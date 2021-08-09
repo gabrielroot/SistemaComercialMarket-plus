@@ -31,21 +31,11 @@ public class Telefone implements Serializable {
     @Column(length=250, nullable=false)
     private String numero;
 
-    public String getNumero() {
-        return numero;
-    }
+    public String getNumero() { return this.numero; }
+    public Long getId() { return this.id; }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setNumero(String numero) { this.numero = numero; }
+    public void setId(Long id) { this.id = id; }
 
     @Override
     public int hashCode() {

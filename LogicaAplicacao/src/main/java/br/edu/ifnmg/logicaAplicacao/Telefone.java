@@ -19,10 +19,6 @@ import javax.persistence.Id;
 @Entity
 public class Telefone implements Serializable {
 
-    public Telefone() {
-        this.numero = "";
-    }
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +26,10 @@ public class Telefone implements Serializable {
 
     @Column(length=250, nullable=false)
     private String numero;
+    
+    public Telefone() {
+        this.numero = "";
+    }
 
     public String getNumero() { return this.numero; }
     public Long getId() { return this.id; }

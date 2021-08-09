@@ -3,6 +3,7 @@
   <persistence-unit name="br.edu.ifnmg_LogicaAplicacao_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.edu.ifnmg.logicaaplicacao.Pessoa</class>
+    <class>br.edu.ifnmg.logicaAplicacao.Telefone</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/marketPlus?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

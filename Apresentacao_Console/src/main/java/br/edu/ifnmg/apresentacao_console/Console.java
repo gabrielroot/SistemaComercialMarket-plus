@@ -19,8 +19,9 @@ public class Console {
      public static void main(String[] args){
         PessoaRepositorio repo = new PessoaDAO();
         
-//        Usuario user = repo.Abrir(201L);
+//        Pessoa person = repo.Abrir(201L);
 //        System.out.println("LOGIN="+user.getLogin());
+//        repo.Apagar(person);
         
         Pessoa pessoa = new Pessoa();
         pessoa.setNome("Pessoa01");
@@ -34,6 +35,5 @@ public class Console {
             System.out.println("Falha!!");
         }
         
-//        repo.Apagar(user);
     }
 }

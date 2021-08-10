@@ -19,10 +19,6 @@ import javax.persistence.Id;
 @Entity
 public class Telefone implements Serializable {
 
-    public Telefone() {
-        this.numero = "";
-    }
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,22 +26,16 @@ public class Telefone implements Serializable {
 
     @Column(length=250, nullable=false)
     private String numero;
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
     
-    public Long getId() {
-        return id;
+    public Telefone() {
+        this.numero = "";
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getNumero() { return this.numero; }
+    public Long getId() { return this.id; }
+
+    public void setNumero(String numero) { this.numero = numero; }
+    public void setId(Long id) { this.id = id; }
 
     @Override
     public int hashCode() {

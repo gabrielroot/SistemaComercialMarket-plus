@@ -7,9 +7,13 @@ package br.edu.ifnmg.apresentacao_console;
 
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
+import br.edu.ifnmg.logicaAplicacao.Telefone;
 import br.edu.ifnmg.logicaAplicacao.TipoDocumento;
 import br.edu.ifnmg.logicaAplicacao.TipoPessoa;
 import br.edu.ifnmg.persistencia.PessoaDAO;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -24,16 +28,28 @@ public class Console {
 //        repo.Apagar(person);
         
         Pessoa pessoa = new Pessoa();
-        pessoa.setNome("Pessoa01");
+        pessoa.setNome("Lucas Santos");
         pessoa.setTipoPessoa(TipoPessoa.Juridica);
         pessoa.setTipoDocumento(TipoDocumento.CertidaoNascimento);
-        pessoa.setNumeroDocumento("123424");
-        System.out.println(pessoa);
+        pessoa.setNumeroDocumento("123456");
+        pessoa.setDataNascimento(new Date());
+        pessoa.setEndereco("Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111");
+        
+        Telefone telefone = new Telefone();
+        telefone.setNumero("(38)9999-1111");
+        
+        Telefone telefon = new Telefone();
+        telefon.setNumero("(38)9629-1131");
+        List telefones = new ArrayList<Telefone>();
+        
+        telefones.add(telefone);
+        telefones.add(telefon);
+        pessoa.setTelefones(telefones);
+
         if(repo.Salvar(pessoa)){
             System.out.println("Sucesso!!");
         }else{
             System.out.println("Falha!!");
         }
-        
     }
 }

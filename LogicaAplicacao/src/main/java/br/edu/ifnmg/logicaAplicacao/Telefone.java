@@ -11,12 +11,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author gabriel
  */
 @Entity
+@Table(name="telefone")
 public class Telefone implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,11 +33,11 @@ public class Telefone implements Serializable {
         this.numero = "";
     }
 
-    public String getNumero() { return this.numero; }
+    public void setId(Long id) { this.id = id; }
     public Long getId() { return this.id; }
 
     public void setNumero(String numero) { this.numero = numero; }
-    public void setId(Long id) { this.id = id; }
+    public String getNumero() { return this.numero; }
 
     @Override
     public int hashCode() {
@@ -59,7 +61,7 @@ public class Telefone implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.ifnmg.logicaAplicacao.Telefone[ id=" + id + " ]";
+        return this.numero;
     }
     
 }

@@ -9,13 +9,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,8 +42,8 @@ public class Pessoa implements Serializable {
     @Column(length=250)
     private String endereco;
     
-//    RELACIONAMENTO
-//    private List<Telefone> telefones;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Telefone.class)
+    private List<Telefone> telefones;
     
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
@@ -65,8 +68,8 @@ public class Pessoa implements Serializable {
     public String getEndereco() { return endereco; }
     public void setEndereco(String endereco) { this.endereco = endereco; }
 
-//    public List<Telefone> getTelefones() { return telefones; }
-//    public void setTelefones(List<Telefone> telefones) { this.telefones = telefones; }
+    public List<Telefone> getTelefones() { return telefones; }
+    public void setTelefones(List<Telefone> telefones) { this.telefones = telefones; }
 
     public Date getDataNascimento() { return dataNascimento; }
     public void setDataNascimento(Date dataNascimento) { this.dataNascimento = dataNascimento;}
@@ -85,7 +88,7 @@ public class Pessoa implements Serializable {
     public Pessoa(){
         this.id = 0L;
         this.nome = "";
-//        this.telefones = new ArrayList<>();
+        this.telefones = new ArrayList<Telefone>();
         this.tipoPessoa = TipoPessoa.Fisica;
         this.tipoDocumento = TipoDocumento.CertidaoNascimento;
         this.numeroDocumento = "";

@@ -5,11 +5,11 @@
  */
 package br.edu.ifnmg.apresentacao_console;
 
+import br.edu.ifnmg.enums.TipoDocumento;
+import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Telefone;
-import br.edu.ifnmg.logicaAplicacao.TipoDocumento;
-import br.edu.ifnmg.logicaAplicacao.TipoPessoa;
 import br.edu.ifnmg.persistencia.PessoaDAO;
 import java.util.ArrayList;
 import java.util.Date;

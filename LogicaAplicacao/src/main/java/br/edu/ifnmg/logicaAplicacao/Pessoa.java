@@ -88,7 +88,7 @@ public class Pessoa implements Serializable {
     public Pessoa(){
         this.id = 0L;
         this.nome = "";
-        this.telefones = new ArrayList<Telefone>();
+        this.telefones = new ArrayList<>();
         this.tipoPessoa = TipoPessoa.Fisica;
         this.tipoDocumento = TipoDocumento.CertidaoNascimento;
         this.numeroDocumento = "";

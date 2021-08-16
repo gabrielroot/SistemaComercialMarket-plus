@@ -6,6 +6,7 @@
 package br.edu.ifnmg.logicaAplicacao;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +23,28 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @Column(nullable= false, unique= true)
+    private String identificacaoCliente;
+    
+    @Column(nullable= false)
+    private String senha;
+
+    public Cliente() {
+        this.identificacaoCliente = "";
+        this.senha = "";
+    }
+    
+
+    public String getIdentificacaoCliente() {
+        return identificacaoCliente;
+    }
+
+    public void setIdentificacaoCliente(String identificacaoCliente) {
+        this.identificacaoCliente = identificacaoCliente;
+    }
+    
+    
 
     public Long getId() {
         return id;

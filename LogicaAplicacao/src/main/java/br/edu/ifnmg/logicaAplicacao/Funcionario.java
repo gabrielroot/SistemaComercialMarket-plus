@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Funcionario extends Pessoa implements Serializable  {
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable=false)
+    @Column()
     private FuncionarioSituacao situacao;
     
     public Funcionario() {
@@ -31,7 +31,7 @@ public class Funcionario extends Pessoa implements Serializable  {
         this.situacao = FuncionarioSituacao.Ativo;
     }
     
-    public FuncionarioSituacao getsituacao() { return this.situacao; }
+    public FuncionarioSituacao getSituacao() { return this.situacao; }
     public void setSituacao(FuncionarioSituacao fs) { this.situacao = fs; }
     
     @Override
@@ -56,7 +56,7 @@ public class Funcionario extends Pessoa implements Serializable  {
 
     @Override
     public String toString() {
-        return "br.edu.ifnmg.logicaAplicacao.Funcionario[ id=" + this.getId() + " ]";
+        return this.situacao.toString();
     }
     
 }

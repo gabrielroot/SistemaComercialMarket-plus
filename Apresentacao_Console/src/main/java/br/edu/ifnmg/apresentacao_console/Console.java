@@ -6,13 +6,17 @@
 package br.edu.ifnmg.apresentacao_console;
 
 import br.edu.ifnmg.enums.FuncionarioSituacao;
+import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
+import br.edu.ifnmg.logicaAplicacao.Fornecedor;
+import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Funcionario;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Telefone;
+import br.edu.ifnmg.persistencia.FornecedorDAO;
 import br.edu.ifnmg.persistencia.FuncionarioDAO;
 import br.edu.ifnmg.persistencia.PessoaDAO;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ public class Console {
     public static boolean popularBD(){
         PessoaRepositorio repositorioPessoa = new PessoaDAO();
         FuncionarioRepositorio repositorioFuncionario = new FuncionarioDAO();
+        FornecedorRepositorio repositorioFornecedor = new FornecedorDAO();
         
         Pessoa pessoa = new Pessoa();
         pessoa.setNome("Lucas Santos");
@@ -57,11 +62,15 @@ public class Console {
         pessoa.setTelefones(telefones);
 
         Funcionario funcionario = new Funcionario();
-        funcionario.setNome("João Castro");
+        funcionario.setNome("João Correa");
         funcionario.setSituacao(FuncionarioSituacao.Demitido);
         
-        repositorioFuncionario.Salvar(funcionario);
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setNome("Josefina Flores");
+        fornecedor.setSegmento(Segmento.Higiene);
         
-        return repositorioPessoa.Salvar(pessoa);
+        return repositorioPessoa.Salvar(pessoa) &&
+               repositorioFuncionario.Salvar(funcionario) &&
+               repositorioFornecedor.Salvar(fornecedor);
      }
 }

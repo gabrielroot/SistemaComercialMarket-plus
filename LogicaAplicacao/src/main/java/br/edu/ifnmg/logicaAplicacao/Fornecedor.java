@@ -37,9 +37,6 @@ public class Fornecedor extends Pessoa implements Serializable {
         this.segmento = Segmento.Enlatados;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public Segmento getSegmento() { return segmento; }
     public void setSegmento(Segmento segmento) { this.segmento = segmento; }
     

@@ -1,5 +1,4 @@
 
-
 package br.edu.ifnmg.logicaAplicacao;
 
 import java.io.Serializable;
@@ -7,16 +6,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="cliente")
 public class Cliente extends Pessoa implements Serializable  {
-
-    @Enumerated(EnumType.ORDINAL)
     
-    @Column(length=250, nullable=false)
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    @Column(length=250, nullable=false, unique=true)
     private String identificaoDoCliente;
     @Column(length=250, nullable=false)
     private String senha;
@@ -24,18 +29,16 @@ public class Cliente extends Pessoa implements Serializable  {
     public Cliente() {
         super();
         
-        this.identificaoDoCliente = identificaoDoCliente;
-        this.senha = senha;
+        this.identificaoDoCliente = "";
+        this.senha = "";
 
     }
     
     public String getIdentificaoDoCliente() { return this.identificaoDoCliente; }
 
-    public void setIdentificaoDoCliente(String x) { this.identificaoDoCliente = x; }
+    public void setIdentificaoDoCliente(String identificaoDoCliente) { this.identificaoDoCliente = identificaoDoCliente; }
 
-    public String getSenha() { return this.senha; }
-
-    public void setSenha(String x) { this.senha = x; }
+    public void setSenha(String senha) { this.senha = senha; }
     
     @Override
     public int hashCode() {
@@ -57,4 +60,9 @@ public class Cliente extends Pessoa implements Serializable  {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return this.identificaoDoCliente;
+    }
+    
 }

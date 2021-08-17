@@ -6,12 +6,17 @@
 package br.edu.ifnmg.logicaAplicacao;
 
 import br.edu.ifnmg.enums.FuncionarioSituacao;
+import br.edu.ifnmg.enums.TipoDocumento;
+import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  *
@@ -22,14 +27,36 @@ import javax.persistence.Table;
 public class Funcionario extends Pessoa implements Serializable  {
 
     @Enumerated(EnumType.ORDINAL)
-    @Column()
+    @Column(nullable=false)
     private FuncionarioSituacao situacao;
+    
+    @Version
+    private long versao;
     
     public Funcionario() {
         super();
         
         this.situacao = FuncionarioSituacao.Ativo;
+        this.versao = 1;
     }
+
+    public Funcionario(
+        String nome, 
+        String endereco, 
+        List<Telefone> telefones, 
+        Date dataNascimento, 
+        TipoPessoa tipoPessoa, 
+        TipoDocumento tipoDocumento, 
+        String numeroDocumento, 
+        FuncionarioSituacao situacao) {
+        
+        super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
+
+        this.versao = 1;
+        this.situacao = situacao;
+    }
+    
+    
     
     public FuncionarioSituacao getSituacao() { return this.situacao; }
     public void setSituacao(FuncionarioSituacao fs) { this.situacao = fs; }

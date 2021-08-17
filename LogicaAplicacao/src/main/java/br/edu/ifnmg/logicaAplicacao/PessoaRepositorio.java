@@ -5,10 +5,11 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import java.util.List;
+
 /**
  *
  * @author gabriel
  */
 public interface PessoaRepositorio extends Repositorio<Pessoa>{
-    
 }

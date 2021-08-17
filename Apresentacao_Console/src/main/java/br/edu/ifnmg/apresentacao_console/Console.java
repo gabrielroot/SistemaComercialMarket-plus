@@ -34,6 +34,29 @@ public class Console {
         }else{
             System.out.println("FALHA ao popular o banco de dados!!");
         }
+        
+        queryPessoa();
+    }
+    
+    public static void queryPessoa(){
+        PessoaRepositorio repositorioPessoa = new PessoaDAO();
+        
+        System.out.println("-- Buscar pessoa com Filtros --");
+        for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa(
+                "Sebastião Codeiro", 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                "123456"))){
+            System.out.println("    "+pessoa.getNome());
+        }
+        
+        System.out.println("-- Buscar todas as Pessoas --");
+        for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa())){
+            System.out.println("    "+pessoa.getNome());
+        }
     }
      
     public static boolean popularBD(){
@@ -41,33 +64,43 @@ public class Console {
         FuncionarioRepositorio repositorioFuncionario = new FuncionarioDAO();
         FornecedorRepositorio repositorioFornecedor = new FornecedorDAO();
         
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome("Lucas Santos");
-        pessoa.setTipoPessoa(TipoPessoa.Juridica);
-        pessoa.setTipoDocumento(TipoDocumento.CertidaoNascimento);
-        pessoa.setNumeroDocumento("123456");
-        pessoa.setDataNascimento(new Date());
-        pessoa.setEndereco("Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111");
-        
-        Telefone telefone01 = new Telefone();
-        telefone01.setNumero("(38)9999-1111");
-        
-        Telefone telefone02 = new Telefone();
-        telefone02.setNumero("(38)9629-1131");
-        
+        Telefone telefone01 = new Telefone("3899991111");        
+        Telefone telefone02 = new Telefone("3896291131");
+
         List telefones = new ArrayList<Telefone>();
         telefones.add(telefone01);
         telefones.add(telefone02);
-        
-        pessoa.setTelefones(telefones);
 
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNome("João Correa");
-        funcionario.setSituacao(FuncionarioSituacao.Demitido);
+        Pessoa pessoa = new Pessoa(
+            "Sebastião Codeiro",
+            "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111",
+            telefones,
+            new Date(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CertidaoNascimento,
+            "123456"
+        );        
         
-        Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setNome("Josefina Flores");
-        fornecedor.setSegmento(Segmento.Higiene);
+        Funcionario funcionario = new Funcionario(
+            "Antônio Gomes",
+            "Lontra, Minas Gerais. Avenida Água viva N° 145",
+            null,
+            new Date(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CNH,
+            "8123427854",
+            FuncionarioSituacao.Ativo);
+        
+        Fornecedor fornecedor = new Fornecedor(
+            "João Geraldo",
+            "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            null,
+            new Date(),
+            TipoPessoa.Juridica,
+            TipoDocumento.CNPJ,
+            "564673",
+            Segmento.Enlatados
+        );
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&

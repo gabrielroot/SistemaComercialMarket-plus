@@ -67,6 +67,27 @@ public class Pessoa implements Serializable {
     
     @Version
     private long versao;
+    
+    public Pessoa(){
+        this.id = 0L;
+        this.nome = "";
+        this.telefones = new ArrayList<>();
+        this.tipoPessoa = TipoPessoa.Fisica;
+        this.tipoDocumento = TipoDocumento.CertidaoNascimento;
+        this.numeroDocumento = "";
+        this.versao = 1;
+    }
+
+    public Pessoa(String nome, String endereco, List<Telefone> telefones, Date dataNascimento, TipoPessoa tipoPessoa, TipoDocumento tipoDocumento, String numeroDocumento) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefones = telefones;
+        this.dataNascimento = dataNascimento;
+        this.tipoPessoa = tipoPessoa;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.versao = 1;
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -94,32 +115,6 @@ public class Pessoa implements Serializable {
 
     public long getVersao() { return versao; }
     public void setVersao(long versao) { this.versao = versao; }
-    
-    
-    
-    
-    public Pessoa(){
-        this.id = 0L;
-        this.nome = "";
-        this.telefones = new ArrayList<>();
-        this.tipoPessoa = TipoPessoa.Fisica;
-        this.tipoDocumento = TipoDocumento.CertidaoNascimento;
-        this.numeroDocumento = "";
-        this.versao = 1;
-    }
-
-    public Pessoa(String nome, String endereco, List<Telefone> telefones, Date dataNascimento, TipoPessoa tipoPessoa, TipoDocumento tipoDocumento, String numeroDocumento) {
-        this.nome = nome;
-        this.endereco = endereco;
-        this.telefones = telefones;
-        this.dataNascimento = dataNascimento;
-        this.tipoPessoa = tipoPessoa;
-        this.tipoDocumento = tipoDocumento;
-        this.numeroDocumento = numeroDocumento;
-        this.versao = 1;
-    }
-    
-    
     
     @java.lang.Override
     public int hashCode() {

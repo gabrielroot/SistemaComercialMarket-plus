@@ -5,8 +5,13 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.Segmento;
+import br.edu.ifnmg.enums.TipoDocumento;
+import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,11 +39,30 @@ public class Fornecedor extends Pessoa implements Serializable {
     private Segmento segmento;
 
     public Fornecedor() {
+        super();
         this.segmento = Segmento.Enlatados;
     }
 
+    public Fornecedor(
+        String nome, 
+        String endereco, 
+        List<Telefone> telefones, 
+        Date dataNascimento, 
+        TipoPessoa tipoPessoa, 
+        TipoDocumento tipoDocumento, 
+        String numeroDocumento, 
+        Segmento segmento) {
+        
+        super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
+        
+        this.segmento = segmento;
+    }
+
+    
+    
     public Segmento getSegmento() { return segmento; }
     public void setSegmento(Segmento segmento) { this.segmento = segmento; }
+
     
     @Override
     public int hashCode() {

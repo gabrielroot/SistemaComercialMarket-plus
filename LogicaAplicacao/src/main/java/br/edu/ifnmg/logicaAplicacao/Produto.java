@@ -34,7 +34,7 @@ public class Produto implements Serializable {
     private String nome;
     
     @Column(precision=8, scale=2)
-    private BigDecimal minimiParaAtacado;
+    private BigDecimal minimoParaAtacado;
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
@@ -52,6 +52,12 @@ public class Produto implements Serializable {
             
     public Long getId() { return this.id; }
     public void setId(Long id) { this.id = id; }
+    
+    public String getNome() { return this.nome; }
+    public void setNome(String nome) { this.nome = nome; }
+    
+    public BigDecimal getMinimoParaAtacado() { return this.minimoParaAtacado; }
+    public void setMinimoParaAtacado(BigDecimal minimoParaAtacado) { this.minimoParaAtacado = minimoParaAtacado; }
     
     @Override
     public int hashCode() {

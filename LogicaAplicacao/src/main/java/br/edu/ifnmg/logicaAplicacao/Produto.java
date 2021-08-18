@@ -59,6 +59,18 @@ public class Produto implements Serializable {
     public BigDecimal getMinimoParaAtacado() { return this.minimoParaAtacado; }
     public void setMinimoParaAtacado(BigDecimal minimoParaAtacado) { this.minimoParaAtacado = minimoParaAtacado; }
     
+    public UnidadeMedida getUnidadeMedidaCusto() { return this.unidadeMedidaCusto; }
+    public void setUnidadeMedidaCusto(UnidadeMedida unidadeMedidaCusto) { this.unidadeMedidaCusto = unidadeMedidaCusto; }
+    
+    public UnidadeMedida getUnidadeMedidaVenda() { return this.unidadeMedidaVenda; }
+    public void setUnidadeMedidaVenda(UnidadeMedida unidadeMedidaVenda) { this.unidadeMedidaVenda = unidadeMedidaVenda; }
+    
+    public BigDecimal getValorVenda() { return this.valorVenda; }
+    public void setValorVenda(BigDecimal valorVenda) { this.valorVenda = valorVenda; }
+    
+    public BigDecimal getValorCusto() { return this.valorCusto; }
+    public void setValorCusto(BigDecimal valorCusto) { this.valorCusto = valorCusto; }
+    
     @Override
     public int hashCode() {
         int hash = 0;

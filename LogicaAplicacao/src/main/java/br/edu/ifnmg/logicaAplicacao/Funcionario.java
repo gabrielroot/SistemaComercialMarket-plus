@@ -56,8 +56,6 @@ public class Funcionario extends Pessoa implements Serializable  {
         this.situacao = situacao;
     }
     
-    
-    
     public FuncionarioSituacao getSituacao() { return this.situacao; }
     public void setSituacao(FuncionarioSituacao fs) { this.situacao = fs; }
     

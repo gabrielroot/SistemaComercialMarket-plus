@@ -57,8 +57,6 @@ public class Fornecedor extends Pessoa implements Serializable {
         
         this.segmento = segmento;
     }
-
-    
     
     public Segmento getSegmento() { return segmento; }
     public void setSegmento(Segmento segmento) { this.segmento = segmento; }

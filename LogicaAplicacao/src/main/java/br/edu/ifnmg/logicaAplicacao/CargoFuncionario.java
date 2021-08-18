@@ -44,22 +44,20 @@ public class CargoFuncionario implements Serializable {
         this.salario = new BigDecimal(salario);
     }
     
-    public void setId(Long id) { this.id = id; }
     public Long getId() { return this.id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setTitulo(String titulo) { this.titulo = titulo; }
     public String getTitulo() { return this.titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
     public String getFuncao() { return funcao; }
     public void setFuncao(String funcao) { this.funcao = funcao; }
 
-
-    public void setComissao(BigDecimal comissao) { this.comissao = comissao; }
     public BigDecimal getComissao() { return this.comissao; }
+    public void setComissao(BigDecimal comissao) { this.comissao = comissao; }
 
-    public void setSalario(BigDecimal salario) { this.salario = salario; }
     public BigDecimal getSalario() { return this.salario; }
-
+    public void setSalario(BigDecimal salario) { this.salario = salario; }
 
     @Override
     public int hashCode() {

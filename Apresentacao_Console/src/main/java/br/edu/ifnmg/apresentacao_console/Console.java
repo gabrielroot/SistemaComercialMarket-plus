@@ -15,7 +15,7 @@ import br.edu.ifnmg.logicaAplicacao.Funcionario;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
-import br.edu.ifnmg.logicaAplicacao.Telefone;
+import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.persistencia.FornecedorDAO;
 import br.edu.ifnmg.persistencia.FuncionarioDAO;
 import br.edu.ifnmg.persistencia.PessoaDAO;

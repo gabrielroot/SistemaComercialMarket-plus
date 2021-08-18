@@ -1,4 +1,4 @@
-package br.edu.ifnmg.logicaAplicacao;
+package br.edu.ifnmg.auxiliares;
 
 import java.io.Serializable;
 import javax.persistence.Column;

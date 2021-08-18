@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;

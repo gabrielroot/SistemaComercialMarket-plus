@@ -49,7 +49,17 @@ public class Produto implements Serializable {
 
     @Column(precision=8, scale=2)
     private BigDecimal valorCusto;
-            
+    
+    public Produto() {
+        this.id = 0L;
+        this.nome = "";
+        this.minimoParaAtacado = new BigDecimal("0.0.");
+        this.unidadeMedidaCusto = UnidadeMedida.Grama;
+        this.unidadeMedidaVenda = UnidadeMedida.Grama;
+        this.valorVenda = new BigDecimal("0.00");
+        this.valorCusto = new BigDecimal("0.00");
+    }
+    
     public Long getId() { return this.id; }
     public void setId(Long id) { this.id = id; }
     

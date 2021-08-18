@@ -18,24 +18,19 @@ public class FuncionarioNormal extends Funcionario implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Column(length=250, nullable=false, unique=true)
-    private int idFuncionario;
 
     @Column(length=250, nullable=false)
     private String cargo;
     
     public FuncionarioNormal() {
         super();
-        
-        this.idFuncionario = idFuncionario;
         this.cargo = "";
 
     }
-    public int getIdFuncionario() { return this.idFuncionario; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setIdFuncionario(int idFuncionario) { this.idFuncionario = idFuncionario; }
-    
+    public Long getId() { return this.id; }
+
     public String getCargo() { return this.cargo; }
 
     public void setCargo(String cargo) { this.cargo = cargo; }

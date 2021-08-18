@@ -8,16 +8,21 @@ package br.edu.ifnmg.logicaAplicacao;
 import br.edu.ifnmg.enums.UnidadeMedida;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
- * @author Murilo
+ * @author Murilo, Kesley
  */
 @Entity
+@Table(name="produtos")
 public class Produto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,26 +30,29 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Column(length=250, nullable=false, unique=true)
     private String nome;
     
+    @Column(precision=8, scale=2)
     private BigDecimal minimiParaAtacado;
     
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable=false)
     private UnidadeMedida unidadeMedidaCusto;
     
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable=false)
     private UnidadeMedida unidadeMedidaVenda;
 
+    @Column(precision=8, scale=2)
     private BigDecimal valorVenda;
-    
+
+    @Column(precision=8, scale=2)
     private BigDecimal valorCusto;
             
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    public Long getId() { return this.id; }
+    public void setId(Long id) { this.id = id; }
+    
     @Override
     public int hashCode() {
         int hash = 0;

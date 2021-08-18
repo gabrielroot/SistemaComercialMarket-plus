@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  *
@@ -29,15 +30,28 @@ public class Telefone implements Serializable {
     @Column(length=250, nullable=false)
     private String numero;
     
+    @Version
+    private long versao;
+    
     public Telefone() {
         this.numero = "";
+        this.versao = 1;
     }
 
+    public Telefone(String numero) {
+        this.numero = numero;
+    }
+
+    
+    
     public void setId(Long id) { this.id = id; }
     public Long getId() { return this.id; }
 
     public void setNumero(String numero) { this.numero = numero; }
     public String getNumero() { return this.numero; }
+
+    public long getVersao() { return versao; }
+    public void setVersao(long versao) { this.versao = versao; }
 
     @Override
     public int hashCode() {

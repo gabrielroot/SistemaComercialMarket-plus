@@ -31,16 +31,19 @@ public class CargoFuncionario implements Serializable {
     @Column(precision=8, scale=2)
     private BigDecimal salario;
     
-    
-    
-    public CargoFuncionario(String titulo, String funcao, BigDecimal comissao, BigDecimal salario) {
+    public CargoFuncionario() {
         this.titulo = "";
         this.funcao = "";
         this.comissao =  new BigDecimal("0.00");
         this.salario =  new BigDecimal("0.00");
     }
-
-  
+    
+    public CargoFuncionario(String titulo, String funcao, String comissao, String salario) {
+        this.titulo = titulo;
+        this.funcao = funcao;
+        this.comissao = new BigDecimal(comissao);
+        this.salario = new BigDecimal(salario);
+    }
     
     public void setId(Long id) { this.id = id; }
     public Long getId() { return this.id; }

@@ -5,7 +5,6 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
-import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
@@ -61,7 +60,6 @@ public class Fornecedor extends Pessoa implements Serializable {
     public Segmento getSegmento() { return segmento; }
     public void setSegmento(Segmento segmento) { this.segmento = segmento; }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;

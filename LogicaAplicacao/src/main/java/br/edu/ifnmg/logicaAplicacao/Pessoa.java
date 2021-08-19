@@ -79,7 +79,15 @@ public class Pessoa implements Serializable {
         this.versao = 1;
     }
 
-    public Pessoa(String nome, String endereco, List<Telefone> telefones, Date dataNascimento, TipoPessoa tipoPessoa, TipoDocumento tipoDocumento, String numeroDocumento) {
+    public Pessoa(
+            String nome, 
+            String endereco, 
+            List<Telefone> telefones, 
+            Date dataNascimento, 
+            TipoPessoa tipoPessoa, 
+            TipoDocumento tipoDocumento, 
+            String numeroDocumento
+        ){
         this.nome = nome;
         this.endereco = endereco;
         this.telefones = telefones;

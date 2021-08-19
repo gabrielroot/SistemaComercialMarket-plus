@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_console;
 
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.TipoDocumento;
@@ -16,9 +17,6 @@ import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
-import br.edu.ifnmg.persistencia.FornecedorDAO;
-import br.edu.ifnmg.persistencia.FuncionarioDAO;
-import br.edu.ifnmg.persistencia.PessoaDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +37,7 @@ public class Console {
     }
     
     public static void queryPessoa(){
-        PessoaRepositorio repositorioPessoa = new PessoaDAO();
+        PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
         
         System.out.println("-- Buscar pessoa com Filtros --");
         for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa(
@@ -60,9 +58,9 @@ public class Console {
     }
      
     public static boolean popularBD(){
-        PessoaRepositorio repositorioPessoa = new PessoaDAO();
-        FuncionarioRepositorio repositorioFuncionario = new FuncionarioDAO();
-        FornecedorRepositorio repositorioFornecedor = new FornecedorDAO();
+        PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
+        FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
+        FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
         
         Telefone telefone01 = new Telefone("3899991111");        
         Telefone telefone02 = new Telefone("3896291131");

@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.repositorioFactory;
 
+import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
@@ -27,6 +28,7 @@ public class RepositorioFactory {
     private static PessoaRepositorio pessoa;
     private static FuncionarioRepositorio funcionario;
     private static FornecedorRepositorio fornecedor;
+    private static ClienteRepositorio cliente;
     
     static {
         FileReader leitorArquivo = null;
@@ -85,5 +87,13 @@ public class RepositorioFactory {
             fornecedor = (FornecedorRepositorio) getInstancia(nomeclasse);
         }
         return fornecedor;
+    }
+    
+    public static ClienteRepositorio getClienteRepositorio() {
+        if(cliente == null){
+            String nomeclasse = propriedades.getProperty("ClienteRepositorio");
+            cliente = (ClienteRepositorio) getInstancia(nomeclasse);
+        }
+        return cliente;
     }
 }

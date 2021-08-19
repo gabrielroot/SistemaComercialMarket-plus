@@ -33,6 +33,9 @@ public class Produto implements Serializable {
     @Column(length=250, nullable=false, unique=true)
     private String nome;
     
+    @Column(length=500, nullable=true)
+    private String descricao;
+    
     @Column(precision=8, scale=2)
     private BigDecimal minimoParaAtacado;
     
@@ -53,7 +56,7 @@ public class Produto implements Serializable {
     public Produto() {
         this.id = 0L;
         this.nome = "";
-        this.minimoParaAtacado = new BigDecimal("0.0.");
+        this.minimoParaAtacado = new BigDecimal("0.00");
         this.unidadeMedidaCusto = UnidadeMedida.Grama;
         this.unidadeMedidaVenda = UnidadeMedida.Grama;
         this.valorVenda = new BigDecimal("0.00");

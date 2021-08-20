@@ -125,7 +125,7 @@ public class Login extends javax.swing.JFrame {
         lblError.setBackground(new java.awt.Color(160, 63, 65));
         lblError.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         lblError.setForeground(new java.awt.Color(160, 63, 65));
-        jPanel3.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 385, -1, -1));
+        jPanel3.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 455, -1, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, 400, 519));
 

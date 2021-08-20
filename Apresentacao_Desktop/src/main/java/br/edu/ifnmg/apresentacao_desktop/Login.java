@@ -54,7 +54,7 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(160, 63, 65));
+        jPanel2.setBackground(new java.awt.Color(135, 30, 30));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon("/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/logo.jpeg")); // NOI18N
@@ -62,6 +62,7 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 520));
 
+        jPanel3.setBackground(new java.awt.Color(244, 188, 188));
         jPanel3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPanel3KeyPressed(evt);
@@ -69,6 +70,10 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        txtEmail.setBackground(new java.awt.Color(255, 255, 255));
+        txtEmail.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        txtEmail.setForeground(new java.awt.Color(0, 0, 0));
+        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(135, 30, 30)));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
@@ -79,20 +84,27 @@ public class Login extends javax.swing.JFrame {
                 txtEmailKeyPressed(evt);
             }
         });
-        jPanel3.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 270, 37));
+        jPanel3.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 290, 37));
 
         lblEmail.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        lblEmail.setForeground(new java.awt.Color(62, 14, 14));
         lblEmail.setText("Email");
-        jPanel3.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jPanel3.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
 
         lblSenha.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        lblSenha.setForeground(new java.awt.Color(62, 14, 14));
         lblSenha.setText("Senha");
-        jPanel3.add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, -1));
+        jPanel3.add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
+        jLabel3.setBackground(new java.awt.Color(255, 0, 0));
+        jLabel3.setFont(new java.awt.Font("sansserif", 0, 40)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(77, 59, 59));
         jLabel3.setText("LOGIN");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
 
+        psswdSenha.setBackground(new java.awt.Color(255, 255, 255));
+        psswdSenha.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        psswdSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(135, 30, 30)));
         psswdSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 psswdSenhaActionPerformed(evt);
@@ -103,9 +115,9 @@ public class Login extends javax.swing.JFrame {
                 psswdSenhaKeyPressed(evt);
             }
         });
-        jPanel3.add(psswdSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 266, 35));
+        jPanel3.add(psswdSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 290, 35));
 
-        jButton1.setBackground(new java.awt.Color(47, 107, 151));
+        jButton1.setBackground(new java.awt.Color(102, 16, 16));
         jButton1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Entrar");
@@ -124,7 +136,7 @@ public class Login extends javax.swing.JFrame {
 
         lblError.setBackground(new java.awt.Color(160, 63, 65));
         lblError.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        lblError.setForeground(new java.awt.Color(160, 63, 65));
+        lblError.setForeground(new java.awt.Color(255, 63, 65));
         jPanel3.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 455, -1, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, 400, 519));

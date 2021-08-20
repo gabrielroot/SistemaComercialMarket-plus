@@ -3,13 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifnmg.logicaAplicacao;
-
-import java.util.List;
+package br.edu.ifnmg.enums;
 
 /**
  *
- * @author gabriel
+ * @author kesley
  */
-public interface PessoaRepositorio extends Repositorio<Pessoa>{
+public enum UnidadeMedida {
+    Quilograma,
+    Grama,
+    Miligrama,
+    Litro,
+    Mililitro,
+    Metro,
+    Centrimetro,
+    Milimetro
 }

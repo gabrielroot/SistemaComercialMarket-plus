@@ -3,20 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifnmg.logicaAplicacao;
+package br.edu.ifnmg.enums;
 
 /**
  *
  * @author gabriel
  */
-public enum TipoDocumento {
-    RG,
-    CNPJ,
-    CTPS,
-    CNH,
-    Passaporte,
-    CertidaoNascimento,
-    CertidaoCasamento,
-    CertidaoProntuario,
-    CarteiraMilitar
+public enum TipoPessoa {
+    Fisica,
+    Juridica
 }

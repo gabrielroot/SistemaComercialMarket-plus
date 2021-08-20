@@ -54,7 +54,8 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
         return consulta.getResultList();
     }
 
-    public boolean autenticar(String email, String senha){
+    @Override
+    public boolean Autenticar(String email, String senha){
         Query sql =  this.manager.createQuery("SELECT usuario from Usuario usuario WHERE usuario.email = :email and usuario.senha = :senha");
         sql.setParameter("email", email);
         sql.setParameter("senha", senha);

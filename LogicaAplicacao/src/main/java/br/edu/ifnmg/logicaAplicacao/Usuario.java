@@ -48,7 +48,6 @@ public class Usuario extends Funcionario implements Serializable {
         this.email = "";
         this.senha = "";
         this.usuarioTipo = UsuarioTipo.Administrador;
-        this.versao = 1L;
     }
     
     public Usuario(
@@ -77,7 +76,6 @@ public class Usuario extends Funcionario implements Serializable {
         this.email = email;
         this.senha = senha;
         this.usuarioTipo = usuarioTipo;
-        this.versao = 1L;
     }
 
     public String getEmail() { return email; }
@@ -87,9 +85,6 @@ public class Usuario extends Funcionario implements Serializable {
 
     public UsuarioTipo getUsuarioTipo() { return usuarioTipo; }
     public void setUsuarioTipo(UsuarioTipo usuarioTipo) { this.usuarioTipo = usuarioTipo; }
-
-    public long getVersao() { return versao; }
-    public void setVersao(long versao) { this.versao = versao;}
 
     @Override
     public int hashCode() {

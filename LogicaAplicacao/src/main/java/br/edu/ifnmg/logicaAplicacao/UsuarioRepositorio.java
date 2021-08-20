@@ -10,5 +10,5 @@ package br.edu.ifnmg.logicaAplicacao;
  * @author kesley
  */
 public interface UsuarioRepositorio extends Repositorio<Usuario> {
-    
+    public boolean Autenticar(String login, String senha);
 }

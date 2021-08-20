@@ -41,7 +41,7 @@ public class Console {
         
         System.out.println("-- Buscar pessoa com Filtros --");
         for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa(
-                "Sebastião Codeiro", 
+                "Sebastião Cordeiro", 
                 null, 
                 null, 
                 null, 
@@ -70,7 +70,7 @@ public class Console {
         telefones.add(telefone02);
 
         Pessoa pessoa = new Pessoa(
-            "Sebastião Codeiro",
+            "Sebastião Cordeiro",
             "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111",
             telefones,
             new Date(),
@@ -87,7 +87,8 @@ public class Console {
             TipoPessoa.Fisica,
             TipoDocumento.CNH,
             "8123427854",
-            FuncionarioSituacao.Ativo);
+            FuncionarioSituacao.Ativo
+        );
         
         Fornecedor fornecedor = new Fornecedor(
             "João Geraldo",

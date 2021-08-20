@@ -28,7 +28,7 @@ public class PessoaDAO extends DataAccessObject<Pessoa> implements PessoaReposit
         Hashtable<String, Object> parametros = new Hashtable<>();
         
         if(obj != null){
-            if(obj.getNome().length() > 0){
+            if(obj.getNome() != null && obj.getNome().length() > 0){
                 filtros += "pessoa.nome LIKE :nome";
                 parametros.put("nome", obj.getNome() + "%");
             }

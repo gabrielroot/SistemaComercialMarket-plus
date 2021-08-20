@@ -9,6 +9,6 @@ O desenvolvimento desse software busca resolver alguns problemas relacionados ao
 - Mysql
 
 ### Criando o Ambiente de Desenvolvimento
-Será necessário ter as tecnologias instaladas mencionadas a cima.
+Será necessário ter as tecnologias mencionadas a cima instaladas.
 
 ### Execução

@@ -77,6 +77,7 @@ public class Usuario extends Funcionario implements Serializable {
         this.senha = senha;
         this.usuarioTipo = usuarioTipo;
     }
+    
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -115,5 +116,4 @@ public class Usuario extends Funcionario implements Serializable {
     public String toString() {
         return this.email;
     }
-    
 }

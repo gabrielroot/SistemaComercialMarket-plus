@@ -9,6 +9,7 @@ import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.util.Hashtable;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -55,11 +56,19 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
     }
 
     @Override
-    public boolean Autenticar(String email, String senha){
+    public Usuario Autenticar(String email, String senha){
         Query sql =  this.manager.createQuery("SELECT usuario from Usuario usuario WHERE usuario.email = :email and usuario.senha = :senha");
         sql.setParameter("email", email);
         sql.setParameter("senha", senha);
         
-        return sql.getResultList().size() > 0;
+        Usuario user = null;
+        
+        try{
+            user = (Usuario) sql.getSingleResult();
+        }catch(NoResultException ex){
+            return user; 
+        }
+        
+        return user;
     }
 }

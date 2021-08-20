@@ -5,18 +5,14 @@
     <class>br.edu.ifnmg.logicaAplicacao.Pessoa</class>
     <class>br.edu.ifnmg.logicaAplicacao.Funcionario</class>
     <class>br.edu.ifnmg.logicaAplicacao.Fornecedor</class>
-<<<<<<< HEAD
     <class>br.edu.ifnmg.auxiliares.CargoFuncionario</class>
     <class>br.edu.ifnmg.auxiliares.Telefone</class>
-=======
-    <class>br.edu.ifnmg.logicaAplicacao.Pagamento</class>
->>>>>>> feature/pagamento
+    <class>br.edu.ifnmg.logicaAplicacao.Usuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/marketPlus?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="market+"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

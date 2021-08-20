@@ -9,6 +9,7 @@ import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
+import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,6 +30,7 @@ public class RepositorioFactory {
     private static FuncionarioRepositorio funcionario;
     private static FornecedorRepositorio fornecedor;
     private static ClienteRepositorio cliente;
+    private static UsuarioRepositorio usuario;
     
     static {
         FileReader leitorArquivo = null;
@@ -95,5 +97,13 @@ public class RepositorioFactory {
             cliente = (ClienteRepositorio) getInstancia(nomeclasse);
         }
         return cliente;
+    }
+    
+    public static UsuarioRepositorio getUsuarioRepositorio() {
+        if(usuario == null){
+            String nomeclasse = propriedades.getProperty("UsuarioRepositorio");
+            usuario = (UsuarioRepositorio) getInstancia(nomeclasse);
+        }
+        return usuario;
     }
 }

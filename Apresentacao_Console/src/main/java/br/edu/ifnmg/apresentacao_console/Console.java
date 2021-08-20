@@ -17,6 +17,9 @@ import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.enums.UsuarioTipo;
+import br.edu.ifnmg.logicaAplicacao.Usuario;
+import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +35,7 @@ public class Console {
         }else{
             System.out.println("FALHA ao popular o banco de dados!!");
         }
-        
+
         queryPessoa();
     }
     
@@ -41,7 +44,7 @@ public class Console {
         
         System.out.println("-- Buscar pessoa com Filtros --");
         for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa(
-                "Sebastião Cordeiro", 
+                "Sebastião Codeiro", 
                 null, 
                 null, 
                 null, 
@@ -61,6 +64,7 @@ public class Console {
         PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
         FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
         FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
+        UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
         
         Telefone telefone01 = new Telefone("3899991111");        
         Telefone telefone02 = new Telefone("3896291131");
@@ -70,7 +74,7 @@ public class Console {
         telefones.add(telefone02);
 
         Pessoa pessoa = new Pessoa(
-            "Sebastião Cordeiro",
+            "Sebastião Codeiro",
             "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111",
             telefones,
             new Date(),
@@ -87,8 +91,7 @@ public class Console {
             TipoPessoa.Fisica,
             TipoDocumento.CNH,
             "8123427854",
-            FuncionarioSituacao.Ativo
-        );
+            FuncionarioSituacao.Ativo);
         
         Fornecedor fornecedor = new Fornecedor(
             "João Geraldo",
@@ -101,8 +104,23 @@ public class Console {
             Segmento.Enlatados
         );
         
+        Usuario usuario = new Usuario(
+            "Jorge Amaro",
+            "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            null,
+            new Date(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CNH,
+            "564612173",
+            FuncionarioSituacao.Ativo,
+            "@",
+            "123",
+            UsuarioTipo.Administrador
+        );
+        
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
-               repositorioFornecedor.Salvar(fornecedor);
+               repositorioFornecedor.Salvar(fornecedor) &&
+               repositorioUsuario.Salvar(usuario);
      }
 }

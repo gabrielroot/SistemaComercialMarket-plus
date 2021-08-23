@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.auxiliares.CargoFuncionario;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.TipoDocumento;
@@ -59,6 +60,7 @@ public class Usuario extends Funcionario implements Serializable {
             TipoDocumento tipoDocumento, 
             String numeroDocumento, 
             FuncionarioSituacao situacao,
+            CargoFuncionario cargo,
             String email, 
             String senha,
             UsuarioTipo usuarioTipo
@@ -71,7 +73,8 @@ public class Usuario extends Funcionario implements Serializable {
             tipoPessoa, 
             tipoDocumento, 
             numeroDocumento, 
-            situacao
+            situacao,
+            cargo
         );
         this.email = email;
         this.senha = senha;
@@ -87,7 +90,7 @@ public class Usuario extends Funcionario implements Serializable {
     public UsuarioTipo getUsuarioTipo() { return usuarioTipo; }
     public void setUsuarioTipo(UsuarioTipo usuarioTipo) { this.usuarioTipo = usuarioTipo; }
 
-    @Override
+        @Override
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + Objects.hashCode(this.senha);
@@ -111,7 +114,7 @@ public class Usuario extends Funcionario implements Serializable {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return this.email;

@@ -91,7 +91,8 @@ public class Console {
             TipoPessoa.Fisica,
             TipoDocumento.CNH,
             "8123427854",
-            FuncionarioSituacao.Ativo);
+            FuncionarioSituacao.Ativo,
+            null);
         
         Fornecedor fornecedor = new Fornecedor(
             "João Geraldo",
@@ -113,6 +114,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
+            null,    
             "@",
             "123",
             UsuarioTipo.Administrador

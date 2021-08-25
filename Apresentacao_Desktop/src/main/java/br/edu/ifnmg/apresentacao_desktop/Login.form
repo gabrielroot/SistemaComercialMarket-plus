@@ -38,7 +38,7 @@
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="1e" green="1e" red="87" type="rgb"/>
+              <Color blue="10" green="10" red="60" type="rgb"/>
             </Property>
           </Properties>
           <Constraints>
@@ -54,12 +54,12 @@
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/gabriel/Documentos/FACULDADE/7&#xb0;/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/logo.jpeg"/>
+                  <Image iconType="2" name="/home/gabriel/Documentos/FACULDADE/7&#xb0;/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/logo.png"/>
                 </Property>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="140" width="470" height="240"/>
+                  <AbsoluteConstraints x="20" y="0" width="510" height="520"/>
                 </Constraint>
               </Constraints>
             </Component>

@@ -60,11 +60,11 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(135, 30, 30));
+        jPanel2.setBackground(new java.awt.Color(96, 16, 16));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/logo.jpeg")); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 470, 240));
+        jLabel1.setIcon(new javax.swing.ImageIcon("/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/logo.png")); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 510, 520));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 520));
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 br/edu/ifnmg/apresentacao_desktop/Login$5.class
 br/edu/ifnmg/apresentacao_desktop/Login.class
 br/edu/ifnmg/apresentacao_desktop/Login$4.class
@@ -12,3 +13,19 @@ br/edu/ifnmg/apresentacao_desktop/TelaPrincipal$1.class
 br/edu/ifnmg/apresentacao_desktop/TelaPrincipal.class
 br/edu/ifnmg/apresentacao_desktop/Login$3.class
 br/edu/ifnmg/apresentacao_desktop/Login$7.class
+=======
+br\edu\ifnmg\apresentacao_desktop\Login$4.class
+br\edu\ifnmg\apresentacao_desktop\TelaPrincipal.class
+br\edu\ifnmg\apresentacao_desktop\Login$9.class
+br\edu\ifnmg\apresentacao_desktop\TelaPrincipal$1.class
+br\edu\ifnmg\apresentacao_desktop\Login$2.class
+br\edu\ifnmg\apresentacao_desktop\Login$5.class
+br\edu\ifnmg\apresentacao_desktop\Login$6.class
+br\edu\ifnmg\apresentacao_desktop\Login$7.class
+br\edu\ifnmg\apresentacao_desktop\Login$1.class
+br\edu\ifnmg\apresentacao_desktop\Login$10.class
+br\edu\ifnmg\apresentacao_desktop\Login.class
+br\edu\ifnmg\apresentacao_desktop\Login$3.class
+br\edu\ifnmg\apresentacao_desktop\TelaPrincipal$2.class
+br\edu\ifnmg\apresentacao_desktop\Login$8.class
+>>>>>>> 3543966d66cfc473b4c78c3cdfeda6b5d9003deb

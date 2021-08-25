@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.auxiliares.CargoFuncionario;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.TipoDocumento;
@@ -12,10 +13,15 @@ import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -31,6 +37,10 @@ public class Funcionario extends Pessoa implements Serializable  {
     @Column(nullable=false)
     private FuncionarioSituacao situacao;
     
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cargoFuncionario_id")
+    private CargoFuncionario cargo;
+    
     @Version
     private long versao;
     
@@ -39,6 +49,7 @@ public class Funcionario extends Pessoa implements Serializable  {
         
         this.situacao = FuncionarioSituacao.Ativo;
         this.versao = 1;
+        this.cargo = new CargoFuncionario();
     }
 
     public Funcionario(
@@ -49,16 +60,24 @@ public class Funcionario extends Pessoa implements Serializable  {
         TipoPessoa tipoPessoa, 
         TipoDocumento tipoDocumento, 
         String numeroDocumento, 
-        FuncionarioSituacao situacao) {
+        FuncionarioSituacao situacao, 
+        CargoFuncionario cargo) {
         
         super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
-
+        
         this.versao = 1;
         this.situacao = situacao;
+        this.cargo = cargo;
     }
     
     public FuncionarioSituacao getSituacao() { return this.situacao; }
     public void setSituacao(FuncionarioSituacao fs) { this.situacao = fs; }
+
+    public CargoFuncionario getCargo() { return cargo; }
+    public void setCargo(CargoFuncionario cargo) { this.cargo = cargo; }
+
+    public long getVersao() { return versao; }
+    public void setVersao(long versao) { this.versao = versao; }
     
     @Override
     public int hashCode() {

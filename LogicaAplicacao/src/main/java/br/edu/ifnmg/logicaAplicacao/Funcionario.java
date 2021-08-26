@@ -19,9 +19,12 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -33,12 +36,17 @@ import javax.persistence.Version;
 @Table(name="funcionario")
 public class Funcionario extends Pessoa implements Serializable  {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
     private FuncionarioSituacao situacao;
     
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cargoFuncionario_id")
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cargoFuncionario_id", nullable= false)
     private CargoFuncionario cargo;
     
     @Version
@@ -46,7 +54,7 @@ public class Funcionario extends Pessoa implements Serializable  {
     
     public Funcionario() {
         super();
-        
+        this.id=0L;
         this.situacao = FuncionarioSituacao.Ativo;
         this.versao = 1;
         this.cargo = new CargoFuncionario();
@@ -64,7 +72,7 @@ public class Funcionario extends Pessoa implements Serializable  {
         CargoFuncionario cargo) {
         
         super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
-        
+       
         this.versao = 1;
         this.situacao = situacao;
         this.cargo = cargo;
@@ -101,7 +109,7 @@ public class Funcionario extends Pessoa implements Serializable  {
 
     @Override
     public String toString() {
-        return this.situacao.toString();
+        return this.id.toString();
     }
     
 }

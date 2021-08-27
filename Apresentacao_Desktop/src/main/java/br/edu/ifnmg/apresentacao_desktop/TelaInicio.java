@@ -9,12 +9,12 @@ package br.edu.ifnmg.apresentacao_desktop;
  *
  * @author gabriel
  */
-public class Principal extends javax.swing.JInternalFrame {
+public class TelaInicio extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public TelaInicio() {
         initComponents();
     }
 

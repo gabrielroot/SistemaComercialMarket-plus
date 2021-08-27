@@ -31,7 +31,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
 
-        Principal principal = new Principal();
+        TelaInicio principal = new TelaInicio();
         this.add(principal);
         principal.setVisible(true);
         try {
@@ -143,7 +143,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Pessoas pessoas = new Pessoas();
+        TelaPessoas pessoas = new TelaPessoas();
         
         if(this.getCurrentFrame().getClass() != pessoas.getClass()){
             this.getCurrentFrame().setVisible(false);
@@ -159,7 +159,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        Principal principal = new Principal();
+        TelaInicio principal = new TelaInicio();
         if(this.getCurrentFrame().getClass() != principal.getClass()){
             this.getCurrentFrame().setVisible(false);
             this.setCurrentFrame(principal);

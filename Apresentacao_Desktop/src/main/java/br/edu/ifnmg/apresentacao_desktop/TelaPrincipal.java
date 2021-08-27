@@ -31,7 +31,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
 
-        TelaInicio principal = new TelaInicio();
+        TelaInicio principal = new TelaInicio(this);
         this.currentFrame = principal;
         this.renderJInternalInicio(principal);
     }
@@ -173,7 +173,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        TelaInicio principal = new TelaInicio();
+        TelaInicio principal = new TelaInicio(this);
         this.renderJInternalFrame(principal);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
     

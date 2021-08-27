@@ -5,6 +5,10 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author gabriel
@@ -105,6 +109,11 @@ public class TelaPessoas extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(212, 167, 167));
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Busca Avançada");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -284,6 +293,12 @@ public class TelaPessoas extends javax.swing.JFrame {
         this.setVisible(false);
         principal.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        BuscaAvancada busca = new BuscaAvancada();
+        this.add(busca);
+        busca.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments

@@ -32,20 +32,44 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
 
         TelaInicio principal = new TelaInicio();
-        this.add(principal);
-        principal.setVisible(true);
-        try {
-            principal.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         this.currentFrame = principal;
+        this.renderJInternalInicio(principal);
     }
 
     public JInternalFrame getCurrentFrame() { return currentFrame; }
     public void setCurrentFrame(JInternalFrame currentFrame) { this.currentFrame = currentFrame; }
 
+    public void renderJInternalInicio(JInternalFrame frame){
+        this.add(frame);
+        frame.setVisible(true);
+
+        try {
+            frame.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        frame.setBorder(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
+    }
+    public void renderJInternalFrame(JInternalFrame frame){
+        if(this.getCurrentFrame().getClass() != frame.getClass()){
+            this.getCurrentFrame().setVisible(false);
+            this.setCurrentFrame(frame);
+            this.add(frame);
+            frame.setVisible(true);
+            
+            try {
+                frame.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            frame.setBorder(null);
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -145,33 +169,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         TelaPessoas pessoas = new TelaPessoas();
         
-        if(this.getCurrentFrame().getClass() != pessoas.getClass()){
-            this.getCurrentFrame().setVisible(false);
-            this.setCurrentFrame(pessoas);
-            this.add(pessoas);
-            pessoas.setVisible(true);
-            try {
-                pessoas.setMaximum(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        this.renderJInternalFrame(pessoas);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         TelaInicio principal = new TelaInicio();
-        if(this.getCurrentFrame().getClass() != principal.getClass()){
-            this.getCurrentFrame().setVisible(false);
-            this.setCurrentFrame(principal);
-            this.add(principal);
-            principal.setVisible(true);
-            
-            try {
-                principal.setMaximum(true);
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        this.renderJInternalFrame(principal);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
     
     /**

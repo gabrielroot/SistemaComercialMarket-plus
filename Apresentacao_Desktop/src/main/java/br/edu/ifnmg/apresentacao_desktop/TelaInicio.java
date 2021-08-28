@@ -5,6 +5,8 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
+import br.edu.ifnmg.enums.UsuarioTipo;
+
 /**
  *
  * @author gabriel
@@ -18,6 +20,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
     public TelaInicio(TelaPrincipal tela) {
         initComponents();
         this.principal = tela;
+        this.labelUsuarioLogado.setText("Bem vindo(a) "+principal.getUsuario().getNome() + " ["+principal.getUsuario().getUsuarioTipo().toString()+"]");
     }
 
     /**
@@ -61,6 +64,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel13 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        labelUsuarioLogado = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(243, 230, 230));
 
@@ -131,6 +135,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel4.setToolTipText("");
         jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel4.setPreferredSize(new java.awt.Dimension(120, 140));
+        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel4MouseClicked(evt);
+            }
+        });
 
         jPanel5.setBackground(new java.awt.Color(98, 57, 57));
 
@@ -465,6 +474,10 @@ public class TelaInicio extends javax.swing.JInternalFrame {
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        labelUsuarioLogado.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        labelUsuarioLogado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelUsuarioLogado.setText("labelUsuarioLogado");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -491,11 +504,17 @@ public class TelaInicio extends javax.swing.JInternalFrame {
                         .addGap(32, 32, 32)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(60, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(labelUsuarioLogado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -507,7 +526,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
                     .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -528,8 +547,17 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
         TelaPessoas pessoas = new TelaPessoas();
-        this.principal.renderJInternalFrame(pessoas);
+        if(principal.temPermissao("TELA_PESSOAS")){
+            this.principal.renderJInternalFrame(pessoas);
+        }
     }//GEN-LAST:event_jPanel12MouseClicked
+
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+        TelaRelatorios telaRelatorios = new TelaRelatorios();
+        if(this.principal.temPermissao("TELA_RELATORIOS")){
+            this.principal.renderJInternalFrame(telaRelatorios);
+        }
+    }//GEN-LAST:event_jPanel4MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -565,6 +593,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel labelUsuarioLogado;
     // End of variables declaration//GEN-END:variables
 
     void setMaximun() {

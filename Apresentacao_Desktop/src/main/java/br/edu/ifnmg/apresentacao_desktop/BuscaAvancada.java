@@ -20,6 +20,8 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
      */
     public BuscaAvancada() {
         initComponents();
+        this.setLocation(this.getWidth(), this.getHeight()/2);
+        
     }
 
     /**
@@ -84,7 +86,7 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
         );
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(54, 54, 54));
         jLabel2.setText("Nome");
 
@@ -93,7 +95,7 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
         jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
         jLabel3.setText("Número do Documento");
 
@@ -102,7 +104,7 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
         jTextField3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel4.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(54, 54, 54));
         jLabel4.setText("Telefone");
 
@@ -150,7 +152,7 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))

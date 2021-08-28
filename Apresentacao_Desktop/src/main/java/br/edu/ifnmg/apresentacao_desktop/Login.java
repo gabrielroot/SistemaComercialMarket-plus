@@ -223,7 +223,7 @@ public class Login extends javax.swing.JFrame {
         }
         
         if(user != null){
-            TelaPrincipal principal = new TelaPrincipal();
+            TelaPrincipal principal = new TelaPrincipal(user);
             this.setVisible(false);
             principal.setVisible(true);
         }else{

@@ -1,5 +1,7 @@
 br/edu/ifnmg/apresentacao_desktop/Login$4.class
 br/edu/ifnmg/apresentacao_desktop/BuscaAvancada.class
+br/edu/ifnmg/apresentacao_desktop/DialogPermissao$1$1.class
+br/edu/ifnmg/apresentacao_desktop/DialogPermissao$1.class
 br/edu/ifnmg/apresentacao_desktop/Login$6.class
 br/edu/ifnmg/apresentacao_desktop/TelaPessoas$2.class
 br/edu/ifnmg/apresentacao_desktop/TelaPessoas.class
@@ -15,7 +17,10 @@ br/edu/ifnmg/apresentacao_desktop/TelaPessoas$1.class
 br/edu/ifnmg/apresentacao_desktop/Login$5.class
 br/edu/ifnmg/apresentacao_desktop/TelaPrincipal$3.class
 br/edu/ifnmg/apresentacao_desktop/Login.class
+br/edu/ifnmg/apresentacao_desktop/BuscaAvancada$1.class
+br/edu/ifnmg/apresentacao_desktop/DialogPermissao.class
 br/edu/ifnmg/apresentacao_desktop/Login$8.class
+br/edu/ifnmg/apresentacao_desktop/TelaInicio$1.class
 br/edu/ifnmg/apresentacao_desktop/TelaPrincipal$1.class
 br/edu/ifnmg/apresentacao_desktop/TelaInicio.class
 br/edu/ifnmg/apresentacao_desktop/Login$3.class

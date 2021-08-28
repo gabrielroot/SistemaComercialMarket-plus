@@ -5,6 +5,9 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
+import java.awt.Dimension;
+import javax.swing.JInternalFrame;
+
 /**
  *
  * @author gabriel
@@ -17,7 +20,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     public TelaPessoas() {
         initComponents();
     }
-
+    
+    private void centralizaInternalFrame(JInternalFrame frame) {
+        Dimension desktopSize = this.getSize();
+        Dimension jInternalFrameSize = frame.getSize();
+        frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height) / 2);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,6 +113,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jButton3.setBackground(new java.awt.Color(212, 167, 167));
         jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Novo");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -249,7 +264,18 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         this.add(busca);
         this.setComponentZOrder(busca, 0);
         busca.setVisible(true);
+        TelaPrincipal.centralizaInternalFrame(busca,this.getSize());
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        TelaCliente telaCliente = new TelaCliente();
+        this.add(telaCliente);
+        this.setComponentZOrder(telaCliente, 0);
+        telaCliente.setVisible(true);
+        TelaPrincipal.centralizaInternalFrame(telaCliente, this.getSize());
+        
+                
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

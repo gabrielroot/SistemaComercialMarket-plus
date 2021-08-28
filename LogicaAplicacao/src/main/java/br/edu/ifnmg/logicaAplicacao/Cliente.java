@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 
 @Entity
@@ -22,9 +23,13 @@ public class Cliente extends Pessoa implements Serializable  {
     @Column(length=250, nullable=false)
     private String senha;
     
+    @Version
+    private long versao;
+    
     public Cliente() {
         super();
         
+        this.versao = 1;
         this.identificaoDoCliente = "";
         this.senha = "";
 
@@ -35,6 +40,10 @@ public class Cliente extends Pessoa implements Serializable  {
     public void setIdentificaoDoCliente(String identificaoDoCliente) { this.identificaoDoCliente = identificaoDoCliente; }
 
     public void setSenha(String senha) { this.senha = senha; }
+
+    public long getVersao() { return versao; }
+
+    public void setVersao(long versao) { this.versao = versao; }
 
     @Override
     public int hashCode() {

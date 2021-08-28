@@ -1,6 +1,6 @@
 package br.edu.ifnmg.persistencia;
 
-import br.edu.ifnmg.logicaAplicacao.Cliente;
+import br.edu.ifnmg.logicaAplicacao.Cliente; 
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import java.util.List;
 

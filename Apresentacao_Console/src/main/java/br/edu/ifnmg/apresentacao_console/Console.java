@@ -136,12 +136,26 @@ public class Console {
             UsuarioTipo.Caixa
         );
         
-        Cliente cliente = new Cliente();
+        Usuario usuarioBalconista = new Usuario(
+            "BalconistaUser",
+            "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            null,
+            new Date(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CNH,
+            "564612173",
+            FuncionarioSituacao.Ativo,
+            null,    
+            "balconista",
+            "123",
+            UsuarioTipo.Balconista
+        );
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
                repositorioFornecedor.Salvar(fornecedor) &&
                repositorioUsuario.Salvar(usuarioAdmin) &&
-               repositorioUsuario.Salvar(usuarioCaixa);
+               repositorioUsuario.Salvar(usuarioCaixa) &&
+               repositorioUsuario.Salvar(usuarioBalconista);
      }
 }

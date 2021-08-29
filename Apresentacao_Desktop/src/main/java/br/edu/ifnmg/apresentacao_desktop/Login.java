@@ -26,6 +26,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         //Centralizando a tela        
         this.setLocationRelativeTo(null);
+        this.setTitle("LOGIN");
     }
 
     /**
@@ -223,9 +224,9 @@ public class Login extends javax.swing.JFrame {
         }
         
         if(user != null){
-            TelaPrincipal principal = new TelaPrincipal(user);
+            TelaPrincipal telaPrincipal = new TelaPrincipal(user);
             this.setVisible(false);
-            principal.setVisible(true);
+            telaPrincipal.setVisible(true);
         }else{
             psswdSenha.selectAll();
             lblError.setText("Usuário e/ou senha inválidos!");

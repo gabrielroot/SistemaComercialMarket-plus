@@ -35,17 +35,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
        
         this.usuario = usuario;
         initDesenvolvedor();
+   
+        this.permissions = new HashMap<>();
+        this.initRemovePermissions();
         
         //Centralizando a tela        
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-
-        TelaInicio principal = new TelaInicio(this);
-        this.currentFrame = principal;
-        this.renderJInternalInicio(principal);
+        this.setTitle("MARKET +");
         
-        this.permissions = new HashMap<>();
-        this.initRemovePermissions();
+        TelaInicio telaPrincipal = new TelaInicio(this);
+        this.currentFrame = telaPrincipal;
+        this.renderJInternalInicio(telaPrincipal);
+        
         
     }
 
@@ -95,18 +97,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String TELA_PRODUTO = "TELA_PRODUTO";
         String TELA_FINANCEIRO = "TELA_FINANCEIRO";
         String TELA_VENDAS = "TELA_VENDAS";
+        String TELA_PESSOAS__ABA_USUARIOS = "TELA_PESSOAS__ABA_USUARIOS";
+        String TELA_PESSOAS__ABA_FORNECEDORES = "TELA_PESSOAS__ABA_FORNECEDORES";
+        String TELA_PESSOAS__ABA_FUNCIONARIOS = "TELA_PESSOAS__ABA_FUNCIONARIOS";
         
+        ArrayList<String> removePermissaoGerente = new ArrayList();
+
         ArrayList<String> removePermissaoAdm = new ArrayList();
         removePermissaoAdm.add(TELA_VENDAS);
         removePermissaoAdm.add(TELA_RELATORIOS);
-        
-        ArrayList<String> removePermissaoGerente = new ArrayList();
         
         ArrayList<String> removePermissaoBalconista = new ArrayList();
         removePermissaoBalconista.add(TELA_COMPRA);
         removePermissaoBalconista.add(TELA_FINANCEIRO);
         removePermissaoBalconista.add(TELA_PRODUTO);
         removePermissaoBalconista.add(TELA_RELATORIOS);
+        removePermissaoBalconista.add(TELA_PESSOAS__ABA_USUARIOS);
+        removePermissaoBalconista.add(TELA_PESSOAS__ABA_FORNECEDORES);
+        removePermissaoBalconista.add(TELA_PESSOAS__ABA_FUNCIONARIOS);
         
         ArrayList<String> removePermissaoCaixa = new ArrayList();
         removePermissaoCaixa.add(TELA_PESSOAS);
@@ -130,10 +138,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         return false;
     }
-    public boolean temPermissao(String query){
-        DialogPermissao acesso = new DialogPermissao(this, true);
-        for(String tela : this.permissions.get(this.usuario.getUsuarioTipo())){
-            if(tela.equals(query)){
+    public boolean temPermissao(String query, boolean bloquearPai){
+        for(String permissaoNegada : permissions.get(this.usuario.getUsuarioTipo())){
+            if(permissaoNegada.equals(query)){
+                DialogPermissao acesso = new DialogPermissao(this, bloquearPai);
                 acesso.setVisible(true);
                 return false;
             }
@@ -253,22 +261,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuItemPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPessoasActionPerformed
-        if(temPermissao("TELA_PESSOAS")){
-            TelaPessoas pessoas = new TelaPessoas();
+        if(temPermissao("TELA_PESSOAS", true)){
+            TelaPessoas pessoas = new TelaPessoas(this);
             this.renderJInternalFrame(pessoas);
         }
     }//GEN-LAST:event_menuItemPessoasActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        TelaInicio principal = new TelaInicio(this);
-        this.renderJInternalFrame(principal);
+        TelaInicio telaPrincipal = new TelaInicio(this);
+        this.renderJInternalFrame(telaPrincipal);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void menuRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseClicked
     }//GEN-LAST:event_menuRelatoriosMouseClicked
 
     private void menuRelatoriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMousePressed
-        if(temPermissao("TELA_RELATORIOS")){
+        if(temPermissao("TELA_RELATORIOS", true)){
             TelaRelatorios telaRelatorios = new TelaRelatorios();
             this.renderJInternalFrame(telaRelatorios);
         }

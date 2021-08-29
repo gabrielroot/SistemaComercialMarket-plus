@@ -20,7 +20,7 @@ public class DialogPermissao extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        this.requestFocus();
+        this.setTitle("Acesso negado");
     }
 
     /**
@@ -47,7 +47,8 @@ public class DialogPermissao extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(197, 197, 197));
 
-        jButton1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,7 +88,7 @@ public class DialogPermissao extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(176, 176, 176));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/error-permission.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/no-permission.png"))); // NOI18N
         jLabel2.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -102,8 +103,8 @@ public class DialogPermissao extends javax.swing.JDialog {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 

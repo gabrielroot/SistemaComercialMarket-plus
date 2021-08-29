@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,12 +35,9 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name="funcionario")
+@DiscriminatorValue("fun")
 public class Funcionario extends Pessoa implements Serializable  {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
@@ -50,14 +48,13 @@ public class Funcionario extends Pessoa implements Serializable  {
     private CargoFuncionario cargo;
     
     @Version
-    private long versao;
-    
+    private int versao;
+     
     public Funcionario() {
         super();
-        this.id=0L;
         this.situacao = FuncionarioSituacao.Ativo;
-        this.versao = 1;
         this.cargo = new CargoFuncionario();
+        this.versao=1;
     }
 
     public Funcionario(
@@ -72,10 +69,9 @@ public class Funcionario extends Pessoa implements Serializable  {
         CargoFuncionario cargo) {
         
         super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
-       
-        this.versao = 1;
         this.situacao = situacao;
         this.cargo = cargo;
+        this.versao=1;
     }
     
     public FuncionarioSituacao getSituacao() { return this.situacao; }
@@ -84,8 +80,12 @@ public class Funcionario extends Pessoa implements Serializable  {
     public CargoFuncionario getCargo() { return cargo; }
     public void setCargo(CargoFuncionario cargo) { this.cargo = cargo; }
 
-    public long getVersao() { return versao; }
-    public void setVersao(long versao) { this.versao = versao; }
+    public int getVersao() {  return versao;   }
+
+    public void setVersao(int versao) {    this.versao = versao;  }
+
+    
+   
     
     @Override
     public int hashCode() {
@@ -109,7 +109,7 @@ public class Funcionario extends Pessoa implements Serializable  {
 
     @Override
     public String toString() {
-        return this.id.toString();
+        return this.getNome().toString();
     }
     
 }

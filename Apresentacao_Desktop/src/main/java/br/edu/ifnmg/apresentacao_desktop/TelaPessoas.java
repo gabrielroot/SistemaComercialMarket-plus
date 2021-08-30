@@ -27,13 +27,6 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         this.jTabbedPane1.getComponent(2).setVisible(true);
     }
     
-    private void centralizaInternalFrame(JInternalFrame frame) {
-        Dimension desktopSize = this.getSize();
-        Dimension jInternalFrameSize = frame.getSize();
-        frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-                (desktopSize.height - jInternalFrameSize.height) / 2);
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,15 +36,6 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/fundoBranco.png"));
-        Image image = icon.getImage();
-        jDesktopPane2 = new javax.swing.JDesktopPane() {
-
-            public void paintComponent(Graphics g){
-                g.drawImage(image,0,0,getWidth(),getHeight(),this);
-            }
-
-        };
         jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -68,9 +52,6 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         tabFuncionarios = new javax.swing.JPanel();
         tabFornecedores = new javax.swing.JPanel();
         tabUsuarios = new javax.swing.JPanel();
-
-        jDesktopPane2.setBackground(new java.awt.Color(255, 255, 255));
-        jDesktopPane2.setForeground(new java.awt.Color(255, 255, 255));
 
         jPanel7.setBackground(new java.awt.Color(243, 230, 230));
 
@@ -147,7 +128,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
+                .addContainerGap(87, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,7 +140,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,7 +193,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         tabFuncionarios.setLayout(tabFuncionariosLayout);
         tabFuncionariosLayout.setHorizontalGroup(
             tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 723, Short.MAX_VALUE)
+            .addGap(0, 735, Short.MAX_VALUE)
         );
         tabFuncionariosLayout.setVerticalGroup(
             tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,7 +206,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         tabFornecedores.setLayout(tabFornecedoresLayout);
         tabFornecedoresLayout.setHorizontalGroup(
             tabFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 723, Short.MAX_VALUE)
+            .addGap(0, 735, Short.MAX_VALUE)
         );
         tabFornecedoresLayout.setVerticalGroup(
             tabFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,7 +219,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         tabUsuarios.setLayout(tabUsuariosLayout);
         tabUsuariosLayout.setHorizontalGroup(
             tabUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 723, Short.MAX_VALUE)
+            .addGap(0, 735, Short.MAX_VALUE)
         );
         tabUsuariosLayout.setVerticalGroup(
             tabUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,7 +233,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,41 +241,18 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-
-        jDesktopPane2.setLayer(jPanel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
-        jDesktopPane2.setLayout(jDesktopPane2Layout);
-        jDesktopPane2Layout.setHorizontalGroup(
-            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 735, Short.MAX_VALUE)
-            .addGroup(jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jDesktopPane2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jDesktopPane2Layout.setVerticalGroup(
-            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
-            .addGroup(jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jDesktopPane2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane2)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -306,14 +264,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         BuscaAvancada busca = new BuscaAvancada();
-        jDesktopPane2.add(busca);
+        TelaPrincipal.renderJInternalFrame(busca, false);
         busca.setVisible(true);
         TelaPrincipal.centralizaInternalFrame(busca,this.getSize());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         TelaCliente telaCliente = new TelaCliente();
-        jDesktopPane2.add(telaCliente);
+        TelaPrincipal.renderJInternalFrame(telaCliente, false);
         telaCliente.setVisible(true);    
         TelaPrincipal.centralizaInternalFrame(telaCliente, this.getSize());
         
@@ -343,7 +301,6 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

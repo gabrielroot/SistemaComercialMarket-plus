@@ -548,14 +548,14 @@ public class TelaInicio extends javax.swing.JInternalFrame {
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
         TelaPessoas pessoas = new TelaPessoas(this.telaPrincipal);
         if(telaPrincipal.temPermissao("TELA_PESSOAS", true)){
-            this.telaPrincipal.renderJInternalFrame(pessoas);
+            TelaPrincipal.renderJInternalFrame(pessoas, true);
         }
     }//GEN-LAST:event_jPanel12MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         TelaRelatorios telaRelatorios = new TelaRelatorios();
         if(this.telaPrincipal.temPermissao("TELA_RELATORIOS", true)){
-            this.telaPrincipal.renderJInternalFrame(telaRelatorios);
+            TelaPrincipal.renderJInternalFrame(telaRelatorios, true);
         }
     }//GEN-LAST:event_jPanel4MouseClicked
 

@@ -54,7 +54,7 @@
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/gabriel/Documentos/FACULDADE/7&#xb0;/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/logo.png"/>
+                  <Image iconType="3" name="/logo.png"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -245,7 +245,7 @@
                   <Color blue="41" green="3f" red="a0" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/gabriel/Documentos/FACULDADE/7&#xb0;/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/close.png"/>
+                  <Image iconType="3" name="/close.png"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
@@ -263,7 +263,7 @@
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/home/gabriel/Documentos/FACULDADE/7&#xb0;/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/minimize.png"/>
+                  <Image iconType="3" name="/minimize.png"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
@@ -274,7 +274,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="310" y="0" width="-1" height="30"/>
+                  <AbsoluteConstraints x="310" y="0" width="40" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>

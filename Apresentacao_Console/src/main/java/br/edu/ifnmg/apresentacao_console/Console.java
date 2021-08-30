@@ -18,6 +18,7 @@ import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.UsuarioTipo;
+import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.util.ArrayList;
@@ -105,8 +106,8 @@ public class Console {
             Segmento.Enlatados
         );
         
-        Usuario usuario = new Usuario(
-            "Jorge Amaro",
+        Usuario usuarioAdmin = new Usuario(
+            "AdminUser",
             "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
             null,
             new Date(),
@@ -115,14 +116,46 @@ public class Console {
             "564612173",
             FuncionarioSituacao.Ativo,
             null,    
-            "@",
+            "admin",
             "123",
             UsuarioTipo.Administrador
+        );
+        
+        Usuario usuarioCaixa = new Usuario(
+            "CaixaUser",
+            "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            null,
+            new Date(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CNH,
+            "564612173",
+            FuncionarioSituacao.Ativo,
+            null,    
+            "caixa",
+            "123",
+            UsuarioTipo.Caixa
+        );
+        
+        Usuario usuarioBalconista = new Usuario(
+            "BalconistaUser",
+            "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            null,
+            new Date(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CNH,
+            "564612173",
+            FuncionarioSituacao.Ativo,
+            null,    
+            "balconista",
+            "123",
+            UsuarioTipo.Balconista
         );
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
                repositorioFornecedor.Salvar(fornecedor) &&
-               repositorioUsuario.Salvar(usuario);
+               repositorioUsuario.Salvar(usuarioAdmin) &&
+               repositorioUsuario.Salvar(usuarioCaixa) &&
+               repositorioUsuario.Salvar(usuarioBalconista);
      }
 }

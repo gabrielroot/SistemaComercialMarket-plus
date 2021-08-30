@@ -26,15 +26,12 @@ public class Cliente extends Pessoa implements Serializable  {
     @Column(length=250, nullable=false)
     private String senha;
     
-    @Version
-    private int versao;
     
     public Cliente() {
         super();
         
         this.identificaoDoCliente = "";
         this.senha = "";
-        this.versao=1;
     }
     
     public String getIdentificaoDoCliente() { return this.identificaoDoCliente; }
@@ -43,9 +40,7 @@ public class Cliente extends Pessoa implements Serializable  {
 
     public void setSenha(String senha) { this.senha = senha; }
 
-    public int getVersao() { return versao;  }
 
-    public void setVersao(int versao) { this.versao = versao; }
 
     @Override
     public int hashCode() {

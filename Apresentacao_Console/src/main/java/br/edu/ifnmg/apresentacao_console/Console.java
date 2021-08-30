@@ -30,17 +30,36 @@ import java.util.List;
  */
 public class Console {
     public static void main(String[] args){
-        if(popularBD()){
-            System.out.println("Banco de dados populado com SUCESSO!!");
-        }else{
-            System.out.println("FALHA ao popular o banco de dados!!");
-        }
+//        if(popularBD()){
+//            System.out.println("Banco de dados populado com SUCESSO!!");
+//        }else{
+//            System.out.println("FALHA ao popular o banco de dados!!");
+//        }
 
         queryPessoa();
     }
     
     public static void queryPessoa(){
         PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
+        UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
+        
+        System.out.println("-- Buscar usuario com Filtros --");
+        for(Usuario usuario : repositorioUsuario.Buscar(new Usuario(
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null,
+                null,
+                null,
+                "admin",
+                null,
+                UsuarioTipo.Administrador
+        ))){
+            System.out.println("    "+usuario.getNome());
+        }
         
         System.out.println("-- Buscar pessoa com Filtros --");
         for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa(

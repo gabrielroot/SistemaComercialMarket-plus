@@ -7,6 +7,7 @@ package br.edu.ifnmg.apresentacao_desktop;
 
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
+import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,6 +148,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         
         return true;
+    }
+    
+    public static void centralizaInternalFrame(JInternalFrame frame,Dimension desktopSize) {
+        Dimension jInternalFrameSize = frame.getSize();
+        frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height) / 2);
     }
     
     @SuppressWarnings("unchecked")

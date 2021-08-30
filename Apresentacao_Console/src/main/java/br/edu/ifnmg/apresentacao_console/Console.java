@@ -18,6 +18,7 @@ import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.UsuarioTipo;
+import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.util.ArrayList;

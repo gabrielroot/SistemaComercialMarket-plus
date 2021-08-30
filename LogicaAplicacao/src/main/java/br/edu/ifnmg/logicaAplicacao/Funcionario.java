@@ -37,7 +37,7 @@ import javax.persistence.Version;
 @Table(name="funcionario")
 @DiscriminatorValue("fun")
 public class Funcionario extends Pessoa implements Serializable  {
-
+    private static final long serialVersionUID = 1L;
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)

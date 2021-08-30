@@ -24,7 +24,7 @@ public class CargoFuncionario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length=250, nullable=false, unique=true)
+    @Column(length=250, nullable=false)
     private String titulo;
 
     @Column(length=250, nullable=false)
@@ -49,11 +49,11 @@ public class CargoFuncionario implements Serializable {
         this.funcionarios=new ArrayList<>();
     }
     
-    public CargoFuncionario(String titulo, String funcao, String comissao, String salario) {
+    public CargoFuncionario(String titulo, String funcao, BigDecimal comissao, BigDecimal salario) {
         this.titulo = titulo;
         this.funcao = funcao;
-        this.comissao = new BigDecimal(comissao);
-        this.salario = new BigDecimal(salario);
+        this.comissao = new BigDecimal("0.00");
+        this.salario = new BigDecimal("0.00");
     }
     
     public Long getId() { return this.id; }

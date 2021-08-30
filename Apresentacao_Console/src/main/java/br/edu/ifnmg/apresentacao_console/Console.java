@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_console;
 
+import br.edu.ifnmg.auxiliares.CargoFuncionario;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.Segmento;
@@ -21,6 +22,7 @@ import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,6 +86,11 @@ public class Console {
             "123456"
         );        
         
+        CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
+        CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("0.00"), new BigDecimal("1600.00"));
+        CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("0.00"), new BigDecimal("2200.00"));
+        CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
+        
         Funcionario funcionario = new Funcionario(
             "Antônio Gomes",
             "Lontra, Minas Gerais. Avenida Água viva N° 145",
@@ -93,7 +100,7 @@ public class Console {
             TipoDocumento.CNH,
             "8123427854",
             FuncionarioSituacao.Ativo,
-            null);
+            cargo1);
         
         Fornecedor fornecedor = new Fornecedor(
             "João Geraldo",
@@ -115,7 +122,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            null,    
+            cargo2,    
             "admin",
             "123",
             UsuarioTipo.Administrador
@@ -130,7 +137,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            null,    
+            cargo3,    
             "caixa",
             "123",
             UsuarioTipo.Caixa
@@ -145,7 +152,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            null,    
+            cargo4,    
             "balconista",
             "123",
             UsuarioTipo.Balconista

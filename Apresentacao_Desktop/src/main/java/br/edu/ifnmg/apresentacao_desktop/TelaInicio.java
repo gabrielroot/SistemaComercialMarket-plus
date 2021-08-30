@@ -5,10 +5,8 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogSucesso;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
-import br.edu.ifnmg.enums.UsuarioTipo;
 
 /**
  *
@@ -567,8 +565,6 @@ public class TelaInicio extends javax.swing.JInternalFrame {
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
         TelaPessoas pessoas = new TelaPessoas(this.telaPrincipal);
         if(telaPrincipal.temPermissao("TELA_PESSOAS", true)){
-            DialogSucesso dlg = new DialogSucesso(this.telaPrincipal, true);
-            dlg.setVisible(true);
             this.telaPrincipal.renderJInternalFrame(pessoas, true);
         }
     }//GEN-LAST:event_jPanel12MouseClicked

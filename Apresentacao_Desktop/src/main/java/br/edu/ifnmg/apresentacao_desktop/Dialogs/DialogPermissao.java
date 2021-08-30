@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifnmg.apresentacao_desktop;
+package br.edu.ifnmg.apresentacao_desktop.Dialogs;
 
 import java.awt.Color;
 
@@ -42,13 +42,14 @@ public class DialogPermissao extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
 
-        jPanel1.setBackground(new java.awt.Color(188, 188, 188));
+        jPanel1.setBackground(new java.awt.Color(223, 223, 223));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(197, 197, 197));
+        jPanel2.setBackground(new java.awt.Color(241, 241, 241));
 
+        jButton1.setBackground(new java.awt.Color(114, 42, 42));
         jButton1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,7 +87,7 @@ public class DialogPermissao extends javax.swing.JDialog {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 0, -1, -1));
 
-        jPanel3.setBackground(new java.awt.Color(176, 176, 176));
+        jPanel3.setBackground(new java.awt.Color(219, 219, 219));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/no-permission.png"))); // NOI18N
         jLabel2.setText("jLabel2");

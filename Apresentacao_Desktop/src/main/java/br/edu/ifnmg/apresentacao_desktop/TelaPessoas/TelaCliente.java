@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifnmg.apresentacao_desktop;
+package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import java.awt.Dimension;
 
@@ -123,7 +123,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         );
 
         cbxDia.getAccessibleContext().setAccessibleName("");
-        cbxDia.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

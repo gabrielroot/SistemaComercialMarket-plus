@@ -5,6 +5,9 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogPermissao;
+import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
+import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import java.awt.Dimension;
@@ -48,7 +51,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         TelaInicio telaPrincipal = new TelaInicio(this);
         this.currentFrame = telaPrincipal;
-        TelaPrincipal.jDesktopPane1.setBackground(null);
         this.renderJInternalInicio(telaPrincipal);
     }
     
@@ -64,8 +66,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     
     
-    public static void renderJInternalInicio(JInternalFrame frame){
-        TelaPrincipal.jDesktopPane1.add(frame);
+    public void renderJInternalInicio(JInternalFrame frame){
+        this.add(frame);
+        frame.setVisible(true);
 
         try {
             frame.setMaximum(true);
@@ -77,30 +80,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
         frame.setVisible(true);
     }
-    public static void renderJInternalFrame(JInternalFrame frame, boolean maximize){
-        if(TelaPrincipal.jDesktopPane1.getSelectedFrame().getClass() != frame.getClass()){
-            TelaPrincipal.setCurrentFrame(frame);
-            TelaPrincipal.jDesktopPane1.add(frame);
-            
-            if(maximize){
-                TelaPrincipal.jDesktopPane1.getSelectedFrame().dispose();
-                try {
-                    frame.setMaximum(true);
-                } catch (PropertyVetoException ex) {
-                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                frame.setBorder(null);
-                ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
-            }
-                
-            
+    public void renderJInternalFrame(JInternalFrame frame, boolean maximize){
+        if(this.getCurrentFrame().getClass() != frame.getClass()){
+            this.getCurrentFrame().setVisible(false);
+            this.setCurrentFrame(frame);
+            this.add(frame);
             frame.setVisible(true);
+            
+            try {
+                frame.setMaximum(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            frame.setBorder(null);
+            ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
         }
     }
-    public void internalFrameIconified(InternalFrameEvent e) {
-        System.out.println("Internal frame iconified"+ e);
-    }
+
     public static void initRemovePermissions(){
         String TELA_PESSOAS = "TELA_PESSOAS";
         String TELA_RELATORIOS = "TELA_RELATORIOS";
@@ -171,7 +168,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuMarketPlus = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -184,17 +180,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuRelatorios = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 880, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
-        );
 
         jMenuBar1.setBackground(new java.awt.Color(169, 124, 124));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -266,11 +251,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addGap(0, 880, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addGap(0, 479, Short.MAX_VALUE)
         );
 
         pack();
@@ -342,7 +327,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;

@@ -52,8 +52,8 @@ public class CargoFuncionario implements Serializable {
     public CargoFuncionario(String titulo, String funcao, BigDecimal comissao, BigDecimal salario) {
         this.titulo = titulo;
         this.funcao = funcao;
-        this.comissao = new BigDecimal("0.00");
-        this.salario = new BigDecimal("0.00");
+        this.comissao = comissao;
+        this.salario = salario;
     }
     
     public Long getId() { return this.id; }

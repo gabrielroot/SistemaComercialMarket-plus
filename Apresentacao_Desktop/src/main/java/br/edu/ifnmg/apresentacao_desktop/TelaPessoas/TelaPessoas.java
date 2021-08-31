@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
-
+import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
@@ -428,8 +428,9 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        ClienteCadastrar telaCliente = new ClienteCadastrar();
-        this.jDesktopPane1.add(telaCliente);
+
+        TelaClienteEditar telaCliente = new TelaClienteEditar((new Cliente()));
+        jDesktopPane1.add(telaCliente);
         telaCliente.setVisible(true);    
         TelaPrincipal.centralizaInternalFrame(telaCliente, this.getSize());
         

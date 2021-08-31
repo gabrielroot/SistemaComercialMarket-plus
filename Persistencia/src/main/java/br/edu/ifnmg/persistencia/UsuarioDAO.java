@@ -58,6 +58,8 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
             jpql = jpql + " WHERE " + filtros;
         }
         
+        jpql += " ORDER BY usuario.nome";
+        
         Query consulta = this.manager.createQuery(jpql);
         
         for(String chave : parametros.keySet()){

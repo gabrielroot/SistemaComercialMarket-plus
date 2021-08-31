@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifnmg.apresentacao_desktop;
+package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;

@@ -169,8 +169,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         menuMarketPlus = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         menuGerenciamento = new javax.swing.JMenu();
         menuItemPessoas = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -189,30 +187,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuMarketPlus.setBackground(new java.awt.Color(48, 150, 52));
         menuMarketPlus.setForeground(new java.awt.Color(61, 16, 16));
         menuMarketPlus.setText("Market +");
+        menuMarketPlus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuMarketPlus.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
-
-        jMenuItem6.setText("Início");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+        menuMarketPlus.setMinimumSize(new java.awt.Dimension(3173, 30));
+        menuMarketPlus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                menuMarketPlusMousePressed(evt);
             }
         });
-        menuMarketPlus.add(jMenuItem6);
-
-        jMenuItem1.setText("Sair");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuMarketPlus.add(jMenuItem1);
-
         jMenuBar1.add(menuMarketPlus);
 
         menuGerenciamento.setForeground(new java.awt.Color(61, 16, 16));
         menuGerenciamento.setText("Gerenciamento");
 
         menuItemPessoas.setText("Pessoas");
+        menuItemPessoas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuItemPessoas.setPreferredSize(new java.awt.Dimension(240, 33));
         menuItemPessoas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemPessoasActionPerformed(evt);
@@ -221,12 +211,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuGerenciamento.add(menuItemPessoas);
 
         jMenuItem3.setText("Produtos");
+        jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem3.setPreferredSize(new java.awt.Dimension(240, 33));
         menuGerenciamento.add(jMenuItem3);
 
         jMenuItem5.setText("Financeiro");
+        jMenuItem5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem5.setPreferredSize(new java.awt.Dimension(240, 33));
         menuGerenciamento.add(jMenuItem5);
 
         jMenuItem4.setText("Crediário");
+        jMenuItem4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem4.setPreferredSize(new java.awt.Dimension(240, 33));
         menuGerenciamento.add(jMenuItem4);
 
         jMenuBar1.add(menuGerenciamento);
@@ -234,6 +230,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuRelatorios.setBackground(new java.awt.Color(48, 150, 52));
         menuRelatorios.setForeground(new java.awt.Color(61, 16, 16));
         menuRelatorios.setText("Relatórios");
+        menuRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuRelatoriosMouseClicked(evt);
@@ -260,13 +257,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-        Login login = new Login();
-        login.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void menuItemPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPessoasActionPerformed
         if(temPermissao("TELA_PESSOAS", true)){
             TelaPessoas pessoas = new TelaPessoas(this);
@@ -275,8 +265,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemPessoasActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        TelaInicio telaPrincipal = new TelaInicio(this);
-        this.renderJInternalFrame(telaPrincipal);
+
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void menuRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseClicked
@@ -288,6 +277,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             this.renderJInternalFrame(telaRelatorios);
         }
     }//GEN-LAST:event_menuRelatoriosMousePressed
+
+    private void menuMarketPlusMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMarketPlusMousePressed
+        TelaInicio telaPrincipal = new TelaInicio(this);
+        this.renderJInternalFrame(telaPrincipal);
+    }//GEN-LAST:event_menuMarketPlusMousePressed
     
     /**
      * @param args the command line arguments
@@ -327,11 +321,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu menuGerenciamento;
     private javax.swing.JMenuItem menuItemPessoas;
     private javax.swing.JMenu menuMarketPlus;

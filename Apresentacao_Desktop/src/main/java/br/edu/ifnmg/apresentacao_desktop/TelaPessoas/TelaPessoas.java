@@ -483,11 +483,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
             }
         }
 
-        if(filter != null){
-            usuario.setUsuarioTipo(filter);
-        }else{
-            usuario.setUsuarioTipo(null);
-        }
+        usuario.setUsuarioTipo(filter);
         
         List<Usuario> resultado = this.usuarioRepositorio.Buscar(usuario);
         

@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_console;
 
+import br.edu.ifnmg.auxiliares.CargoFuncionario;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.Segmento;
@@ -20,7 +21,9 @@ import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -30,11 +33,11 @@ import java.util.List;
  */
 public class Console {
     public static void main(String[] args){
-//        if(popularBD()){
-//            System.out.println("Banco de dados populado com SUCESSO!!");
-//        }else{
-//            System.out.println("FALHA ao popular o banco de dados!!");
-//        }
+        if(popularBD()){
+            System.out.println("Banco de dados populado com SUCESSO!!");
+        }else{
+            System.out.println("FALHA ao popular o banco de dados!!");
+        }
 
         queryPessoa();
     }
@@ -102,6 +105,11 @@ public class Console {
             "123456"
         );        
         
+        CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
+        CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("0.00"), new BigDecimal("1600.00"));
+        CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("0.00"), new BigDecimal("2200.00"));
+        CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
+        
         Funcionario funcionario = new Funcionario(
             "Antônio Gomes",
             "Lontra, Minas Gerais. Avenida Água viva N° 145",
@@ -111,7 +119,7 @@ public class Console {
             TipoDocumento.CNH,
             "8123427854",
             FuncionarioSituacao.Ativo,
-            null);
+            cargo1);
         
         Fornecedor fornecedor = new Fornecedor(
             "João Geraldo",
@@ -133,7 +141,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            null,    
+            cargo2,    
             "admin",
             "123",
             UsuarioTipo.Administrador
@@ -148,7 +156,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            null,    
+            cargo3,    
             "caixa",
             "123",
             UsuarioTipo.Caixa
@@ -163,11 +171,13 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            null,    
+            cargo4,    
             "balconista",
             "123",
             UsuarioTipo.Balconista
         );
+        
+        usuariosAleatorios(repositorioUsuario);
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
@@ -176,4 +186,28 @@ public class Console {
                repositorioUsuario.Salvar(usuarioCaixa) &&
                repositorioUsuario.Salvar(usuarioBalconista);
      }
+    
+    public static void usuariosAleatorios(UsuarioRepositorio repositorioUsuario){
+        CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
+        CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
+        CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
+        CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
+        
+        Telefone telefone01 = new Telefone("3899991111");        
+        Telefone telefone02 = new Telefone("3896291131");
+
+        List telefones = new ArrayList<Telefone>();
+        telefones.add(telefone01);
+        telefones.add(telefone02);
+        
+        Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", "Marcela Fernandes", "Gustavo Barbosa", "Ana Laura Castro", "Ana Carolina Silveira", "Maria Luiza Barros", "Gustavo Rocha", "Luiz Felipe Moura", "Thiago Castro", "Pietro da Paz", "Yago da Costa", "Pietro da Mota", "Gabriel da Mata", "João Miguel Peixoto", "Breno da Luz", "André Peixoto", "Yuri Fogaça", "Sabrina Moreira", "Bárbara Dias", "Vitor Gabriel Barbosa", "Ana Castro", "Emilly Barbosa", "Vitória Silveira", "Vitor Gomes", "Bruno Moreira", "Ana Lívia Farias", "Benício Pires", "Lara Castro", "Sabrina Moraes", "Fernanda Porto", "Pietra Viana", "Luiz Fernando Ribeiro", "Maitê Pinto", "Sophie Almeida", "Stephany da Cunha", "Raul da Rocha", "Maria Vitória Viana", "Gustavo Henrique Nogueira", "Theo Cavalcanti", "Enzo Rodrigues", "Guilherme Rocha", "Davi Lucca Rodrigues", "Bruno da Mata"};
+        Object[] c = {cargo1, cargo2, cargo3, cargo4};
+        List cargos = Arrays.asList(c);
+        Object[] enderecos = {"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12", "Lontra, Minas Gerais. Avenida Água viva N° 145", "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
+        
+        for(int i=0; i<50; i++){
+            Usuario usuario = new Usuario(nomes[i].toString(), enderecos[(int) (Math.random()*3)].toString(), telefones, new Date(), TipoPessoa.Fisica, TipoDocumento.CertidaoNascimento, "1578095689", FuncionarioSituacao.Ativo,(CargoFuncionario)  cargos.get((int) (Math.random()*4)), (CargoFuncionario) cargos.get((int) (Math.random()*4))+String.valueOf((int) (Math.random()*3000))+"@marketplus.com", "123", UsuarioTipo.values()[(int) (Math.random()*4)]);
+            repositorioUsuario.Salvar(usuario);
+        }
+    }
 }

@@ -78,10 +78,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         frame.setBorder(null);
         ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
     }
-    public void renderJInternalFrame(JInternalFrame frame){
-        if(this.getCurrentFrame().getClass() != frame.getClass()){
-            this.getCurrentFrame().setVisible(false);
-            this.setCurrentFrame(frame);
+    public boolean renderJInternalFrame(JInternalFrame frame){
+        if(TelaPrincipal.getCurrentFrame().getClass() != frame.getClass()){
+            TelaPrincipal.getCurrentFrame().setVisible(false);
+            TelaPrincipal.setCurrentFrame(frame);
             this.add(frame);
             frame.setVisible(true);
             
@@ -93,7 +93,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             
             frame.setBorder(null);
             ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
-        }
+            
+            return true;
+        }else System.out.println("Noooop!");
+            return false;
     }
 
     public static void initRemovePermissions(){
@@ -190,6 +193,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuMarketPlus.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         menuMarketPlus.setMinimumSize(new java.awt.Dimension(3173, 30));
         menuMarketPlus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuMarketPlusMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 menuMarketPlusMousePressed(evt);
             }
@@ -240,6 +246,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuRelatoriosMouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuRelatoriosMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 menuRelatoriosMousePressed(evt);
             }
@@ -287,6 +296,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaInicio telaPrincipal = new TelaInicio(this);
         this.renderJInternalFrame(telaPrincipal);
     }//GEN-LAST:event_menuMarketPlusMousePressed
+
+    private void menuMarketPlusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMarketPlusMouseExited
+        menuMarketPlus.setSelected(false);
+    }//GEN-LAST:event_menuMarketPlusMouseExited
+
+    private void menuRelatoriosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseExited
+        menuRelatorios.setSelected(false);
+    }//GEN-LAST:event_menuRelatoriosMouseExited
     
     /**
      * @param args the command line arguments

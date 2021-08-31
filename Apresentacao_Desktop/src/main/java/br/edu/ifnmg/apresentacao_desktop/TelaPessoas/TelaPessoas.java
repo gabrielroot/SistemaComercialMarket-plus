@@ -6,15 +6,18 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
+import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.UsuarioTipo;
+import br.edu.ifnmg.logicaAplicacao.Fornecedor;
+import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 /**
  *
  * @author gabriel
@@ -22,7 +25,10 @@ import javax.swing.table.TableColumn;
 public class TelaPessoas extends javax.swing.JInternalFrame {
     private TelaPrincipal telaPrincipal;
     private UsuarioRepositorio usuarioRepositorio;
+    private FornecedorRepositorio fornecedorRepositorio;
+    private Fornecedor fornecedor;
     private Usuario usuario;
+    ArrayList clicked;
     
     
     /**
@@ -33,10 +39,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         this.telaPrincipal = telaPrincipal;
         this.usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         this.usuario = new Usuario();
+        this.fornecedorRepositorio = RepositorioFactory.getFornecedorRepositorio();
+        this.fornecedor = new Fornecedor();
         
-        for(UsuarioTipo tipo: UsuarioTipo.values()){
-            this.comboTipoUsuario.addItem(tipo.toString());
-        }
+        this.clicked = new ArrayList<>();
+        clicked.add(false);
+        clicked.add(false);
+        clicked.add(false);
+        clicked.add(false);
     }
 
     public static JDesktopPane getjDesktopPane1() { return jDesktopPane1; }
@@ -66,6 +76,15 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         tabFuncionarios = new javax.swing.JPanel();
         tabFornecedores = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        txtNome = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        comboSegmento = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableResultadoFornecedores = new javax.swing.JTable();
         tabUsuarios = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         txtEmail = new javax.swing.JTextField();
@@ -75,7 +94,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         comboTipoUsuario = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableResultado = new javax.swing.JTable();
+        tableResultadoUsuarios = new javax.swing.JTable();
 
         jPanel7.setBackground(new java.awt.Color(219, 219, 219));
 
@@ -226,15 +245,132 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Funcionários", tabFuncionarios);
 
+        jPanel3.setBackground(new java.awt.Color(219, 219, 219));
+
+        txtNome.setBackground(new java.awt.Color(255, 255, 255));
+        txtNome.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        txtNome.setForeground(new java.awt.Color(0, 0, 0));
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNomeKeyPressed(evt);
+            }
+        });
+
+        jButton6.setBackground(new java.awt.Color(212, 167, 167));
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
+        jButton6.setText("Novo Fornecedor");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setBackground(new java.awt.Color(140, 71, 71));
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Buscar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Nome:");
+
+        comboSegmento.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        comboSegmento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+
+        jLabel6.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Segmento");
+
+        tableResultadoFornecedores.setBackground(new java.awt.Color(255, 255, 255));
+        tableResultadoFornecedores.setForeground(new java.awt.Color(0, 0, 0));
+        tableResultadoFornecedores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nome", "Email", "Tipo de Usuário"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tableResultadoFornecedores);
+        if (tableResultadoFornecedores.getColumnModel().getColumnCount() > 0) {
+            tableResultadoFornecedores.getColumnModel().getColumn(0).setPreferredWidth(45);
+            tableResultadoFornecedores.getColumnModel().getColumn(1).setPreferredWidth(400);
+            tableResultadoFornecedores.getColumnModel().getColumn(1).setMaxWidth(400);
+            tableResultadoFornecedores.getColumnModel().getColumn(3).setPreferredWidth(300);
+            tableResultadoFornecedores.getColumnModel().getColumn(3).setMaxWidth(300);
+        }
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(comboSegmento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboSegmento, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+
         javax.swing.GroupLayout tabFornecedoresLayout = new javax.swing.GroupLayout(tabFornecedores);
         tabFornecedores.setLayout(tabFornecedoresLayout);
         tabFornecedoresLayout.setHorizontalGroup(
             tabFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 701, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         tabFornecedoresLayout.setVerticalGroup(
             tabFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 427, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Fornecedores", tabFornecedores);
@@ -244,11 +380,6 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         txtEmail.setBackground(new java.awt.Color(255, 255, 255));
         txtEmail.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(0, 0, 0));
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtEmailKeyPressed(evt);
@@ -284,9 +415,9 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Tipo de Usuário:");
 
-        tableResultado.setBackground(new java.awt.Color(255, 255, 255));
-        tableResultado.setForeground(new java.awt.Color(0, 0, 0));
-        tableResultado.setModel(new javax.swing.table.DefaultTableModel(
+        tableResultadoUsuarios.setBackground(new java.awt.Color(255, 255, 255));
+        tableResultadoUsuarios.setForeground(new java.awt.Color(0, 0, 0));
+        tableResultadoUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
             },
@@ -302,13 +433,13 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tableResultado);
-        if (tableResultado.getColumnModel().getColumnCount() > 0) {
-            tableResultado.getColumnModel().getColumn(0).setPreferredWidth(45);
-            tableResultado.getColumnModel().getColumn(1).setPreferredWidth(400);
-            tableResultado.getColumnModel().getColumn(1).setMaxWidth(400);
-            tableResultado.getColumnModel().getColumn(3).setPreferredWidth(300);
-            tableResultado.getColumnModel().getColumn(3).setMaxWidth(300);
+        jScrollPane2.setViewportView(tableResultadoUsuarios);
+        if (tableResultadoUsuarios.getColumnModel().getColumnCount() > 0) {
+            tableResultadoUsuarios.getColumnModel().getColumn(0).setPreferredWidth(45);
+            tableResultadoUsuarios.getColumnModel().getColumn(1).setPreferredWidth(400);
+            tableResultadoUsuarios.getColumnModel().getColumn(1).setMaxWidth(400);
+            tableResultadoUsuarios.getColumnModel().getColumn(3).setPreferredWidth(300);
+            tableResultadoUsuarios.getColumnModel().getColumn(3).setMaxWidth(300);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -316,7 +447,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -334,7 +465,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -438,28 +569,45 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         switch(this.jTabbedPane1.getSelectedIndex()){
+        case 0: 
+                break;
         case 1: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_FUNCIONARIOS", false)){
                     this.jTabbedPane1.setSelectedIndex(0);
+                }
+                if(!(boolean) clicked.get(this.jTabbedPane1.getSelectedIndex())){
+                    clicked.set(this.jTabbedPane1.getSelectedIndex(), true);
+                    for(UsuarioTipo tipo: UsuarioTipo.values()){
+                        this.comboTipoUsuario.addItem(tipo.toString());
+                    }
                 }
                 break;
         case 2: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_FORNECEDORES", false)){
                     this.jTabbedPane1.setSelectedIndex(0);
                 }
+                if(!(boolean) clicked.get(this.jTabbedPane1.getSelectedIndex())){
+                    clicked.set(this.jTabbedPane1.getSelectedIndex(), true);
+                    for(Segmento segmento: Segmento.values()){
+                        this.comboSegmento.addItem(segmento.toString());
+                    }
+                }
+                buscarFornecedores();
                 break;
         case 3: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_USUARIOS", false)){
                     this.jTabbedPane1.setSelectedIndex(0);
                 }
+                if(!(boolean) clicked.get(this.jTabbedPane1.getSelectedIndex())){
+                    clicked.set(this.jTabbedPane1.getSelectedIndex(), true);
+                    for(UsuarioTipo tipo: UsuarioTipo.values()){
+                        this.comboTipoUsuario.addItem(tipo.toString());
+                    }
+                }
                 buscarUsuarios();
                 break;
         }
     }//GEN-LAST:event_jTabbedPane1MouseClicked
-
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         UsuarioEditar novo = new UsuarioEditar();
@@ -477,6 +625,65 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
             this.buscarUsuarios();
         }
     }//GEN-LAST:event_txtEmailKeyPressed
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            this.buscarFornecedores();
+        }
+    }//GEN-LAST:event_txtNomeKeyPressed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+       this.buscarFornecedores();
+    }//GEN-LAST:event_jButton7ActionPerformed
+    
+    private void buscarFornecedores(){
+        fornecedor.setNome(this.txtNome.getText());
+        
+        Segmento filter = null;
+        for(Segmento segmento: Segmento.values()){
+            if(this.comboSegmento.getSelectedItem().equals(segmento.toString())){
+                System.out.println(this.comboSegmento.getSelectedItem()+"kkkkk"+segmento.toString());
+                filter = segmento;
+                break;
+            }
+        }
+
+        fornecedor.setSegmento(filter);
+        
+        List<Fornecedor> resultado = this.fornecedorRepositorio.Buscar(fornecedor);
+        
+        DefaultTableModel modelo = new DefaultTableModel();
+        
+        modelo.addColumn("#");
+        modelo.addColumn("Nome");
+        modelo.addColumn("Endereço");
+        modelo.addColumn("Documento");
+        modelo.addColumn("Telefones");
+        modelo.addColumn("Segmento");
+        
+        for(int i=0;i<resultado.size(); i++){
+            Vector linha = new Vector();
+            linha.add(i+1);
+            linha.add(resultado.get(i).getNome());
+            linha.add(resultado.get(i).getEndereco());
+            linha.add(resultado.get(i).getTipoDocumento() + 
+                    ": " + 
+                    resultado.get(i).getNumeroDocumento());
+            linha.add(resultado.get(i).getTelefones());
+            linha.add(resultado.get(i).getSegmento());
+            
+            modelo.addRow(linha);
+        }
+        this.tableResultadoFornecedores.setModel(modelo);
+    }
     
     private void buscarUsuarios(){
         usuario.setEmail(this.txtEmail.getText());
@@ -509,27 +716,34 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
             
             modelo.addRow(linha);
         }
-        this.tableResultado.setModel(modelo);
+        this.tableResultadoUsuarios.setModel(modelo);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboSegmento;
     private javax.swing.JComboBox<String> comboTipoUsuario;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
@@ -537,7 +751,9 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private javax.swing.JPanel tabFornecedores;
     private javax.swing.JPanel tabFuncionarios;
     private javax.swing.JPanel tabUsuarios;
-    private javax.swing.JTable tableResultado;
+    private javax.swing.JTable tableResultadoFornecedores;
+    private javax.swing.JTable tableResultadoUsuarios;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }

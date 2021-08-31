@@ -206,7 +206,7 @@ public class Console {
         Object[] enderecos = {"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12", "Lontra, Minas Gerais. Avenida Água viva N° 145", "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
         
         for(int i=0; i<50; i++){
-            Usuario usuario = new Usuario(nomes[i].toString(), enderecos[(int) (Math.random()*3)].toString(), telefones, new Date(), TipoPessoa.Fisica, TipoDocumento.CertidaoNascimento, "1578095689", FuncionarioSituacao.Ativo,(CargoFuncionario)  cargos.get((int) (Math.random()*4)), (CargoFuncionario) cargos.get((int) (Math.random()*4))+String.valueOf((int) (Math.random()*3000))+"@marketplus.com", "123", UsuarioTipo.values()[(int) (Math.random()*4)]);
+            Usuario usuario = new Usuario(nomes[i].toString(), enderecos[(int) (Math.random()*3)].toString(), telefones, new Date(), TipoPessoa.Fisica, TipoDocumento.CertidaoNascimento, "1578095689", FuncionarioSituacao.Ativo,(CargoFuncionario)  cargos.get((int) (Math.random()*4)), (CargoFuncionario) cargos.get((int) (Math.random()*4))+String.valueOf((int) (Math.random()*3000000))+"@marketplus.com", "123", UsuarioTipo.values()[(int) (Math.random()*4)]);
             repositorioUsuario.Salvar(usuario);
         }
     }

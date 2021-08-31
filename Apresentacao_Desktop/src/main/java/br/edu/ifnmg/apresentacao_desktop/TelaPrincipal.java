@@ -95,7 +95,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
             
             return true;
-        }else System.out.println("Noooop!");
+        }
             return false;
     }
 
@@ -141,7 +141,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if(TelaPrincipal.usuario.getId() == 0){
             TelaPrincipal.usuario.setNome("Desenvolvedor");
             TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Gerente);
-            System.out.println("[DEV] Iniciando usuário Desenvolvedor");
+            System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
             
             return true;
         }
@@ -169,7 +169,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
+        javax.swing.JMenuBar jMenuBar1 = new javax.swing.JMenuBar();
         menuMarketPlus = new javax.swing.JMenu();
         menuGerenciamento = new javax.swing.JMenu();
         menuItemPessoas = new javax.swing.JMenuItem();
@@ -180,10 +180,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenuBar1.setBackground(new java.awt.Color(169, 124, 124));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jMenuBar1.setMinimumSize(new java.awt.Dimension(195, 40));
         jMenuBar1.setName(""); // NOI18N
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(195, 50));
+        jMenuBar1.setName(""); // NOI18N
+
         jMenuBar1.setPreferredSize(new java.awt.Dimension(195, 50));
 
         menuMarketPlus.setBackground(new java.awt.Color(48, 150, 52));
@@ -342,7 +344,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

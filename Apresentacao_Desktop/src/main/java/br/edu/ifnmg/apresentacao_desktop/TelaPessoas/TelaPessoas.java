@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 /**
  *
  * @author gabriel
@@ -303,8 +304,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tableResultado);
         if (tableResultado.getColumnModel().getColumnCount() > 0) {
-            tableResultado.getColumnModel().getColumn(0).setMaxWidth(50);
-            tableResultado.getColumnModel().getColumn(1).setMaxWidth(1000);
+            tableResultado.getColumnModel().getColumn(0).setPreferredWidth(45);
+            tableResultado.getColumnModel().getColumn(1).setPreferredWidth(400);
+            tableResultado.getColumnModel().getColumn(1).setMaxWidth(400);
+            tableResultado.getColumnModel().getColumn(3).setPreferredWidth(300);
+            tableResultado.getColumnModel().getColumn(3).setMaxWidth(300);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -347,8 +351,9 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout tabUsuariosLayout = new javax.swing.GroupLayout(tabUsuarios);
@@ -359,7 +364,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         );
         tabUsuariosLayout.setVerticalGroup(
             tabUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 427, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Usuários", tabUsuarios);
@@ -494,12 +499,12 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         modelo.addColumn("Email");
         modelo.addColumn("Tipo de Usuário");
         
-        for(Usuario user : resultado){
+        for(int i=0;i<resultado.size(); i++){
             Vector linha = new Vector();
-            linha.add(user.getId());
-            linha.add(user.getNome());
-            linha.add(user.getEmail());
-            linha.add(user.getUsuarioTipo());
+            linha.add(i+1);
+            linha.add(resultado.get(i).getNome());
+            linha.add(resultado.get(i).getEmail());
+            linha.add(resultado.get(i).getUsuarioTipo());
             
             modelo.addRow(linha);
         }

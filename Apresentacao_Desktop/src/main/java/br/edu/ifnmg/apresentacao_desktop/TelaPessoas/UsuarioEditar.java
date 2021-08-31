@@ -6,6 +6,7 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
+import br.edu.ifnmg.logicaAplicacao.Usuario;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,14 +15,16 @@ import java.util.logging.Logger;
  *
  * @author gabriel
  */
-public class TelaNovoUsuario extends javax.swing.JInternalFrame {
+public class UsuarioEditar extends javax.swing.JInternalFrame {
 
+    private Usuario usuario;
+//    private UsuarioRepositorio usuarioRepositorio;
+    
     /**
      * Creates new form TelaNovoUsuario
      */
-    public TelaNovoUsuario() {
+    public UsuarioEditar() {
         initComponents();
-        this.setClosable(true);
     }
 
     /**
@@ -49,6 +52,7 @@ public class TelaNovoUsuario extends javax.swing.JInternalFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
 
         setBackground(new java.awt.Color(208, 208, 208));
+        setClosable(true);
 
         jPanel1.setBackground(new java.awt.Color(140, 71, 71));
 
@@ -76,6 +80,8 @@ public class TelaNovoUsuario extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(208, 208, 208));
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jTextField1.setText("[Selecionar Funcionario]");
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTextField1.setEnabled(false);
         jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,7 +98,7 @@ public class TelaNovoUsuario extends javax.swing.JInternalFrame {
         jButton1.setBackground(new java.awt.Color(140, 71, 71));
         jButton1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Buscar");
+        jButton1.setText("Buscar...");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -104,6 +110,7 @@ public class TelaNovoUsuario extends javax.swing.JInternalFrame {
         jLabel2.setText("Tipo de Usuário");
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
@@ -141,6 +148,7 @@ public class TelaNovoUsuario extends javax.swing.JInternalFrame {
         jLabel5.setText("Nome do Funcionário");
 
         jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
+        jPasswordField1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -197,7 +205,7 @@ public class TelaNovoUsuario extends javax.swing.JInternalFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -230,12 +238,12 @@ public class TelaNovoUsuario extends javax.swing.JInternalFrame {
         try {
             this.setClosed(true);
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaNovoUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TelaSelecionarFuncionario selecionar = new TelaSelecionarFuncionario();
+        FuncionarioSelecionar selecionar = new FuncionarioSelecionar();
         TelaPessoas.getjDesktopPane1().add(selecionar);
         selecionar.setVisible(true);
         TelaPrincipal.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
@@ -246,7 +254,7 @@ public class TelaNovoUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
-        TelaSelecionarFuncionario selecionar = new TelaSelecionarFuncionario();
+        FuncionarioSelecionar selecionar = new FuncionarioSelecionar();
         TelaPessoas.getjDesktopPane1().add(selecionar);
         selecionar.setVisible(true);
         TelaPrincipal.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());

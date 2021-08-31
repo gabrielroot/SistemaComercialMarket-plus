@@ -248,6 +248,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 txtEmailActionPerformed(evt);
             }
         });
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEmailKeyPressed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(212, 167, 167));
         jButton5.setForeground(new java.awt.Color(0, 0, 0));
@@ -258,8 +263,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(212, 167, 167));
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
+        jButton4.setBackground(new java.awt.Color(140, 71, 71));
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Buscar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -282,14 +287,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         tableResultado.setForeground(new java.awt.Color(0, 0, 0));
         tableResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Email", "Tipo de Usuário"
+                "ID", "Nome", "Email", "Tipo de Usuário"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -298,7 +303,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tableResultado);
         if (tableResultado.getColumnModel().getColumnCount() > 0) {
-            tableResultado.getColumnModel().getColumn(0).setResizable(false);
+            tableResultado.getColumnModel().getColumn(0).setMaxWidth(50);
+            tableResultado.getColumnModel().getColumn(1).setMaxWidth(1000);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -410,14 +416,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        BuscaAvancada busca = new BuscaAvancada();
+        ClienteBuscaAvancada busca = new ClienteBuscaAvancada();
         this.jDesktopPane1.add(busca);
         busca.setVisible(true);
         TelaPrincipal.centralizaInternalFrame(busca,this.getSize());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        TelaCliente telaCliente = new TelaCliente();
+        ClienteCadastrar telaCliente = new ClienteCadastrar();
         this.jDesktopPane1.add(telaCliente);
         telaCliente.setVisible(true);    
         TelaPrincipal.centralizaInternalFrame(telaCliente, this.getSize());
@@ -440,6 +446,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_USUARIOS", false)){
                     this.jTabbedPane1.setSelectedIndex(0);
                 }
+                buscarUsuarios();
                 break;
         }
     }//GEN-LAST:event_jTabbedPane1MouseClicked
@@ -449,13 +456,23 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        TelaNovoUsuario novo = new TelaNovoUsuario();
+        UsuarioEditar novo = new UsuarioEditar();
         TelaPessoas.jDesktopPane1.add(novo);
         TelaPrincipal.centralizaInternalFrame(novo, this.getSize());
         novo.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.buscarUsuarios();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            this.buscarUsuarios();
+        }
+    }//GEN-LAST:event_txtEmailKeyPressed
+    
+    private void buscarUsuarios(){
         usuario.setEmail(this.txtEmail.getText());
         
         UsuarioTipo filter = null;
@@ -477,20 +494,22 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = new DefaultTableModel();
         
         modelo.addColumn("#");
+        modelo.addColumn("Nome");
         modelo.addColumn("Email");
         modelo.addColumn("Tipo de Usuário");
         
         for(Usuario user : resultado){
             Vector linha = new Vector();
             linha.add(user.getId());
+            linha.add(user.getNome());
             linha.add(user.getEmail());
             linha.add(user.getUsuarioTipo());
             
             modelo.addRow(linha);
         }
         this.tableResultado.setModel(modelo);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboTipoUsuario;
     private javax.swing.JButton jButton1;

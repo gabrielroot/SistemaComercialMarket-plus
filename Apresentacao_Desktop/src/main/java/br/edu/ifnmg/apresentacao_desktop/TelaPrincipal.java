@@ -10,6 +10,8 @@ import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
+import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private static JInternalFrame currentFrame;
     private static Usuario usuario;
     private static Map<UsuarioTipo, ArrayList<String>> permissions;
-
     
     public TelaPrincipal(Usuario usuario) {
         initComponents();
@@ -78,7 +79,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
         frame.setVisible(true);
     }
-    public void renderJInternalFrame(JInternalFrame frame, boolean maximize){
+    public void renderJInternalFrame(JInternalFrame frame){
         if(this.getCurrentFrame().getClass() != frame.getClass()){
             this.getCurrentFrame().setVisible(false);
             this.setCurrentFrame(frame);
@@ -269,13 +270,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void menuItemPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPessoasActionPerformed
         if(temPermissao("TELA_PESSOAS", true)){
             TelaPessoas pessoas = new TelaPessoas(this);
-            this.renderJInternalFrame(pessoas, true);
+            this.renderJInternalFrame(pessoas);
         }
     }//GEN-LAST:event_menuItemPessoasActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         TelaInicio telaPrincipal = new TelaInicio(this);
-        this.renderJInternalFrame(telaPrincipal, true);
+        this.renderJInternalFrame(telaPrincipal);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void menuRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseClicked
@@ -284,7 +285,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void menuRelatoriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMousePressed
         if(temPermissao("TELA_RELATORIOS", true)){
             TelaRelatorios telaRelatorios = new TelaRelatorios();
-            this.renderJInternalFrame(telaRelatorios, true);
+            this.renderJInternalFrame(telaRelatorios);
         }
     }//GEN-LAST:event_menuRelatoriosMousePressed
     

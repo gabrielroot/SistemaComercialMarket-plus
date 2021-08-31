@@ -77,7 +77,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         frame.setBorder(null);
         ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
-        frame.setVisible(true);
     }
     public void renderJInternalFrame(JInternalFrame frame){
         if(this.getCurrentFrame().getClass() != frame.getClass()){

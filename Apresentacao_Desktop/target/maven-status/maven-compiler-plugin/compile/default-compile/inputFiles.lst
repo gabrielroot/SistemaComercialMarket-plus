@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogSucesso.java
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaInicio.java
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\BuscaAvancada.java
@@ -8,3 +9,16 @@ E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desk
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogPermissao.java
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaRelatorios\TelaRelatorios.java
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas.java
+=======
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/TelaPessoas.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogSucesso.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogPermissao.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/TelaCliente.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogErro.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Login.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Busca.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPrincipal.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaInicio.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaRelatorios/TelaRelatorios.java
+/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/BuscaAvancada.java
+>>>>>>> d374f9d7aa0def3260ef5ec4242c595a2b6c74dc

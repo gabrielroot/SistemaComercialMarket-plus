@@ -30,7 +30,7 @@ import javax.persistence.Version;
 @Table(name = "usuario")
 public class Usuario extends Funcionario implements Serializable {
     
-    @Column(length = 250, nullable = false)
+    @Column(length = 250, nullable = false, unique = true)
     private String email;
     
     @Column(length = 250, nullable = false)

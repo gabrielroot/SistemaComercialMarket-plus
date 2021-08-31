@@ -4,6 +4,7 @@ package br.edu.ifnmg.logicaAplicacao;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,25 +15,23 @@ import javax.persistence.Version;
 
 @Entity
 @Table(name="cliente")
+@DiscriminatorValue("C")
 public class Cliente extends Pessoa implements Serializable  {
     
     private static final long serialVersionUID = 1L;
     
     @Column(length=250, nullable=false, unique=true)
     private String identificaoDoCliente;
+   
     @Column(length=250, nullable=false)
     private String senha;
     
-    @Version
-    private long versao;
     
     public Cliente() {
         super();
         
-        this.versao = 1;
         this.identificaoDoCliente = "";
         this.senha = "";
-
     }
     
     public String getIdentificaoDoCliente() { return this.identificaoDoCliente; }
@@ -41,9 +40,7 @@ public class Cliente extends Pessoa implements Serializable  {
 
     public void setSenha(String senha) { this.senha = senha; }
 
-    public long getVersao() { return versao; }
 
-    public void setVersao(long versao) { this.versao = versao; }
 
     @Override
     public int hashCode() {

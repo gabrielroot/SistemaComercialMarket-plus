@@ -14,10 +14,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  *
@@ -25,6 +27,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="fornecedor")
+@DiscriminatorValue("for")
 public class Fornecedor extends Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,12 +35,18 @@ public class Fornecedor extends Pessoa implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     @Column
     private Segmento segmento;
-
+    
+    @Version
+    private int versao;
+     
     public Fornecedor() {
         super();
         this.segmento = Segmento.Enlatados;
+        this.versao=1;
     }
+    
 
+    
     public Fornecedor(
         String nome, 
         String endereco, 
@@ -51,12 +60,21 @@ public class Fornecedor extends Pessoa implements Serializable {
         super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
         
         this.segmento = segmento;
+        this.versao=1;
+        
     }
+
     
     public Segmento getSegmento() { return segmento; }
     
     public void setSegmento(Segmento segmento) { this.segmento = segmento; }
 
+    public int getVersao() {       return versao;    }
+
+    public void setVersao(int versao) {     this.versao = versao;    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;

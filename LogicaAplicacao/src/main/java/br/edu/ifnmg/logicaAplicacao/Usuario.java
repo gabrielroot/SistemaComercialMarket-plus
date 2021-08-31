@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,6 +29,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "usuario")
+@DiscriminatorValue(value="0")
 public class Usuario extends Funcionario implements Serializable {
     
     @Column(length = 250, nullable = false)

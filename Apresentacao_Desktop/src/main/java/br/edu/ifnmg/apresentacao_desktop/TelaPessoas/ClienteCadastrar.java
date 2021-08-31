@@ -11,12 +11,12 @@ import java.awt.Dimension;
  *
  * @author Murilo
  */
-public class TelaCliente extends javax.swing.JInternalFrame {
+public class ClienteCadastrar extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TelaCliente
      */
-    public TelaCliente() {
+    public ClienteCadastrar() {
         initComponents();
     }
 

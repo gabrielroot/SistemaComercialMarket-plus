@@ -10,6 +10,8 @@ import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
+import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -18,8 +20,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
-import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
 
 /**
  *
@@ -33,7 +33,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private static JInternalFrame currentFrame;
     private static Usuario usuario;
     private static Map<UsuarioTipo, ArrayList<String>> permissions;
-
     
     public TelaPrincipal(Usuario usuario) {
         initComponents();
@@ -78,12 +77,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         frame.setBorder(null);
         ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
-        frame.setVisible(true);
     }
-    public void renderJInternalFrame(JInternalFrame frame, boolean maximize){
-        if(this.getCurrentFrame().getClass() != frame.getClass()){
-            this.getCurrentFrame().setVisible(false);
-            this.setCurrentFrame(frame);
+    public boolean renderJInternalFrame(JInternalFrame frame){
+        if(TelaPrincipal.getCurrentFrame().getClass() != frame.getClass()){
+            TelaPrincipal.getCurrentFrame().setVisible(false);
+            TelaPrincipal.setCurrentFrame(frame);
             this.add(frame);
             frame.setVisible(true);
             
@@ -95,7 +93,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
             
             frame.setBorder(null);
             ((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
+            
+            return true;
         }
+            return false;
     }
 
     public static void initRemovePermissions(){
@@ -140,7 +141,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if(TelaPrincipal.usuario.getId() == 0){
             TelaPrincipal.usuario.setNome("Desenvolvedor");
             TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Gerente);
-            System.out.println("[DEV] Iniciando usuário Desenvolvedor");
+            System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
             
             return true;
         }
@@ -168,7 +169,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuBar1 = new javax.swing.JMenuBar();
+        javax.swing.JMenuBar jMenuBar1 = new javax.swing.JMenuBar();
         menuMarketPlus = new javax.swing.JMenu();
         menuGerenciamento = new javax.swing.JMenu();
         menuItemPessoas = new javax.swing.JMenuItem();
@@ -179,19 +180,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenuBar1.setBackground(new java.awt.Color(169, 124, 124));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jMenuBar1.setMinimumSize(new java.awt.Dimension(185, 40));
+        jMenuBar1.setMinimumSize(new java.awt.Dimension(195, 40));
         jMenuBar1.setName(""); // NOI18N
-        jMenuBar1.setPreferredSize(new java.awt.Dimension(185, 40));
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(195, 50));
+        jMenuBar1.setName(""); // NOI18N
+
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(195, 50));
 
         menuMarketPlus.setBackground(new java.awt.Color(48, 150, 52));
         menuMarketPlus.setForeground(new java.awt.Color(61, 16, 16));
         menuMarketPlus.setText("Market +");
         menuMarketPlus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menuMarketPlus.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
+        menuMarketPlus.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         menuMarketPlus.setMinimumSize(new java.awt.Dimension(3173, 30));
         menuMarketPlus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuMarketPlusMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 menuMarketPlusMousePressed(evt);
             }
@@ -200,7 +206,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         menuGerenciamento.setForeground(new java.awt.Color(61, 16, 16));
         menuGerenciamento.setText("Gerenciamento");
+        menuGerenciamento.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
+        menuItemPessoas.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         menuItemPessoas.setText("Pessoas");
         menuItemPessoas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuItemPessoas.setPreferredSize(new java.awt.Dimension(240, 33));
@@ -211,16 +219,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuGerenciamento.add(menuItemPessoas);
 
+        jMenuItem3.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem3.setText("Produtos");
         jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem3.setPreferredSize(new java.awt.Dimension(240, 33));
         menuGerenciamento.add(jMenuItem3);
 
+        jMenuItem5.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem5.setText("Financeiro");
         jMenuItem5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem5.setPreferredSize(new java.awt.Dimension(240, 33));
         menuGerenciamento.add(jMenuItem5);
 
+        jMenuItem4.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem4.setText("Crediário");
         jMenuItem4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem4.setPreferredSize(new java.awt.Dimension(240, 33));
@@ -232,9 +243,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuRelatorios.setForeground(new java.awt.Color(61, 16, 16));
         menuRelatorios.setText("Relatórios");
         menuRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuRelatorios.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         menuRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuRelatoriosMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuRelatoriosMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 menuRelatoriosMousePressed(evt);
@@ -252,7 +267,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
+            .addGap(0, 469, Short.MAX_VALUE)
         );
 
         pack();
@@ -261,9 +276,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void menuItemPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPessoasActionPerformed
         if(temPermissao("TELA_PESSOAS", true)){
             TelaPessoas pessoas = new TelaPessoas(this);
-            this.renderJInternalFrame(pessoas, true);
+            this.renderJInternalFrame(pessoas);
         }
     }//GEN-LAST:event_menuItemPessoasActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void menuRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseClicked
     }//GEN-LAST:event_menuRelatoriosMouseClicked
@@ -271,14 +290,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void menuRelatoriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMousePressed
         if(temPermissao("TELA_RELATORIOS", true)){
             TelaRelatorios telaRelatorios = new TelaRelatorios();
-            this.renderJInternalFrame(telaRelatorios, true);
+            this.renderJInternalFrame(telaRelatorios);
         }
     }//GEN-LAST:event_menuRelatoriosMousePressed
 
     private void menuMarketPlusMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMarketPlusMousePressed
         TelaInicio telaPrincipal = new TelaInicio(this);
-        this.renderJInternalFrame(telaPrincipal, true);
+        this.renderJInternalFrame(telaPrincipal);
     }//GEN-LAST:event_menuMarketPlusMousePressed
+
+    private void menuMarketPlusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMarketPlusMouseExited
+        menuMarketPlus.setSelected(false);
+    }//GEN-LAST:event_menuMarketPlusMouseExited
+
+    private void menuRelatoriosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseExited
+        menuRelatorios.setSelected(false);
+    }//GEN-LAST:event_menuRelatoriosMouseExited
     
     /**
      * @param args the command line arguments
@@ -317,7 +344,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

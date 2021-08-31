@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -35,7 +37,8 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name="pessoa")
-@Inheritance(strategy=InheritanceType.JOINED)  
+@Inheritance(strategy=InheritanceType.JOINED) 
+@DiscriminatorColumn(discriminatorType=DiscriminatorType.STRING, name="tipo")
 public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,7 +70,7 @@ public class Pessoa implements Serializable {
     private String numeroDocumento;
     
     @Version
-    private long versao;
+    private int versao;
     
     public Pessoa(){
         this.id = 0L;
@@ -122,8 +125,8 @@ public class Pessoa implements Serializable {
     public String getNumeroDocumento() { return numeroDocumento; }
     public void setNumeroDocumento(String numeroDocumento) { this.numeroDocumento = numeroDocumento; }
 
-    public long getVersao() { return versao; }
-    public void setVersao(long versao) { this.versao = versao; }
+    public int getVersao() { return versao; }
+    public void setVersao(int versao) { this.versao = versao; }
     
     @java.lang.Override
     public int hashCode() {

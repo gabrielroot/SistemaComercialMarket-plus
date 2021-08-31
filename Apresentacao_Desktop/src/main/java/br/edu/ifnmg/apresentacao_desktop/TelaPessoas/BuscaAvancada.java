@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifnmg.apresentacao_desktop;
+package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
@@ -20,8 +20,6 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
      */
     public BuscaAvancada() {
         initComponents();
-        this.setLocation(this.getWidth(), this.getHeight()/2);
-        
     }
 
     /**
@@ -57,10 +55,14 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jPanel1.setBackground(new java.awt.Color(140, 71, 71));
 
@@ -92,7 +94,6 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jTextField2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -101,7 +102,6 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
 
         jTextField3.setBackground(new java.awt.Color(255, 255, 255));
         jTextField3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jTextField3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -169,6 +169,10 @@ public class BuscaAvancada extends javax.swing.JInternalFrame {
             Logger.getLogger(BuscaAvancada.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

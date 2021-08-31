@@ -64,7 +64,7 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
         Usuario user = null;
         
         try{
-            user = (Usuario) sql.getSingleResult();
+            user = (Usuario) sql.getResultList().get(0);
         }catch(NoResultException ex){
             return user; 
         }

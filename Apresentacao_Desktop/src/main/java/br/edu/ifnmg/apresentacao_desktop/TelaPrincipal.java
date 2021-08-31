@@ -10,8 +10,6 @@ import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
-import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
-import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -137,7 +135,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaPrincipal.permissions.put(UsuarioTipo.Balconista, removePermissaoBalconista);
         TelaPrincipal.permissions.put(UsuarioTipo.Caixa, removePermissaoCaixa);
     }
-    public static boolean initDesenvolvedor(){
+    public boolean initDesenvolvedor(){
         if(TelaPrincipal.usuario.getId() == 0){
             TelaPrincipal.usuario.setNome("Desenvolvedor");
             TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Gerente);

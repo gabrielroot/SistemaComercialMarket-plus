@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
+import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import java.beans.PropertyVetoException;
@@ -111,6 +112,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
@@ -148,7 +150,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         jLabel5.setText("Nome do Funcionário");
 
         jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jPasswordField1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -246,7 +248,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         FuncionarioSelecionar selecionar = new FuncionarioSelecionar();
         TelaPessoas.getjDesktopPane1().add(selecionar);
         selecionar.setVisible(true);
-        TelaPrincipal.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
+        Util.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -257,7 +259,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         FuncionarioSelecionar selecionar = new FuncionarioSelecionar();
         TelaPessoas.getjDesktopPane1().add(selecionar);
         selecionar.setVisible(true);
-        TelaPrincipal.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
+        Util.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
     }//GEN-LAST:event_jTextField1MouseClicked
 
 

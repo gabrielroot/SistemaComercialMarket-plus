@@ -10,9 +10,6 @@ import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
-import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
-import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
-import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,11 +34,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal(Usuario usuario) {
         initComponents();
        
-        this.usuario = usuario;
+        TelaPrincipal.usuario = usuario;
+        
         initDesenvolvedor();
    
-        this.permissions = new HashMap<>();
-        this.initRemovePermissions();
+        TelaPrincipal.permissions = new HashMap<>();
+        TelaPrincipal.initRemovePermissions();
         
         //Centralizando a tela        
         this.setLocationRelativeTo(null);
@@ -49,7 +47,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setTitle("MARKET +");
         
         TelaInicio telaPrincipal = new TelaInicio(this);
-        this.currentFrame = telaPrincipal;
+        TelaPrincipal.currentFrame = telaPrincipal;
         this.renderJInternalInicio(telaPrincipal);
     }
     
@@ -63,8 +61,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public static Usuario getUsuario() { return usuario; }
     public static void setUsuario(Usuario usuario) { TelaPrincipal.usuario = usuario; }
 
-    
-    
+
     public void renderJInternalInicio(JInternalFrame frame){
         this.add(frame);
         frame.setVisible(true);
@@ -157,12 +154,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         
         return true;
-    }
-    
-    public static void centralizaInternalFrame(JInternalFrame frame,Dimension desktopSize) {
-        Dimension jInternalFrameSize = frame.getSize();
-        frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-                (desktopSize.height - jInternalFrameSize.height) / 2);
     }
     
     @SuppressWarnings("unchecked")

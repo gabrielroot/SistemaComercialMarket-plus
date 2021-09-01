@@ -10,12 +10,10 @@ import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
-import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,8 +70,17 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         this.cliente.setNome(this.txtNome.getText());
        // this.cliente.setDataNascimento();
         this.cliente.setEndereco(endereco.toString());
-        this.cliente.setTipoPessoa(TipoPessoa.Fisica);
-        this.cliente.setTipoDocumento(TipoDocumento.RG);
+        for(TipoPessoa pessoa: TipoPessoa.values()){
+            if(this.cbxTipoPessoa.getSelectedItem().equals(pessoa.toString())){
+                this.cliente.setTipoPessoa(pessoa);
+            }
+        }
+        for(TipoDocumento documento: TipoDocumento.values()){
+            if(this.cbxTipoDocumento.getSelectedItem().equals(documento.toString())){
+                this.cliente.setTipoDocumento(documento);
+            }
+        }
+        
         this.cliente.setNumeroDocumento(txtNumeroDocumento.getText());
         this.cliente.setTelefones(telefones);
         this.cliente.setIdentificaoDoCliente(this.txtIdentificacaoCliente.getText());
@@ -250,7 +257,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
 
         cbxTipoPessoa.setBackground(new java.awt.Color(255, 255, 255));
         cbxTipoPessoa.setForeground(new java.awt.Color(0, 0, 0));
-        cbxTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Física", "Juridica" }));
+        cbxTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -520,7 +527,6 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Operação cancelada","Informação", JOptionPane.INFORMATION_MESSAGE);
         }
-        
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 

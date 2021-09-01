@@ -111,6 +111,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
@@ -148,7 +149,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         jLabel5.setText("Nome do Funcionário");
 
         jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jPasswordField1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

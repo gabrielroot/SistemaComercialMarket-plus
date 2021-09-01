@@ -86,7 +86,7 @@ public class Console {
                 null, 
                 null, 
                 null,
-                Segmento.Limpeza
+                null
         ))){
             System.out.println("    "+fornecedor.getNome());
         }
@@ -226,7 +226,7 @@ public class Console {
             new Date(),
             TipoPessoa.Juridica,
             TipoDocumento.CNPJ,
-            (int) (Math.random()*4)+"14"+(int) (Math.random()*4)+"3"+(int) (Math.random()*4),
+            (int) (Math.random()*4)+"13334"+(int) (Math.random()*4)+"355565"+(int) (Math.random()*4),
             (Segmento) Segmento.values()[((int) (Math.random()*Segmento.values().length))]
         );
             repositorioFornecedor.Salvar(fornecedor);

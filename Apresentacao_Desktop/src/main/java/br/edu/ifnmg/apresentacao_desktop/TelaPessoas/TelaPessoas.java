@@ -7,6 +7,8 @@ package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
 import br.edu.ifnmg.enums.Segmento;
+import br.edu.ifnmg.enums.TipoDocumento;
+import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
@@ -14,6 +16,7 @@ import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
@@ -637,7 +640,10 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeKeyPressed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        FornecedorEditar fornecedorEditar = new FornecedorEditar(new Fornecedor("wefref", "erfr", null, new Date(), TipoPessoa.Fisica, TipoDocumento.CertidaoNascimento, "22222222222222", Segmento.Higiene));
+        TelaPrincipal.centralizaInternalFrame(fornecedorEditar, this.getSize());
+        TelaPessoas.jDesktopPane1.add(fornecedorEditar);
+        fornecedorEditar.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed

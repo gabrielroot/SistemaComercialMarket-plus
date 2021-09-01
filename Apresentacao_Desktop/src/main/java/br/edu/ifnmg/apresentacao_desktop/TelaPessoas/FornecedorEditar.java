@@ -5,9 +5,15 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogErro;
+import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
+import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -15,16 +21,19 @@ import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
  */
 public class FornecedorEditar extends javax.swing.JInternalFrame {
 
+    private TelaPrincipal telaPrincipal;
     private Fornecedor fornecedor;
     private FornecedorRepositorio fornecedorRepositorio;
     
     /**
      * Creates new form FornecedoreEditar
      */
-    public FornecedorEditar(Fornecedor fornecedor) {
+    public FornecedorEditar(TelaPrincipal telaPrincipal, Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
+        this.telaPrincipal = telaPrincipal;
         initComponents();
         setComponentes();
+        getComponentes();
     }
 
     private void setComponentes(){
@@ -51,18 +60,27 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
 
     private void getComponentes(){
         this.fornecedor.setNome(this.txtNome.getText());
-        this.txtEndereco.setText(this.fornecedor.getEndereco());
-        this.txtCnpj.setText(this.fornecedor.getNumeroDocumento());
-        this.txtNascimento.setValue(this.fornecedor.getDataNascimento().toString());
+        this.fornecedor.setEndereco(this.txtEndereco.getText());
+        this.fornecedor.setNumeroDocumento(this.txtCnpj.getText());
+        this.fornecedor.setDataNascimento(new Date());
         
-        if(this.fornecedor.getTelefones() != null){
-            this.txtTelefone1.setValue(this.fornecedor.getTelefones().get(0).getNumero());
+        List<Telefone> telefones = new ArrayList();
+        if(this.txtTelefone1.getValue() == null &&  this.txtTelefone2.getValue() == null){
+            DialogErro erro = new DialogErro(this.telaPrincipal, true);
+            erro.setVisible(true);
+        }else if(this.txtTelefone1.getValue() != null){
+            Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString());
+            telefones.add(telefone1);
             
-            if(this.fornecedor.getTelefones().size() > 0){
-                this.txtTelefone2.setValue(this.fornecedor.getTelefones().get(1).getNumero());
+            if(this.txtTelefone2.getValue() != null){
+                Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString());
+                telefones.add(telefone2);
             }
+        }else{
+            Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString());
+            telefones.add(telefone2);
         }
-        
+            
         for(int i = 0; i < Segmento.values().length ; i++){
             this.comboSegmento.addItem(Segmento.values()[i].toString());
             if(this.fornecedor.getSegmento() == Segmento.values()[i]){

@@ -31,7 +31,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private FornecedorRepositorio fornecedorRepositorio;
     private Fornecedor fornecedor;
     private Usuario usuario;
-    ArrayList clicked;
+    ArrayList tabClicked;
     
     
     /**
@@ -45,11 +45,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         this.fornecedorRepositorio = RepositorioFactory.getFornecedorRepositorio();
         this.fornecedor = new Fornecedor();
         
-        this.clicked = new ArrayList<>();
-        clicked.add(false);
-        clicked.add(false);
-        clicked.add(false);
-        clicked.add(false);
+        this.tabClicked = new ArrayList<>();
+        tabClicked.add(false);
+        tabClicked.add(false);
+        tabClicked.add(false);
+        tabClicked.add(false);
     }
 
     public static JDesktopPane getjDesktopPane1() { return jDesktopPane1; }
@@ -189,19 +189,18 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 64, Short.MAX_VALUE)
+                        .addGap(0, 81, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(93, 93, 93)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(113, 113, 113)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 48, Short.MAX_VALUE))
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 65, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -413,6 +412,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
         comboTipoUsuario.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         comboTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        comboTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTipoUsuarioActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -578,19 +582,13 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_FUNCIONARIOS", false)){
                     this.jTabbedPane1.setSelectedIndex(0);
                 }
-                if(!(boolean) clicked.get(this.jTabbedPane1.getSelectedIndex())){
-                    clicked.set(this.jTabbedPane1.getSelectedIndex(), true);
-                    for(UsuarioTipo tipo: UsuarioTipo.values()){
-                        this.comboTipoUsuario.addItem(tipo.toString());
-                    }
-                }
                 break;
         case 2: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_FORNECEDORES", false)){
                     this.jTabbedPane1.setSelectedIndex(0);
                 }
-                if(!(boolean) clicked.get(this.jTabbedPane1.getSelectedIndex())){
-                    clicked.set(this.jTabbedPane1.getSelectedIndex(), true);
+                if(!(boolean) tabClicked.get(this.jTabbedPane1.getSelectedIndex())){
+                    tabClicked.set(this.jTabbedPane1.getSelectedIndex(), true);
                     for(Segmento segmento: Segmento.values()){
                         this.comboSegmento.addItem(segmento.toString());
                     }
@@ -601,8 +599,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_USUARIOS", false)){
                     this.jTabbedPane1.setSelectedIndex(0);
                 }
-                if(!(boolean) clicked.get(this.jTabbedPane1.getSelectedIndex())){
-                    clicked.set(this.jTabbedPane1.getSelectedIndex(), true);
+                if(!(boolean) tabClicked.get(this.jTabbedPane1.getSelectedIndex())){
+                    tabClicked.set(this.jTabbedPane1.getSelectedIndex(), true);
                     for(UsuarioTipo tipo: UsuarioTipo.values()){
                         this.comboTipoUsuario.addItem(tipo.toString());
                     }
@@ -640,7 +638,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeKeyPressed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        FornecedorEditar fornecedorEditar = new FornecedorEditar(new Fornecedor("wefref", "erfr", null, new Date(), TipoPessoa.Fisica, TipoDocumento.CertidaoNascimento, "22222222222222", Segmento.Higiene));
+        FornecedorEditar fornecedorEditar = new FornecedorEditar(this.telaPrincipal,new Fornecedor("wefref", "erfr", null, new Date(), TipoPessoa.Fisica, TipoDocumento.CertidaoNascimento, "22222222222222", Segmento.Higiene));
         TelaPrincipal.centralizaInternalFrame(fornecedorEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(fornecedorEditar);
         fornecedorEditar.setVisible(true);
@@ -690,6 +688,10 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         }
         this.tableResultadoFornecedores.setModel(modelo);
     }
+
+    private void comboTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboTipoUsuarioActionPerformed
     
     private void buscarUsuarios(){
         usuario.setEmail(this.txtEmail.getText());

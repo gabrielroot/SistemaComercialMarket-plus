@@ -1,3 +1,4 @@
+br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$9.class
 br\edu\ifnmg\apresentacao_desktop\Login$9.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$2.class
 br\edu\ifnmg\apresentacao_desktop\Busca.class
@@ -6,9 +7,11 @@ br\edu\ifnmg\apresentacao_desktop\Login$6.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas$4.class
 br\edu\ifnmg\apresentacao_desktop\TelaInicio.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas.class
+br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$6.class
 br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogPermissao.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\UsuarioEditar$1.class
 br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogSucesso$2$1.class
+br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$10.class
 br\edu\ifnmg\apresentacao_desktop\TelaInicio$3.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\FuncionarioSelecionar$1.class
 br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogConfirma$1.class
@@ -16,6 +19,8 @@ br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas$7.class
 br\edu\ifnmg\apresentacao_desktop\TelaPrincipal$2.class
 br\edu\ifnmg\apresentacao_desktop\TelaRelatorios\TelaRelatorios.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$3.class
+br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas$10.class
+br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$12.class
 br\edu\ifnmg\apresentacao_desktop\TelaPrincipal.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\ClienteBuscaAvancada$2.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\FuncionarioSelecionar.class
@@ -37,6 +42,7 @@ br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas$6.class
 br\edu\ifnmg\apresentacao_desktop\TelaInicio$2.class
 br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogPermissao$2.class
 br\edu\ifnmg\apresentacao_desktop\Login$4.class
+br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$11.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\UsuarioEditar$3.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$4.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas$9.class
@@ -47,6 +53,7 @@ br\edu\ifnmg\apresentacao_desktop\Login$1.class
 br\edu\ifnmg\apresentacao_desktop\Login$10.class
 br\edu\ifnmg\apresentacao_desktop\TelaInicio$1.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\UsuarioEditar.class
+br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$8.class
 br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogErro.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\ClienteBuscaAvancada.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas$2.class
@@ -60,6 +67,7 @@ br\edu\ifnmg\apresentacao_desktop\Busca$1$1.class
 br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogSucesso.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas$8.class
 br\edu\ifnmg\apresentacao_desktop\Busca$1.class
+br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar$7.class
 br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogConfirma.class
 br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogErro$1.class
 br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas$1.class

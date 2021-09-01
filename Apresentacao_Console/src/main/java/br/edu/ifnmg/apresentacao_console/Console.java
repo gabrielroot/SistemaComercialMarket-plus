@@ -24,6 +24,7 @@ import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -99,7 +100,7 @@ public class Console {
             "Sebastião Codeiro",
             "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111",
             telefones,
-            new Date(),
+            Calendar.getInstance(),
             TipoPessoa.Fisica,
             TipoDocumento.CertidaoNascimento,
             "123456"
@@ -114,7 +115,7 @@ public class Console {
             "Antônio Gomes",
             "Lontra, Minas Gerais. Avenida Água viva N° 145",
             null,
-            new Date(),
+            Calendar.getInstance(),
             TipoPessoa.Fisica,
             TipoDocumento.CNH,
             "8123427854",
@@ -125,7 +126,7 @@ public class Console {
             "João Geraldo",
             "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
             null,
-            new Date(),
+            Calendar.getInstance(),
             TipoPessoa.Juridica,
             TipoDocumento.CNPJ,
             "564673",
@@ -136,7 +137,7 @@ public class Console {
             "AdminUser",
             "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
             null,
-            new Date(),
+            Calendar.getInstance(),
             TipoPessoa.Fisica,
             TipoDocumento.CNH,
             "564612173",
@@ -151,7 +152,7 @@ public class Console {
             "CaixaUser",
             "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
             null,
-            new Date(),
+            Calendar.getInstance(),
             TipoPessoa.Fisica,
             TipoDocumento.CNH,
             "564612173",
@@ -166,7 +167,7 @@ public class Console {
             "BalconistaUser",
             "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
             null,
-            new Date(),
+            Calendar.getInstance(),
             TipoPessoa.Fisica,
             TipoDocumento.CNH,
             "564612173",
@@ -200,13 +201,35 @@ public class Console {
         telefones.add(telefone01);
         telefones.add(telefone02);
         
-        Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", "Marcela Fernandes", "Gustavo Barbosa", "Ana Laura Castro", "Ana Carolina Silveira", "Maria Luiza Barros", "Gustavo Rocha", "Luiz Felipe Moura", "Thiago Castro", "Pietro da Paz", "Yago da Costa", "Pietro da Mota", "Gabriel da Mata", "João Miguel Peixoto", "Breno da Luz", "André Peixoto", "Yuri Fogaça", "Sabrina Moreira", "Bárbara Dias", "Vitor Gabriel Barbosa", "Ana Castro", "Emilly Barbosa", "Vitória Silveira", "Vitor Gomes", "Bruno Moreira", "Ana Lívia Farias", "Benício Pires", "Lara Castro", "Sabrina Moraes", "Fernanda Porto", "Pietra Viana", "Luiz Fernando Ribeiro", "Maitê Pinto", "Sophie Almeida", "Stephany da Cunha", "Raul da Rocha", "Maria Vitória Viana", "Gustavo Henrique Nogueira", "Theo Cavalcanti", "Enzo Rodrigues", "Guilherme Rocha", "Davi Lucca Rodrigues", "Bruno da Mata"};
+        Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", 
+            "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", 
+            "Marcela Fernandes", "Gustavo Barbosa", "Ana Laura Castro", "Ana Carolina Silveira",
+            "Maria Luiza Barros", "Gustavo Rocha", "Luiz Felipe Moura", "Thiago Castro",
+            "Pietro da Paz", "Yago da Costa", "Pietro da Mota", "Gabriel da Mata", 
+            "João Miguel Peixoto", "Breno da Luz", "André Peixoto", "Yuri Fogaça", 
+            "Sabrina Moreira", "Bárbara Dias", "Vitor Gabriel Barbosa", "Ana Castro", 
+            "Emilly Barbosa", "Vitória Silveira", "Vitor Gomes", "Bruno Moreira", 
+            "Ana Lívia Farias", "Benício Pires", "Lara Castro", "Sabrina Moraes", 
+            "Fernanda Porto", "Pietra Viana", "Luiz Fernando Ribeiro", "Maitê Pinto",
+            "Sophie Almeida", "Stephany da Cunha", "Raul da Rocha", "Maria Vitória Viana",
+            "Gustavo Henrique Nogueira", "Theo Cavalcanti", "Enzo Rodrigues", "Guilherme Rocha",
+            "Davi Lucca Rodrigues", "Bruno da Mata"};
+        
         Object[] c = {cargo1, cargo2, cargo3, cargo4};
         List cargos = Arrays.asList(c);
-        Object[] enderecos = {"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12", "Lontra, Minas Gerais. Avenida Água viva N° 145", "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
+        Object[] enderecos = {"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            "Lontra, Minas Gerais. Avenida Água viva N° 145",
+            "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
         
         for(int i=0; i<50; i++){
-            Usuario usuario = new Usuario(nomes[i].toString(), enderecos[(int) (Math.random()*3)].toString(), telefones, new Date(), TipoPessoa.Fisica, TipoDocumento.CertidaoNascimento, "1578095689", FuncionarioSituacao.Ativo,(CargoFuncionario)  cargos.get((int) (Math.random()*4)), (CargoFuncionario) cargos.get((int) (Math.random()*4))+String.valueOf((int) (Math.random()*3000000))+"@marketplus.com", "123", UsuarioTipo.values()[(int) (Math.random()*4)]);
+            Usuario usuario = new Usuario(nomes[i].toString(), 
+                    enderecos[(int) (Math.random()*3)].toString(), 
+                    telefones, Calendar.getInstance(), TipoPessoa.Fisica,
+                    TipoDocumento.CertidaoNascimento, "1578095689", 
+                    FuncionarioSituacao.Ativo,
+                    (CargoFuncionario)  cargos.get((int) (Math.random()*4)), 
+                    (CargoFuncionario) cargos.get((int) (Math.random()*4))+String.valueOf((int) (Math.random()*3000000))+"@marketplus.com",
+                    "123", UsuarioTipo.values()[(int) (Math.random()*4)]);
             repositorioUsuario.Salvar(usuario);
         }
     }

@@ -5,12 +5,15 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogConfirma;
 import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogErro;
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogSucesso;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,46 +31,48 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
     /**
      * Creates new form FornecedoreEditar
      */
-    public FornecedorEditar(TelaPrincipal telaPrincipal, Fornecedor fornecedor) {
+    public FornecedorEditar(TelaPrincipal telaPrincipal, String title, Fornecedor fornecedor) {
+        this.fornecedorRepositorio = RepositorioFactory.getFornecedorRepositorio();
         this.fornecedor = fornecedor;
         this.telaPrincipal = telaPrincipal;
+        this.setTitle(title);
         initComponents();
         setComponentes();
-        getComponentes();
+        this.labelTitulo.setText(title);
     }
 
     private void setComponentes(){
         this.txtNome.setText(this.fornecedor.getNome());
         this.txtEndereco.setText(this.fornecedor.getEndereco());
         this.txtCnpj.setText(this.fornecedor.getNumeroDocumento());
-        this.txtNascimento.setValue(this.fornecedor.getDataNascimento().toString());
+        this.txtNascimento.setValue(this.fornecedor.getDataNascimento());
         
-        if(this.fornecedor.getTelefones() != null){
+        if(this.fornecedor.getTelefones().size() > 0){
             this.txtTelefone1.setValue(this.fornecedor.getTelefones().get(0).getNumero());
             
-            if(this.fornecedor.getTelefones().size() > 0){
+            if(this.fornecedor.getTelefones().size() > 1){
                 this.txtTelefone2.setValue(this.fornecedor.getTelefones().get(1).getNumero());
             }
         }
         
+        this.comboSegmentoEditar.removeAllItems();
         for(int i = 0; i < Segmento.values().length ; i++){
-            this.comboSegmento.addItem(Segmento.values()[i].toString());
+            this.comboSegmentoEditar.addItem(Segmento.values()[i].toString());
             if(this.fornecedor.getSegmento() == Segmento.values()[i]){
-                this.comboSegmento.setSelectedIndex(i);
+                this.comboSegmentoEditar.setSelectedIndex(i);
             }
         }
     }
 
-    private void getComponentes(){
+    private boolean getComponentes(){
         this.fornecedor.setNome(this.txtNome.getText());
         this.fornecedor.setEndereco(this.txtEndereco.getText());
         this.fornecedor.setNumeroDocumento(this.txtCnpj.getText());
-        this.fornecedor.setDataNascimento(new Date());
+        this.fornecedor.setDataNascimento( new Date());
         
         List<Telefone> telefones = new ArrayList();
         if(this.txtTelefone1.getValue() == null &&  this.txtTelefone2.getValue() == null){
-            DialogErro erro = new DialogErro(this.telaPrincipal, true);
-            erro.setVisible(true);
+            return false;
         }else if(this.txtTelefone1.getValue() != null){
             Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString());
             telefones.add(telefone1);
@@ -80,13 +85,14 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
             Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString());
             telefones.add(telefone2);
         }
-            
-        for(int i = 0; i < Segmento.values().length ; i++){
-            this.comboSegmento.addItem(Segmento.values()[i].toString());
-            if(this.fornecedor.getSegmento() == Segmento.values()[i]){
-                this.comboSegmento.setSelectedIndex(i);
+        for(Segmento segmento : Segmento.values()){
+            if(segmento.toString().equals(this.comboSegmentoEditar.getSelectedIndex())){
+                this.fornecedor.setSegmento(segmento);
             }
         }
+        
+        this.fornecedor.setTelefones(telefones);
+        return true;
     }
     
     /**
@@ -99,7 +105,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        labelTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -108,7 +114,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        comboSegmento = new javax.swing.JComboBox<>();
+        comboSegmentoEditar = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -123,9 +129,9 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(140, 71, 71));
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Editar Fornecedor");
+        labelTitulo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        labelTitulo.setText("Editar Fornecedor");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -133,14 +139,14 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(280, 280, 280)
-                .addComponent(jLabel1)
+                .addComponent(labelTitulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(labelTitulo)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -174,8 +180,8 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(54, 54, 54));
         jLabel6.setText("CNPJ");
 
-        comboSegmento.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        comboSegmento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Frios" }));
+        comboSegmentoEditar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        comboSegmentoEditar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Frios" }));
 
         jLabel7.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(54, 54, 54));
@@ -189,11 +195,21 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         jButton1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(181, 181, 181));
         jButton2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jButton2.setForeground(new java.awt.Color(8, 8, 8));
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         txtCnpj.setBackground(new java.awt.Color(255, 255, 255));
         txtCnpj.setForeground(new java.awt.Color(0, 0, 0));
@@ -271,7 +287,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                                     .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7)
-                                .addComponent(comboSegmento, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(comboSegmentoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(143, 143, 143)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,7 +327,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboSegmento, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(comboSegmentoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,12 +353,36 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DialogConfirma dialog = new DialogConfirma(this.telaPrincipal, true);
+        dialog.setVisible(true);
+        
+        if(dialog.isConfirma()){
+            if(this.getComponentes()){
+                if(this.fornecedorRepositorio.Salvar(this.fornecedor)){
+                    DialogSucesso sucesso = new DialogSucesso(this.telaPrincipal, true);
+                    sucesso.setVisible(true);
+                    this.dispose();
+                }else{
+                    DialogErro erro = new DialogErro(this.telaPrincipal, true, "Erro na Operação.");
+                    erro.setVisible(true);
+                }
+            }else{
+                DialogErro erro = new DialogErro(this.telaPrincipal, true, "Preencha todos os campos!");
+                erro.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> comboSegmento;
+    private javax.swing.JComboBox<String> comboSegmentoEditar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -352,6 +392,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelTitulo;
     private javax.swing.JFormattedTextField txtCnpj;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JFormattedTextField txtNascimento;

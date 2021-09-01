@@ -310,6 +310,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableResultadoFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableResultadoFornecedoresMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tableResultadoFornecedores);
         if (tableResultadoFornecedores.getColumnModel().getColumnCount() > 0) {
             tableResultadoFornecedores.getColumnModel().getColumn(0).setPreferredWidth(45);
@@ -638,7 +643,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeKeyPressed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        FornecedorEditar fornecedorEditar = new FornecedorEditar(this.telaPrincipal,new Fornecedor("wefref", "erfr", null, new Date(), TipoPessoa.Fisica, TipoDocumento.CertidaoNascimento, "22222222222222", Segmento.Higiene));
+        FornecedorEditar fornecedorEditar = new FornecedorEditar(this.telaPrincipal,"Novo Fornecedor" ,new Fornecedor());
         TelaPrincipal.centralizaInternalFrame(fornecedorEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(fornecedorEditar);
         fornecedorEditar.setVisible(true);
@@ -654,7 +659,6 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         Segmento filter = null;
         for(Segmento segmento: Segmento.values()){
             if(this.comboSegmento.getSelectedItem().equals(segmento.toString())){
-                System.out.println(this.comboSegmento.getSelectedItem()+"kkkkk"+segmento.toString());
                 filter = segmento;
                 break;
             }
@@ -667,20 +671,20 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = new DefaultTableModel();
         
         modelo.addColumn("#");
+        modelo.addColumn("ID");
         modelo.addColumn("Nome");
         modelo.addColumn("Endereço");
-        modelo.addColumn("Documento");
+        modelo.addColumn("CNPJ");
         modelo.addColumn("Telefones");
         modelo.addColumn("Segmento");
         
         for(int i=0;i<resultado.size(); i++){
             Vector linha = new Vector();
             linha.add(i+1);
+            linha.add(resultado.get(i).getId());
             linha.add(resultado.get(i).getNome());
             linha.add(resultado.get(i).getEndereco());
-            linha.add(resultado.get(i).getTipoDocumento() + 
-                    ": " + 
-                    resultado.get(i).getNumeroDocumento());
+            linha.add(resultado.get(i).getNumeroDocumento());
             linha.add(resultado.get(i).getTelefones());
             linha.add(resultado.get(i).getSegmento());
             
@@ -692,6 +696,17 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private void comboTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboTipoUsuarioActionPerformed
+
+    private void tableResultadoFornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoFornecedoresMouseClicked
+        int linha = tableResultadoFornecedores.getSelectedRow();
+        long id = (long) tableResultadoFornecedores.getValueAt(linha, 1);
+        
+        Fornecedor f = fornecedorRepositorio.Abrir(id);
+        FornecedorEditar fornecedorEditar = new FornecedorEditar(this.telaPrincipal, "Editar Fornecedor",f);
+        TelaPrincipal.centralizaInternalFrame(fornecedorEditar, this.getSize());
+        TelaPessoas.jDesktopPane1.add(fornecedorEditar);
+        fornecedorEditar.setVisible(true);
+    }//GEN-LAST:event_tableResultadoFornecedoresMouseClicked
     
     private void buscarUsuarios(){
         usuario.setEmail(this.txtEmail.getText());

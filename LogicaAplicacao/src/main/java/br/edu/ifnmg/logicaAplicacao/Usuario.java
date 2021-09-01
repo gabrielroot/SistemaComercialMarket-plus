@@ -29,7 +29,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "usuario")
-@DiscriminatorValue(value="0")
+//@DiscriminatorValue(value="0")
 public class Usuario extends Funcionario implements Serializable {
     
     @Column(length = 250, nullable = false)

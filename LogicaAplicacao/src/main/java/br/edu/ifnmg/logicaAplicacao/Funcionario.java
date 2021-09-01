@@ -40,8 +40,8 @@ import javax.persistence.Version;
 @Entity
 @Table(name="funcionario")
 @DiscriminatorValue(value="0")
-@Inheritance(strategy=InheritanceType.JOINED) 
-@DiscriminatorColumn(discriminatorType=DiscriminatorType.INTEGER, name="usuario")
+//@Inheritance(strategy=InheritanceType.JOINED) 
+//@DiscriminatorColumn(discriminatorType=DiscriminatorType.INTEGER, name="usuario")
 public class Funcionario extends Pessoa implements Serializable  {
     private static final long serialVersionUID = 1L;
     

@@ -39,7 +39,8 @@ public class Console {
             System.out.println("FALHA ao popular o banco de dados!!");
         }
 
-        queryPessoa();
+       // queryPessoa();
+        queryFuncionario();
     }
     
     public static void queryPessoa(){
@@ -55,14 +56,24 @@ public class Console {
                 null, 
                 "123456"))){
             System.out.println("    "+pessoa.getNome());
-        }
         
+        }
         System.out.println("-- Buscar todas as Pessoas --");
         for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa())){
             System.out.println("    "+pessoa.getNome());
         }
     }
-     
+    
+    public static void queryFuncionario(){
+        
+        FuncionarioRepositorio funcionarioRepo = RepositorioFactory.getFuncionarioRepositorio();
+        System.out.print("---Buscar Funcionario com filtro---");
+        for(Funcionario funcionario : funcionarioRepo.Buscar(new Funcionario("A",null,null,null,null,null,
+                null,null,null)))
+            System.out.println("  " +funcionario.getNome());
+        
+        
+    }
     public static boolean popularBD(){
         PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
         FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
@@ -164,5 +175,6 @@ public class Console {
                repositorioUsuario.Salvar(usuarioAdmin) &&
                repositorioUsuario.Salvar(usuarioCaixa) &&
                repositorioUsuario.Salvar(usuarioBalconista);
+        
      }
 }

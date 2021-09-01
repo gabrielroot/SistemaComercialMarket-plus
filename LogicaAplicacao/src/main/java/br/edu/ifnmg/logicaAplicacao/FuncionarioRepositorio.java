@@ -10,5 +10,5 @@ package br.edu.ifnmg.logicaAplicacao;
  * @author kesley
  */
 public interface FuncionarioRepositorio extends Repositorio<Funcionario> {
-    
+    public Funcionario BuscarPorNome(String nome);
 }

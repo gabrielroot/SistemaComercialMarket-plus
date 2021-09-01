@@ -7,7 +7,9 @@ package br.edu.ifnmg.persistencia;
 
 import br.edu.ifnmg.logicaAplicacao.Funcionario;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
+import java.util.Hashtable;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -21,7 +23,44 @@ public class FuncionarioDAO extends DataAccessObject<Funcionario> implements Fun
 
     @Override
     public List<Funcionario> Buscar(Funcionario obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql=("SELECT funcionario FROM Funcionario funcionario");
+        String filtros="";
+        Hashtable<String, Object> parametros = new Hashtable<>();
+        
+        if(obj!=null){
+            
+            if(obj.getNome().length()>0){
+                filtros+= "funcionario.nome LIKE :nome";
+                parametros.put("nome",obj.getNome()+ "%");
+            }
+        
+            if(obj.getNumeroDocumento()!=null){
+                if(obj.getNumeroDocumento().length()>0){
+                    filtros += "and";
+                    filtros += "funcionario.numeroDocumento LIKE :numero";
+                    parametros.put("numero", obj.getNumeroDocumento()+ "%");
+                }
+            }
+        }
+        if(filtros.length()>0)
+            jpql=jpql+ " WHERE "+ filtros;
+        
+        Query consulta=this.manager.createQuery(jpql);
+        
+        for(String chave: parametros.keySet())
+            consulta.setParameter(chave,parametros.get(chave));
+        
+        return consulta.getResultList();
     }
+    
+    @Override
+    public Funcionario BuscarPorNome(String nome){
+        Query consulta = this.manager.createQuery("select funcionario from Funcionario funcionario where funcionario.nome =:parametro");
+        consulta.setParameter("parametro", nome);
+        return (Funcionario) consulta.getSingleResult();
+    }
+
+    
+    
     
 }

@@ -391,7 +391,6 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -751,7 +750,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel18.setBackground(new java.awt.Color(101, 58, 58));
 
         jPanel19.setBackground(new java.awt.Color(120, 80, 80));
-        jPanel19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel19.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel20.setBackground(new java.awt.Color(107, 70, 70));
 
@@ -809,7 +808,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Encerrar Sessão");
         jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

@@ -10,6 +10,7 @@ import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -56,7 +57,7 @@ public class Pessoa implements Serializable {
     private List<Telefone> telefones;
     
     @Temporal(TemporalType.DATE)
-    private Date dataNascimento;
+    private Calendar dataNascimento;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
@@ -77,6 +78,8 @@ public class Pessoa implements Serializable {
         this.nome = "";
         this.telefones = new ArrayList<>();
         this.tipoPessoa = TipoPessoa.Fisica;
+        this.dataNascimento = Calendar.getInstance();
+        this.dataNascimento.set(1900, 01, 10);
         this.tipoDocumento = TipoDocumento.CertidaoNascimento;
         this.numeroDocumento = "";
         this.versao = 1;
@@ -86,7 +89,7 @@ public class Pessoa implements Serializable {
             String nome, 
             String endereco, 
             List<Telefone> telefones, 
-            Date dataNascimento, 
+            Calendar dataNascimento, 
             TipoPessoa tipoPessoa, 
             TipoDocumento tipoDocumento, 
             String numeroDocumento
@@ -113,8 +116,8 @@ public class Pessoa implements Serializable {
     public List<Telefone> getTelefones() { return telefones; }
     public void setTelefones(List<Telefone> telefones) { this.telefones = telefones; }
 
-    public Date getDataNascimento() { return dataNascimento; }
-    public void setDataNascimento(Date dataNascimento) { this.dataNascimento = dataNascimento;}
+    public Calendar getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(Calendar dataNascimento) { this.dataNascimento = dataNascimento;}
 
     public TipoPessoa getTipoPessoa() { return tipoPessoa; }
     public void setTipoPessoa(TipoPessoa tipoPessoa) { this.tipoPessoa = tipoPessoa; }

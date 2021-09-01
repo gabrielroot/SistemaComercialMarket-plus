@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
+import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import java.beans.PropertyVetoException;
@@ -247,7 +248,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         FuncionarioSelecionar selecionar = new FuncionarioSelecionar();
         TelaPessoas.getjDesktopPane1().add(selecionar);
         selecionar.setVisible(true);
-        TelaPrincipal.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
+        Util.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -258,7 +259,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         FuncionarioSelecionar selecionar = new FuncionarioSelecionar();
         TelaPessoas.getjDesktopPane1().add(selecionar);
         selecionar.setVisible(true);
-        TelaPrincipal.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
+        Util.centralizaInternalFrame(selecionar, TelaPessoas.getjDesktopPane1().getSize());
     }//GEN-LAST:event_jTextField1MouseClicked
 
 

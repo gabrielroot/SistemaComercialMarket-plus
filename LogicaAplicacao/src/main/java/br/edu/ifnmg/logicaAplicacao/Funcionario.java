@@ -11,6 +11,7 @@ import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -67,7 +68,7 @@ public class Funcionario extends Pessoa implements Serializable  {
         String nome, 
         String endereco, 
         List<Telefone> telefones, 
-        Date dataNascimento, 
+        Calendar dataNascimento, 
         TipoPessoa tipoPessoa, 
         TipoDocumento tipoDocumento, 
         String numeroDocumento, 

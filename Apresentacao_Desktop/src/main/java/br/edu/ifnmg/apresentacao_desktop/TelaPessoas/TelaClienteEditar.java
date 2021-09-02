@@ -14,6 +14,7 @@ import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,22 +66,20 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         Telefone telefone2 = new Telefone(this.txtTelefone2.getText());
         telefones.add(telefone1);
         telefones.add(telefone2);
-                
         
+        StringTokenizer strData = new StringTokenizer(this.txtDataNascimento.getText(),"/");
+        
+        Calendar data = Calendar.getInstance();
+   
+        //data.set(ano, mes, dia);
+                 
         this.cliente.setNome(this.txtNome.getText());
-       // this.cliente.setDataNascimento();
+        this.cliente.setDataNascimento(data);
         this.cliente.setEndereco(endereco.toString());
-        for(TipoPessoa pessoa: TipoPessoa.values()){
-            if(this.cbxTipoPessoa.getSelectedItem().equals(pessoa.toString())){
-                this.cliente.setTipoPessoa(pessoa);
-            }
-        }
-        for(TipoDocumento documento: TipoDocumento.values()){
-            if(this.cbxTipoDocumento.getSelectedItem().equals(documento.toString())){
-                this.cliente.setTipoDocumento(documento);
-            }
-        }
-        
+        this.cliente.setTipoPessoa(TipoPessoa.values()[this.cbxTipoPessoa.
+                getSelectedIndex()]);
+        this.cliente.setTipoDocumento(TipoDocumento.values()[this.cbxTipoDocumento.
+                getSelectedIndex()]);
         this.cliente.setNumeroDocumento(txtNumeroDocumento.getText());
         this.cliente.setTelefones(telefones);
         this.cliente.setIdentificaoDoCliente(this.txtIdentificacaoCliente.getText());
@@ -121,13 +120,13 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         TxtComplemento = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtTelefone1 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtIdentificacaoCliente = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         txtSenhaCliente = new javax.swing.JPasswordField();
         txtTelefone2 = new javax.swing.JFormattedTextField();
+        txtTelefone1 = new javax.swing.JFormattedTextField();
 
         jTextField1.setText("jTextField1");
 
@@ -302,14 +301,6 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Telefone");
 
-        txtTelefone1.setBackground(new java.awt.Color(255, 255, 255));
-        txtTelefone1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtTelefone1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefone1ActionPerformed(evt);
-            }
-        });
-
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
@@ -345,6 +336,15 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         txtTelefone2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        txtTelefone1.setBackground(new java.awt.Color(255, 255, 255));
+        txtTelefone1.setForeground(new java.awt.Color(0, 0, 0));
+        try {
+            txtTelefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)# ########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtTelefone1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -458,8 +458,8 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -538,10 +538,6 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtComplementoActionPerformed
 
-    private void txtTelefone1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefone1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefone1ActionPerformed
-
     private void txtIdentificacaoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificacaoClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdentificacaoClienteActionPerformed
@@ -578,7 +574,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNumeroCasa;
     private javax.swing.JTextField txtNumeroDocumento;
     private javax.swing.JPasswordField txtSenhaCliente;
-    private javax.swing.JTextField txtTelefone1;
+    private javax.swing.JFormattedTextField txtTelefone1;
     private javax.swing.JFormattedTextField txtTelefone2;
     // End of variables declaration//GEN-END:variables
 }

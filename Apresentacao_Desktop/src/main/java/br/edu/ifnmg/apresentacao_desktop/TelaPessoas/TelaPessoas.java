@@ -580,7 +580,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        TelaClienteEditar telaCliente = new TelaClienteEditar((new Cliente()));
+        TelaClienteEditar telaCliente = new TelaClienteEditar(new Cliente(), "Novo Cliente");
         jDesktopPane1.add(telaCliente);
         telaCliente.setVisible(true);    
         Util.centralizaInternalFrame(telaCliente, this.getSize());

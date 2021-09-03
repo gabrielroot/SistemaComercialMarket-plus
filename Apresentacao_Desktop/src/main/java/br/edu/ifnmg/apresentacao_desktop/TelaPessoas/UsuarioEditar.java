@@ -32,6 +32,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
     private Usuario usuario;
     private UsuarioRepositorio usuarioRepositorio;
     private Funcionario funcionarioSelecionado;
+    private Util util;
     
     /**
      * Creates new form TelaNovoUsuario
@@ -44,6 +45,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         initComponents();
         setComponentes();
         this.labelTitulo.setText(title);
+        this.util  = new Util();
     }
 
     private void setComponentes(){
@@ -105,6 +107,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         txtSelecionar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -122,7 +125,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
 
         labelTitulo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        labelTitulo.setText("Editar de Usuário");
+        labelTitulo.setText("Editar Usuário");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,6 +175,10 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(54, 54, 54));
         jLabel2.setText("Tipo de Usuário");
+
+        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
+        jTextField2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
@@ -309,9 +316,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Util util = new Util();
-        
-        if(util.abrirJOptionPane("confirma", "Deseja realmente Salvar?")){
+        if(this.util.abrirJOptionPane("confirma", "Deseja realmente Salvar?")){
             if(this.getComponentes()){
                 if(this.usuarioRepositorio.Salvar(this.usuario)){
                     util.abrirJOptionPane("sucesso","");
@@ -352,25 +357,20 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSelecionarMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        DialogConfirma dialog = new DialogConfirma(this.telaPrincipal, true);
-        dialog.setVisible(true);
-        
-        if(dialog.isConfirma()){
+        if(this.util.abrirJOptionPane("confirma","")){
             if(this.getComponentes()){
                 if(this.usuarioRepositorio.Apagar(this.usuario)){
-                    DialogSucesso sucesso = new DialogSucesso(this.telaPrincipal, true);
-                    sucesso.setVisible(true);
+                    util.abrirJOptionPane("sucesso","");
                     this.dispose();
                 }else{
-                    DialogErro erro = new DialogErro(this.telaPrincipal, true, "Erro na Operação.");
-                    erro.setVisible(true);
+                    util.abrirJOptionPane("erro","");
                 }
             }else{
-                DialogErro erro = new DialogErro(this.telaPrincipal, true, "Erro ao carregar usuário");
-                erro.setVisible(true);
+                util.abrirJOptionPane("erro","Erro ao carregar usuário.");
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -385,6 +385,7 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JPasswordField psswdSenha1;
     private javax.swing.JPasswordField psswdSenha2;

@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,14 +34,12 @@ public class Util {
         String mes = String.valueOf(date.get(Calendar.MONTH)).length() == 1?
                 "0" + String.valueOf(date.get(Calendar.MONTH)):
                 String.valueOf(date.get(Calendar.MONTH));
-        System.out.println("" +
-            dia+"/"+
-            mes+"/"+
-            date.get(Calendar.YEAR));
-        return  "" +
+
+        String nascimento = "" +
             dia+"/"+
             mes+"/"+
             date.get(Calendar.YEAR);
+        return nascimento;
     }
     
     /**
@@ -65,12 +64,35 @@ public class Util {
                 (desktopSize.height - jInternalFrameSize.height) / 2);
     }
     
+
     public Icon icone(String caminho){
         Icon img = new ImageIcon(new ImageIcon(getClass().getResource(caminho)).getImage()
         .getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH));
         
         return img;
     }    
+
+    /**
+     *
+     * @param type
+     * "confirma" ->
+     * "permissao" ->
+     * "erro" ->
+     * "sucesso" ->
+     * "informacao"
+     * @param message
+     * Casso informe uma string vazia (""), atribui-se uma mensagem padrão:
+     * "confirma" -> Tem Certeza??
+     * "permissao" -> Você não tem permissão de acesso à este recurso.
+     * "erro" -> Você não tem permissão de acesso à este recurso.
+     * "sucesso" -> Operação bem Sucedida!
+     * "informacao" -> null
+     * @return
+     * "confirma" -> YES == TRUE, NO == FALSE
+     * "permissao" -> TRUE
+     * "erro" -> TRUE
+     * "sucesso" -> TRUE
+     */
     public boolean abrirJOptionPane(String type, String message){
         if(type.equalsIgnoreCase("confirma") && message.length() == 0){
             message = "Tem Certeza??";
@@ -79,7 +101,7 @@ public class Util {
             message = "Você não tem permissão de acesso à este recurso.";
         }
         if(type.equalsIgnoreCase("erro") && message.length() == 0){
-            message = "Erro na Operação.";
+            message = "Ocorreu um erro na operação.";
         }
         if(type.equalsIgnoreCase("sucesso") && message.length() == 0){
             message = "Operação bem Sucedida!";
@@ -99,6 +121,8 @@ public class Util {
             case "sucesso":
                 JOptionPane.showMessageDialog(null, message, "Sucesso!", JOptionPane.PLAIN_MESSAGE, icone("/ok-success.png"));
                 break;
+            case "informacao":
+                JOptionPane.showMessageDialog(null, message,"Informação", JOptionPane.INFORMATION_MESSAGE,icone("/info.png"));
         }
 
         return result;

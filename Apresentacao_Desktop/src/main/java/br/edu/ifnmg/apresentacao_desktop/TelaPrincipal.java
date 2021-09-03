@@ -142,7 +142,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public boolean initDesenvolvedor(){
         if(TelaPrincipal.usuario.getId() == 0){
             TelaPrincipal.usuario.setNome("Desenvolvedor");
-            TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Balconista);
+            TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Gerente);
             System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
             
             return true;
@@ -158,8 +158,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         return true;
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

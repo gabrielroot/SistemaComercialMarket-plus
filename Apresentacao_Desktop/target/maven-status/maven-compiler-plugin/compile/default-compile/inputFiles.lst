@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/TelaPessoas.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogSucesso.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogErro.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/TelaClienteEditar.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPrincipal.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaInicio.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/FornecedorEditar.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/ClienteBuscaAvancada.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogPermissao.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/UsuarioEditar.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Login.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogConfirma.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/Util/Util.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaRelatorios/TelaRelatorios.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/FuncionarioSelecionar.java
-=======
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\ClienteBuscaAvancada.java
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogSucesso.java
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPrincipal.java
@@ -30,4 +13,3 @@ E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desk
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar.java
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\UsuarioEditar.java
 E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas.java
->>>>>>> a5f2899dce27085996ff09629c15c84b2af233cd

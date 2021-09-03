@@ -19,6 +19,8 @@ import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.UsuarioTipo;
+import br.edu.ifnmg.logicaAplicacao.Cliente;
+import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.math.BigDecimal;
@@ -46,6 +48,7 @@ public class Console {
         PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
         UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
         FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
+        ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
         
         System.out.println("-- Buscar usuario com Filtros --");
         for(Usuario usuario : repositorioUsuario.Buscar(new Usuario(
@@ -98,6 +101,7 @@ public class Console {
         FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
         FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
         UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
+        ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
         
         List telefones = new ArrayList<Telefone>();
         telefones.add(new Telefone("3899991111"));
@@ -201,6 +205,28 @@ public class Console {
             UsuarioTipo.Balconista
         );
         
+        Cliente cliente1 = new Cliente("zeroberto", 
+                "1234",
+                "Ze Roberto", 
+                "\"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12\"", 
+                null,
+                Calendar.getInstance(), 
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento,
+                "333333"
+        );
+        
+        Cliente cliente2 = new Cliente("mila", 
+                "1234", 
+                "Kamila", 
+                "\"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12\"",
+                null,
+                Calendar.getInstance(),
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento, 
+                "333333"
+        );
+        
         usuariosAleatorios(repositorioUsuario);
         fornecedoresAleatorios(repositorioFornecedor);
         
@@ -209,7 +235,9 @@ public class Console {
                repositorioUsuario.Salvar(usuarioAdmin) &&
                repositorioUsuario.Salvar(usuarioCaixa) &&
                repositorioUsuario.Salvar(usuarioGerente) &&
-               repositorioUsuario.Salvar(usuarioBalconista);
+               repositorioUsuario.Salvar(usuarioBalconista) &&
+               repositorioCliente.Salvar(cliente1) &&
+               repositorioCliente.Salvar(cliente2);
      }
     
     public static void fornecedoresAleatorios(FornecedorRepositorio repositorioFornecedor){

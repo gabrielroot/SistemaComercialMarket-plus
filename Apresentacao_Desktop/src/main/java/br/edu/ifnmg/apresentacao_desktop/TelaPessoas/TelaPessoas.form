@@ -303,7 +303,7 @@
                                     <Column editable="false" title="ID" type="java.lang.Integer"/>
                                     <Column editable="false" title="Nome" type="java.lang.String"/>
                                     <Column editable="false" title="Endere&#xe7;o" type="java.lang.String"/>
-                                    <Column editable="false" title="Telefone" type="java.lang.String"/>
+                                    <Column editable="false" title="Telefones" type="java.lang.String"/>
                                     <Column editable="false" title="TipoDocumento" type="java.lang.String"/>
                                     <Column editable="false" title="NumeroDocumento" type="java.lang.String"/>
                                   </Table>

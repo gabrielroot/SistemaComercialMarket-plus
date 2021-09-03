@@ -187,7 +187,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Endereço", "Telefone", "TipoDocumento", "NumeroDocumento"
+                "ID", "Nome", "Endereço", "Telefones", "TipoDocumento", "NumeroDocumento"
             }
         ) {
             Class[] types = new Class [] {
@@ -741,9 +741,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private void buscarCliente(){
-        System.out.println(this.txtNomeCliente.getText());
-        cliente.setNome(this.txtNomeCliente.getText());
         
+        cliente.setNome(this.txtNomeCliente.getText());      
         List<Cliente> resultado = this.clienteRepositorio.Buscar(cliente);
         
         DefaultTableModel modelo = new DefaultTableModel();
@@ -761,7 +760,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
             linha.add(resultado.get(i).getId());
             linha.add(resultado.get(i).getNome());
             linha.add(resultado.get(i).getEndereco());
-            linha.add(resultado.get(i).getTelefones());
+            linha.add(resultado.get(i).getTelefones().toString());
             linha.add(resultado.get(i).getTipoDocumento());
             linha.add(resultado.get(i).getNumeroDocumento());
             

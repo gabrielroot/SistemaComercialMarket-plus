@@ -78,6 +78,8 @@ public class Pessoa implements Serializable {
         this.nome = "";
         this.telefones = new ArrayList<>();
         this.tipoPessoa = TipoPessoa.Fisica;
+        this.dataNascimento = Calendar.getInstance();
+        this.dataNascimento.set(1900, 01, 10);
         this.tipoDocumento = TipoDocumento.CertidaoNascimento;
         this.numeroDocumento = "";
         this.versao = 1;

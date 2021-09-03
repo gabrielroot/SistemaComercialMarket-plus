@@ -154,6 +154,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jButton1.setBackground(new java.awt.Color(212, 167, 167));
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(212, 167, 167));
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
@@ -738,6 +743,10 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
         checkPermissions();
     }//GEN-LAST:event_jTabbedPane1MousePressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     private void buscarUsuarios(){
         usuario.setEmail(this.txtEmail.getText());

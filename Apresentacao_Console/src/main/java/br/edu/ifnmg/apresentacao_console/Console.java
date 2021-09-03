@@ -12,15 +12,18 @@ import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
+import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Funcionario;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.enums.UnidadeMedida;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
+import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.math.BigDecimal;
@@ -34,21 +37,43 @@ import java.util.List;
  * @author gabriel
  */
 public class Console {
+    static PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
+    static UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
+    static FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
+    static ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
+    static ProdutoRepositorio repositorioProduto = RepositorioFactory.getProdutoRepositorio();
+    static FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
+    
     public static void main(String[] args){
-        if(popularBD()){
-            System.out.println("Banco de dados populado com SUCESSO!!");
-        }else{
-            System.out.println("FALHA ao popular o banco de dados!!");
-        }
+//        if(popularBD()){
+//            System.out.println("Banco de dados populado com SUCESSO!!");
+//        }else{
+//            System.out.println("FALHA ao popular o banco de dados!!");
+//        }
         
+        Produto produto = new Produto("dd", "DDd", 2, 1, UnidadeMedida.Milimetro, UnidadeMedida.Quilograma, BigDecimal.ZERO, BigDecimal.ZERO);
+        
+        repositorioProduto.Salvar(produto);
         queryPessoa();
     }
     
     public static void queryPessoa(){
-        PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
-        UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
-        FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
-        ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
+        
+        
+        System.out.println("-- Buscar produtos com Filtros --");
+        for(Produto produto : repositorioProduto.Buscar(new Produto(
+                null, 
+                null, 
+                2, 
+                1, 
+                null, 
+                null, 
+                null,
+                null
+        
+        ))){
+            System.out.println("    "+produto.getNome());
+        }
         
         System.out.println("-- Buscar usuario com Filtros --");
         for(Usuario usuario : repositorioUsuario.Buscar(new Usuario(
@@ -97,12 +122,6 @@ public class Console {
     }
      
     public static boolean popularBD(){
-        PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
-        FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
-        FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
-        UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
-        ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
-        
         List telefones = new ArrayList<Telefone>();
         telefones.add(new Telefone("3899991111"));
         telefones.add(new Telefone("3896291131"));

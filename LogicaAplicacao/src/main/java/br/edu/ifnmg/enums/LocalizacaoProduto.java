@@ -7,17 +7,17 @@ package br.edu.ifnmg.enums;
 
 /**
  *
- * @author kesley
+ * @author gabriel
  */
-public enum UnidadeMedida {
-    Quilograma,
-    Grama,
-    Miligrama,
-    Litro,
-    Mililitro,
-    Metro,
-    Centrimetro,
-    Milimetro,
-    Fardo,
-    Pacote
+public enum LocalizacaoProduto {
+    SETOR01,
+    SETOR02,
+    SETOR03,
+    SETOR04,
+    SETOR05,
+    SETOR06,
+    SETOR07,
+    SETOR08,
+    SETOR09,
+    SETOR010
 }

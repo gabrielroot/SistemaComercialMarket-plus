@@ -36,8 +36,11 @@ public class Produto implements Serializable {
     @Column(length=500, nullable=true)
     private String descricao;
     
-    @Column(precision=8, scale=2)
-    private BigDecimal minimoParaAtacado;
+    @Column()
+    private int quantidade;
+
+    @Column()
+    private int minimoParaAtacado;
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
@@ -48,7 +51,7 @@ public class Produto implements Serializable {
     private UnidadeMedida unidadeMedidaVenda;
 
     @Column(precision=8, scale=2)
-    private BigDecimal valorVenda;
+    private BigDecimal valorVarejo;
 
     @Column(precision=8, scale=2)
     private BigDecimal valorCusto;
@@ -56,12 +59,36 @@ public class Produto implements Serializable {
     public Produto() {
         this.id = 0L;
         this.nome = "";
-        this.minimoParaAtacado = new BigDecimal("0.00");
+        this.descricao = "";
+        this.quantidade = 0;
+        this.minimoParaAtacado = 0;
         this.unidadeMedidaCusto = UnidadeMedida.Grama;
         this.unidadeMedidaVenda = UnidadeMedida.Grama;
-        this.valorVenda = new BigDecimal("0.00");
+        this.valorVarejo = new BigDecimal("0.00");
         this.valorCusto = new BigDecimal("0.00");
     }
+
+    public Produto(
+            String nome, 
+            String descricao, 
+            int quantidade, 
+            int minimoParaAtacado, 
+            UnidadeMedida unidadeMedidaCusto, 
+            UnidadeMedida unidadeMedidaVenda, 
+            BigDecimal valorVarejo, 
+            BigDecimal valorCusto
+    ) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.minimoParaAtacado = minimoParaAtacado;
+        this.unidadeMedidaCusto = unidadeMedidaCusto;
+        this.unidadeMedidaVenda = unidadeMedidaVenda;
+        this.valorVarejo = valorVarejo;
+        this.valorCusto = valorCusto;
+    }
+    
+    
     
     public Long getId() { return this.id; }
     public void setId(Long id) { this.id = id; }
@@ -69,20 +96,38 @@ public class Produto implements Serializable {
     public String getNome() { return this.nome; }
     public void setNome(String nome) { this.nome = nome; }
     
-    public BigDecimal getMinimoParaAtacado() { return this.minimoParaAtacado; }
-    public void setMinimoParaAtacado(BigDecimal minimoParaAtacado) { this.minimoParaAtacado = minimoParaAtacado; }
+    public int getMinimoParaAtacado() { return this.minimoParaAtacado; }
+    public void setMinimoParaAtacado(int minimoParaAtacado) { this.minimoParaAtacado = minimoParaAtacado; }
     
     public UnidadeMedida getUnidadeMedidaCusto() { return this.unidadeMedidaCusto; }
     public void setUnidadeMedidaCusto(UnidadeMedida unidadeMedidaCusto) { this.unidadeMedidaCusto = unidadeMedidaCusto; }
     
-    public UnidadeMedida getUnidadeMedidaVenda() { return this.unidadeMedidaVenda; }
+    public UnidadeMedida getUnidadeMedidaVarejo() { return this.unidadeMedidaVenda; }
     public void setUnidadeMedidaVenda(UnidadeMedida unidadeMedidaVenda) { this.unidadeMedidaVenda = unidadeMedidaVenda; }
     
-    public BigDecimal getValorVenda() { return this.valorVenda; }
-    public void setValorVenda(BigDecimal valorVenda) { this.valorVenda = valorVenda; }
+    public BigDecimal getValorVenda() { return this.valorVarejo; }
+    public void setValorVenda(BigDecimal valorVenda) { this.valorVarejo = valorVenda; }
     
     public BigDecimal getValorCusto() { return this.valorCusto; }
     public void setValorCusto(BigDecimal valorCusto) { this.valorCusto = valorCusto; }
+
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+
+    public BigDecimal getValorVarejo() {
+        return valorVarejo;
+    }
+
+    public int getQuantidade() { return quantidade; }
+    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+    
+    
+
+    public void setValorVarejo(BigDecimal valorVarejo) {
+        this.valorVarejo = valorVarejo;
+    }
+    
+    
     
     @Override
     public int hashCode() {

@@ -5,12 +5,12 @@
  */
 package br.edu.ifnmg.repositorioFactory;
 
-import br.edu.ifnmg.auxiliares.CargoFuncionario;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,6 +32,7 @@ public class RepositorioFactory {
     private static FornecedorRepositorio fornecedor;
     private static ClienteRepositorio cliente;
     private static UsuarioRepositorio usuario;
+    private static ProdutoRepositorio produto;
 //    private static CargoFuncionario cargo;
     
     static {
@@ -107,6 +108,14 @@ public class RepositorioFactory {
             usuario = (UsuarioRepositorio) getInstancia(nomeclasse);
         }
         return usuario;
+    }
+    
+    public static ProdutoRepositorio getProdutoRepositorio() {
+        if(produto == null){
+            String nomeclasse = propriedades.getProperty("ProdutoRepositorio");
+            produto = (ProdutoRepositorio) getInstancia(nomeclasse);
+        }
+        return produto;
     }
     
     /*public static CargoFuncionario getCargoFuncionario() {

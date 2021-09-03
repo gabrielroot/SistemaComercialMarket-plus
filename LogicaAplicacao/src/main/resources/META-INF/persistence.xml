@@ -5,6 +5,7 @@
     <class>br.edu.ifnmg.auxiliares.CargoFuncionario</class>
     <class>br.edu.ifnmg.auxiliares.Telefone</class>
     <class>br.edu.ifnmg.logicaAplicacao.Cliente</class>
+    <class>br.edu.ifnmg.logicaAplicacao.Estoque</class>
     <class>br.edu.ifnmg.logicaAplicacao.Fornecedor</class>
     <class>br.edu.ifnmg.logicaAplicacao.Funcionario</class>
     <class>br.edu.ifnmg.logicaAplicacao.Pagamento</class>
@@ -16,6 +17,7 @@
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="market+"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

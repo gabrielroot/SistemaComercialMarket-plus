@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
+import Util.Util;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
@@ -19,23 +20,24 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author Murilo
  */
 public class TelaClienteEditar extends javax.swing.JInternalFrame {
 
-    Cliente cliente;
-    ClienteRepositorio clienteRepositorio;
+    private Cliente cliente;
+    private ClienteRepositorio clienteRepositorio;
     
     /**
      * Creates new form TelaCliente
+     * @param cliente
      */
-    public TelaClienteEditar(Cliente cliente) {
+    public TelaClienteEditar(Cliente cliente, String titulo) {
         this.cliente = cliente;
         this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
         initComponents();
+        this.lblTitulo.setText(titulo);
     }
     
     private void setComponentes(){
@@ -47,6 +49,15 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         this.txtBairro.setText(enderecoCompleto.nextToken(","));
         this.TxtComplemento.setText(enderecoCompleto.nextToken(","));
         this.lblNome.setText(this.cliente.getNome());
+        
+        if(this.cliente.getTelefones().size() > 0){
+            this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
+            
+            if(this.cliente.getTelefones().size() > 1){
+                this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
+            }
+        }
+        
     }
     
     private void getComponentes(){
@@ -60,19 +71,15 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         endereco.append(", ");
         endereco.append(TxtComplemento.getText());
         
-        ArrayList<Telefone> telefones = new ArrayList();
-        
+        ArrayList<Telefone> telefones = new ArrayList();     
         Telefone telefone1 = new Telefone(this.txtTelefone1.getText());
         Telefone telefone2 = new Telefone(this.txtTelefone2.getText());
         telefones.add(telefone1);
         telefones.add(telefone2);
         
-        StringTokenizer strData = new StringTokenizer(this.txtDataNascimento.getText(),"/");
-        
         Calendar data = Calendar.getInstance();
-   
-        //data.set(ano, mes, dia);
-                 
+        data = Util.getCalendarDateFromString(this.txtDataNascimento.getText());
+        
         this.cliente.setNome(this.txtNome.getText());
         this.cliente.setDataNascimento(data);
         this.cliente.setEndereco(endereco.toString());
@@ -102,7 +109,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         txtDataNascimento = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -164,9 +171,9 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(140, 71, 71));
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Cadastro Cliente");
+        lblTitulo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setText("Cadastro Cliente");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -174,14 +181,14 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(lblTitulo)
                 .addGap(285, 285, 285))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblTitulo)
                 .addGap(19, 19, 19))
         );
 
@@ -299,7 +306,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Telefone");
+        jLabel11.setText("Telefone 1");
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -549,7 +556,6 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbxTipoDocumento;
     private javax.swing.JComboBox<String> cbxTipoPessoa;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -566,6 +572,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtDataNascimento;
     private javax.swing.JTextField txtEndereco;

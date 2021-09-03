@@ -7,7 +7,9 @@ package br.edu.ifnmg.persistencia;
 
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
+import java.util.Hashtable;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -21,7 +23,43 @@ public class FornecedorDAO extends DataAccessObject<Fornecedor> implements Forne
 
     @Override
     public List<Fornecedor> Buscar(Fornecedor obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql = "SELECT fornecedor FROM Fornecedor fornecedor";
+        String filtros = "";
+        Hashtable<String, Object> parametros = new Hashtable<>();
+        
+        if(obj != null){
+            if(obj.getSegmento() != null){
+                filtros += "fornecedor.segmento = :segmento";
+                parametros.put("segmento", obj.getSegmento() );
+            }
+            
+            if(obj.getNome() != null && obj.getNome().length() > 0){
+                if(filtros.length() > 0) filtros += " and ";
+                filtros += "fornecedor.nome LIKE :nome";
+                parametros.put("nome", obj.getNome() + "%");
+            }
+
+            if(obj.getId() != null && obj.getId() > 0){
+                if(filtros.length() > 0) filtros += " and ";
+                filtros += "fornecedor.id LIKE :id";
+                parametros.put("id", obj.getId()+ "%");
+            }
+
+        }
+        
+        if(filtros.length() > 0){
+            jpql = jpql + " WHERE " + filtros;
+        }
+        
+        jpql += " ORDER BY fornecedor.nome";
+        
+        Query consulta = this.manager.createQuery(jpql);
+        
+        for(String chave : parametros.keySet()){
+            consulta.setParameter(chave, parametros.get(chave));
+        }
+        
+        return consulta.getResultList();
     }
 
 }

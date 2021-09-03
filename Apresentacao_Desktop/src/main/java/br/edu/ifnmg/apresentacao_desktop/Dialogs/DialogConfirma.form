@@ -65,7 +65,7 @@
                   <Component id="jLabel1" alignment="0" pref="280" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="94" max="-2" attributes="0"/>
+                      <Component id="btnNao" min="-2" pref="94" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="94" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -80,7 +80,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jButton1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="btnNao" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
@@ -117,7 +117,7 @@
                 <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Tem certeza??&lt;/p&gt;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnNao">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="a3" green="57" red="16" type="rgb"/>
@@ -131,7 +131,7 @@
                 <Property name="text" type="java.lang.String" value="N&#xc3;O"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNaoActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

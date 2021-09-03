@@ -609,13 +609,13 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         case 1: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_FUNCIONARIOS")){
                     this.jTabbedPane1.setSelectedIndex(0);
-                    util.abrirJOptionPane("permissao","");
+                    util.abrirJOptionPane("permissao","",this);
                 }
                 break;
         case 2: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_FORNECEDORES")){
                     this.jTabbedPane1.setSelectedIndex(0);
-                    util.abrirJOptionPane("permissao","");
+                    util.abrirJOptionPane("permissao","",this);
                 }
                 if(!(boolean) tabClicked.get(this.jTabbedPane1.getSelectedIndex())){
                     tabClicked.set(this.jTabbedPane1.getSelectedIndex(), true);
@@ -628,7 +628,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         case 3: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_USUARIOS")){
                     this.jTabbedPane1.setSelectedIndex(0);
-                    util.abrirJOptionPane("permissao","");
+                    util.abrirJOptionPane("permissao","",this);
                 }
                 if(!(boolean) tabClicked.get(this.jTabbedPane1.getSelectedIndex())){
                     tabClicked.set(this.jTabbedPane1.getSelectedIndex(), true);

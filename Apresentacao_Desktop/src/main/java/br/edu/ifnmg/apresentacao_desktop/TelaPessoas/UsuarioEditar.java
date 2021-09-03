@@ -6,13 +6,7 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import Util.Util;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogConfirma;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogErro;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogSucesso;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
-import br.edu.ifnmg.enums.FuncionarioSituacao;
-import br.edu.ifnmg.enums.TipoDocumento;
-import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Funcionario;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
@@ -316,16 +310,16 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(this.util.abrirJOptionPane("confirma", "Deseja realmente Salvar?")){
+        if(this.util.abrirJOptionPane("confirma", "Deseja realmente Salvar?",this)){
             if(this.getComponentes()){
                 if(this.usuarioRepositorio.Salvar(this.usuario)){
-                    util.abrirJOptionPane("sucesso","");
+                    util.abrirJOptionPane("sucesso","",this);
                     this.dispose();
                 }else{
-                    util.abrirJOptionPane("erro","");
+                    util.abrirJOptionPane("erro","",this);
                 }
             }else{
-                util.abrirJOptionPane("erro","Preencha todos os campos!");
+                util.abrirJOptionPane("erro","Preencha todos os campos!",this);
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -357,16 +351,16 @@ public class UsuarioEditar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSelecionarMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if(this.util.abrirJOptionPane("confirma","")){
+        if(this.util.abrirJOptionPane("confirma","",this)){
             if(this.getComponentes()){
                 if(this.usuarioRepositorio.Apagar(this.usuario)){
-                    util.abrirJOptionPane("sucesso","");
+                    util.abrirJOptionPane("sucesso","",this);
                     this.dispose();
                 }else{
-                    util.abrirJOptionPane("erro","");
+                    util.abrirJOptionPane("erro","",this);
                 }
             }else{
-                util.abrirJOptionPane("erro","Erro ao carregar usuário.");
+                util.abrirJOptionPane("erro","Erro ao carregar usuário.",this);
             }
         }
     }//GEN-LAST:event_jButton4ActionPerformed

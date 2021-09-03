@@ -93,7 +93,7 @@ public class Util {
      * "erro" -> TRUE
      * "sucesso" -> TRUE
      */
-    public boolean abrirJOptionPane(String type, String message){
+    public boolean abrirJOptionPane(String type, String message,JInternalFrame frame){
         if(type.equalsIgnoreCase("confirma") && message.length() == 0){
             message = "Tem Certeza??";
         }
@@ -110,19 +110,19 @@ public class Util {
         boolean result = true;
         switch(type){
             case "confirma":
-                result = JOptionPane.showInternalConfirmDialog(null, message, "Confirmação", JOptionPane.YES_NO_OPTION, 0, icone("/question.png")) == JOptionPane.YES_OPTION;
+                result = JOptionPane.showInternalConfirmDialog(frame, message, "Confirmação", JOptionPane.YES_NO_OPTION, 0, icone("/question.png")) == JOptionPane.YES_OPTION;
                 break;
             case "permissao":
-                JOptionPane.showMessageDialog(null, message, "Title", JOptionPane.PLAIN_MESSAGE, icone("/no-permission.png"));
+                JOptionPane.showMessageDialog(frame, message, "Title", JOptionPane.PLAIN_MESSAGE, icone("/no-permission.png"));
                 break;
             case "erro":
-                JOptionPane.showMessageDialog(null, message, "Oops!", JOptionPane.PLAIN_MESSAGE, icone("/error.png"));
+                JOptionPane.showMessageDialog(frame, message, "Oops!", JOptionPane.PLAIN_MESSAGE, icone("/error.png"));
                 break;
             case "sucesso":
-                JOptionPane.showMessageDialog(null, message, "Sucesso!", JOptionPane.PLAIN_MESSAGE, icone("/ok-success.png"));
+                JOptionPane.showMessageDialog(frame, message, "Sucesso!", JOptionPane.PLAIN_MESSAGE, icone("/ok-success.png"));
                 break;
             case "informacao":
-                JOptionPane.showMessageDialog(null, message,"Informação", JOptionPane.INFORMATION_MESSAGE,icone("/info.png"));
+                JOptionPane.showMessageDialog(frame, message,"Informação", JOptionPane.INFORMATION_MESSAGE,icone("/info.png"));
         }
 
         return result;

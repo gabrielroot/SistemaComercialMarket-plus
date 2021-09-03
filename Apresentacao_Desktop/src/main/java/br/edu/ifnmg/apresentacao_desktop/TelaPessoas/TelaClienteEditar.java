@@ -547,38 +547,21 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(util.abrirJOptionPane("confirma", "Deseja realmente salvar o cadastro do cliente?")){
-            this.getComponentes();
-            if(clienteRepositorio.Salvar(this.cliente)){
-                util.abrirJOptionPane("sucesso", "Cliente salvo com Sucesso!");
-                //depois de comfirmar, deve se implementar para que todos os dados sejam apagados da tela.
-            }else{
-                util.abrirJOptionPane("erro", "Erro ao salvar!");
-            } 
-            
-        }else{
-            util.abrirJOptionPane("informacao", "Operação cancelada.");
-        }
-        
-       /* DialogConfirma dialog = new DialogConfirma(this.telaPrincipal, true);
-        dialog.setVisible(true);
-        
-        if(dialog.isConfirma()){
+        if(util.abrirJOptionPane("confirma", "Deseja realmente salvar o cadastro do cliente?",this) ){
             if(this.getComponentes()){
-                if(this.clienteRepositorio.Salvar(this.cliente)){
-                    DialogSucesso sucesso = new DialogSucesso(this.telaPrincipal, true);
-                    sucesso.setVisible(true);
-                    this.dispose();
+            
+                if(clienteRepositorio.Salvar(this.cliente)){
+                    util.abrirJOptionPane("sucesso", "Cliente salvo com Sucesso!",this);
+                    //depois de comfirmar, deve se implementar para que todos os dados sejam apagados da tela.
                 }else{
-                    DialogErro erro = new DialogErro(this.telaPrincipal, true, "Erro na Operação.");
-                    erro.setVisible(true);
-                }
+                    util.abrirJOptionPane("erro", "Erro ao salvar!",this);
+                } 
             }else{
-                DialogErro erro = new DialogErro(this.telaPrincipal, true, "Preencha todos os campos!");
-                erro.setVisible(true);
+                util.abrirJOptionPane("erro", "Preencha todos os campos!",this);
             }
-        }
-    }*/
+        }else{
+            util.abrirJOptionPane("informacao", "Operação cancelada.",this);
+        }  
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 

@@ -286,7 +286,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             TelaRelatorios telaRelatorios = new TelaRelatorios();
             this.renderJInternalFrame(telaRelatorios);
         }else{
-            util.abrirJOptionPane("permissao", "");
+            util.abrirJOptionPane("permissao", "",null);
         }
     }//GEN-LAST:event_menuRelatoriosMousePressed
 

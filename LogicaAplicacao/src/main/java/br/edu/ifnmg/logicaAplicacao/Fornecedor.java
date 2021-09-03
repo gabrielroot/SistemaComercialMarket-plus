@@ -10,7 +10,7 @@ import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -51,7 +51,7 @@ public class Fornecedor extends Pessoa implements Serializable {
         String nome, 
         String endereco, 
         List<Telefone> telefones, 
-        Date dataNascimento, 
+        Calendar dataNascimento, 
         TipoPessoa tipoPessoa, 
         TipoDocumento tipoDocumento, 
         String numeroDocumento, 

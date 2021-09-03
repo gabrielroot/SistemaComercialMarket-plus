@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
+import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 
@@ -14,6 +15,7 @@ import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
  */
 public class TelaInicio extends javax.swing.JInternalFrame {
     private TelaPrincipal telaPrincipal;
+    private  Util util;
     /**
      * Creates new form telaPrincipal
      * @param tela
@@ -23,6 +25,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         this.telaPrincipal = tela;
         this.labelUsuario.setText(telaPrincipal.getUsuario().getNome());
         this.labelCargoUsuario.setText("[ "+telaPrincipal.getUsuario().getUsuarioTipo().toString()+" ]");
+        this.util = new Util();
     }
 
     /**
@@ -851,15 +854,19 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
         TelaPessoas pessoas = new TelaPessoas(this.telaPrincipal);
-        if(telaPrincipal.temPermissao("TELA_PESSOAS", true)){
+        if(telaPrincipal.temPermissao("TELA_PESSOAS")){
             this.telaPrincipal.renderJInternalFrame(pessoas);
+        }else{
+            util.abrirJOptionPane("permissao", "");
         }
     }//GEN-LAST:event_jPanel12MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         TelaRelatorios telaRelatorios = new TelaRelatorios();
-        if(this.telaPrincipal.temPermissao("TELA_RELATORIOS", true)){
+        if(this.telaPrincipal.temPermissao("TELA_RELATORIOS")){
             this.telaPrincipal.renderJInternalFrame(telaRelatorios);
+        }else{
+            util.abrirJOptionPane("permissao", "");
         }
     }//GEN-LAST:event_jPanel4MouseClicked
 

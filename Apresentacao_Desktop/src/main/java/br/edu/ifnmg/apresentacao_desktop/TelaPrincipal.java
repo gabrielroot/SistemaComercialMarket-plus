@@ -5,18 +5,19 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogPermissao;
+import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
-import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
 /**
@@ -31,23 +32,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private static JInternalFrame currentFrame;
     private static Usuario usuario;
     private static Map<UsuarioTipo, ArrayList<String>> permissions;
+    private  Util util;
     
     public TelaPrincipal(Usuario usuario) {
         initComponents();
        
-        this.usuario = usuario;
+        TelaPrincipal.usuario = usuario;
+        
         initDesenvolvedor();
    
-        this.permissions = new HashMap<>();
-        this.initRemovePermissions();
+        TelaPrincipal.permissions = new HashMap<>();
+        TelaPrincipal.initRemovePermissions();
         
         //Centralizando a tela        
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        this.setTitle("MARKET +");
+        this.setTitle("Market +");
+        
+        this.util = new Util();
         
         TelaInicio telaPrincipal = new TelaInicio(this);
-        this.currentFrame = telaPrincipal;
+        TelaPrincipal.currentFrame = telaPrincipal;
         this.renderJInternalInicio(telaPrincipal);
     }
     
@@ -61,8 +66,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public static Usuario getUsuario() { return usuario; }
     public static void setUsuario(Usuario usuario) { TelaPrincipal.usuario = usuario; }
 
-    
-    
+
     public void renderJInternalInicio(JInternalFrame frame){
         this.add(frame);
         frame.setVisible(true);
@@ -138,18 +142,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public boolean initDesenvolvedor(){
         if(TelaPrincipal.usuario.getId() == 0){
             TelaPrincipal.usuario.setNome("Desenvolvedor");
-            TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Gerente);
+            TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Balconista);
             System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
             
             return true;
         }
         return false;
     }
-    public boolean temPermissao(String query, boolean bloquearPai){
+    public boolean temPermissao(String query){
         for(String permissaoNegada : permissions.get(TelaPrincipal.usuario.getUsuarioTipo())){
             if(permissaoNegada.equals(query)){
-                DialogPermissao acesso = new DialogPermissao(this, bloquearPai);
-                acesso.setVisible(true);
                 return false;
             }
         }
@@ -157,11 +159,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return true;
     }
     
-    public static void centralizaInternalFrame(JInternalFrame frame,Dimension desktopSize) {
-        Dimension jInternalFrameSize = frame.getSize();
-        frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-                (desktopSize.height - jInternalFrameSize.height) / 2);
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -272,7 +269,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPessoasActionPerformed
-        if(temPermissao("TELA_PESSOAS", true)){
+        if(temPermissao("TELA_PESSOAS")){
             TelaPessoas pessoas = new TelaPessoas(this);
             this.renderJInternalFrame(pessoas);
         }
@@ -286,9 +283,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuRelatoriosMouseClicked
 
     private void menuRelatoriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMousePressed
-        if(temPermissao("TELA_RELATORIOS", true)){
+        if(temPermissao("TELA_RELATORIOS")){
             TelaRelatorios telaRelatorios = new TelaRelatorios();
             this.renderJInternalFrame(telaRelatorios);
+        }else{
+            util.abrirJOptionPane("permissao", "");
         }
     }//GEN-LAST:event_menuRelatoriosMousePressed
 

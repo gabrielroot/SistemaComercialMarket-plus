@@ -6,6 +6,9 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogConfirma;
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogErro;
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogSucesso;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
@@ -60,7 +63,22 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         
     }
     
-    private void getComponentes(){
+    private boolean getComponentes(){
+        if(
+                this.txtNome.getText() == null ||
+                this.txtDataNascimento.getText() == null ||
+                this.txtEndereco.getText() == null ||
+                this.txtNumeroCasa.getText() == null ||
+                this.txtBairro.getText() == null ||
+                this.txtNumeroDocumento.getText() == null ||
+                this.txtIdentificacaoCliente.getText() == null ||
+                this.txtSenhaCliente.getPassword() == null ||
+                this.txtTelefone1.getValue() == null &&
+                this.txtTelefone2.getValue() == null
+          ){
+            return false;
+        }
+        
         StringBuilder endereco = new StringBuilder();
      
         endereco.append(txtEndereco.getText());
@@ -85,12 +103,19 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         this.cliente.setEndereco(endereco.toString());
         this.cliente.setTipoPessoa(TipoPessoa.values()[this.cbxTipoPessoa.
                 getSelectedIndex()]);
+        for (TipoDocumento tipoDocumento : TipoDocumento.values()) {
+            if(tipoDocumento.toString() == this.cbxTipoDocumento.getSelectedItem().toString()){
+                this.cliente.setTipoDocumento(tipoDocumento);
+            }
+        }
+        
         this.cliente.setTipoDocumento(TipoDocumento.values()[this.cbxTipoDocumento.
                 getSelectedIndex()]);
         this.cliente.setNumeroDocumento(txtNumeroDocumento.getText());
         this.cliente.setTelefones(telefones);
         this.cliente.setIdentificaoDoCliente(this.txtIdentificacaoCliente.getText());
         this.cliente.setSenha(String.valueOf(this.txtSenhaCliente.getPassword()));
+        return true;
     }
 
     /**
@@ -534,6 +559,26 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Operação cancelada","Informação", JOptionPane.INFORMATION_MESSAGE);
         }
+        
+       /* DialogConfirma dialog = new DialogConfirma(this.telaPrincipal, true);
+        dialog.setVisible(true);
+        
+        if(dialog.isConfirma()){
+            if(this.getComponentes()){
+                if(this.clienteRepositorio.Salvar(this.cliente)){
+                    DialogSucesso sucesso = new DialogSucesso(this.telaPrincipal, true);
+                    sucesso.setVisible(true);
+                    this.dispose();
+                }else{
+                    DialogErro erro = new DialogErro(this.telaPrincipal, true, "Erro na Operação.");
+                    erro.setVisible(true);
+                }
+            }else{
+                DialogErro erro = new DialogErro(this.telaPrincipal, true, "Preencha todos os campos!");
+                erro.setVisible(true);
+            }
+        }
+    }*/
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 

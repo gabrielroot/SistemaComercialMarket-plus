@@ -36,7 +36,7 @@ public class CargoFuncionario implements Serializable {
     @Column(precision=8, scale=2)
     private BigDecimal salario;
     
-     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "cargo")
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "cargo")
     private List<Funcionario> funcionarios;
 
      

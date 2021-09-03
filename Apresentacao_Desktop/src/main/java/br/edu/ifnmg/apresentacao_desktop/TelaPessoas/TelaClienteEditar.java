@@ -31,6 +31,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
 
     private Cliente cliente;
     private ClienteRepositorio clienteRepositorio;
+    private Util util;
     
     /**
      * Creates new form TelaCliente
@@ -41,6 +42,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
         initComponents();
         this.lblTitulo.setText(titulo);
+        this.util = new Util();
     }
     
     private void setComponentes(){
@@ -545,19 +547,17 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(JOptionPane.showConfirmDialog(this,"Deseja realmente salvar o cadastro do cliente?", 
-                "Confirmação",JOptionPane.YES_NO_OPTION)
-                == JOptionPane.YES_OPTION){
+        if(util.abrirJOptionPane("confirma", "Deseja realmente salvar o cadastro do cliente?")){
             this.getComponentes();
             if(clienteRepositorio.Salvar(this.cliente)){
-                JOptionPane.showMessageDialog(this,"Cliente salvo com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                util.abrirJOptionPane("sucesso", "Cliente salvo com Sucesso!");
                 //depois de comfirmar, deve se implementar para que todos os dados sejam apagados da tela.
             }else{
-                JOptionPane.showMessageDialog(this,"Erro ao salvar!", "Erro!", JOptionPane.ERROR_MESSAGE);
+                util.abrirJOptionPane("erro", "Erro ao salvar!");
             } 
             
         }else{
-            JOptionPane.showMessageDialog(this, "Operação cancelada","Informação", JOptionPane.INFORMATION_MESSAGE);
+            util.abrirJOptionPane("informacao", "Operação cancelada.");
         }
         
        /* DialogConfirma dialog = new DialogConfirma(this.telaPrincipal, true);

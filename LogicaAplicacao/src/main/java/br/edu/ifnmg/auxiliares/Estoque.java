@@ -43,6 +43,9 @@ public class Estoque implements Serializable {
     private LocalizacaoProduto localizacaoProduto;
     
     @Column()
+    private int quantidade;
+    
+    @Column()
     private int quantidadeMinimaDesejada;
     
     @Temporal(TemporalType.DATE)
@@ -56,15 +59,17 @@ public class Estoque implements Serializable {
 
     public Estoque() {
         this.id = 0L;
-        this.localizacaoProduto = LocalizacaoProduto.SETOR01;
-        this.quantidadeMinimaDesejada = 100;
-        this.dataAquisicao = Calendar.getInstance();
-        this.dataValidade = Calendar.getInstance();
+        this.localizacaoProduto = null;
+        this.quantidade = -1;
+        this.quantidadeMinimaDesejada = -1;
+        this.dataAquisicao = null;
+        this.dataValidade = null;
         this.produto = new ArrayList<>();
     }
 
-    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade) {
+    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade) {
         this.localizacaoProduto = localizacaoProduto;
+        this.quantidade = quantidade;
         this.quantidadeMinimaDesejada = quantidadeMinimaDesejada;
         this.dataAquisicao = dataAquisicao;
         this.dataValidade = dataValidade;
@@ -88,8 +93,9 @@ public class Estoque implements Serializable {
     public List<Produto> getProduto() { return produto; }
     public void setProduto(List<Produto> produto) { this.produto = produto; }
 
-    
-    
+    public int getQuantidade() { return quantidade; }
+    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+
     @Override
     public int hashCode() {
         int hash = 0;

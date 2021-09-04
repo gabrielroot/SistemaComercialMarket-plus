@@ -64,10 +64,30 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 parametros.put("va", obj.getValorAtacado());
             }
             
-            if(obj.getEstoque() != null && obj.getEstoque().getDataValidade() != null){
+            if(obj.getQuantidade() > -1){
                 if(filtros.length() > 0) filtros += " AND ";
-                filtros += "produto.estoque.dataValidade = :validade";
-                parametros.put("validade", obj.getEstoque().getDataValidade());
+                filtros += "produto.quantidade = :qt";
+                parametros.put("qt", obj.getQuantidade());
+            }
+            
+            if(obj.getEstoque() != null){
+                if(obj.getEstoque().getDataValidade() != null){
+                    if(filtros.length() > 0) filtros += " AND ";
+                    filtros += "produto.estoque.dataValidade = :validade";
+                    parametros.put("validade", obj.getEstoque().getDataValidade());
+                }
+
+                if(obj.getEstoque().getQuantidade() > -1){
+                    if(filtros.length() > 0) filtros += " AND ";
+                    filtros += "produto.estoque.quantidade = :qtde";
+                    parametros.put("qtde", obj.getEstoque().getQuantidade());
+                }
+
+                if(obj.getEstoque().getLocalizacaoProduto() != null){
+                    if(filtros.length() > 0) filtros += " AND ";
+                    filtros += "produto.estoque.localizacaoProduto = :local";
+                    parametros.put("local", obj.getEstoque().getLocalizacaoProduto());
+                }
             }
         }
         

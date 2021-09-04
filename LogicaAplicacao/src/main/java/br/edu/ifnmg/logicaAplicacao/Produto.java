@@ -72,10 +72,10 @@ public class Produto implements Serializable {
         this.id = 0L;
         this.nome = "";
         this.descricao = "";
-        this.quantidade = 0;
-        this.minimoParaAtacado = 0;
-        this.unidadeMedidaCusto = UnidadeMedida.Grama;
-        this.unidadeMedidaVenda = UnidadeMedida.Grama;
+        this.quantidade = -1;
+        this.minimoParaAtacado = -1;
+        this.unidadeMedidaCusto = null;
+        this.unidadeMedidaVenda = null;
         this.valorVarejo = new BigDecimal("0.00");
         this.valorAtacado= new BigDecimal("0.00");
         this.valorCusto = new BigDecimal("0.00");
@@ -101,7 +101,7 @@ public class Produto implements Serializable {
         this.unidadeMedidaCusto = unidadeMedidaCusto;
         this.unidadeMedidaVenda = unidadeMedidaVenda;
         this.valorVarejo = valorVarejo;
-        this.valorCusto = valorAtacado;
+        this.valorAtacado = valorAtacado;
         this.valorCusto = valorCusto;
         this.estoque = estoque;
     }

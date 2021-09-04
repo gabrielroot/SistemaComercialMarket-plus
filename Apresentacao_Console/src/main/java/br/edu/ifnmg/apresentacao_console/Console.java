@@ -62,16 +62,6 @@ public class Console {
         
         System.out.println("-- Buscar produtos com Filtros --");
         for(Produto produto : repositorioProduto.Buscar(new Produto(
-                "Sandália", 
-                null, 
-                20, 
-                5, 
-                null, 
-                UnidadeMedida.Unidade, 
-                null,
-                null,
-                null,
-                null
         
         ))){
             System.out.println("    "+produto.getNome());
@@ -368,7 +358,7 @@ public class Console {
     
     public static void produtosAleatorios(){
         for(int i=0; i<50; i++){
-            Estoque estoque = new Estoque(LocalizacaoProduto.values()[(int) (Math.random()*10)], (int) (Math.random()*200), Calendar.getInstance(), Calendar.getInstance());
+            Estoque estoque = new Estoque(LocalizacaoProduto.values()[(int) (Math.random()*10)], (int) (Math.random()*60), (int) (Math.random()*200), Calendar.getInstance(), Calendar.getInstance());
 
             Produto produto = new Produto("Sandália Havaianas"+((int) (Math.random()*10)+10)+" Polegadas ["+i+"]", 
                 "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 

@@ -1,16 +1,17 @@
 
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.enums.TipoDocumento;
+import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 
 @Entity
@@ -29,9 +30,22 @@ public class Cliente extends Pessoa implements Serializable  {
     
     public Cliente() {
         super();
-        
         this.identificaoDoCliente = "";
         this.senha = "";
+    }
+
+    public Cliente(String identificaoDoCliente, 
+            String senha, 
+            String nome, 
+            String endereco,
+            List<Telefone> telefones,
+            Calendar dataNascimento, 
+            TipoPessoa tipoPessoa, 
+            TipoDocumento tipoDocumento, 
+            String numeroDocumento) {
+        super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
+        this.identificaoDoCliente = identificaoDoCliente;
+        this.senha = senha;
     }
     
     public String getIdentificaoDoCliente() { return this.identificaoDoCliente; }
@@ -39,8 +53,6 @@ public class Cliente extends Pessoa implements Serializable  {
     public void setIdentificaoDoCliente(String identificaoDoCliente) { this.identificaoDoCliente = identificaoDoCliente; }
 
     public void setSenha(String senha) { this.senha = senha; }
-
-
 
     @Override
     public int hashCode() {

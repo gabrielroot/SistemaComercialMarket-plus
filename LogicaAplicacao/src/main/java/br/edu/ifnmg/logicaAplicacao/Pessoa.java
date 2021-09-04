@@ -106,6 +106,27 @@ public class Pessoa implements Serializable {
         this.versao = 1;
         
     }
+    
+    public Pessoa(
+            Long id,
+            String nome, 
+            String endereco, 
+            List<Telefone> telefones, 
+            Calendar dataNascimento, 
+            TipoPessoa tipoPessoa, 
+            TipoDocumento tipoDocumento, 
+            String numeroDocumento
+        ){
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefones = telefones;
+        this.dataNascimento = dataNascimento;
+        this.tipoPessoa = tipoPessoa;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.versao = 1;
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

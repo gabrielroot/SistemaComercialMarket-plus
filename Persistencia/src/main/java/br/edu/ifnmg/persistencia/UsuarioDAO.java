@@ -34,10 +34,16 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
                 parametros.put("tipo", obj.getUsuarioTipo() );
             }
             
-            if(obj.getEmail() != null && obj.getEmail().length() > 0){
+            if(obj.getNome() != null && obj.getNome().length() > 0){
                 if(filtros.length() > 0) filtros += " and ";
                 filtros += "usuario.nome LIKE :nome";
-                parametros.put("nome", obj.getEmail() + "%");
+                parametros.put("nome", obj.getNome() + "%");
+            }
+            
+            if(obj.getEmail() != null && obj.getEmail().length() > 0){
+                if(filtros.length() > 0) filtros += " and ";
+                filtros += "usuario.email LIKE :email";
+                parametros.put("email", obj.getEmail() + "%");
             }
 
             if(obj.getId() != null && obj.getId() > 0){
@@ -51,6 +57,8 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
         if(filtros.length() > 0){
             jpql = jpql + " WHERE " + filtros;
         }
+        
+        jpql += " ORDER BY usuario.nome";
         
         Query consulta = this.manager.createQuery(jpql);
         
@@ -70,8 +78,7 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
         Usuario user = null;
         
         try{
-            List<Usuario> users = null;
-            users = sql.getResultList();
+            List<Usuario> users = sql.getResultList();
             if(users.size() > 0){
                 user = (Usuario) users.get(0);
             }

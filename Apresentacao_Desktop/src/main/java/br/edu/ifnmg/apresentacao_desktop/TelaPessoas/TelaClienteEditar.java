@@ -5,38 +5,44 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
+import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogConfirma;
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogErro;
+import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogSucesso;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
-import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author Murilo
  */
 public class TelaClienteEditar extends javax.swing.JInternalFrame {
 
-    Cliente cliente;
-    ClienteRepositorio clienteRepositorio;
+    private Cliente cliente;
+    private ClienteRepositorio clienteRepositorio;
+    private Util util;
     
     /**
      * Creates new form TelaCliente
+     * @param cliente
      */
-    public TelaClienteEditar(Cliente cliente) {
+    public TelaClienteEditar(Cliente cliente, String titulo) {
         this.cliente = cliente;
         this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
         initComponents();
+        this.lblTitulo.setText(titulo);
+        this.util = new Util();
     }
     
     private void setComponentes(){
@@ -48,9 +54,33 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         this.txtBairro.setText(enderecoCompleto.nextToken(","));
         this.TxtComplemento.setText(enderecoCompleto.nextToken(","));
         this.lblNome.setText(this.cliente.getNome());
+        
+        if(this.cliente.getTelefones().size() > 0){
+            this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
+            
+            if(this.cliente.getTelefones().size() > 1){
+                this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
+            }
+        }
+        
     }
     
-    private void getComponentes(){
+    private boolean getComponentes(){
+        if(
+                this.txtNome.getText() == null ||
+                this.txtDataNascimento.getText() == null ||
+                this.txtEndereco.getText() == null ||
+                this.txtNumeroCasa.getText() == null ||
+                this.txtBairro.getText() == null ||
+                this.txtNumeroDocumento.getText() == null ||
+                this.txtIdentificacaoCliente.getText() == null ||
+                this.txtSenhaCliente.getPassword() == null ||
+                this.txtTelefone1.getValue() == null &&
+                this.txtTelefone2.getValue() == null
+          ){
+            return false;
+        }
+        
         StringBuilder endereco = new StringBuilder();
      
         endereco.append(txtEndereco.getText());
@@ -61,23 +91,33 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         endereco.append(", ");
         endereco.append(TxtComplemento.getText());
         
-        ArrayList<Telefone> telefones = new ArrayList();
-        
+        ArrayList<Telefone> telefones = new ArrayList();     
         Telefone telefone1 = new Telefone(this.txtTelefone1.getText());
         Telefone telefone2 = new Telefone(this.txtTelefone2.getText());
         telefones.add(telefone1);
         telefones.add(telefone2);
-                
+        
+        Calendar data = Calendar.getInstance();
+        data = Util.getCalendarDateFromString(this.txtDataNascimento.getText());
         
         this.cliente.setNome(this.txtNome.getText());
-       // this.cliente.setDataNascimento();
+        this.cliente.setDataNascimento(data);
         this.cliente.setEndereco(endereco.toString());
-        this.cliente.setTipoPessoa(TipoPessoa.Fisica);
-        this.cliente.setTipoDocumento(TipoDocumento.RG);
+        this.cliente.setTipoPessoa(TipoPessoa.values()[this.cbxTipoPessoa.
+                getSelectedIndex()]);
+        for (TipoDocumento tipoDocumento : TipoDocumento.values()) {
+            if(tipoDocumento.toString() == this.cbxTipoDocumento.getSelectedItem().toString()){
+                this.cliente.setTipoDocumento(tipoDocumento);
+            }
+        }
+        
+        this.cliente.setTipoDocumento(TipoDocumento.values()[this.cbxTipoDocumento.
+                getSelectedIndex()]);
         this.cliente.setNumeroDocumento(txtNumeroDocumento.getText());
         this.cliente.setTelefones(telefones);
         this.cliente.setIdentificaoDoCliente(this.txtIdentificacaoCliente.getText());
         this.cliente.setSenha(String.valueOf(this.txtSenhaCliente.getPassword()));
+        return true;
     }
 
     /**
@@ -96,7 +136,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         txtDataNascimento = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -114,13 +154,13 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         TxtComplemento = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtTelefone1 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtIdentificacaoCliente = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         txtSenhaCliente = new javax.swing.JPasswordField();
         txtTelefone2 = new javax.swing.JFormattedTextField();
+        txtTelefone1 = new javax.swing.JFormattedTextField();
 
         jTextField1.setText("jTextField1");
 
@@ -158,9 +198,9 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(140, 71, 71));
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Cadastro Cliente");
+        lblTitulo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setText("Cadastro Cliente");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -168,14 +208,14 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(lblTitulo)
                 .addGap(285, 285, 285))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblTitulo)
                 .addGap(19, 19, 19))
         );
 
@@ -250,7 +290,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
 
         cbxTipoPessoa.setBackground(new java.awt.Color(255, 255, 255));
         cbxTipoPessoa.setForeground(new java.awt.Color(0, 0, 0));
-        cbxTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Física", "Juridica" }));
+        cbxTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -293,15 +333,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Telefone");
-
-        txtTelefone1.setBackground(new java.awt.Color(255, 255, 255));
-        txtTelefone1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtTelefone1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefone1ActionPerformed(evt);
-            }
-        });
+        jLabel11.setText("Telefone 1");
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -338,6 +370,15 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         txtTelefone2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        txtTelefone1.setBackground(new java.awt.Color(255, 255, 255));
+        txtTelefone1.setForeground(new java.awt.Color(0, 0, 0));
+        try {
+            txtTelefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)# ########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtTelefone1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -451,8 +492,8 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -506,21 +547,21 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(JOptionPane.showConfirmDialog(this,"Deseja realmente salvar o cadastro do cliente?", 
-                "Confirmação",JOptionPane.YES_NO_OPTION)
-                == JOptionPane.YES_OPTION){
-            this.getComponentes();
-            if(clienteRepositorio.Salvar(this.cliente)){
-                JOptionPane.showMessageDialog(this,"Cliente salvo com Sucesso!", "Informação", JOptionPane.INFORMATION_MESSAGE);
-                //depois de comfirmar, deve se implementar para que todos os dados sejam apagados da tela.
-            }else{
-                JOptionPane.showMessageDialog(this,"Erro ao salvar!", "Erro!", JOptionPane.ERROR_MESSAGE);
-            } 
+        if(util.abrirJOptionPane("confirma", "Deseja realmente salvar o cadastro do cliente?",this) ){
+            if(this.getComponentes()){
             
+                if(clienteRepositorio.Salvar(this.cliente)){
+                    util.abrirJOptionPane("sucesso", "Cliente salvo com Sucesso!",this);
+                    //depois de comfirmar, deve se implementar para que todos os dados sejam apagados da tela.
+                }else{
+                    util.abrirJOptionPane("erro", "Erro ao salvar!",this);
+                } 
+            }else{
+                util.abrirJOptionPane("erro", "Preencha todos os campos!",this);
+            }
         }else{
-            JOptionPane.showMessageDialog(this, "Operação cancelada","Informação", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
+            util.abrirJOptionPane("informacao", "Operação cancelada.",this);
+        }  
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -531,10 +572,6 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private void TxtComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtComplementoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtComplementoActionPerformed
-
-    private void txtTelefone1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefone1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefone1ActionPerformed
 
     private void txtIdentificacaoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificacaoClienteActionPerformed
         // TODO add your handling code here:
@@ -547,7 +584,6 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbxTipoDocumento;
     private javax.swing.JComboBox<String> cbxTipoPessoa;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -564,6 +600,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtDataNascimento;
     private javax.swing.JTextField txtEndereco;
@@ -572,7 +609,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNumeroCasa;
     private javax.swing.JTextField txtNumeroDocumento;
     private javax.swing.JPasswordField txtSenhaCliente;
-    private javax.swing.JTextField txtTelefone1;
+    private javax.swing.JFormattedTextField txtTelefone1;
     private javax.swing.JFormattedTextField txtTelefone2;
     // End of variables declaration//GEN-END:variables
 }

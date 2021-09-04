@@ -5,7 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogPermissao;
+import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
 /**
@@ -30,6 +32,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private static JInternalFrame currentFrame;
     private static Usuario usuario;
     private static Map<UsuarioTipo, ArrayList<String>> permissions;
+    private  Util util;
     
     public TelaPrincipal(Usuario usuario) {
         initComponents();
@@ -44,7 +47,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //Centralizando a tela        
         this.setLocationRelativeTo(null);
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        this.setTitle("MARKET +");
+        this.setTitle("Market +");
+        
+        this.util = new Util();
         
         TelaInicio telaPrincipal = new TelaInicio(this);
         TelaPrincipal.currentFrame = telaPrincipal;
@@ -134,7 +139,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaPrincipal.permissions.put(UsuarioTipo.Balconista, removePermissaoBalconista);
         TelaPrincipal.permissions.put(UsuarioTipo.Caixa, removePermissaoCaixa);
     }
-    public static boolean initDesenvolvedor(){
+    public boolean initDesenvolvedor(){
         if(TelaPrincipal.usuario.getId() == 0){
             TelaPrincipal.usuario.setNome("Desenvolvedor");
             TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Gerente);
@@ -144,18 +149,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         return false;
     }
-    public boolean temPermissao(String query, boolean bloquearPai){
+    public boolean temPermissao(String query){
         for(String permissaoNegada : permissions.get(TelaPrincipal.usuario.getUsuarioTipo())){
             if(permissaoNegada.equals(query)){
-                DialogPermissao acesso = new DialogPermissao(this, bloquearPai);
-                acesso.setVisible(true);
                 return false;
             }
         }
         
         return true;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -265,7 +268,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemPessoasActionPerformed
-        if(temPermissao("TELA_PESSOAS", true)){
+        if(temPermissao("TELA_PESSOAS")){
             TelaPessoas pessoas = new TelaPessoas(this);
             this.renderJInternalFrame(pessoas);
         }
@@ -279,9 +282,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuRelatoriosMouseClicked
 
     private void menuRelatoriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMousePressed
-        if(temPermissao("TELA_RELATORIOS", true)){
+        if(temPermissao("TELA_RELATORIOS")){
             TelaRelatorios telaRelatorios = new TelaRelatorios();
             this.renderJInternalFrame(telaRelatorios);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
         }
     }//GEN-LAST:event_menuRelatoriosMousePressed
 

@@ -20,6 +20,7 @@ import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
+import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.math.BigDecimal;
@@ -41,14 +42,19 @@ public class Console {
             System.out.println("FALHA ao popular o banco de dados!!");
         }
 
-       // queryPessoa();
+
+      
         queryFuncionario();
+       
+        queryPessoa();
+
     }
     
     public static void queryPessoa(){
         PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
         UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
         FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
+        ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
         
         System.out.println("-- Buscar usuario com Filtros --");
         for(Usuario usuario : repositorioUsuario.Buscar(new Usuario(
@@ -117,6 +123,7 @@ public class Console {
         FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
         FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
         UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
+        ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
         
         List telefones = new ArrayList<Telefone>();
         telefones.add(new Telefone("3899991111"));
@@ -175,6 +182,25 @@ public class Console {
             UsuarioTipo.Administrador
         );
         
+//        CargoFuncionario cargo22 = new CargoFuncionario(cargo1.getTitulo(), cargo1.getFuncao(), cargo1.getComissao(), cargo1.getSalario());
+//        repositorioFuncionario.Apagar(funcionario);
+//        Usuario novoUsuario = new Usuario(
+//                funcionario.getId(),
+//                funcionario.getNome(), 
+//                funcionario.getEndereco(), 
+//                funcionario.getTelefones(), 
+//                funcionario.getDataNascimento(), 
+//                funcionario.getTipoPessoa(), 
+//                funcionario.getTipoDocumento(), 
+//                funcionario.getNumeroDocumento(), 
+//                funcionario.getSituacao(),
+//                cargo22,
+//                "emailFunc",
+//                "123",
+//                UsuarioTipo.Administrador
+//        ); 
+        
+ 
         Usuario usuarioCaixa = new Usuario(
             "CaixaUser",
             "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
@@ -220,7 +246,28 @@ public class Console {
             UsuarioTipo.Balconista
         );
         
-
+        Cliente cliente1 = new Cliente("zeroberto", 
+                "1234",
+                "Ze Roberto", 
+                "\"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12\"", 
+                null,
+                Calendar.getInstance(), 
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento,
+                "333333"
+        );
+        
+        Cliente cliente2 = new Cliente("mila", 
+                "1234", 
+                "Kamila", 
+                "\"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12\"",
+                null,
+                Calendar.getInstance(),
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento, 
+                "333333"
+        );
+        
         usuariosAleatorios(repositorioUsuario);
         fornecedoresAleatorios(repositorioFornecedor);
         
@@ -230,9 +277,10 @@ public class Console {
                repositorioUsuario.Salvar(usuarioAdmin) &&
                repositorioUsuario.Salvar(usuarioCaixa) &&
                repositorioUsuario.Salvar(usuarioGerente) &&
-               repositorioUsuario.Salvar(usuarioBalconista);
+               repositorioUsuario.Salvar(usuarioBalconista) &&
+               repositorioCliente.Salvar(cliente1) &&
+               repositorioCliente.Salvar(cliente2);
 
-        
      }
 
      
@@ -243,12 +291,6 @@ public class Console {
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
         CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
         
-        Telefone telefone01 = new Telefone("(38) 9 9991-8711");
-        Telefone telefone02 = new Telefone("(38) 9 9629-1131");
-
-        List telefones = new ArrayList<Telefone>();
-        telefones.add(telefone01);
-        telefones.add(telefone02);
         
         Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", "Marcela Fernandes", "Gustavo Barbosa", "Ana Laura Castro", "Ana Carolina Silveira", "Maria Luiza Barros", "Gustavo Rocha", "Luiz Felipe Moura", "Thiago Castro", "Pietro da Paz", "Yago da Costa", "Pietro da Mota", "Gabriel da Mata", "João Miguel Peixoto", "Breno da Luz", "André Peixoto", "Yuri Fogaça", "Sabrina Moreira", "Bárbara Dias", "Vitor Gabriel Barbosa", "Ana Castro", "Emilly Barbosa", "Vitória Silveira", "Vitor Gomes", "Bruno Moreira", "Ana Lívia Farias", "Benício Pires", "Lara Castro", "Sabrina Moraes", "Fernanda Porto", "Pietra Viana", "Luiz Fernando Ribeiro", "Maitê Pinto", "Sophie Almeida", "Stephany da Cunha", "Raul da Rocha", "Maria Vitória Viana", "Gustavo Henrique Nogueira", "Theo Cavalcanti", "Enzo Rodrigues", "Guilherme Rocha", "Davi Lucca Rodrigues", "Bruno da Mata"};
         Object[] c = {cargo1, cargo2, cargo3, cargo4};
@@ -256,6 +298,12 @@ public class Console {
         Object[] enderecos = {"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12", "Lontra, Minas Gerais. Avenida Água viva N° 145", "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
         
         for(int i=0; i<50; i++){
+            Telefone telefone01 = new Telefone("(38) 9 9991-8711");
+            Telefone telefone02 = new Telefone("(38) 9 9629-1131");
+
+            List telefones = new ArrayList<Telefone>();
+            telefones.add(telefone01);
+            telefones.add(telefone02);
             Fornecedor fornecedor = new Fornecedor(
             nomes[i].toString(),
             enderecos[(int) (Math.random()*3)].toString(),
@@ -275,12 +323,6 @@ public class Console {
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
         CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
         
-        Telefone telefone01 = new Telefone("3899991111");        
-        Telefone telefone02 = new Telefone("3896291131");
-
-        List telefones = new ArrayList<Telefone>();
-        telefones.add(telefone01);
-        telefones.add(telefone02);
         
         Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", 
             "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", 
@@ -303,6 +345,12 @@ public class Console {
             "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
         
         for(int i=0; i<50; i++){
+            Telefone telefone01 = new Telefone("3899991111");        
+            Telefone telefone02 = new Telefone("3896291131");
+
+            List telefones = new ArrayList<Telefone>();
+            telefones.add(telefone01);
+            telefones.add(telefone02);
             Usuario usuario = new Usuario(
                     nomes[i].toString(), 
                     enderecos[(int) (Math.random()*3)].toString(), 

@@ -80,6 +80,24 @@ public class Funcionario extends Pessoa implements Serializable  {
         this.cargo = cargo;
         this.versao=1;
     }
+
+    public Funcionario(
+        Long id,
+        String nome, 
+        String endereco, 
+        List<Telefone> telefones, 
+        Calendar dataNascimento, 
+        TipoPessoa tipoPessoa, 
+        TipoDocumento tipoDocumento, 
+        String numeroDocumento, 
+        FuncionarioSituacao situacao, 
+        CargoFuncionario cargo) {
+        
+        super(id, nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
+        this.situacao = situacao;
+        this.cargo = cargo;
+        this.versao=1;
+    }
     
     public FuncionarioSituacao getSituacao() { return this.situacao; }
     public void setSituacao(FuncionarioSituacao fs) { this.situacao = fs; }
@@ -91,7 +109,6 @@ public class Funcionario extends Pessoa implements Serializable  {
 
     public void setVersao(int versao) {    this.versao = versao;  }
 
-    
    
     
     @Override

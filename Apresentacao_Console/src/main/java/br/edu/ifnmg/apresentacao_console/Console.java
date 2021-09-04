@@ -19,10 +19,12 @@ import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.enums.LocalizacaoProduto;
 import br.edu.ifnmg.enums.UnidadeMedida;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
+import br.edu.ifnmg.logicaAplicacao.Estoque;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
@@ -51,7 +53,19 @@ public class Console {
 //            System.out.println("FALHA ao popular o banco de dados!!");
 //        }
         
-        Produto produto = new Produto("dd", "DDd", 2, 1, UnidadeMedida.Milimetro, UnidadeMedida.Quilograma, BigDecimal.ZERO, BigDecimal.ZERO);
+        Estoque estoque = new Estoque(LocalizacaoProduto.SETOR01, 40, Calendar.getInstance(), Calendar.getInstance());
+
+        Produto produto = new Produto("Sandália Havaianas 44 Polegadas", 
+                "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
+                20, 5, UnidadeMedida.Pacote, 
+                UnidadeMedida.Unidade, 
+                new BigDecimal("32.00"), 
+                new BigDecimal("30.00"), 
+                new BigDecimal("25.00"), 
+                estoque
+        );
+        
+//        produto.getEstoque().
         
         repositorioProduto.Salvar(produto);
         queryPessoa();
@@ -62,12 +76,14 @@ public class Console {
         
         System.out.println("-- Buscar produtos com Filtros --");
         for(Produto produto : repositorioProduto.Buscar(new Produto(
+                "Sandália", 
                 null, 
+                20, 
+                5, 
                 null, 
-                2, 
-                1, 
-                null, 
-                null, 
+                UnidadeMedida.Unidade, 
+                null,
+                null,
                 null,
                 null
         

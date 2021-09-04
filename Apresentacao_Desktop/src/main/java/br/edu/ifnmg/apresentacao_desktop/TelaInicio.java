@@ -857,7 +857,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         if(telaPrincipal.temPermissao("TELA_PESSOAS")){
             this.telaPrincipal.renderJInternalFrame(pessoas);
         }else{
-            util.abrirJOptionPane("permissao", "");
+            util.abrirJOptionPane("permissao", "",this);
         }
     }//GEN-LAST:event_jPanel12MouseClicked
 
@@ -866,7 +866,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         if(this.telaPrincipal.temPermissao("TELA_RELATORIOS")){
             this.telaPrincipal.renderJInternalFrame(telaRelatorios);
         }else{
-            util.abrirJOptionPane("permissao", "");
+            util.abrirJOptionPane("permissao", "",this);
         }
     }//GEN-LAST:event_jPanel4MouseClicked
 

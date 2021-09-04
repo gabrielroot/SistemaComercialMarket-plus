@@ -11,6 +11,7 @@ import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.enums.UsuarioTipo;
+import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
@@ -33,6 +34,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private Fornecedor fornecedor;
     private Usuario usuario;
     ArrayList tabClicked;
+    private Cliente cliente;
+    private ClienteRepositorio clienteRepositorio;
     
     
     /**
@@ -45,12 +48,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         this.usuario = new Usuario();
         this.fornecedorRepositorio = RepositorioFactory.getFornecedorRepositorio();
         this.fornecedor = new Fornecedor();
-        
+        this.cliente = new Cliente();
+        this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
         this.tabClicked = new ArrayList<>();
         tabClicked.add(false);
         tabClicked.add(false);
         tabClicked.add(false);
         tabClicked.add(false);
+        this.buscarCliente();
     }
 
     public static JDesktopPane getjDesktopPane1() { return jDesktopPane1; }
@@ -72,12 +77,12 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         tabClientes = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNomeCliente = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblResultadoClientes = new javax.swing.JTable();
         tabFuncionarios = new javax.swing.JPanel();
         tabFornecedores = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -142,12 +147,12 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("NOME:");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtNomeCliente.setBackground(new java.awt.Color(255, 255, 255));
+        txtNomeCliente.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        txtNomeCliente.setForeground(new java.awt.Color(0, 0, 0));
+        txtNomeCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtNomeClienteActionPerformed(evt);
             }
         });
 
@@ -178,9 +183,9 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblResultadoClientes.setBackground(new java.awt.Color(255, 255, 255));
+        tblResultadoClientes.setForeground(new java.awt.Color(0, 0, 0));
+        tblResultadoClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null}
             },
@@ -188,7 +193,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblResultadoClientes);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -208,7 +213,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 280, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
@@ -219,7 +224,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 .addGap(64, 64, 64)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -572,9 +577,9 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtNomeClienteActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         ClienteBuscaAvancada busca = new ClienteBuscaAvancada();
@@ -599,18 +604,18 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private void checkPermissions(){
         Util util = new Util();
         switch(this.jTabbedPane1.getSelectedIndex()){
-        case 0: 
+        case 0: buscarCliente();
                 break;
         case 1: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_FUNCIONARIOS")){
                     this.jTabbedPane1.setSelectedIndex(0);
-                    util.abrirJOptionPane("permissao","");
+                    util.abrirJOptionPane("permissao","",this);
                 }
                 break;
         case 2: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_FORNECEDORES")){
                     this.jTabbedPane1.setSelectedIndex(0);
-                    util.abrirJOptionPane("permissao","");
+                    util.abrirJOptionPane("permissao","",this);
                 }
                 if(!(boolean) tabClicked.get(this.jTabbedPane1.getSelectedIndex())){
                     tabClicked.set(this.jTabbedPane1.getSelectedIndex(), true);
@@ -623,7 +628,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         case 3: 
                 if(!this.telaPrincipal.temPermissao("TELA_PESSOAS__ABA_USUARIOS")){
                     this.jTabbedPane1.setSelectedIndex(0);
-                    util.abrirJOptionPane("permissao","");
+                    util.abrirJOptionPane("permissao","",this);
                 }
                 if(!(boolean) tabClicked.get(this.jTabbedPane1.getSelectedIndex())){
                     tabClicked.set(this.jTabbedPane1.getSelectedIndex(), true);
@@ -745,8 +750,37 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTabbedPane1MousePressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        this.buscarCliente();
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void buscarCliente(){
+        
+        cliente.setNome(this.txtNomeCliente.getText());      
+        List<Cliente> resultado = this.clienteRepositorio.Buscar(cliente);
+        
+        DefaultTableModel modelo = new DefaultTableModel();
+        
+        modelo.addColumn("ID");
+        modelo.addColumn("Nome");
+        modelo.addColumn("Endereço");
+        modelo.addColumn("Telefones");
+        modelo.addColumn("TipoDocumento");
+        modelo.addColumn("NumeroDocumento");
+        
+        for(int i=0;i<resultado.size(); i++){
+            Vector linha = new Vector();
+            
+            linha.add(resultado.get(i).getId());
+            linha.add(resultado.get(i).getNome());
+            linha.add(resultado.get(i).getEndereco());
+            linha.add(resultado.get(i).getTelefones().toString());
+            linha.add(resultado.get(i).getTipoDocumento());
+            linha.add(resultado.get(i).getNumeroDocumento());
+            
+            modelo.addRow(linha);
+        }
+        tblResultadoClientes.setModel(modelo);
+    }
     
     private void buscarUsuarios(){
         usuario.setEmail(this.txtEmail.getText());
@@ -810,15 +844,15 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel tabClientes;
     private javax.swing.JPanel tabFornecedores;
     private javax.swing.JPanel tabFuncionarios;
     private javax.swing.JPanel tabUsuarios;
     private javax.swing.JTable tableResultadoFornecedores;
     private javax.swing.JTable tableResultadoUsuarios;
+    private javax.swing.JTable tblResultadoClientes;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtNomeCliente;
     // End of variables declaration//GEN-END:variables
 }

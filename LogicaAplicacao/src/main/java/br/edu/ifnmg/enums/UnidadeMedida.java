@@ -19,5 +19,7 @@ public enum UnidadeMedida {
     Centrimetro,
     Milimetro,
     Fardo,
-    Pacote
+    Pacote,
+    Unidade,
+    Duzia
 }

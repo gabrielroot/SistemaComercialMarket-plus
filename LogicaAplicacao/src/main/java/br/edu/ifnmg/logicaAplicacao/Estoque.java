@@ -7,14 +7,20 @@ package br.edu.ifnmg.logicaAplicacao;
 
 import br.edu.ifnmg.enums.LocalizacaoProduto;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,6 +29,7 @@ import javax.persistence.TemporalType;
  * @author gabriel
  */
 @Entity
+@Table(name="estoque")
 public class Estoque implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,9 +50,45 @@ public class Estoque implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar dataValidade;
 
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
+    private List<Produto> produto;
+
+    public Estoque() {
+        this.id = 0L;
+        this.localizacaoProduto = LocalizacaoProduto.SETOR01;
+        this.quantidadeMinimaDesejada = 100;
+        this.dataAquisicao = Calendar.getInstance();
+        this.dataValidade = Calendar.getInstance();
+        this.produto = new ArrayList<>();
+    }
+
+    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade) {
+        this.localizacaoProduto = localizacaoProduto;
+        this.quantidadeMinimaDesejada = quantidadeMinimaDesejada;
+        this.dataAquisicao = dataAquisicao;
+        this.dataValidade = dataValidade;
+    }
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
+    public LocalizacaoProduto getLocalizacaoProduto() { return localizacaoProduto; }
+    public void setLocalizacaoProduto(LocalizacaoProduto localizacaoProduto) { this.localizacaoProduto = localizacaoProduto; }
+
+    public int getQuantidadeMinimaDesejada() { return quantidadeMinimaDesejada; }
+    public void setQuantidadeMinimaDesejada(int quantidadeMinimaDesejada) { this.quantidadeMinimaDesejada = quantidadeMinimaDesejada; }
+
+    public Calendar getDataAquisicao() { return dataAquisicao; }
+    public void setDataAquisicao(Calendar dataAquisicao) { this.dataAquisicao = dataAquisicao; }
+
+    public Calendar getDataValidade() { return dataValidade; }
+    public void setDataValidade(Calendar dataValidade) { this.dataValidade = dataValidade; }
+
+    public List<Produto> getProduto() { return produto; }
+    public void setProduto(List<Produto> produto) { this.produto = produto; }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
+import TelaProduto.ProdutoEditar;
 import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
@@ -98,7 +99,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(224, 191, 191));
         jPanel2.setForeground(new java.awt.Color(224, 191, 191));
         jPanel2.setToolTipText("");
-        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.setPreferredSize(new java.awt.Dimension(120, 140));
 
         jPanel3.setBackground(new java.awt.Color(98, 57, 57));
@@ -158,7 +159,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel4.setBackground(new java.awt.Color(224, 191, 191));
         jPanel4.setForeground(new java.awt.Color(224, 191, 191));
         jPanel4.setToolTipText("");
-        jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel4.setPreferredSize(new java.awt.Dimension(120, 140));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -213,8 +214,13 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel6.setBackground(new java.awt.Color(224, 191, 191));
         jPanel6.setForeground(new java.awt.Color(224, 191, 191));
         jPanel6.setToolTipText("");
-        jPanel6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel6.setPreferredSize(new java.awt.Dimension(120, 140));
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
+        });
 
         jPanel7.setBackground(new java.awt.Color(98, 57, 57));
 
@@ -263,7 +269,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel8.setBackground(new java.awt.Color(224, 191, 191));
         jPanel8.setForeground(new java.awt.Color(224, 191, 191));
         jPanel8.setToolTipText("");
-        jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel8.setPreferredSize(new java.awt.Dimension(120, 140));
 
         jPanel9.setBackground(new java.awt.Color(98, 57, 57));
@@ -313,7 +319,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel10.setBackground(new java.awt.Color(224, 191, 191));
         jPanel10.setForeground(new java.awt.Color(224, 191, 191));
         jPanel10.setToolTipText("");
-        jPanel10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel10.setPreferredSize(new java.awt.Dimension(120, 140));
 
         jPanel11.setBackground(new java.awt.Color(98, 57, 57));
@@ -355,7 +361,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel14.setBackground(new java.awt.Color(224, 191, 191));
         jPanel14.setForeground(new java.awt.Color(224, 191, 191));
         jPanel14.setToolTipText("");
-        jPanel14.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel14.setPreferredSize(new java.awt.Dimension(120, 140));
 
         jPanel15.setBackground(new java.awt.Color(98, 57, 57));
@@ -403,7 +409,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel16.setBackground(new java.awt.Color(224, 191, 191));
         jPanel16.setForeground(new java.awt.Color(224, 191, 191));
         jPanel16.setToolTipText("");
-        jPanel16.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel16.setPreferredSize(new java.awt.Dimension(120, 140));
 
         jPanel17.setBackground(new java.awt.Color(98, 57, 57));
@@ -453,7 +459,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel12.setBackground(new java.awt.Color(224, 191, 191));
         jPanel12.setForeground(new java.awt.Color(224, 191, 191));
         jPanel12.setToolTipText("");
-        jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel12.setPreferredSize(new java.awt.Dimension(120, 140));
         jPanel12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -812,7 +818,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Encerrar Sessão");
         jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -875,6 +881,15 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         Login login = new Login();
         login.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        if(telaPrincipal.temPermissao("TELA_PRODUTO")){
+            ProdutoEditar produtoEditar = new ProdutoEditar();
+            telaPrincipal.renderJInternalFrame(produtoEditar);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jPanel6MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

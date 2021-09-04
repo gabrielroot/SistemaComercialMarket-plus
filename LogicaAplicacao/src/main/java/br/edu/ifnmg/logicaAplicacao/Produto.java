@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.enums.UnidadeMedida;
 import java.io.Serializable;
 import java.math.BigDecimal;

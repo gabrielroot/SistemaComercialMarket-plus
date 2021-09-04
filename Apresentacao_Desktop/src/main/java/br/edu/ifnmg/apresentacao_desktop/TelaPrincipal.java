@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
+import TelaProduto.ProdutoEditar;
 import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
@@ -185,7 +186,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuMarketPlus.setBackground(new java.awt.Color(48, 150, 52));
         menuMarketPlus.setForeground(new java.awt.Color(61, 16, 16));
         menuMarketPlus.setText("Market +");
-        menuMarketPlus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuMarketPlus.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuMarketPlus.setFont(new java.awt.Font("sansserif", 1, 16)); // NOI18N
         menuMarketPlus.setMinimumSize(new java.awt.Dimension(3173, 30));
         menuMarketPlus.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,7 +205,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         menuItemPessoas.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         menuItemPessoas.setText("Pessoas");
-        menuItemPessoas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuItemPessoas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuItemPessoas.setPreferredSize(new java.awt.Dimension(240, 33));
         menuItemPessoas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,19 +216,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuItem3.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem3.setText("Produtos");
-        jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenuItem3.setPreferredSize(new java.awt.Dimension(240, 33));
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         menuGerenciamento.add(jMenuItem3);
 
         jMenuItem5.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem5.setText("Financeiro");
-        jMenuItem5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenuItem5.setPreferredSize(new java.awt.Dimension(240, 33));
         menuGerenciamento.add(jMenuItem5);
 
         jMenuItem4.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem4.setText("Crediário");
-        jMenuItem4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenuItem4.setPreferredSize(new java.awt.Dimension(240, 33));
         menuGerenciamento.add(jMenuItem4);
 
@@ -236,7 +242,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuRelatorios.setBackground(new java.awt.Color(48, 150, 52));
         menuRelatorios.setForeground(new java.awt.Color(61, 16, 16));
         menuRelatorios.setText("Relatórios");
-        menuRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuRelatorios.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         menuRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -302,6 +308,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void menuRelatoriosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseExited
         menuRelatorios.setSelected(false);
     }//GEN-LAST:event_menuRelatoriosMouseExited
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       if(temPermissao("TELA_PRODUTO")){
+            ProdutoEditar produtoEditar = new ProdutoEditar();
+            this.renderJInternalFrame(produtoEditar);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
     
     /**
      * @param args the command line arguments

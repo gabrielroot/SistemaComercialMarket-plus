@@ -63,7 +63,12 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 filtros += "produto.valorAtacado = :va";
                 parametros.put("va", obj.getValorAtacado());
             }
-
+            
+            if(obj.getEstoque() != null && obj.getEstoque().getDataValidade() != null){
+                if(filtros.length() > 0) filtros += " AND ";
+                filtros += "produto.estoque.dataValidade = :validade";
+                parametros.put("validade", obj.getEstoque().getDataValidade());
+            }
         }
         
         if(filtros.length() > 0){

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifnmg.logicaAplicacao;
+package br.edu.ifnmg.auxiliares;
 
 import br.edu.ifnmg.enums.LocalizacaoProduto;
+import br.edu.ifnmg.logicaAplicacao.Produto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;

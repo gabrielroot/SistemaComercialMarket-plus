@@ -24,7 +24,7 @@ import br.edu.ifnmg.enums.UnidadeMedida;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
-import br.edu.ifnmg.logicaAplicacao.Estoque;
+import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
@@ -47,27 +47,13 @@ public class Console {
     static FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
     
     public static void main(String[] args){
-//        if(popularBD()){
-//            System.out.println("Banco de dados populado com SUCESSO!!");
-//        }else{
-//            System.out.println("FALHA ao popular o banco de dados!!");
-//        }
+        if(popularBD()){
+            System.out.println("Banco de dados populado com SUCESSO!!");
+        }else{
+            System.out.println("FALHA ao popular o banco de dados!!");
+        }
         
-        Estoque estoque = new Estoque(LocalizacaoProduto.SETOR01, 40, Calendar.getInstance(), Calendar.getInstance());
 
-        Produto produto = new Produto("Sandália Havaianas 44 Polegadas", 
-                "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
-                20, 5, UnidadeMedida.Pacote, 
-                UnidadeMedida.Unidade, 
-                new BigDecimal("32.00"), 
-                new BigDecimal("30.00"), 
-                new BigDecimal("25.00"), 
-                estoque
-        );
-        
-//        produto.getEstoque().
-        
-        repositorioProduto.Salvar(produto);
         queryPessoa();
     }
     
@@ -202,7 +188,7 @@ public class Console {
 //                funcionario.getNome(), 
 //                funcionario.getEndereco(), 
 //                funcionario.getTelefones(), 
-//                funcionario.getDataNascimento(), 
+//                funcionario.getDataNascimento(),         
 //                funcionario.getTipoPessoa(), 
 //                funcionario.getTipoDocumento(), 
 //                funcionario.getNumeroDocumento(), 
@@ -281,8 +267,9 @@ public class Console {
                 "333333"
         );
         
-        usuariosAleatorios(repositorioUsuario);
-        fornecedoresAleatorios(repositorioFornecedor);
+        usuariosAleatorios();
+        fornecedoresAleatorios();
+        produtosAleatorios();
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
@@ -294,7 +281,7 @@ public class Console {
                repositorioCliente.Salvar(cliente2);
      }
     
-    public static void fornecedoresAleatorios(FornecedorRepositorio repositorioFornecedor){
+    public static void fornecedoresAleatorios(){
         CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
         CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
@@ -326,7 +313,7 @@ public class Console {
             repositorioFornecedor.Salvar(fornecedor);
         }
     }
-    public static void usuariosAleatorios(UsuarioRepositorio repositorioUsuario){
+    public static void usuariosAleatorios(){
         CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
         CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
@@ -376,6 +363,25 @@ public class Console {
                     "123",
                     UsuarioTipo.values()[(int) (Math.random()*4)]);
             repositorioUsuario.Salvar(usuario);
+        }
+    }
+    
+    public static void produtosAleatorios(){
+        for(int i=0; i<50; i++){
+            Estoque estoque = new Estoque(LocalizacaoProduto.values()[(int) (Math.random()*10)], (int) (Math.random()*200), Calendar.getInstance(), Calendar.getInstance());
+
+            Produto produto = new Produto("Sandália Havaianas"+((int) (Math.random()*10)+10)+" Polegadas ["+i+"]", 
+                "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
+                (int) (Math.random()*50), 5, 
+                    UnidadeMedida.values()[(int) (Math.random()*11)], 
+                    UnidadeMedida.values()[(int) (Math.random()*11)], 
+                new BigDecimal("32.00"), 
+                new BigDecimal("30.00"), 
+                new BigDecimal("25.00"), 
+                estoque
+            );
+            
+            repositorioProduto.Salvar(produto);
         }
     }
 }

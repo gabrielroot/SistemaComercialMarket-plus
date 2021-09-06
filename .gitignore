@@ -27,3 +27,6 @@ hs_err_pid*
 /Apresentacao_Console/target/
 /Market-plusLogicaAplicacao/target/
 /Apresentacao_Desktop/target/
+
+# ignore persistence.xml
+LogicaAplicacao/src/main/resources/META-INF/persistence.xml

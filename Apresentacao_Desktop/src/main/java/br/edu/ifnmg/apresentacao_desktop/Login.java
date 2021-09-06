@@ -153,7 +153,7 @@ public class Login extends javax.swing.JFrame {
                 jLabel2MouseClicked(evt);
             }
         });
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 40, 30));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 40, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/minimize.png"))); // NOI18N
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -162,7 +162,7 @@ public class Login extends javax.swing.JFrame {
                 jLabel4MouseClicked(evt);
             }
         });
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 40, 30));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 40, 30));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, 400, 519));
 

@@ -59,7 +59,7 @@ public class Estoque implements Serializable {
     private List<Produto> produto;
     
     @Column()
-    private Validade validade;
+    private  List<Validade> validade;
 
     public Estoque() {
         this.id = 0L;
@@ -69,16 +69,15 @@ public class Estoque implements Serializable {
         this.dataAquisicao = null;
         this.dataValidade = null;
         this.produto = new ArrayList<>();
-        this.validade = null;
+        this.validade = new ArrayList<>();
     }
 
-    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade,  Validade validade) {
+    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade) {
         this.localizacaoProduto = localizacaoProduto;
         this.quantidade = quantidade;
         this.quantidadeMinimaDesejada = quantidadeMinimaDesejada;
         this.dataAquisicao = dataAquisicao;
         this.dataValidade = dataValidade;
-        this.validade = validade;
     }
     
     public Long getId() { return id; }
@@ -102,8 +101,8 @@ public class Estoque implements Serializable {
     public int getQuantidade() { return quantidade; }
     public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
 
-    public Validade getValidade() { return validade; }
-    public void setValidade(Validade validade) { this.validade = validade; }
+    public List<Validade> getValidade() { return validade; }
+    public void setValidade(List<Validade> validade) { this.validade = validade; }
 
     @Override
     public int hashCode() {

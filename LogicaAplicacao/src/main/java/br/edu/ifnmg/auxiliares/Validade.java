@@ -37,7 +37,7 @@ public class Validade implements Serializable {
     private int loteQuantidade; 
     
     public Validade() {
-        this.dataValidade = null;;
+        this.dataValidade = null;
         this.lote = "";
         this.loteQuantidade = -1;
     }

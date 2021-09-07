@@ -9,7 +9,6 @@ import br.edu.ifnmg.enums.LocalizacaoProduto;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,8 +23,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -61,6 +58,7 @@ public class Estoque implements Serializable {
         this.produto = new ArrayList<>();
         this.lote = new Lote();
     }
+
 
     public Estoque(LocalizacaoProduto localizacaoProduto, int quantidadeMinimaDesejada, Lote lote) {
         this.localizacaoProduto = localizacaoProduto;

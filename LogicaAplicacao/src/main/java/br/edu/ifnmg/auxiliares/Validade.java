@@ -32,15 +32,20 @@ public class Validade implements Serializable {
     
     @Column()
     private String lote;
+
+    @Column()
+    private int loteQuantidade; 
     
     public Validade() {
         this.dataValidade = null;;
         this.lote = "";
+        this.loteQuantidade = -1;
     }
 
-    public Validade(Calendar dataValidade,  String lote) {
+    public Validade(Calendar dataValidade,  String lote, int loteQuantidade) {
         this.dataValidade = dataValidade;
         this.lote = lote;
+        this.loteQuantidade = loteQuantidade;
     }
 
     
@@ -53,6 +58,9 @@ public class Validade implements Serializable {
 
     public String getLote() { return lote; }
     public void setLote(String Lote) { this.lote = lote; }
+    
+    public int getLoteQuantidade() { return loteQuantidade; }
+    public void setLoteQuantidade(int loteQuantidade) { this.loteQuantidade = loteQuantidade; }
 
     @Override
     public int hashCode() {

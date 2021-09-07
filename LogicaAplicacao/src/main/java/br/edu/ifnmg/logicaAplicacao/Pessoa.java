@@ -39,7 +39,6 @@ import javax.persistence.Version;
 @Entity
 @Table(name="pessoa")
 @Inheritance(strategy=InheritanceType.JOINED) 
-//@DiscriminatorColumn(discriminatorType=DiscriminatorType.INTEGER, name="tp")
 public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;

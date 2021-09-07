@@ -9,14 +9,32 @@ package br.edu.ifnmg.enums;
  *
  * @author gabriel
  */
+        
 public enum TipoDocumento {
-    RG,
-    CNPJ,
-    CTPS,
-    CNH,
-    Passaporte,
-    CertidaoNascimento,
-    CertidaoCasamento,
-    CertidaoProntuario,
-    CarteiraMilitar
+    RG("RG"),
+    CNPJ("CNPJ"),
+    CPF("CPF"),
+    CNH("CNH"),
+    CTPS("CTPS"),
+    Passaporte("Passaporte"),
+    CertidaoNascimento("Certidão de Nascimento"),
+    CertidaoCasamento("Certidão de Casamento"),
+    CertidaoProntuario("Certidão de Pronduário"),
+    CarteiraMilitar("Carteira Militar");
+    
+    private String descricao;
+
+    private TipoDocumento(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+    
+    
+    @Override
+    public String toString() {
+        return this.descricao;
+    }
 }

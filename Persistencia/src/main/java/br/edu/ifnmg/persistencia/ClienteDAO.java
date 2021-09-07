@@ -40,7 +40,7 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
   //      StringBuilder filtros = new StringBuilder();
         
         Hashtable<String, Object> parametros = new Hashtable<>();
-        
+                
         if(obj != null){
             if(obj.getNome() != null && !obj.getNome().isEmpty()){
                 parametros.put("nome", obj.getNome());
@@ -48,7 +48,7 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
             }
         }
 
-        if(!parametros.isEmpty()){
+        if(!parametros.isEmpty()){         
             String filtros = "";
             jpql += " where ";      
             for (String campo : parametros.keySet()) {

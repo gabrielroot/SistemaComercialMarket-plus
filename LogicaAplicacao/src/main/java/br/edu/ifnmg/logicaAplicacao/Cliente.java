@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="cliente")
-@DiscriminatorValue(value="2")
+
 public class Cliente extends Pessoa implements Serializable  {
     
     private static final long serialVersionUID = 1L;
@@ -52,7 +52,9 @@ public class Cliente extends Pessoa implements Serializable  {
 
     public void setIdentificaoDoCliente(String identificaoDoCliente) { this.identificaoDoCliente = identificaoDoCliente; }
 
-    public void setSenha(String senha) { this.senha = senha; }
+    public void setSenha(String senha) { this.senha = senha;}
+    
+    public String getSenha() { return senha; }
 
     @Override
     public int hashCode() {
@@ -85,3 +87,5 @@ public class Cliente extends Pessoa implements Serializable  {
     }
     
 }
+
+   

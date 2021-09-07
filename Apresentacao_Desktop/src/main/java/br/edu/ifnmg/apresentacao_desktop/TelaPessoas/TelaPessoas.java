@@ -8,8 +8,6 @@ import Util.Util;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
 import br.edu.ifnmg.enums.Segmento;
-import br.edu.ifnmg.enums.TipoDocumento;
-import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
@@ -18,7 +16,6 @@ import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
@@ -193,6 +190,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        tblResultadoClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblResultadoClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblResultadoClientes);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -753,6 +755,18 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.buscarCliente();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tblResultadoClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoClientesMouseClicked
+       
+        int linha = this.tblResultadoClientes.getSelectedRow();// seleciono a linha clicada
+        long id = (long)this.tblResultadoClientes.getValueAt(linha, 1); // seleciono a coluna 
+        
+        Cliente cliente = clienteRepositorio.Abrir(id); 
+        TelaClienteEditar telaClienteEditar = new TelaClienteEditar(cliente, "Editar Cliente");
+        Util.centralizaInternalFrame(telaClienteEditar, this.getSize());
+        TelaPessoas.jDesktopPane1.add(telaClienteEditar);
+        telaClienteEditar.setVisible(true);
+    }//GEN-LAST:event_tblResultadoClientesMouseClicked
     
     private void buscarCliente(){
         
@@ -761,6 +775,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         
         DefaultTableModel modelo = new DefaultTableModel();
         
+        modelo.addColumn("#");
         modelo.addColumn("ID");
         modelo.addColumn("Nome");
         modelo.addColumn("Endereço");
@@ -771,10 +786,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         for(int i=0;i<resultado.size(); i++){
             Vector linha = new Vector();
             
+            linha.add(i+1);
             linha.add(resultado.get(i).getId());
             linha.add(resultado.get(i).getNome());
             linha.add(resultado.get(i).getEndereco());
-            linha.add(resultado.get(i).getTelefones().toString());
+            linha.add(resultado.get(i).getTelefones());
             linha.add(resultado.get(i).getTipoDocumento());
             linha.add(resultado.get(i).getNumeroDocumento());
             

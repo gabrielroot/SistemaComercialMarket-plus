@@ -6,23 +6,19 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import Util.Util;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogConfirma;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogErro;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogSucesso;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
-import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 /**
  *
  * @author Murilo
@@ -41,20 +37,33 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         this.cliente = cliente;
         this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
         initComponents();
+        setComponentes();
         this.lblTitulo.setText(titulo);
         this.util = new Util();
     }
     
     private void setComponentes(){
-        StringTokenizer enderecoCompleto = new StringTokenizer("aldar,900,jardim, casa");
         
-        this.lblNome.setText(this.cliente.getNome());
-        this.txtEndereco.setText(enderecoCompleto.nextToken(","));
-        this.txtNumeroCasa.setText(enderecoCompleto.nextToken(","));
-        this.txtBairro.setText(enderecoCompleto.nextToken(","));
-        this.TxtComplemento.setText(enderecoCompleto.nextToken(","));
-        this.lblNome.setText(this.cliente.getNome());
+        this.txtNome.setText(this.cliente.getNome());
         
+        if(cliente.getEndereco() != null){
+            StringTokenizer enderecoCompleto = new StringTokenizer(cliente.getEndereco(), ",");
+            this.txtEndereco.setText(enderecoCompleto.nextToken());
+            this.txtNumeroCasa.setText(enderecoCompleto.nextToken());
+            this.txtBairro.setText(enderecoCompleto.nextToken());
+            this.TxtComplemento.setText(enderecoCompleto.nextToken());      
+        }
+        
+        this.txtDataNascimento.setValue(Util.getStringDateFromCalendar(this.cliente.getDataNascimento()));
+        this.cbxTipoPessoa.setSelectedItem(this.cliente.getTipoPessoa().toString());
+        
+        for (TipoDocumento tipoDocumento : TipoDocumento.values()) {
+            if(tipoDocumento.toString().equals(this.cliente.getTipoDocumento().toString())){
+                this.cbxTipoDocumento.setSelectedItem(cliente.getTipoDocumento().toString());
+                break;
+            }
+        }
+        this.txtNumeroDocumento.setText(this.cliente.getNumeroDocumento());
         if(this.cliente.getTelefones().size() > 0){
             this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
             
@@ -62,6 +71,8 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
                 this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
             }
         }
+        this.txtIdentificacaoCliente.setText(this.cliente.getIdentificaoDoCliente());
+        this.txtSenhaCliente.setText(this.cliente.getSenha());
         
     }
     
@@ -73,8 +84,8 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
                 this.txtNumeroCasa.getText() == null ||
                 this.txtBairro.getText() == null ||
                 this.txtNumeroDocumento.getText() == null ||
-                this.txtIdentificacaoCliente.getText() == null ||
-                this.txtSenhaCliente.getPassword() == null ||
+                this.txtIdentificacaoCliente.getText() == null || 
+                this.txtSenhaCliente.getPassword().length == 0 || 
                 this.txtTelefone1.getValue() == null &&
                 this.txtTelefone2.getValue() == null
           ){
@@ -106,13 +117,12 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         this.cliente.setTipoPessoa(TipoPessoa.values()[this.cbxTipoPessoa.
                 getSelectedIndex()]);
         for (TipoDocumento tipoDocumento : TipoDocumento.values()) {
-            if(tipoDocumento.toString() == this.cbxTipoDocumento.getSelectedItem().toString()){
+            if(tipoDocumento.toString().equals(this.cbxTipoDocumento.getSelectedItem().toString())){
                 this.cliente.setTipoDocumento(tipoDocumento);
+                break;
             }
         }
         
-        this.cliente.setTipoDocumento(TipoDocumento.values()[this.cbxTipoDocumento.
-                getSelectedIndex()]);
         this.cliente.setNumeroDocumento(txtNumeroDocumento.getText());
         this.cliente.setTelefones(telefones);
         this.cliente.setIdentificaoDoCliente(this.txtIdentificacaoCliente.getText());
@@ -289,6 +299,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         });
 
         cbxTipoPessoa.setBackground(new java.awt.Color(255, 255, 255));
+        cbxTipoPessoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbxTipoPessoa.setForeground(new java.awt.Color(0, 0, 0));
         cbxTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica" }));
 
@@ -297,8 +308,9 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         jLabel7.setText("Tipo Pessoa");
 
         cbxTipoDocumento.setBackground(new java.awt.Color(255, 255, 255));
+        cbxTipoDocumento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbxTipoDocumento.setForeground(new java.awt.Color(0, 0, 0));
-        cbxTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RG", "CNPJ", "CPF", "CTPS", "CNH", "Passaporte", "Certidao de Nascimento", "Certidao de Casamento", "Certidao de Prontuario", "Carteira de Militar" }));
+        cbxTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RG", "CNPJ", "CPF", "CTPS", "CNH", "Passaporte", "Certidão de Nascimento", "Certidão de Casamento", "Certidão de Prontuário", "Carteira Militar" }));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
@@ -547,21 +559,22 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(util.abrirJOptionPane("confirma", "Deseja realmente salvar o cadastro do cliente?",this) ){
-            if(this.getComponentes()){
+        if(this.getComponentes()){
+            if(util.abrirJOptionPane("confirma", "Deseja realmente salvar o cadastro do cliente?",this)){
             
                 if(clienteRepositorio.Salvar(this.cliente)){
                     util.abrirJOptionPane("sucesso", "Cliente salvo com Sucesso!",this);
-                    //depois de comfirmar, deve se implementar para que todos os dados sejam apagados da tela.
+                    this.dispose();
+                    //depois que salvar deverar atualizar o cadastro!!
                 }else{
                     util.abrirJOptionPane("erro", "Erro ao salvar!",this);
                 } 
             }else{
+            util.abrirJOptionPane("informacao", "Operação cancelada.",this);
+            }  
+        }else{
                 util.abrirJOptionPane("erro", "Preencha todos os campos!",this);
             }
-        }else{
-            util.abrirJOptionPane("informacao", "Operação cancelada.",this);
-        }  
         
     }//GEN-LAST:event_btnSalvarActionPerformed
 

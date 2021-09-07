@@ -426,6 +426,9 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="0"/>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
@@ -456,6 +459,9 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="0"/>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
@@ -467,10 +473,10 @@
             <StringItem index="3" value="CTPS"/>
             <StringItem index="4" value="CNH"/>
             <StringItem index="5" value="Passaporte"/>
-            <StringItem index="6" value="Certidao de Nascimento"/>
-            <StringItem index="7" value="Certidao de Casamento"/>
-            <StringItem index="8" value="Certidao de Prontuario"/>
-            <StringItem index="9" value="Carteira de Militar"/>
+            <StringItem index="6" value="Certid&#xe3;o de Nascimento"/>
+            <StringItem index="7" value="Certid&#xe3;o de Casamento"/>
+            <StringItem index="8" value="Certid&#xe3;o de Prontu&#xe1;rio"/>
+            <StringItem index="9" value="Carteira Militar"/>
           </StringArray>
         </Property>
       </Properties>

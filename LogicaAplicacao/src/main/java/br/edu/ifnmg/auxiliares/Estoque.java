@@ -7,6 +7,7 @@ package br.edu.ifnmg.auxiliares;
 
 import br.edu.ifnmg.enums.LocalizacaoProduto;
 import br.edu.ifnmg.logicaAplicacao.Produto;
+import br.edu.ifnmg.auxiliares.Validade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,7 +59,7 @@ public class Estoque implements Serializable {
     private List<Produto> produto;
     
     @Column()
-    private String lote;
+    private Validade validade;
 
     public Estoque() {
         this.id = 0L;
@@ -68,16 +69,16 @@ public class Estoque implements Serializable {
         this.dataAquisicao = null;
         this.dataValidade = null;
         this.produto = new ArrayList<>();
-        this.lote = "";
+        this.validade = null;
     }
 
-    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade,  String lote) {
+    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade,  Validade validade) {
         this.localizacaoProduto = localizacaoProduto;
         this.quantidade = quantidade;
         this.quantidadeMinimaDesejada = quantidadeMinimaDesejada;
         this.dataAquisicao = dataAquisicao;
         this.dataValidade = dataValidade;
-        this.lote = lote;
+        this.validade = validade;
     }
     
     public Long getId() { return id; }
@@ -101,8 +102,8 @@ public class Estoque implements Serializable {
     public int getQuantidade() { return quantidade; }
     public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
 
-    public String getLote() { return lote; }
-    public void setLote(String Lote) { this.lote = lote; }
+    public Validade getValidade() { return validade; }
+    public void setValidade(Validade validade) { this.validade = validade; }
 
     @Override
     public int hashCode() {

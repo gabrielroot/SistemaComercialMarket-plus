@@ -48,12 +48,6 @@ public class Estoque implements Serializable {
     
     @Column()
     private int quantidadeMinimaDesejada;
-    
-    @Temporal(TemporalType.DATE)
-    private Calendar dataAquisicao;
-    
-    @Temporal(TemporalType.DATE)
-    private Calendar dataValidade;
 
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
     private List<Produto> produto;
@@ -66,18 +60,14 @@ public class Estoque implements Serializable {
         this.localizacaoProduto = null;
         this.quantidade = -1;
         this.quantidadeMinimaDesejada = -1;
-        this.dataAquisicao = null;
-        this.dataValidade = null;
         this.produto = new ArrayList<>();
         this.validade = new ArrayList<>();
     }
 
-    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade) {
+    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada) {
         this.localizacaoProduto = localizacaoProduto;
         this.quantidade = quantidade;
         this.quantidadeMinimaDesejada = quantidadeMinimaDesejada;
-        this.dataAquisicao = dataAquisicao;
-        this.dataValidade = dataValidade;
     }
     
     public Long getId() { return id; }
@@ -88,12 +78,6 @@ public class Estoque implements Serializable {
 
     public int getQuantidadeMinimaDesejada() { return quantidadeMinimaDesejada; }
     public void setQuantidadeMinimaDesejada(int quantidadeMinimaDesejada) { this.quantidadeMinimaDesejada = quantidadeMinimaDesejada; }
-
-    public Calendar getDataAquisicao() { return dataAquisicao; }
-    public void setDataAquisicao(Calendar dataAquisicao) { this.dataAquisicao = dataAquisicao; }
-
-    public Calendar getDataValidade() { return dataValidade; }
-    public void setDataValidade(Calendar dataValidade) { this.dataValidade = dataValidade; }
 
     public List<Produto> getProduto() { return produto; }
     public void setProduto(List<Produto> produto) { this.produto = produto; }

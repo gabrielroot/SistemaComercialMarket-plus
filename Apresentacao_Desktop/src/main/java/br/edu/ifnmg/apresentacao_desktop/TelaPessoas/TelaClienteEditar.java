@@ -43,37 +43,38 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     }
     
     private void setComponentes(){
-        
-        this.txtNome.setText(this.cliente.getNome());
-        
-        if(cliente.getEndereco() != null){
-            StringTokenizer enderecoCompleto = new StringTokenizer(cliente.getEndereco(), ",");
-            this.txtEndereco.setText(enderecoCompleto.nextToken());
-            this.txtNumeroCasa.setText(enderecoCompleto.nextToken());
-            this.txtBairro.setText(enderecoCompleto.nextToken());
-            this.TxtComplemento.setText(enderecoCompleto.nextToken());      
-        }
-        
-        this.txtDataNascimento.setValue(Util.getStringDateFromCalendar(this.cliente.getDataNascimento()));
-        this.cbxTipoPessoa.setSelectedItem(this.cliente.getTipoPessoa().toString());
-        
-        for (TipoDocumento tipoDocumento : TipoDocumento.values()) {
-            if(tipoDocumento.toString().equals(this.cliente.getTipoDocumento().toString())){
-                this.cbxTipoDocumento.setSelectedItem(cliente.getTipoDocumento().toString());
-                break;
+        if(!this.cliente.getNome().isEmpty()){
+            System.out.println("");
+            this.txtNome.setText(this.cliente.getNome());
+
+            if(cliente.getEndereco() != null){
+                StringTokenizer enderecoCompleto = new StringTokenizer(cliente.getEndereco(), ",");
+                this.txtEndereco.setText(enderecoCompleto.nextToken());
+                this.txtNumeroCasa.setText(enderecoCompleto.nextToken());
+                this.txtBairro.setText(enderecoCompleto.nextToken());
+                this.TxtComplemento.setText(enderecoCompleto.nextToken());      
             }
-        }
-        this.txtNumeroDocumento.setText(this.cliente.getNumeroDocumento());
-        if(this.cliente.getTelefones().size() > 0){
-            this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
-            
-            if(this.cliente.getTelefones().size() > 1){
-                this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
+
+            this.txtDataNascimento.setValue(Util.getStringDateFromCalendar(this.cliente.getDataNascimento()));
+            this.cbxTipoPessoa.setSelectedItem(this.cliente.getTipoPessoa().toString());
+
+            for (TipoDocumento tipoDocumento : TipoDocumento.values()) {
+                if(tipoDocumento.toString().equals(this.cliente.getTipoDocumento().toString())){
+                    this.cbxTipoDocumento.setSelectedItem(cliente.getTipoDocumento().toString());
+                    break;
+                }
             }
-        }
-        this.txtIdentificacaoCliente.setText(this.cliente.getIdentificaoDoCliente());
-        this.txtSenhaCliente.setText(this.cliente.getSenha());
-        
+            this.txtNumeroDocumento.setText(this.cliente.getNumeroDocumento());
+            if(this.cliente.getTelefones().size() > 0){
+                this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
+
+                if(this.cliente.getTelefones().size() > 1){
+                    this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
+                }
+            }
+            this.txtIdentificacaoCliente.setText(this.cliente.getIdentificaoDoCliente());
+            this.txtSenhaCliente.setText(this.cliente.getSenha());
+        } 
     }
     
     private boolean getComponentes(){
@@ -102,11 +103,16 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         endereco.append(", ");
         endereco.append(TxtComplemento.getText());
         
-        ArrayList<Telefone> telefones = new ArrayList();     
-        Telefone telefone1 = new Telefone(this.txtTelefone1.getText());
-        Telefone telefone2 = new Telefone(this.txtTelefone2.getText());
-        telefones.add(telefone1);
-        telefones.add(telefone2);
+        ArrayList<Telefone> telefones = new ArrayList();
+        if(this.txtTelefone1.getValue() != null){
+            Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString());
+            telefones.add(telefone1);
+        }
+        
+        if(this.txtTelefone2.getValue() != null){
+            Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString());
+            telefones.add(telefone2);
+        }
         
         Calendar data = Calendar.getInstance();
         data = Util.getCalendarDateFromString(this.txtDataNascimento.getText());

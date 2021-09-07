@@ -19,5 +19,5 @@ public enum LocalizacaoProduto {
     SETOR07,
     SETOR08,
     SETOR09,
-    SETOR010
+    SETOR10
 }

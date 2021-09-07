@@ -8,6 +8,7 @@ package br.edu.ifnmg.apresentacao_desktop;
 import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 
 /**
  *
@@ -268,6 +269,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelEstoque.setToolTipText("");
         panelEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelEstoque.setPreferredSize(new java.awt.Dimension(120, 140));
+        panelEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelEstoqueMouseClicked(evt);
+            }
+        });
 
         jPanel7.setBackground(new java.awt.Color(98, 57, 57));
 
@@ -820,6 +826,15 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         Login login = new Login();
         login.setVisible(true);
     }//GEN-LAST:event_btnEncerrarSessaoActionPerformed
+
+    private void panelEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelEstoqueMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_PRODUTO")){
+            ProdutoEditar produtoEditar = new ProdutoEditar();
+            this.telaPrincipal.renderJInternalFrame(produtoEditar);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_panelEstoqueMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

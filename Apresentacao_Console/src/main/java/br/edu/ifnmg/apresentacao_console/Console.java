@@ -25,6 +25,7 @@ import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.Lote;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
@@ -54,20 +55,30 @@ public class Console {
         }
         
 
-        queryPessoa();
+        queries();
     }
     
-    public static void queryPessoa(){
+    public static void queries(){
         
         
-        System.out.println("-- Buscar produtos com Filtros --");
+        System.out.println("-- Buscar produtos em que a quantidade mínima para atacado == 5 --");
         for(Produto produto : repositorioProduto.Buscar(new Produto(
-        
-        ))){
+                null, 
+                null, 
+                -1, 
+                5, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null
+        )
+        )){
             System.out.println("    "+produto.getNome());
         }
         
-        System.out.println("-- Buscar usuario com Filtros --");
+        System.out.println("-- Buscar usuarios em que o email == admin & UserType == Administrador --");
         for(Usuario usuario : repositorioUsuario.Buscar(new Usuario(
                 null, 
                 null, 
@@ -85,7 +96,7 @@ public class Console {
             System.out.println("    "+usuario.getNome());
         }
         
-        System.out.println("-- Buscar pessoa com Filtros --");
+        System.out.println("-- Buscar pessoa em que nome == 'Sebastião Codeiro' & NDocumento == '123456'--");
         for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa(
                 "Sebastião Codeiro", 
                 null, 
@@ -97,7 +108,7 @@ public class Console {
             System.out.println("    "+pessoa.getNome());
         }
         
-        System.out.println("-- Buscar fornecedor com Filtros --");
+        System.out.println("-- Buscar fornecedor em que nome == 'Enrico Santos' --");
         for(Fornecedor fornecedor : repositorioFornecedor.Buscar(new Fornecedor(
                 "Enrico Santos", 
                 null, 
@@ -358,11 +369,17 @@ public class Console {
     
     public static void produtosAleatorios(){
         for(int i=0; i<50; i++){
-            Estoque estoque = new Estoque(LocalizacaoProduto.values()[(int) (Math.random()*10)], (int) (Math.random()*60), (int) (Math.random()*200), Calendar.getInstance(), Calendar.getInstance());
+            Lote lote = new Lote((int) (Math.random()*20), Calendar.getInstance());
+            Estoque estoque = new Estoque(
+                    LocalizacaoProduto.values()[(int) (Math.random()*10)], 
+                    (int) (Math.random()*200), 
+                    lote
+            );
 
             Produto produto = new Produto("Sandália Havaianas"+((int) (Math.random()*10)+10)+" Polegadas ["+i+"]", 
                 "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
-                (int) (Math.random()*50), 5, 
+                (int) (Math.random()*20), 
+                (int) (Math.random()*10), 
                     UnidadeMedida.values()[(int) (Math.random()*11)], 
                     UnidadeMedida.values()[(int) (Math.random()*11)], 
                 new BigDecimal("32.00"), 
@@ -370,7 +387,7 @@ public class Console {
                 new BigDecimal("25.00"), 
                 estoque
             );
-            
+
             repositorioProduto.Salvar(produto);
         }
     }

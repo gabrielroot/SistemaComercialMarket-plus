@@ -5,7 +5,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
-import TelaProduto.ProdutoEditar;
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;

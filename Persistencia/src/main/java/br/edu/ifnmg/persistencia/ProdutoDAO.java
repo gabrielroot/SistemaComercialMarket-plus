@@ -34,6 +34,11 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 parametros.put("id", obj.getId());
             }
             
+            if(obj.getMinimoParaAtacado() >= 0){
+                filtros += "produto.minimoParaAtacado = :min";
+                parametros.put("min", obj.getMinimoParaAtacado());
+            }
+            
             if(obj.getNome() != null && obj.getNome().length() > 0){
                 if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.nome LIKE :nome";
@@ -52,41 +57,37 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 parametros.put("custo", obj.getUnidadeMedidaCusto());
             }
             
-            if(obj.getValorVarejo() != null && !(obj.getValorVarejo().compareTo(new BigDecimal("0.00")) == 0)){
+            if(obj.getValorVarejo() != null){
                 if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.valorVarejo = :vv";
                 parametros.put("vv", obj.getValorVarejo());
             }
             
-            if(obj.getValorAtacado()!= null && !(obj.getValorAtacado().compareTo(new BigDecimal("0.00")) == 0)){
+            if(obj.getValorAtacado()!= null){
                 if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.valorAtacado = :va";
                 parametros.put("va", obj.getValorAtacado());
             }
             
-            if(obj.getQuantidade() > -1){
-                if(filtros.length() > 0) filtros += " AND ";
-                filtros += "produto.quantidade = :qt";
-                parametros.put("qt", obj.getQuantidade());
-            }
-            
             if(obj.getEstoque() != null){
-                if(obj.getEstoque().getDataValidade() != null){
-                    if(filtros.length() > 0) filtros += " AND ";
-                    filtros += "produto.estoque.dataValidade = :validade";
-                    parametros.put("validade", obj.getEstoque().getDataValidade());
-                }
-
-                if(obj.getEstoque().getQuantidade() > -1){
-                    if(filtros.length() > 0) filtros += " AND ";
-                    filtros += "produto.estoque.quantidade = :qtde";
-                    parametros.put("qtde", obj.getEstoque().getQuantidade());
-                }
-
                 if(obj.getEstoque().getLocalizacaoProduto() != null){
                     if(filtros.length() > 0) filtros += " AND ";
                     filtros += "produto.estoque.localizacaoProduto = :local";
                     parametros.put("local", obj.getEstoque().getLocalizacaoProduto());
+                }
+                
+                if(obj.getEstoque().getLote() != null){
+                    if(obj.getEstoque().getLote().getQuantidade() > -1){
+                        if(filtros.length() > 0) filtros += " AND ";
+                        filtros += "produto.estoque.lote.quantidade = :qt";
+                        parametros.put("qt", obj.getEstoque().getLote().getQuantidade());
+                    }
+
+                    if(obj.getEstoque().getLote().getDataValidade() != null){
+                        if(filtros.length() > 0) filtros += " AND ";
+                        filtros += "produto.estoque.lote.dataValidade = :validade";
+                        parametros.put("validade", obj.getEstoque().getLote().getDataValidade());
+                    }
                 }
             }
         }

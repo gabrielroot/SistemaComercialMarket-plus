@@ -42,7 +42,7 @@ public class Produto implements Serializable {
     private String descricao;
     
     @Column()
-    private int quantidade;
+    private int quantidadePrateleira;
 
     @Column()
     private int minimoParaAtacado;
@@ -72,20 +72,20 @@ public class Produto implements Serializable {
         this.id = 0L;
         this.nome = "";
         this.descricao = "";
-        this.quantidade = -1;
+        this.quantidadePrateleira = -1;
         this.minimoParaAtacado = -1;
         this.unidadeMedidaCusto = null;
         this.unidadeMedidaVenda = null;
-        this.valorVarejo = new BigDecimal("0.00");
-        this.valorAtacado= new BigDecimal("0.00");
-        this.valorCusto = new BigDecimal("0.00");
+        this.valorVarejo = null;
+        this.valorAtacado= null;
+        this.valorCusto = null;
         this.estoque = new Estoque();
     }
 
     public Produto(
             String nome, 
             String descricao, 
-            int quantidade, 
+            int quantidadePrateleira,
             int minimoParaAtacado, 
             UnidadeMedida unidadeMedidaCusto, 
             UnidadeMedida unidadeMedidaVenda, 
@@ -96,13 +96,29 @@ public class Produto implements Serializable {
     ) {
         this.nome = nome;
         this.descricao = descricao;
-        this.quantidade = quantidade;
+        this.quantidadePrateleira = quantidadePrateleira;
         this.minimoParaAtacado = minimoParaAtacado;
         this.unidadeMedidaCusto = unidadeMedidaCusto;
         this.unidadeMedidaVenda = unidadeMedidaVenda;
         this.valorVarejo = valorVarejo;
         this.valorAtacado = valorAtacado;
         this.valorCusto = valorCusto;
+        this.estoque = estoque;
+    }
+
+    public Produto(
+            Estoque estoque
+    ) {
+        this.id = 0L;
+        this.nome = "";
+        this.descricao = "";
+        this.quantidadePrateleira = -1;
+        this.minimoParaAtacado = -1;
+        this.unidadeMedidaCusto = null;
+        this.unidadeMedidaVenda = null;
+        this.valorVarejo = null;
+        this.valorAtacado= null;
+        this.valorCusto = null;
         this.estoque = estoque;
     }
     
@@ -134,15 +150,15 @@ public class Produto implements Serializable {
 
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
-
-    public int getQuantidade() { return quantidade; }
-    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
     
     public BigDecimal getValorVarejo() { return valorVarejo; }
     public void setValorVarejo(BigDecimal valorVarejo) { this.valorVarejo = valorVarejo; }
 
     public Estoque getEstoque() { return estoque; }
     public void setEstoque(Estoque estoque) { this.estoque = estoque; }
+
+    public int getQuantidadePrateleira() { return quantidadePrateleira; }
+    public void setQuantidadePrateleira(int quantidadePrateleira) { this.quantidadePrateleira = quantidadePrateleira; }
     
     
     

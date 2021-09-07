@@ -20,6 +20,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,36 +45,31 @@ public class Estoque implements Serializable {
     private LocalizacaoProduto localizacaoProduto;
     
     @Column()
-    private int quantidade;
-    
-    @Column()
     private int quantidadeMinimaDesejada;
-    
-    @Temporal(TemporalType.DATE)
-    private Calendar dataAquisicao;
-    
-    @Temporal(TemporalType.DATE)
-    private Calendar dataValidade;
 
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
     private List<Produto> produto;
+    
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "lote_id", nullable= false)
+    private Lote lote;
 
     public Estoque() {
         this.id = 0L;
         this.localizacaoProduto = null;
-        this.quantidade = -1;
         this.quantidadeMinimaDesejada = -1;
-        this.dataAquisicao = null;
-        this.dataValidade = null;
         this.produto = new ArrayList<>();
+        this.lote = new Lote();
     }
 
-    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade) {
+    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidadeMinimaDesejada, Lote lote) {
         this.localizacaoProduto = localizacaoProduto;
-        this.quantidade = quantidade;
         this.quantidadeMinimaDesejada = quantidadeMinimaDesejada;
-        this.dataAquisicao = dataAquisicao;
-        this.dataValidade = dataValidade;
+        this.lote = lote;
+    }
+
+    public Estoque(Lote lote) {
+        this.lote = lote;
     }
     
     public Long getId() { return id; }
@@ -84,17 +81,11 @@ public class Estoque implements Serializable {
     public int getQuantidadeMinimaDesejada() { return quantidadeMinimaDesejada; }
     public void setQuantidadeMinimaDesejada(int quantidadeMinimaDesejada) { this.quantidadeMinimaDesejada = quantidadeMinimaDesejada; }
 
-    public Calendar getDataAquisicao() { return dataAquisicao; }
-    public void setDataAquisicao(Calendar dataAquisicao) { this.dataAquisicao = dataAquisicao; }
-
-    public Calendar getDataValidade() { return dataValidade; }
-    public void setDataValidade(Calendar dataValidade) { this.dataValidade = dataValidade; }
-
     public List<Produto> getProduto() { return produto; }
     public void setProduto(List<Produto> produto) { this.produto = produto; }
 
-    public int getQuantidade() { return quantidade; }
-    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+    public Lote getLote() { return lote; }
+    public void setLote(Lote lote) { this.lote = lote; }
 
     @Override
     public int hashCode() {

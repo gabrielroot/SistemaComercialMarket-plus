@@ -95,31 +95,30 @@ public class Util {
      * "sucesso" -> TRUE
      */
     public boolean abrirJOptionPane(String type, String message,JInternalFrame frame){
-        if(type.equalsIgnoreCase("confirma") && message.length() == 0){
-            message = "Tem Certeza??";
-        }
-        if(type.equalsIgnoreCase("permissao") && message.length() == 0){
-            message = "Você não tem permissão de acesso à este recurso.";
-        }
-        if(type.equalsIgnoreCase("erro") && message.length() == 0){
-            message = "Ocorreu um erro na operação.";
-        }
-        if(type.equalsIgnoreCase("sucesso") && message.length() == 0){
-            message = "Operação bem Sucedida!";
-        }
-        
         boolean result = true;
         switch(type){
             case "confirma":
+                if(message.length() == 0){
+                    message = "Tem Certeza??";
+                }
                 result = JOptionPane.showInternalConfirmDialog(frame, message, "Confirmação", JOptionPane.YES_NO_OPTION, 0, icone("/question.png")) == JOptionPane.YES_OPTION;
                 break;
             case "permissao":
-                JOptionPane.showMessageDialog(frame, message, "Title", JOptionPane.PLAIN_MESSAGE, icone("/no-permission.png"));
+                if(message.length() == 0){
+                    message = "Você não tem permissão de acesso à este recurso.";
+                }
+                JOptionPane.showMessageDialog(frame, message, "Permissão negada", JOptionPane.PLAIN_MESSAGE, icone("/no-permission.png"));
                 break;
             case "erro":
+                if(message.length() == 0){
+                    message = "Ocorreu um erro na operação.";
+                }
                 JOptionPane.showMessageDialog(frame, message, "Oops!", JOptionPane.PLAIN_MESSAGE, icone("/error.png"));
                 break;
             case "sucesso":
+                if(message.length() == 0){
+                    message = "Operação bem Sucedida!";
+                }
                 JOptionPane.showMessageDialog(frame, message, "Sucesso!", JOptionPane.PLAIN_MESSAGE, icone("/ok-success.png"));
                 break;
             case "informacao":

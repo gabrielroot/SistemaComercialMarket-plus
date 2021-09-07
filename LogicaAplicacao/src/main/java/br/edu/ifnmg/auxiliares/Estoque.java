@@ -56,6 +56,9 @@ public class Estoque implements Serializable {
 
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
     private List<Produto> produto;
+    
+    @Column()
+    private String lote;
 
     public Estoque() {
         this.id = 0L;
@@ -65,14 +68,16 @@ public class Estoque implements Serializable {
         this.dataAquisicao = null;
         this.dataValidade = null;
         this.produto = new ArrayList<>();
+        this.lote = "";
     }
 
-    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade) {
+    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidade, int quantidadeMinimaDesejada, Calendar dataAquisicao, Calendar dataValidade,  String lote) {
         this.localizacaoProduto = localizacaoProduto;
         this.quantidade = quantidade;
         this.quantidadeMinimaDesejada = quantidadeMinimaDesejada;
         this.dataAquisicao = dataAquisicao;
         this.dataValidade = dataValidade;
+        this.lote = lote;
     }
     
     public Long getId() { return id; }
@@ -95,6 +100,9 @@ public class Estoque implements Serializable {
 
     public int getQuantidade() { return quantidade; }
     public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+
+    public String getLote() { return lote; }
+    public void setLote(String Lote) { this.lote = lote; }
 
     @Override
     public int hashCode() {

@@ -16,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,25 +36,37 @@ public class Lote implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Column(length=254)
+    private String codigo;
+    
     @Column()
     private int quantidade;
     
     @Temporal(TemporalType.DATE)
+    private Calendar dataFabricacao;
+    
+    @Temporal(TemporalType.DATE)
     private Calendar dataValidade;
-
-    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "lote")
-    private List<Estoque> estoque;
+    
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "estoque_id", nullable= false)
+    private Estoque estoque;
 
     public Lote() {
         this.id = 0L;
+        this.codigo = "";
         this.quantidade = -1;
         this.dataValidade = null;
-        this.estoque = new ArrayList<>();
+        this.dataFabricacao = null;
+        this.estoque = new Estoque();
     }
 
-    public Lote(int quantidade, Calendar dataValidade) {
+    public Lote(String codigo, int quantidade, Calendar dataValidade, Calendar dataFabricacao, Estoque estoque) {
+        this.codigo = codigo;
         this.quantidade = quantidade;
         this.dataValidade = dataValidade;
+        this.dataFabricacao = dataFabricacao;
+        this.estoque = estoque;
     }
     
     public Long getId() { return id; }
@@ -61,11 +75,17 @@ public class Lote implements Serializable {
     public Calendar getDataValidade() { return dataValidade; }
     public void setDataValidade(Calendar dataValidade) { this.dataValidade = dataValidade; }
 
-    public List<Estoque> getEstoque() { return estoque; }
-    public void setEstoque(List<Estoque> estoque) { this.estoque = estoque; }
+    public Estoque getEstoque() { return estoque; }
+    public void setEstoque(Estoque estoque) { this.estoque = estoque; }
 
     public int getQuantidade() { return quantidade; }
     public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+
+    public String getCodigo() { return codigo; }
+    public void setCodigo(String codigo) { this.codigo = codigo; }
+
+    public Calendar getDataFabricacao() { return dataFabricacao; }
+    public void setDataFabricacao(Calendar dataFabricacao) { this.dataFabricacao = dataFabricacao;}
 
     @Override
     public int hashCode() {

@@ -105,24 +105,6 @@ public class Produto implements Serializable {
         this.valorCusto = valorCusto;
         this.estoque = estoque;
     }
-
-    public Produto(
-            Estoque estoque
-    ) {
-        this.id = 0L;
-        this.nome = "";
-        this.descricao = "";
-        this.quantidadePrateleira = -1;
-        this.minimoParaAtacado = -1;
-        this.unidadeMedidaCusto = null;
-        this.unidadeMedidaVenda = null;
-        this.valorVarejo = null;
-        this.valorAtacado= null;
-        this.valorCusto = null;
-        this.estoque = estoque;
-    }
-    
-    
     
     public Long getId() { return this.id; }
     public void setId(Long id) { this.id = id; }

@@ -76,17 +76,29 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                     parametros.put("local", obj.getEstoque().getLocalizacaoProduto());
                 }
                 
-                if(obj.getEstoque().getLote() != null){
-                    if(obj.getEstoque().getLote().getQuantidade() > -1){
+                if(obj.getEstoque().getLotes() != null){
+                    if(obj.getEstoque().getLotes().get(0).getCodigo() != null && obj.getEstoque().getLotes().get(0).getCodigo().length() > 0){
+                        if(filtros.length() > 0) filtros += " AND ";
+                        filtros += "produto.estoque.lote.codigo LIKE :code";
+                        parametros.put("code", obj.getEstoque().getLotes().get(0).getCodigo() + "%");
+                    }
+                    
+                    if(obj.getEstoque().getLotes().get(0).getQuantidade() > -1){
                         if(filtros.length() > 0) filtros += " AND ";
                         filtros += "produto.estoque.lote.quantidade = :qt";
-                        parametros.put("qt", obj.getEstoque().getLote().getQuantidade());
+                        parametros.put("qt", obj.getEstoque().getLotes().get(0).getQuantidade());
                     }
 
-                    if(obj.getEstoque().getLote().getDataValidade() != null){
+                    if(obj.getEstoque().getLotes().get(0).getDataValidade() != null){
                         if(filtros.length() > 0) filtros += " AND ";
                         filtros += "produto.estoque.lote.dataValidade = :validade";
-                        parametros.put("validade", obj.getEstoque().getLote().getDataValidade());
+                        parametros.put("validade", obj.getEstoque().getLotes().get(0).getDataValidade());
+                    }
+
+                    if(obj.getEstoque().getLotes().get(0).getDataFabricacao() != null){
+                        if(filtros.length() > 0) filtros += " AND ";
+                        filtros += "produto.estoque.lote.dataFabricacao = :fab";
+                        parametros.put("fab", obj.getEstoque().getLotes().get(0).getDataFabricacao());
                     }
                 }
             }

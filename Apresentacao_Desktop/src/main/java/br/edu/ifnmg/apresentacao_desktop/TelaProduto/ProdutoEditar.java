@@ -13,8 +13,10 @@ import br.edu.ifnmg.enums.UnidadeMedida;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JInternalFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,7 +26,6 @@ import javax.swing.table.DefaultTableModel;
 public class ProdutoEditar extends javax.swing.JInternalFrame {
 
     private Produto produto;
-    private Estoque estoque;
     private Lote lote;
     private ProdutoRepositorio produtoRepositorio;
     private Util util;
@@ -34,9 +35,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
      */
     public ProdutoEditar() {
         initComponents();
-        this.lote = new Lote();
-        this.estoque = new Estoque(lote);
-        this.produto = new Produto(estoque);
+        this.produto = new Produto();
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.util = new Util();
         this.buscarProduto();
@@ -54,6 +53,10 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     }
     
     private void buscarProduto(){
+        Estoque estoque = new Estoque();
+        List lotes = new ArrayList<>();
+        Lote lote = new Lote();
+        lotes.add(lote);
         
         this.produto.setNome(this.txtNome.getText());    
         
@@ -65,6 +68,9 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
             }
         }
         estoque.setLocalizacaoProduto(filter);
+        
+        estoque.setLotes(lotes);
+        produto.setEstoque(estoque);
         
         UnidadeMedida filter2 = null;
         for(UnidadeMedida unidade: UnidadeMedida.values()){
@@ -83,13 +89,13 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         modelo.addColumn("Nome");
         modelo.addColumn("Descrição");
         modelo.addColumn("QTDE. nas Prateleiras");
-        modelo.addColumn("QTDE. Mínima para Atacado");
-        modelo.addColumn("UND. de Compra");
-        modelo.addColumn("UND. de Venda");
-        modelo.addColumn("VAL. para Verejo");
-        modelo.addColumn("VAL. para Atacado");
-        modelo.addColumn("VAL. de Compra");
-        modelo.addColumn("Localização");
+        modelo.addColumn("QTDE. MÍN. Atacado");
+        modelo.addColumn("UND. Compra");
+        modelo.addColumn("UND. Venda");
+        modelo.addColumn("VAL. Varejo");
+        modelo.addColumn("VAL. Atacado");
+        modelo.addColumn("VAL. Compra");
+        modelo.addColumn("Local");
         modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("QTDE. MÍN. em Estoque");
         modelo.addColumn("Data de Vencimento");
@@ -109,9 +115,9 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
             linha.add(resultado.get(i).getValorAtacado());
             linha.add(resultado.get(i).getValorCusto());
             linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
-            linha.add(resultado.get(i).getEstoque().getLote().getQuantidade());  //QUANTIDADE EM ESTOQUE == SOMA DE TODOS OS LOTES
+            linha.add(resultado.get(i).getEstoque().getLotes().get(0).getQuantidade());  //QUANTIDADE EM ESTOQUE == SOMA DE TODOS OS LOTES
             linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
-            linha.add(Util.getStringDateFromCalendar(resultado.get(i).getEstoque().getLote().getDataValidade()));
+            linha.add(Util.getStringDateFromCalendar(resultado.get(i).getEstoque().getLotes().get(0).getDataValidade()));
             modelo.addRow(linha);
         }
         tblResultadoProdutos.setModel(modelo);
@@ -141,6 +147,9 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         comboUnidadeVenda = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
@@ -190,6 +199,11 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblResultadoProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblResultadoProdutosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblResultadoProdutos);
 
         jButton1.setBackground(new java.awt.Color(109, 46, 46));
@@ -234,6 +248,36 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(8, 8, 8));
         jLabel4.setText("Local:");
 
+        jCheckBox1.setBackground(new java.awt.Color(163, 124, 124));
+        jCheckBox1.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
+        jCheckBox1.setForeground(new java.awt.Color(8, 8, 8));
+        jCheckBox1.setText("Descrição");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox2.setBackground(new java.awt.Color(163, 124, 124));
+        jCheckBox2.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
+        jCheckBox2.setForeground(new java.awt.Color(8, 8, 8));
+        jCheckBox2.setText("Nome");
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox3.setBackground(new java.awt.Color(163, 124, 124));
+        jCheckBox3.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
+        jCheckBox3.setForeground(new java.awt.Color(8, 8, 8));
+        jCheckBox3.setText("Unidade de Compra");
+        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -261,6 +305,14 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                     .addComponent(comboLocalizacaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addContainerGap(175, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,17 +324,23 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboLocalizacaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboUnidadeVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(comboLocalizacaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboUnidadeVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jCheckBox2)
+                    .addComponent(jCheckBox3))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
         );
 
         jDesktopPane1.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -321,6 +379,22 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         this.buscarProduto();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void tblResultadoProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoProdutosMouseClicked
+
+    }//GEN-LAST:event_tblResultadoProdutosMouseClicked
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboLocalizacaoProduto;
@@ -328,6 +402,9 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
     private static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

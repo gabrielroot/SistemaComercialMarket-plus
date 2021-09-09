@@ -47,27 +47,22 @@ public class Estoque implements Serializable {
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
     private List<Produto> produto;
     
-    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "lote_id", nullable= false)
-    private Lote lote;
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
+    private List<Lote> lotes;
 
     public Estoque() {
         this.id = 0L;
         this.localizacaoProduto = null;
         this.quantidadeMinimaDesejada = -1;
         this.produto = new ArrayList<>();
-        this.lote = new Lote();
+        this.lotes = new ArrayList<>();
     }
 
 
-    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidadeMinimaDesejada, Lote lote) {
+    public Estoque(LocalizacaoProduto localizacaoProduto, int quantidadeMinimaDesejada) {
         this.localizacaoProduto = localizacaoProduto;
         this.quantidadeMinimaDesejada = quantidadeMinimaDesejada;
-        this.lote = lote;
-    }
-
-    public Estoque(Lote lote) {
-        this.lote = lote;
+        this.lotes = new ArrayList<>();
     }
     
     public Long getId() { return id; }
@@ -82,8 +77,8 @@ public class Estoque implements Serializable {
     public List<Produto> getProduto() { return produto; }
     public void setProduto(List<Produto> produto) { this.produto = produto; }
 
-    public Lote getLote() { return lote; }
-    public void setLote(Lote lote) { this.lote = lote; }
+    public List<Lote> getLotes() { return lotes; }
+    public void setLotes(List lotes) { this.lotes = lotes; }
 
     @Override
     public int hashCode() {

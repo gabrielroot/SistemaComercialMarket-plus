@@ -369,12 +369,16 @@ public class Console {
     
     public static void produtosAleatorios(){
         for(int i=0; i<50; i++){
-            Lote lote = new Lote((int) (Math.random()*20), Calendar.getInstance());
             Estoque estoque = new Estoque(
                     LocalizacaoProduto.values()[(int) (Math.random()*10)], 
-                    (int) (Math.random()*200), 
-                    lote
+                    (int) (Math.random()*200)
             );
+            
+            List lotes = new ArrayList();
+            Lote lote = new Lote((int) (Math.random()*20)+"0b", (int) (Math.random()*20), Calendar.getInstance(), Calendar.getInstance(), estoque);
+            lotes.add(lote);
+            
+            estoque.setLotes(lotes);
 
             Produto produto = new Produto("Sandália Havaianas"+((int) (Math.random()*10)+10)+" Polegadas ["+i+"]", 
                 "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 

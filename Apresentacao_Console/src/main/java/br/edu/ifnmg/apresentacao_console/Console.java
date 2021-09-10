@@ -29,6 +29,7 @@ import br.edu.ifnmg.auxiliares.Lote;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import Util.Util;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -270,7 +271,7 @@ public class Console {
         
         usuariosAleatorios();
         fornecedoresAleatorios();
-        produtosAleatorios();
+        produtosFixos();
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
@@ -367,32 +368,61 @@ public class Console {
         }
     }
     
-    public static void produtosAleatorios(){
-        for(int i=0; i<50; i++){
+    public static void produtosFixos(){
             Estoque estoque = new Estoque(
-                    LocalizacaoProduto.values()[(int) (Math.random()*10)], 
-                    (int) (Math.random()*200)
+                    LocalizacaoProduto.SETOR01, 
+                    50
             );
             
             List lotes = new ArrayList();
-            Lote lote = new Lote((int) (Math.random()*20)+"0b", (int) (Math.random()*20), Calendar.getInstance(), Calendar.getInstance(), estoque);
+            Lote lote = new Lote("BR110", 5, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoque);
+            Lote lote1 = new Lote("BR140", 3, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoque);
+            Lote lote11 = new Lote("BR14012", 31, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoque);
             lotes.add(lote);
+            lotes.add(lote1);
+            lotes.add(lote11);
             
             estoque.setLotes(lotes);
 
-            Produto produto = new Produto("Sandália Havaianas"+((int) (Math.random()*10)+10)+" Polegadas ["+i+"]", 
+            Produto produto = new Produto("Sandália Havaianas 44 Polegadas", 
                 "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
-                (int) (Math.random()*20), 
-                (int) (Math.random()*10), 
-                    UnidadeMedida.values()[(int) (Math.random()*11)], 
-                    UnidadeMedida.values()[(int) (Math.random()*11)], 
+                10, 
+                3, 
+                UnidadeMedida.Unidade, 
+                UnidadeMedida.Fardo, 
                 new BigDecimal("32.00"), 
                 new BigDecimal("30.00"), 
                 new BigDecimal("25.00"), 
                 estoque
             );
-
+            
             repositorioProduto.Salvar(produto);
-        }
+            
+            Estoque estoque2 = new Estoque(
+                    LocalizacaoProduto.SETOR02, 
+                    25
+            );
+            
+            List lotes2 = new ArrayList();
+            Lote lote2 = new Lote("BR130", 15, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoque2);
+            Lote lote22 = new Lote("BR1330", 3, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoque2);
+            lotes2.add(lote2);
+            lotes2.add(lote22);
+            
+            estoque.setLotes(lotes2);
+
+            Produto produto2 = new Produto("Tigela azul marinho 700ml", 
+                "Ideal para saladas ou uso como prato de pedreiro", 
+                5, 
+                2, 
+                UnidadeMedida.Unidade, 
+                UnidadeMedida.Fardo, 
+                new BigDecimal("22.00"), 
+                new BigDecimal("20.00"), 
+                new BigDecimal("15.00"), 
+                estoque2
+            );
+            
+            repositorioProduto.Salvar(produto2);
     }
 }

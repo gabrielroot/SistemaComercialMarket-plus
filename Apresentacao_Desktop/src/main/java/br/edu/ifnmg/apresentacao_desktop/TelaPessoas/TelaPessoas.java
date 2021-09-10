@@ -758,8 +758,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
     private void tblResultadoClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoClientesMouseClicked
        
-        int linha = this.tblResultadoClientes.getSelectedRow();// seleciono a linha clicada
-        long id = (long)this.tblResultadoClientes.getValueAt(linha, 1); // seleciono a coluna 
+        int linha = this.tblResultadoClientes.getSelectedRow();
+        long id = (long)this.tblResultadoClientes.getValueAt(linha, 1);
         
         Cliente cliente = clienteRepositorio.Abrir(id); 
         TelaClienteEditar telaClienteEditar = new TelaClienteEditar(cliente, "Editar Cliente");

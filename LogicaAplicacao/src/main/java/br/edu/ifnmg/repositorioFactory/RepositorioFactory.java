@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.repositorioFactory;
 
+import br.edu.ifnmg.auxiliares.LoteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
@@ -33,6 +34,7 @@ public class RepositorioFactory {
     private static ClienteRepositorio cliente;
     private static UsuarioRepositorio usuario;
     private static ProdutoRepositorio produto;
+    private static LoteRepositorio lote;
 //    private static CargoFuncionario cargo;
     
     static {
@@ -116,6 +118,14 @@ public class RepositorioFactory {
             produto = (ProdutoRepositorio) getInstancia(nomeclasse);
         }
         return produto;
+    }
+    
+    public static LoteRepositorio getLoteRepositorio() {
+        if(lote == null){
+            String nomeclasse = propriedades.getProperty("LoteRepositorio");
+            lote = (LoteRepositorio) getInstancia(nomeclasse);
+        }
+        return lote;
     }
     
     /*public static CargoFuncionario getCargoFuncionario() {

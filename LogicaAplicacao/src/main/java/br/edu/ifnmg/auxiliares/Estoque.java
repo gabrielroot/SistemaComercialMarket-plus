@@ -79,6 +79,14 @@ public class Estoque implements Serializable {
 
     public List<Lote> getLotes() { return lotes; }
     public void setLotes(List lotes) { this.lotes = lotes; }
+    
+    public int getSomaLotes() { 
+        int sum = 0;
+        for(Lote lote: this.lotes){
+            sum += lote.getQuantidade();
+        }
+        return sum; 
+    }
 
     @Override
     public int hashCode() {

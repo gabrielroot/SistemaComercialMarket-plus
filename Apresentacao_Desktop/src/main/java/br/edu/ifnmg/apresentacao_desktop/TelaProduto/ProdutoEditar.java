@@ -40,11 +40,22 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.util = new Util();
         this.buscarProduto();
-        setComponentes();
+        initTabProdutos();
         jDesktopPane1.setBackground(null);
     }
-
-    private void setComponentes(){
+    
+    private void initTab(){
+        switch(jTabbedPane1.getSelectedIndex()){
+            case 0:
+                initTabProdutos();
+                break;
+            case 1:
+                initTabEstoque();
+                break;
+        }
+    }
+    
+    private void initTabProdutos(){
         for(LocalizacaoProduto segmento: LocalizacaoProduto.values()){
             this.comboLocalizacaoProduto.addItem(segmento.toString());
         }
@@ -52,6 +63,34 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         for(UnidadeMedida unidadeMedida: UnidadeMedida.values()){
             this.comboUnidadeVenda.addItem(unidadeMedida.toString());
         }
+        
+        buscarProduto();
+    }
+    
+    private void initTabEstoque(){
+        List<Produto> resultado = this.produtoRepositorio.Buscar(produto);
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("#");
+        modelo.addColumn("ID");
+        modelo.addColumn("Nome");
+        modelo.addColumn("Local");
+        modelo.addColumn("QTDE. em Estoque");
+        modelo.addColumn("QTDE. Min Desejada");
+        modelo.addColumn("Data de Vencimento");
+        
+        for(int i=0;i<resultado.size(); i++){
+            Vector linha = new Vector();
+            
+            linha.add((i+1));
+            linha.add(resultado.get(i).getId());
+            linha.add(resultado.get(i).getNome());
+            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
+            linha.add(resultado.get(i).getEstoque().getSomaLotes());
+            linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
+            linha.add(Util.getStringDateFromCalendar(resultado.get(i).getEstoque().getLotes().get(0).getDataValidade()));
+            modelo.addRow(linha);
+        }
+        tableResultadoEstoque.setModel(modelo);
     }
     
     private void buscarProduto(){
@@ -169,6 +208,9 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableResultadoEstoque = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
@@ -200,6 +242,11 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
         jTabbedPane1.setForeground(new java.awt.Color(0, 0, 0));
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(208, 208, 208));
 
@@ -407,7 +454,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                     .addComponent(checkQTDEstoque)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -422,6 +469,38 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         );
 
         jTabbedPane1.addTab("Produtos", jPanel2);
+
+        tableResultadoEstoque.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableResultadoEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableResultadoEstoqueMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableResultadoEstoque);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1194, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jTabbedPane1.addTab("Estoque", jPanel3);
 
         jDesktopPane1.setLayer(jpBG, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -487,6 +566,20 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
 
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        initTab();
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void tableResultadoEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoEstoqueMouseClicked
+        int linha = this.tableResultadoEstoque.getSelectedRow();
+        long id = (long)this.tableResultadoEstoque.getValueAt(linha, 1);
+        Estoque estoque = produtoRepositorio.Abrir(id).getEstoque();
+        TelaLote lote = new TelaLote(estoque);
+        jDesktopPane1.add(lote);
+        Util.centralizaInternalFrame(lote, this.getSize());
+        lote.setVisible(true);
+    }//GEN-LAST:event_tableResultadoEstoqueMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checkDescricao;
@@ -507,10 +600,13 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel jpBG;
+    private javax.swing.JTable tableResultadoEstoque;
     private javax.swing.JTable tblResultadoProdutos;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

@@ -55,9 +55,10 @@ public class Util {
             parseInt(date.split("/",3)[1]),
             parseInt(date.split("/",3)[0])
         );
-        
+     nascimento.get(0);
         return nascimento;
     }
+    
     public static void centralizaInternalFrame(JInternalFrame frame,Dimension desktopSize) {
         Dimension jInternalFrameSize = frame.getSize();
         frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,

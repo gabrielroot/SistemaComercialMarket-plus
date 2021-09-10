@@ -1,5 +1,6 @@
 package br.edu.ifnmg.auxiliares;
 
+import br.edu.ifnmg.logicaAplicacao.Funcionario;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name="cargoFuncionario")
@@ -30,18 +36,24 @@ public class CargoFuncionario implements Serializable {
     @Column(precision=8, scale=2)
     private BigDecimal salario;
     
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "cargo")
+    private List<Funcionario> funcionarios;
+
+     
     public CargoFuncionario() {
+        this.id=0L;
         this.titulo = "";
         this.funcao = "";
         this.comissao =  new BigDecimal("0.00");
         this.salario =  new BigDecimal("0.00");
+        this.funcionarios=new ArrayList<>();
     }
     
-    public CargoFuncionario(String titulo, String funcao, String comissao, String salario) {
+    public CargoFuncionario(String titulo, String funcao, BigDecimal comissao, BigDecimal salario) {
         this.titulo = titulo;
         this.funcao = funcao;
-        this.comissao = new BigDecimal(comissao);
-        this.salario = new BigDecimal(salario);
+        this.comissao = comissao;
+        this.salario = salario;
     }
     
     public Long getId() { return this.id; }
@@ -58,7 +70,27 @@ public class CargoFuncionario implements Serializable {
 
     public BigDecimal getSalario() { return this.salario; }
     public void setSalario(BigDecimal salario) { this.salario = salario; }
+    
+    public List<Funcionario> getFuncionarios() {   return funcionarios;    }
 
+    public void setFuncionarios(List<Funcionario> funcionarios) { this.funcionarios = funcionarios; }
+
+    public boolean add(Funcionario funcionario){
+        if(!(this.funcionarios.contains(funcionario))){
+            this.funcionarios.add(funcionario);
+            return true;
+        }
+        return false; 
+    }
+    
+    public boolean remove(Funcionario funcionario){
+        if(this.funcionarios.contains(funcionario)){
+            this.funcionarios.remove(funcionario);
+            return true;
+        }
+        return false; 
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

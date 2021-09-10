@@ -5,9 +5,11 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
+import java.awt.Frame;
 import javax.persistence.NoResultException;
 
 /**
@@ -23,6 +25,9 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         initComponents();
+        //Centralizando a tela        
+        this.setLocationRelativeTo(null);
+        this.setTitle("LOGIN");
     }
 
     /**
@@ -36,32 +41,37 @@ public class Login extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        imgLogo = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        txtEmail = new javax.swing.JTextField();
+        inputEmail = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         lblSenha = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        psswdSenha = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        inputSenha = new javax.swing.JPasswordField();
+        btnEntrar = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
         setLocationByPlatform(true);
+        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(160, 63, 65));
+        jPanel2.setBackground(new java.awt.Color(96, 16, 16));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/Imagens/logo.jpeg")); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 470, 240));
+        imgLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo.png"))); // NOI18N
+        jPanel2.add(imgLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 510, 520));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 520));
 
+        jPanel3.setBackground(new java.awt.Color(244, 188, 188));
+        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPanel3KeyPressed(evt);
@@ -69,63 +79,91 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+        inputEmail.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        inputEmail.setForeground(new java.awt.Color(0, 0, 0));
+        inputEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(135, 30, 30)));
+        inputEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
+                inputEmailActionPerformed(evt);
             }
         });
-        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+        inputEmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtEmailKeyPressed(evt);
+                inputEmailKeyPressed(evt);
             }
         });
-        jPanel3.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 270, 37));
+        jPanel3.add(inputEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 290, 37));
 
         lblEmail.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        lblEmail.setForeground(new java.awt.Color(62, 14, 14));
         lblEmail.setText("Email");
-        jPanel3.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jPanel3.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
 
         lblSenha.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        lblSenha.setForeground(new java.awt.Color(62, 14, 14));
         lblSenha.setText("Senha");
-        jPanel3.add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, -1));
+        jPanel3.add(lblSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
+        jLabel3.setBackground(new java.awt.Color(255, 0, 0));
+        jLabel3.setFont(new java.awt.Font("sansserif", 0, 40)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(77, 59, 59));
         jLabel3.setText("LOGIN");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, -1, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
 
-        psswdSenha.addActionListener(new java.awt.event.ActionListener() {
+        inputSenha.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        inputSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(135, 30, 30)));
+        inputSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                psswdSenhaActionPerformed(evt);
+                inputSenhaActionPerformed(evt);
             }
         });
-        psswdSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+        inputSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                psswdSenhaKeyPressed(evt);
+                inputSenhaKeyPressed(evt);
             }
         });
-        jPanel3.add(psswdSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, 266, 35));
+        jPanel3.add(inputSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 290, 35));
 
-        jButton1.setBackground(new java.awt.Color(47, 107, 151));
-        jButton1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Entrar");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEntrar.setBackground(new java.awt.Color(102, 16, 16));
+        btnEntrar.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntrar.setText("Entrar");
+        btnEntrar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEntrarActionPerformed(evt);
             }
         });
-        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+        btnEntrar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton1KeyPressed(evt);
+                btnEntrarKeyPressed(evt);
             }
         });
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 134, 33));
+        jPanel3.add(btnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 134, 33));
 
         lblError.setBackground(new java.awt.Color(160, 63, 65));
         lblError.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        lblError.setForeground(new java.awt.Color(160, 63, 65));
+        lblError.setForeground(new java.awt.Color(255, 63, 65));
         jPanel3.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 455, -1, -1));
+
+        jLabel2.setBackground(new java.awt.Color(160, 63, 65));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/close.png"))); // NOI18N
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 40, 30));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/minimize.png"))); // NOI18N
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 40, 30));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, 400, 519));
 
@@ -138,50 +176,58 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jPanel3KeyPressed
 
-    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+    private void btnEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEntrarKeyPressed
 
-    }//GEN-LAST:event_jButton1KeyPressed
+    }//GEN-LAST:event_btnEntrarKeyPressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         this.logar();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
-    private void psswdSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_psswdSenhaKeyPressed
+    private void inputSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputSenhaKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
             this.logar();
         }
-    }//GEN-LAST:event_psswdSenhaKeyPressed
+    }//GEN-LAST:event_inputSenhaKeyPressed
 
-    private void psswdSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_psswdSenhaActionPerformed
+    private void inputSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputSenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_psswdSenhaActionPerformed
+    }//GEN-LAST:event_inputSenhaActionPerformed
 
-    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
+    private void inputEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputEmailKeyPressed
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
-            psswdSenha.requestFocus();
+            inputSenha.requestFocus();
         }
-    }//GEN-LAST:event_txtEmailKeyPressed
+    }//GEN-LAST:event_inputEmailKeyPressed
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+    private void inputEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
+    }//GEN-LAST:event_inputEmailActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     private void logar(){
         Usuario user;
         
         try{
-            user = usuarioRepositorio.Autenticar(txtEmail.getText(), String.valueOf(psswdSenha.getPassword()));
+            user = usuarioRepositorio.Autenticar(inputEmail.getText(), String.valueOf(inputSenha.getPassword()));
         }catch(NoResultException ex){
             user = null;
         }
         
         if(user != null){
-            TelaPrincipal principal = new TelaPrincipal();
+            TelaPrincipal telaPrincipal = new TelaPrincipal(user);
             this.setVisible(false);
-            principal.setVisible(true);
+            telaPrincipal.setVisible(true);
         }else{
-            psswdSenha.selectAll();
+            inputSenha.selectAll();
             lblError.setText("Usuário e/ou senha inválidos!");
         }
     }
@@ -222,16 +268,18 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnEntrar;
+    private javax.swing.JLabel imgLogo;
+    private javax.swing.JTextField inputEmail;
+    private javax.swing.JPasswordField inputSenha;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblSenha;
-    private javax.swing.JPasswordField psswdSenha;
-    private javax.swing.JTextField txtEmail;
     // End of variables declaration//GEN-END:variables
 }

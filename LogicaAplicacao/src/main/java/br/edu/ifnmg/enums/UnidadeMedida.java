@@ -17,5 +17,9 @@ public enum UnidadeMedida {
     Mililitro,
     Metro,
     Centrimetro,
-    Milimetro
+    Milimetro,
+    Fardo,
+    Pacote,
+    Unidade,
+    Duzia
 }

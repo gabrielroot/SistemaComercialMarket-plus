@@ -10,10 +10,13 @@ import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -35,7 +38,8 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name="pessoa")
-@Inheritance(strategy=InheritanceType.JOINED)  
+@Inheritance(strategy=InheritanceType.JOINED) 
+@DiscriminatorColumn(discriminatorType=DiscriminatorType.STRING, name="tipo")
 public class Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,7 +57,7 @@ public class Pessoa implements Serializable {
     private List<Telefone> telefones;
     
     @Temporal(TemporalType.DATE)
-    private Date dataNascimento;
+    private Calendar dataNascimento;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
@@ -67,13 +71,15 @@ public class Pessoa implements Serializable {
     private String numeroDocumento;
     
     @Version
-    private long versao;
+    private int versao;
     
     public Pessoa(){
         this.id = 0L;
         this.nome = "";
         this.telefones = new ArrayList<>();
         this.tipoPessoa = TipoPessoa.Fisica;
+        this.dataNascimento = Calendar.getInstance();
+        this.dataNascimento.set(1900, 01, 10);
         this.tipoDocumento = TipoDocumento.CertidaoNascimento;
         this.numeroDocumento = "";
         this.versao = 1;
@@ -83,11 +89,32 @@ public class Pessoa implements Serializable {
             String nome, 
             String endereco, 
             List<Telefone> telefones, 
-            Date dataNascimento, 
+            Calendar dataNascimento, 
             TipoPessoa tipoPessoa, 
             TipoDocumento tipoDocumento, 
             String numeroDocumento
         ){
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefones = telefones;
+        this.dataNascimento = dataNascimento;
+        this.tipoPessoa = tipoPessoa;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.versao = 1;
+    }
+    
+    public Pessoa(
+            Long id,
+            String nome, 
+            String endereco, 
+            List<Telefone> telefones, 
+            Calendar dataNascimento, 
+            TipoPessoa tipoPessoa, 
+            TipoDocumento tipoDocumento, 
+            String numeroDocumento
+        ){
+        this.id = id;
         this.nome = nome;
         this.endereco = endereco;
         this.telefones = telefones;
@@ -110,8 +137,8 @@ public class Pessoa implements Serializable {
     public List<Telefone> getTelefones() { return telefones; }
     public void setTelefones(List<Telefone> telefones) { this.telefones = telefones; }
 
-    public Date getDataNascimento() { return dataNascimento; }
-    public void setDataNascimento(Date dataNascimento) { this.dataNascimento = dataNascimento;}
+    public Calendar getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(Calendar dataNascimento) { this.dataNascimento = dataNascimento;}
 
     public TipoPessoa getTipoPessoa() { return tipoPessoa; }
     public void setTipoPessoa(TipoPessoa tipoPessoa) { this.tipoPessoa = tipoPessoa; }
@@ -122,8 +149,8 @@ public class Pessoa implements Serializable {
     public String getNumeroDocumento() { return numeroDocumento; }
     public void setNumeroDocumento(String numeroDocumento) { this.numeroDocumento = numeroDocumento; }
 
-    public long getVersao() { return versao; }
-    public void setVersao(long versao) { this.versao = versao; }
+    public int getVersao() { return versao; }
+    public void setVersao(int versao) { this.versao = versao; }
     
     @java.lang.Override
     public int hashCode() {

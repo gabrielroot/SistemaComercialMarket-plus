@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author kesley
  */
-public class FuncionarioDAO extends DataAccessObject<Funcionario> implements FuncionarioRepositorio {
+public class FuncionarioDAO extends DataAccessObject<Funcionario> implements FuncionarioRepositorio{
     
     public FuncionarioDAO() {
         super(Funcionario.class);

@@ -5,13 +5,14 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.auxiliares.CargoFuncionario;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ import javax.persistence.Version;
 @Table(name = "usuario")
 public class Usuario extends Funcionario implements Serializable {
     
-    @Column(length = 250, nullable = false)
+    @Column(length = 250, nullable = false, unique = true)
     private String email;
     
     @Column(length = 250, nullable = false)
@@ -54,11 +55,12 @@ public class Usuario extends Funcionario implements Serializable {
             String nome, 
             String endereco, 
             List<Telefone> telefones, 
-            Date dataNascimento, 
+            Calendar dataNascimento, 
             TipoPessoa tipoPessoa, 
             TipoDocumento tipoDocumento, 
             String numeroDocumento, 
             FuncionarioSituacao situacao,
+            CargoFuncionario cargo,
             String email, 
             String senha,
             UsuarioTipo usuarioTipo
@@ -71,7 +73,40 @@ public class Usuario extends Funcionario implements Serializable {
             tipoPessoa, 
             tipoDocumento, 
             numeroDocumento, 
-            situacao
+            situacao,
+            cargo
+        );
+        this.email = email;
+        this.senha = senha;
+        this.usuarioTipo = usuarioTipo;
+    }
+    
+    public Usuario(
+            Long id,
+            String nome, 
+            String endereco, 
+            List<Telefone> telefones, 
+            Calendar dataNascimento, 
+            TipoPessoa tipoPessoa, 
+            TipoDocumento tipoDocumento, 
+            String numeroDocumento, 
+            FuncionarioSituacao situacao,
+            CargoFuncionario cargo,
+            String email, 
+            String senha,
+            UsuarioTipo usuarioTipo
+    ) {
+        super(
+            id,
+            nome, 
+            endereco, 
+            telefones, 
+            dataNascimento, 
+            tipoPessoa, 
+            tipoDocumento, 
+            numeroDocumento, 
+            situacao,
+            cargo
         );
         this.email = email;
         this.senha = senha;
@@ -82,12 +117,13 @@ public class Usuario extends Funcionario implements Serializable {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
+    public String getSenha() { return senha;}
     public void setSenha(String senha) { this.senha = senha; }
-
+    
     public UsuarioTipo getUsuarioTipo() { return usuarioTipo; }
     public void setUsuarioTipo(UsuarioTipo usuarioTipo) { this.usuarioTipo = usuarioTipo; }
 
-    @Override
+        @Override
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + Objects.hashCode(this.senha);
@@ -111,7 +147,7 @@ public class Usuario extends Funcionario implements Serializable {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return this.email;

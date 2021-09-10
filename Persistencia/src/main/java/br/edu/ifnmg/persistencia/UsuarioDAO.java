@@ -29,12 +29,24 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
         Hashtable<String, Object> parametros = new Hashtable<>();
         
         if(obj != null){
-            if(obj.getEmail() != null && obj.getEmail().length() > 0){
+            if(obj.getUsuarioTipo() != null){
+                filtros += "usuario.usuarioTipo = :tipo";
+                parametros.put("tipo", obj.getUsuarioTipo() );
+            }
+            
+            if(obj.getNome() != null && obj.getNome().length() > 0){
+                if(filtros.length() > 0) filtros += " and ";
                 filtros += "usuario.nome LIKE :nome";
-                parametros.put("nome", obj.getEmail() + "%");
+                parametros.put("nome", obj.getNome() + "%");
+            }
+            
+            if(obj.getEmail() != null && obj.getEmail().length() > 0){
+                if(filtros.length() > 0) filtros += " and ";
+                filtros += "usuario.email LIKE :email";
+                parametros.put("email", obj.getEmail() + "%");
             }
 
-            if(obj.getId() > 0){
+            if(obj.getId() != null && obj.getId() > 0){
                 if(filtros.length() > 0) filtros += " and ";
                 filtros += "usuario.id LIKE :id";
                 parametros.put("id", obj.getId()+ "%");
@@ -45,6 +57,8 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
         if(filtros.length() > 0){
             jpql = jpql + " WHERE " + filtros;
         }
+        
+        jpql += " ORDER BY usuario.nome";
         
         Query consulta = this.manager.createQuery(jpql);
         
@@ -64,9 +78,12 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
         Usuario user = null;
         
         try{
-            user = (Usuario) sql.getSingleResult();
+            List<Usuario> users = sql.getResultList();
+            if(users.size() > 0){
+                user = (Usuario) users.get(0);
+            }
         }catch(NoResultException ex){
-            return user; 
+            System.out.println(ex);
         }
         
         return user;

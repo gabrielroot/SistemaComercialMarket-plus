@@ -5,17 +5,28 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.auxiliares.CargoFuncionario;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -25,40 +36,74 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name="funcionario")
+@DiscriminatorValue("fun")
 public class Funcionario extends Pessoa implements Serializable  {
-
+    private static final long serialVersionUID = 1L;
+    
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
     private FuncionarioSituacao situacao;
     
-    @Version
-    private long versao;
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cargoFuncionario_id", nullable= false)
+    private CargoFuncionario cargo;
     
+    @Version
+    private int versao;
+     
     public Funcionario() {
         super();
-        
         this.situacao = FuncionarioSituacao.Ativo;
-        this.versao = 1;
+        this.cargo = new CargoFuncionario();
+        this.versao=1;
     }
 
     public Funcionario(
         String nome, 
         String endereco, 
         List<Telefone> telefones, 
-        Date dataNascimento, 
+        Calendar dataNascimento, 
         TipoPessoa tipoPessoa, 
         TipoDocumento tipoDocumento, 
         String numeroDocumento, 
-        FuncionarioSituacao situacao) {
+        FuncionarioSituacao situacao, 
+        CargoFuncionario cargo) {
         
         super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
-
-        this.versao = 1;
         this.situacao = situacao;
+        this.cargo = cargo;
+        this.versao=1;
+    }
+
+    public Funcionario(
+        Long id,
+        String nome, 
+        String endereco, 
+        List<Telefone> telefones, 
+        Calendar dataNascimento, 
+        TipoPessoa tipoPessoa, 
+        TipoDocumento tipoDocumento, 
+        String numeroDocumento, 
+        FuncionarioSituacao situacao, 
+        CargoFuncionario cargo) {
+        
+        super(id, nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
+        this.situacao = situacao;
+        this.cargo = cargo;
+        this.versao=1;
     }
     
     public FuncionarioSituacao getSituacao() { return this.situacao; }
     public void setSituacao(FuncionarioSituacao fs) { this.situacao = fs; }
+
+    public CargoFuncionario getCargo() { return cargo; }
+    public void setCargo(CargoFuncionario cargo) { this.cargo = cargo; }
+
+    public int getVersao() {  return versao;   }
+
+    public void setVersao(int versao) {    this.versao = versao;  }
+
+   
     
     @Override
     public int hashCode() {
@@ -82,7 +127,7 @@ public class Funcionario extends Pessoa implements Serializable  {
 
     @Override
     public String toString() {
-        return this.situacao.toString();
+        return this.getNome().toString();
     }
     
 }

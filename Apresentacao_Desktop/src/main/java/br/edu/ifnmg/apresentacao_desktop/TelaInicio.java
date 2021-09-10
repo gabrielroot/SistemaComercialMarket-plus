@@ -9,6 +9,7 @@ import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 
 /**
  *
@@ -26,7 +27,6 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         this.telaPrincipal = tela;
         this.labelUsuario.setText(telaPrincipal.getUsuario().getNome());
         this.labelCargoUsuario.setText("[ "+telaPrincipal.getUsuario().getUsuarioTipo().toString()+" ]");
-        this.util = new Util();
     }
 
     /**
@@ -829,7 +829,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
     private void panelEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelEstoqueMouseClicked
         if(this.telaPrincipal.temPermissao("TELA_PRODUTO")){
-            ProdutoEditar produtoEditar = new ProdutoEditar();
+            ProdutoTela produtoEditar = new ProdutoTela();
             this.telaPrincipal.renderJInternalFrame(produtoEditar);
         }else{
             util.abrirJOptionPane("permissao", "",null);

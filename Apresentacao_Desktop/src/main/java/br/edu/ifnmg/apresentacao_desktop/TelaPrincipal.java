@@ -5,10 +5,11 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
-import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import java.beans.PropertyVetoException;
@@ -311,7 +312,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
        if(temPermissao("TELA_PRODUTO")){
-            ProdutoEditar produtoEditar = new ProdutoEditar();
+            ProdutoTela produtoEditar = new ProdutoTela();
             this.renderJInternalFrame(produtoEditar);
         }else{
             util.abrirJOptionPane("permissao", "",null);

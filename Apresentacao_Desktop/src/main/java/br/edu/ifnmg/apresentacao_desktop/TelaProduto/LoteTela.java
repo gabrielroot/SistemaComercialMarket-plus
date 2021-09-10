@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author gabriel
  */
-public class TelaLote extends javax.swing.JInternalFrame {
+public class LoteTela extends javax.swing.JInternalFrame {
 
     private Produto produto;
     private Estoque estoque;
@@ -32,7 +32,7 @@ public class TelaLote extends javax.swing.JInternalFrame {
     /**
      * Creates new form Lote
      */
-    public TelaLote(Estoque estoque) {
+    public LoteTela(Estoque estoque) {
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.loteRepositorio = RepositorioFactory.getLoteRepositorio();
         this.produto = new Produto();

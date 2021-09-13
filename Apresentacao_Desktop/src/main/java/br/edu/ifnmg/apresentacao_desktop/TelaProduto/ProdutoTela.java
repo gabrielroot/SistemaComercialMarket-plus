@@ -76,7 +76,6 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         modelo.addColumn("Local");
         modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("QTDE. Min Desejada");
-        modelo.addColumn("Data de Vencimento");
         
         for(int i=0;i<resultado.size(); i++){
             Vector linha = new Vector();
@@ -87,7 +86,6 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
             linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
             linha.add(resultado.get(i).getEstoque().getSomaLotes());
             linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
-            linha.add(Util.getStringDateFromCalendar(resultado.get(i).getEstoque().getLotes().get(0).getDataValidade()));
             modelo.addRow(linha);
         }
         tableResultadoEstoque.setModel(modelo);
@@ -125,7 +123,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         List<Produto> resultado = this.produtoRepositorio.Buscar(produto);
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
-        modelo.addColumn("ID");
+        modelo.addColumn("Código");
         if(checkNome.isSelected()) modelo.addColumn("Nome");
         if(checkDescricao.isSelected()) modelo.addColumn("Descrição");
         modelo.addColumn("QTDE. nas Prateleiras");
@@ -138,7 +136,6 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         modelo.addColumn("Local");
         if(checkQTDEstoque.isSelected()) modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("QTDE. MÍN. em Estoque");
-        modelo.addColumn("Data de Vencimento");
         
         for(int i=0;i<resultado.size(); i++){
             Vector linha = new Vector();
@@ -155,14 +152,13 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
                 linha.add(resultado.get(i).getUnidadeMedidaCusto());
             if(checkUNDVenda.isSelected())
                 linha.add(resultado.get(i).getUnidadeMedidaVenda());
-            linha.add(resultado.get(i).getValorVarejo());
-            linha.add(resultado.get(i).getValorAtacado());
-            linha.add(resultado.get(i).getValorCusto());
+            linha.add(resultado.get(i).getValorVarejo().toString().replace(".", ","));
+            linha.add(resultado.get(i).getValorAtacado().toString().replace(".", ","));
+            linha.add(resultado.get(i).getValorCusto().toString().replace(".", ","));
             linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
             if(checkQTDEstoque.isSelected())
-                linha.add(resultado.get(i).getEstoque().getLotes().get(0).getQuantidade());  //QUANTIDADE EM ESTOQUE == SOMA DE TODOS OS LOTES
+                linha.add(resultado.get(i).getEstoque().getSomaLotes());
             linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
-            linha.add(Util.getStringDateFromCalendar(resultado.get(i).getEstoque().getLotes().get(0).getDataValidade()));
             modelo.addRow(linha);
         }
         tblResultadoProdutos.setModel(modelo);
@@ -350,6 +346,11 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         jButton3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jButton3.setForeground(new java.awt.Color(8, 8, 8));
         jButton3.setText("Novo Produto");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         comboUnidadeVenda.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         comboUnidadeVenda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
@@ -479,6 +480,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableResultadoEstoque.setToolTipText("Clique para ver os lotes do produto");
         tableResultadoEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableResultadoEstoqueMouseClicked(evt);
@@ -538,9 +540,12 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tblResultadoProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoProdutosMouseClicked
-        this.util = new Util();
-        ProdutoEditar produtoEditar = new ProdutoEditar();
+        int linha = this.tblResultadoProdutos.getSelectedRow();
+        long id = (long)this.tblResultadoProdutos.getValueAt(linha, 1);
+        Produto p = produtoRepositorio.Abrir(id); 
+        ProdutoEditar produtoEditar = new ProdutoEditar(p, "Editar Produto");
         this.jDesktopPane1.add(produtoEditar);
+        Util.centralizaInternalFrame(produtoEditar, this.getSize());
         produtoEditar.setVisible(true);
     }//GEN-LAST:event_tblResultadoProdutosMouseClicked
 
@@ -581,6 +586,13 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         Util.centralizaInternalFrame(lote, this.getSize());
         lote.setVisible(true);
     }//GEN-LAST:event_tableResultadoEstoqueMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       ProdutoEditar produtoEditar = new ProdutoEditar(new Produto(), "Novo Produto");
+       jDesktopPane1.add(produtoEditar);
+       Util.centralizaInternalFrame(produtoEditar, this.getSize());
+       produtoEditar.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

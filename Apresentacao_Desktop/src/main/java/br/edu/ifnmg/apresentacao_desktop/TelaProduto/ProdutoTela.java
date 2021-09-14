@@ -8,8 +8,6 @@ package br.edu.ifnmg.apresentacao_desktop.TelaProduto;
 import Util.Util;
 import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.Lote;
-import br.edu.ifnmg.enums.LocalizacaoProduto;
-import br.edu.ifnmg.enums.UnidadeMedida;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
@@ -378,8 +376,8 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 868, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)))
                 .addContainerGap(125, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(231, 231, 231)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)

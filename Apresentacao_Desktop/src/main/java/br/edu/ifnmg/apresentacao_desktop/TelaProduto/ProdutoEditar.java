@@ -30,14 +30,48 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.util = new Util();
         initComponents();
-        this.setComponentes();
         this.txtTitle.setText(title);
-        if(title.equalsIgnoreCase("novo produto")){
+        if(!title.equalsIgnoreCase("editar produto")){
             btnDelete.setVisible(false);
         }
+        if(!title.equalsIgnoreCase("buscar produto")){
+            btnBuscar.setVisible(false);
+        }
+        if(title.equalsIgnoreCase("buscar produto")){
+            btnSalvar.setVisible(false);
+        }
+        
+        this.setComponentes();
     }
 
     private void setComponentes(){
+        if(this.txtTitle.getText().equalsIgnoreCase("buscar produto")){
+            this.comboLocal.addItem("Todas");
+            this.comboUNDVenda.addItem("Todas");
+            this.comboUNDCompra.addItem("Todos");
+        }
+        
+        for(int i = 0; i < UnidadeMedida.values().length ; i++){
+            this.comboUNDCompra.addItem(UnidadeMedida.values()[i].toString());
+            this.comboUNDVenda.addItem(UnidadeMedida.values()[i].toString());
+
+            if(this.produto.getUnidadeMedidaCusto() == UnidadeMedida.values()[i]){
+                this.comboUNDCompra.setSelectedIndex(i);
+            }
+            
+            if(this.produto.getUnidadeMedidaVenda() == UnidadeMedida.values()[i]){
+                this.comboUNDVenda.setSelectedIndex(i);
+            }
+        }
+
+        for(int i = 0; i < LocalizacaoProduto.values().length ; i++){
+            this.comboLocal.addItem(LocalizacaoProduto.values()[i].toString());
+
+            if(this.produto.getEstoque().getLocalizacaoProduto() == LocalizacaoProduto.values()[i]){
+                this.comboLocal.setSelectedIndex(i);
+            }
+        }
+
         try{
             this.txtNome.setText(this.produto.getNome());
             this.txtCode.setText(this.produto.getId().toString());
@@ -61,33 +95,17 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
             this.txtValorAtacado.setText(this.produto.getValorAtacado().toString().replace(".", ","));
             this.txtValorCusto.setText(this.produto.getValorCusto().toString().replace(".", ","));
             this.txtValorVarejo.setText(this.produto.getValorVarejo().toString().replace(".", ","));
-        }catch(NullPointerException ex){
-            System.out.println("Novo produto, sem valores.");
-        }
         
-        for(int i = 0; i < UnidadeMedida.values().length ; i++){
-            this.comboUNDCompra.addItem(UnidadeMedida.values()[i].toString());
-            this.comboUNDVenda.addItem(UnidadeMedida.values()[i].toString());
-            
-            if(this.produto.getUnidadeMedidaCusto() == UnidadeMedida.values()[i]){
-                this.comboUNDCompra.setSelectedIndex(i);
-            }
-            if(this.produto.getUnidadeMedidaVenda()== UnidadeMedida.values()[i]){
-                this.comboUNDVenda.setSelectedIndex(i);
-            }
+        }catch(NullPointerException | NumberFormatException ex){
+            System.out.println("Produto com alguns atributos vazios.");
         }
-        
-        for(int i = 0; i < LocalizacaoProduto.values().length ; i++){
-            this.comboLocal.addItem(LocalizacaoProduto.values()[i].toString());
-            
-            if(this.produto.getEstoque().getLocalizacaoProduto() == LocalizacaoProduto.values()[i]){
-                this.comboLocal.setSelectedIndex(i);
-            }
-        }
+                
     }
 
-    private boolean getComponentes(){
+    private boolean getComponentes(boolean preencherTudo){
         if(
+            preencherTudo &&
+            (
                 this.txtNome.getText().isEmpty() ||
                 this.txtValorCusto.getText().isEmpty() ||
                 this.txtDescricao.getText().isEmpty() ||
@@ -97,32 +115,83 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                 this.txtValorAtacado.getText().isEmpty() ||
                 this.txtValorCusto.getText().isEmpty() ||
                 this.txtValorVarejo.getText().isEmpty()
+            )
           ){
             return false;
         }
-        this.produto.setNome(this.txtNome.getText());
-        this.produto.setDescricao(this.txtDescricao.getText());
-        this.produto.setMinimoParaAtacado(Integer.parseInt(this.txtQTDEAtacado.getText()));
-        this.produto.getEstoque().setQuantidadeMinimaDesejada(Integer.parseInt(this.txtQTDEEstoque.getText()));
-        this.produto.setQuantidadePrateleira(Integer.parseInt(this.txtQTDEPrateleiras.getText()));
-        this.produto.setValorCusto(new BigDecimal(this.txtCompra.getText().replace(",", ".")));
-        this.produto.setValorAtacado(new BigDecimal(this.txtValorAtacado.getText().replace(",", ".")));
-        this.produto.setValorCusto(new BigDecimal(this.txtValorCusto.getText().replace(",", ".")));
-        this.produto.setValorVarejo(new BigDecimal(this.txtValorVarejo.getText().replace(",", ".")));
+        try{
+            this.produto.setNome(this.txtNome.getText());
+            this.produto.setDescricao(this.txtDescricao.getText());
+
+            this.produto.setMinimoParaAtacado(
+                    Integer.parseInt(this.txtQTDEAtacado.getText().length() == 0?
+                        "-1":
+                        this.txtQTDEAtacado.getText()
+                    ));
+            this.produto.getEstoque().setQuantidadeMinimaDesejada(
+                    Integer.parseInt(this.txtQTDEEstoque.getText().length() == 0?
+                        "-1":
+                        this.txtQTDEEstoque.getText()
+                    ));
+            this.produto.setQuantidadePrateleira(Integer.parseInt(
+                    this.txtQTDEPrateleiras.getText().length() == 0?
+                    "-1":
+                    this.txtQTDEPrateleiras.getText()
+            ));
+            this.produto.setValorCusto(new BigDecimal(
+                    this.txtCompra.getText().length() == 0?
+                    null:
+                    this.txtCompra.getText().replace(",", ".")
+            ));
+            this.produto.setValorAtacado(new BigDecimal(
+                    this.txtValorAtacado.getText().length() == 0?
+                    null:
+                    this.txtValorAtacado.getText().replace(",", ".")
+            ));
+            this.produto.setValorCusto(new BigDecimal(
+                    this.txtValorCusto.getText().length() == 0?
+                    null:
+                    this.txtValorCusto.getText().replace(",", ".")
+            ));
+            this.produto.setValorVarejo(new BigDecimal(
+                    this.txtValorVarejo.getText().length() == 0?
+                    null:
+                    this.txtValorVarejo.getText().replace(",", ".")
+            ));
+        }catch(NullPointerException | NumberFormatException ex){}
         
-        for(LocalizacaoProduto localizacaoProduto : LocalizacaoProduto.values()){
-            if(localizacaoProduto.toString().equals(this.comboLocal.getSelectedItem())){
-                this.produto.getEstoque().setLocalizacaoProduto(localizacaoProduto);
+        boolean venda = false;
+        boolean compra = false;
+        boolean local = false;
+        
+        for(int i = 0; i<LocalizacaoProduto.values().length; i++){
+            if(LocalizacaoProduto.values()[i].toString().equals(this.comboLocal.getSelectedItem())){
+                this.produto.getEstoque().setLocalizacaoProduto(LocalizacaoProduto.values()[i]);
+                local = true;
             }
         }
         
         for(UnidadeMedida unidadeMedida : UnidadeMedida.values()){
             if(unidadeMedida.toString().equals(this.comboUNDCompra.getSelectedItem())){
                 this.produto.setUnidadeMedidaCusto(unidadeMedida);
+                compra = true;
             }
-            
+
             if(unidadeMedida.toString().equals(this.comboUNDVenda.getSelectedItem())){
                 this.produto.setUnidadeMedidaVenda(unidadeMedida);
+                venda = true;
+            }
+        }
+        
+        if(this.txtTitle.getText().equalsIgnoreCase("buscar produto")){
+            if(!venda){
+                this.produto.setUnidadeMedidaVenda(null);
+            }
+            if(!compra){
+                this.produto.setUnidadeMedidaCusto(null);
+            }
+            if(!local){
+                this.produto.getEstoque().setLocalizacaoProduto(null);
             }
         }
         
@@ -172,8 +241,9 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         txtDescricao = new javax.swing.JTextArea();
         footer = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
@@ -236,14 +306,12 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         jLabel6.setText("Valor para Varejo");
 
         comboUNDVenda.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        comboUNDVenda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quilograma" }));
 
         jLabel7.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(8, 8, 8));
         jLabel7.setText("Unidade de Venda");
 
         comboUNDCompra.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        comboUNDCompra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quilograma" }));
 
         jLabel8.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(8, 8, 8));
@@ -306,7 +374,6 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         jLabel14.setText("Valor de Custo");
 
         comboLocal.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        comboLocal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SETOR01" }));
 
         jLabel15.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(8, 8, 8));
@@ -463,16 +530,16 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         });
         footer.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 158, 37));
 
-        jButton1.setBackground(new java.awt.Color(109, 46, 46));
-        jButton1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setBackground(new java.awt.Color(109, 46, 46));
+        btnBuscar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
-        footer.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 158, 37));
+        footer.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 158, 37));
 
         btnDelete.setBackground(new java.awt.Color(208, 208, 208));
         btnDelete.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -484,6 +551,17 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
             }
         });
         footer.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 158, 37));
+
+        btnSalvar.setBackground(new java.awt.Color(109, 46, 46));
+        btnSalvar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+        footer.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 158, 37));
 
         javax.swing.GroupLayout BgLayout = new javax.swing.GroupLayout(Bg);
         Bg.setLayout(BgLayout);
@@ -524,20 +602,11 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(this.util.abrirJOptionPane("confirma","",this)){
-            if(this.getComponentes()){
-                if(this.produtoRepositorio.Salvar(this.produto)){
-                    util.abrirJOptionPane("sucesso","",this);
-                    this.dispose();
-                }else{
-                    util.abrirJOptionPane("erro","",this);
-                }
-            }else{
-                util.abrirJOptionPane("erro","Preencha todos os campos!",this);
-            }
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        this.getComponentes(false);
+        ProdutoTela.setProduto(this.produto);
+        this.dispose();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
@@ -554,16 +623,32 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if(this.util.abrirJOptionPane("confirma","",this)){
+            if(this.getComponentes(true)){
+                if(this.produtoRepositorio.Salvar(this.produto)){
+                    util.abrirJOptionPane("sucesso","",this);
+                    this.dispose();
+                }else{
+                    util.abrirJOptionPane("erro","",this);
+                }
+            }else{
+                util.abrirJOptionPane("erro","Preencha todos os campos!",this);
+            }
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Bg;
     private javax.swing.JPanel Components;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboLocal;
     private javax.swing.JComboBox<String> comboUNDCompra;
     private javax.swing.JComboBox<String> comboUNDVenda;
     private javax.swing.JPanel footer;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

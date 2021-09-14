@@ -180,7 +180,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelVender.setBackground(new java.awt.Color(224, 191, 191));
         panelVender.setForeground(new java.awt.Color(224, 191, 191));
-        panelVender.setToolTipText("");
+        panelVender.setToolTipText("Abrir módulo de caixa");
         panelVender.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelVender.setPreferredSize(new java.awt.Dimension(120, 140));
         panelVender.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -210,11 +210,12 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelVender.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 30, -1, -1));
 
         imgVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sell.png"))); // NOI18N
+        imgVender.setToolTipText("Abrir módulo de caixa");
         panelVender.add(imgVender, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 0, -1, 100));
 
         panelRelatorios.setBackground(new java.awt.Color(224, 191, 191));
         panelRelatorios.setForeground(new java.awt.Color(224, 191, 191));
-        panelRelatorios.setToolTipText("");
+        panelRelatorios.setToolTipText("Gerar relatórios");
         panelRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelRelatorios.setPreferredSize(new java.awt.Dimension(120, 140));
         panelRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -245,6 +246,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboard.png"))); // NOI18N
+        imgRelatorios.setToolTipText("Gerar relatórios");
 
         javax.swing.GroupLayout panelRelatoriosLayout = new javax.swing.GroupLayout(panelRelatorios);
         panelRelatorios.setLayout(panelRelatoriosLayout);
@@ -266,7 +268,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelEstoque.setBackground(new java.awt.Color(224, 191, 191));
         panelEstoque.setForeground(new java.awt.Color(224, 191, 191));
-        panelEstoque.setToolTipText("");
+        panelEstoque.setToolTipText("Gerir produtos, lotes e estoque");
         panelEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelEstoque.setPreferredSize(new java.awt.Dimension(120, 140));
         panelEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -299,6 +301,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/product.png"))); // NOI18N
+        imgEstoque.setToolTipText("Gerir produtos, lotes e estoque");
 
         javax.swing.GroupLayout panelEstoqueLayout = new javax.swing.GroupLayout(panelEstoque);
         panelEstoque.setLayout(panelEstoqueLayout);
@@ -321,7 +324,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelComprar.setBackground(new java.awt.Color(224, 191, 191));
         panelComprar.setForeground(new java.awt.Color(224, 191, 191));
-        panelComprar.setToolTipText("");
+        panelComprar.setToolTipText("Transação financeira de compra com fornecedores");
         panelComprar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelComprar.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -349,6 +352,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supplier.png"))); // NOI18N
+        imgComprar.setToolTipText("Transação financeira de compra com fornecedores");
 
         javax.swing.GroupLayout panelComprarLayout = new javax.swing.GroupLayout(panelComprar);
         panelComprar.setLayout(panelComprarLayout);
@@ -371,7 +375,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel10.setBackground(new java.awt.Color(224, 191, 191));
         jPanel10.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel10.setToolTipText("");
+        jPanel10.setToolTipText("[VOID]");
         jPanel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel10.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -413,7 +417,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelCrediario.setBackground(new java.awt.Color(224, 191, 191));
         panelCrediario.setForeground(new java.awt.Color(224, 191, 191));
-        panelCrediario.setToolTipText("");
+        panelCrediario.setToolTipText("Gerir crediário de clientes");
         panelCrediario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelCrediario.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -439,6 +443,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgCrediario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/crediario.png"))); // NOI18N
+        imgCrediario.setToolTipText("Gerir crediário de clientes");
 
         javax.swing.GroupLayout panelCrediarioLayout = new javax.swing.GroupLayout(panelCrediario);
         panelCrediario.setLayout(panelCrediarioLayout);
@@ -460,7 +465,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelFinanceiro.setBackground(new java.awt.Color(224, 191, 191));
         panelFinanceiro.setForeground(new java.awt.Color(224, 191, 191));
-        panelFinanceiro.setToolTipText("");
+        panelFinanceiro.setToolTipText("Gerir fluxo monetário");
         panelFinanceiro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelFinanceiro.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -486,6 +491,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance.png"))); // NOI18N
+        imgFinanceiro.setToolTipText("Gerir fluxo monetário");
 
         javax.swing.GroupLayout panelFinanceiroLayout = new javax.swing.GroupLayout(panelFinanceiro);
         panelFinanceiro.setLayout(panelFinanceiroLayout);
@@ -507,7 +513,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelPessoas.setBackground(new java.awt.Color(224, 191, 191));
         panelPessoas.setForeground(new java.awt.Color(224, 191, 191));
-        panelPessoas.setToolTipText("");
+        panelPessoas.setToolTipText("Gestão de todos os indivíduos envolvidos no negócio");
         panelPessoas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelPessoas.setPreferredSize(new java.awt.Dimension(120, 140));
         panelPessoas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -540,6 +546,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgPessoas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/people.png"))); // NOI18N
+        imgPessoas.setToolTipText("Gestão de todos os indivíduos envolvidos no negócio");
 
         javax.swing.GroupLayout panelPessoasLayout = new javax.swing.GroupLayout(panelPessoas);
         panelPessoas.setLayout(panelPessoasLayout);
@@ -561,7 +568,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel21.setBackground(new java.awt.Color(224, 191, 191));
         jPanel21.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel21.setToolTipText("");
+        jPanel21.setToolTipText("[VOID]");
         jPanel21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel21.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -603,7 +610,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel23.setBackground(new java.awt.Color(224, 191, 191));
         jPanel23.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel23.setToolTipText("");
+        jPanel23.setToolTipText("[VOID]");
         jPanel23.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel23.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -645,7 +652,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel25.setBackground(new java.awt.Color(224, 191, 191));
         jPanel25.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel25.setToolTipText("");
+        jPanel25.setToolTipText("[VOID]");
         jPanel25.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel25.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -687,7 +694,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel27.setBackground(new java.awt.Color(224, 191, 191));
         jPanel27.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel27.setToolTipText("");
+        jPanel27.setToolTipText("[VOID]");
         jPanel27.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel27.setPreferredSize(new java.awt.Dimension(120, 140));
 

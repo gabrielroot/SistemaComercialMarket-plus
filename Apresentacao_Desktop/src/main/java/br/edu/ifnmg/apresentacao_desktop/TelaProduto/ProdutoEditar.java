@@ -72,34 +72,45 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
             }
         }
 
-        try{
-            this.txtNome.setText(this.produto.getNome());
-            this.txtCode.setText(this.produto.getId().toString());
-            this.txtDescricao.setText(this.produto.getDescricao());
-            this.txtQTDEAtacado.setText(
-                    String.valueOf(this.produto.getMinimoParaAtacado() == -1? 
-                    "":
-                    this.produto.getMinimoParaAtacado()
-            ));
-            this.txtQTDEEstoque.setText(
-                    String.valueOf(this.produto.getEstoque().getQuantidadeMinimaDesejada() == -1? 
-                    "":
-                    this.produto.getEstoque().getQuantidadeMinimaDesejada()
-            ));
-            this.txtQTDEPrateleiras.setText(
-                    String.valueOf(this.produto.getQuantidadePrateleira() == -1? 
-                    "":
-                    this.produto.getQuantidadePrateleira()
-            ));
-            this.txtCompra.setText(this.produto.getValorCusto().toString().replace(".", ","));
-            this.txtValorAtacado.setText(this.produto.getValorAtacado().toString().replace(".", ","));
-            this.txtValorCusto.setText(this.produto.getValorCusto().toString().replace(".", ","));
-            this.txtValorVarejo.setText(this.produto.getValorVarejo().toString().replace(".", ","));
-        
-        }catch(NullPointerException | NumberFormatException ex){
-            System.out.println("Produto com alguns atributos vazios.");
-        }
-                
+        this.txtNome.setText(this.produto.getNome());
+        this.txtCode.setText(this.produto.getId().toString());
+        this.txtDescricao.setText(this.produto.getDescricao());
+        this.txtQTDEAtacado.setText(
+                String.valueOf(this.produto.getMinimoParaAtacado() == -1? 
+                "":
+                this.produto.getMinimoParaAtacado()
+        ));
+        this.txtQTDEEstoque.setText(
+                String.valueOf(this.produto.getEstoque().getQuantidadeMinimaDesejada() == -1? 
+                "":
+                this.produto.getEstoque().getQuantidadeMinimaDesejada()
+        ));
+        this.txtQTDEPrateleiras.setText(
+                String.valueOf(this.produto.getQuantidadePrateleira() == -1? 
+                "":
+                this.produto.getQuantidadePrateleira()
+        ));
+
+        this.txtCompra.setText(
+                this.produto.getValorCusto() == null?
+                null:
+                this.produto.getValorCusto().toString().replace(".", ",")
+        );
+        this.txtValorAtacado.setText(
+                this.produto.getValorAtacado() == null?
+                null:
+                this.produto.getValorAtacado().toString().replace(".", ",")
+        );
+        this.txtValorCusto.setText(
+                this.produto.getValorCusto() == null?
+                null:
+                this.produto.getValorCusto().toString().replace(".", ",")
+        );
+        this.txtValorVarejo.setText(
+                this.produto.getValorVarejo() == null?
+                null:
+                this.produto.getValorVarejo().toString().replace(".", ",")
+        );
     }
 
     private boolean getComponentes(boolean preencherTudo){
@@ -119,46 +130,49 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
           ){
             return false;
         }
-        try{
-            this.produto.setNome(this.txtNome.getText());
-            this.produto.setDescricao(this.txtDescricao.getText());
+        this.produto.setNome(this.txtNome.getText());
+        this.produto.setDescricao(this.txtDescricao.getText());
 
-            this.produto.setMinimoParaAtacado(
-                    Integer.parseInt(this.txtQTDEAtacado.getText().length() == 0?
-                        "-1":
-                        this.txtQTDEAtacado.getText()
-                    ));
-            this.produto.getEstoque().setQuantidadeMinimaDesejada(
-                    Integer.parseInt(this.txtQTDEEstoque.getText().length() == 0?
-                        "-1":
-                        this.txtQTDEEstoque.getText()
-                    ));
-            this.produto.setQuantidadePrateleira(Integer.parseInt(
-                    this.txtQTDEPrateleiras.getText().length() == 0?
+        this.produto.setMinimoParaAtacado(
+                Integer.parseInt(this.txtQTDEAtacado.getText().length() == 0?
                     "-1":
-                    this.txtQTDEPrateleiras.getText()
-            ));
-            this.produto.setValorCusto(new BigDecimal(
-                    this.txtCompra.getText().length() == 0?
-                    null:
-                    this.txtCompra.getText().replace(",", ".")
-            ));
-            this.produto.setValorAtacado(new BigDecimal(
-                    this.txtValorAtacado.getText().length() == 0?
-                    null:
-                    this.txtValorAtacado.getText().replace(",", ".")
-            ));
-            this.produto.setValorCusto(new BigDecimal(
-                    this.txtValorCusto.getText().length() == 0?
-                    null:
-                    this.txtValorCusto.getText().replace(",", ".")
-            ));
-            this.produto.setValorVarejo(new BigDecimal(
-                    this.txtValorVarejo.getText().length() == 0?
-                    null:
-                    this.txtValorVarejo.getText().replace(",", ".")
-            ));
-        }catch(NullPointerException | NumberFormatException ex){}
+                    this.txtQTDEAtacado.getText()
+                ));
+        this.produto.getEstoque().setQuantidadeMinimaDesejada(
+                Integer.parseInt(this.txtQTDEEstoque.getText().length() == 0?
+                    "-1":
+                    this.txtQTDEEstoque.getText()
+                ));
+        this.produto.setQuantidadePrateleira(Integer.parseInt(
+                this.txtQTDEPrateleiras.getText().length() == 0?
+                "-1":
+                this.txtQTDEPrateleiras.getText()
+        ));
+
+        this.produto.setValorCusto(
+            this.txtCompra.getText().length() == 0?
+            null:
+            new BigDecimal(this.txtCompra.getText().replace(",", "."))
+        );
+
+        this.produto.setValorAtacado(
+            this.txtValorAtacado.getText().length() == 0?
+            null:
+            new BigDecimal(this.txtValorAtacado.getText().replace(",", "."))
+        );
+
+        this.produto.setValorCusto(
+                this.txtValorCusto.getText().length() == 0?
+                null:
+                new BigDecimal(this.txtValorCusto.getText().replace(",", "."))
+        );
+
+        this.produto.setValorVarejo(
+                this.txtValorVarejo.getText().length() == 0?
+                null:
+                new BigDecimal(
+                this.txtValorVarejo.getText().replace(",", "."))
+        );
         
         boolean venda = false;
         boolean compra = false;

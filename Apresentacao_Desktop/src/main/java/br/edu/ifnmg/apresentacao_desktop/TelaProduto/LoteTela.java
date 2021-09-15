@@ -46,7 +46,7 @@ public class LoteTela extends javax.swing.JInternalFrame {
         modelo.addColumn("#");
         modelo.addColumn("ID");
         modelo.addColumn("Lote");
-        modelo.addColumn("QTDE. em Estoque");
+        modelo.addColumn("Quantidade");
         modelo.addColumn("Fabricação");
         modelo.addColumn("Vencimento");
         

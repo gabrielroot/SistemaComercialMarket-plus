@@ -214,14 +214,14 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="panelCrediario" min="-2" pref="134" max="-2" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                  <Component id="jPanel25" min="-2" pref="132" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="panelCrediario" pref="140" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                                  <Component id="jPanel25" pref="138" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jPanel27" pref="140" max="32767" attributes="0"/>
                               <Component id="jPanel10" pref="140" max="32767" attributes="0"/>
@@ -341,14 +341,18 @@
             </Component>
             <Component class="javax.swing.JLabel" name="imgVender">
               <Properties>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/sell.png"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Abrir m&#xf3;dulo de caixa"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgVenderMouseClicked"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="36" y="0" width="-1" height="100"/>
+                  <AbsoluteConstraints x="0" y="0" width="140" height="100"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -441,6 +445,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Gerar relat&#xf3;rios"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgRelatoriosMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -535,6 +542,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Gerir produtos, lotes e estoque"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgEstoqueMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -727,7 +737,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel15" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="28" max="32767" attributes="0"/>
+                      <EmptySpace pref="34" max="32767" attributes="0"/>
                       <Component id="imgCrediario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
@@ -969,6 +979,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Gest&#xe3;o de todos os indiv&#xed;duos envolvidos no neg&#xf3;cio"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgPessoasMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1168,7 +1181,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="43" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>

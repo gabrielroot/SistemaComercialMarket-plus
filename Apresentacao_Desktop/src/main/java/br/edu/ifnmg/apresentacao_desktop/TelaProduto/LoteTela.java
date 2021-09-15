@@ -79,6 +79,7 @@ public class LoteTela extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
 
         comboVencimento.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N

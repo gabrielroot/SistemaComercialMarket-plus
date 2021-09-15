@@ -39,10 +39,21 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 parametros.put("min", obj.getMinimoParaAtacado());
             }
             
+            if(obj.getQuantidadePrateleira() >= 0){
+                filtros += "produto.quantidadePrateleira = :qtdePrat";
+                parametros.put("qtdePrat", obj.getQuantidadePrateleira());
+            }
+            
             if(obj.getNome() != null && obj.getNome().length() > 0){
                 if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.nome LIKE :nome";
                 parametros.put("nome", obj.getNome() + "%");
+            }
+            
+            if(obj.getDescricao()!= null && obj.getDescricao().length() > 0){
+                if(filtros.length() > 0) filtros += " AND ";
+                filtros += "produto.descricao LIKE :desc";
+                parametros.put("desc", obj.getDescricao() + "%");
             }
 
             if(obj.getUnidadeMedidaVenda() != null){
@@ -76,7 +87,7 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                     parametros.put("local", obj.getEstoque().getLocalizacaoProduto());
                 }
                 
-                if(obj.getEstoque().getLotes() != null){
+                if(obj.getEstoque().getLotes() != null && obj.getEstoque().getLotes().size() > 0){
                     if(obj.getEstoque().getLotes().get(0).getCodigo() != null && obj.getEstoque().getLotes().get(0).getCodigo().length() > 0){
                         if(filtros.length() > 0) filtros += " AND ";
                         filtros += "produto.estoque.lote.codigo LIKE :code";

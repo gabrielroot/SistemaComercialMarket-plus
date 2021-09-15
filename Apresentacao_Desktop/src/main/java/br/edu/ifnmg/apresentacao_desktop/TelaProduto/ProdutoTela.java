@@ -74,6 +74,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         modelo.addColumn("Nome");
         modelo.addColumn("Local");
         modelo.addColumn("QTDE. em Estoque");
+        modelo.addColumn("Num. Lotes");
         modelo.addColumn("QTDE. Min Desejada");
         
         for(int i=0;i<resultado.size(); i++){
@@ -84,6 +85,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
             linha.add(resultado.get(i).getNome());
             linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
             linha.add(resultado.get(i).getEstoque().getSomaLotes());
+            linha.add(resultado.get(i).getEstoque().getLotes().size());
             linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
         }

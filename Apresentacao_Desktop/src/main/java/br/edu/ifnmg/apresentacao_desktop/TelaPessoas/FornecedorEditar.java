@@ -257,7 +257,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 114, 35));
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 114, 35));
 
         jButton2.setBackground(new java.awt.Color(181, 181, 181));
         jButton2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -268,7 +268,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 114, 35));
+        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 114, 35));
 
         btnDeletar.setBackground(new java.awt.Color(208, 208, 208));
         btnDeletar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -279,7 +279,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                 btnDeletarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnDeletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, 35));
+        jPanel3.add(btnDeletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, 35));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

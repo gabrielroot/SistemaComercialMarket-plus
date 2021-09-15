@@ -73,8 +73,8 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         modelo.addColumn("ID");
         modelo.addColumn("Nome");
         modelo.addColumn("Local");
-        modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("Num. Lotes");
+        modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("QTDE. Min Desejada");
         
         for(int i=0;i<resultado.size(); i++){
@@ -84,8 +84,8 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
             linha.add(resultado.get(i).getId());
             linha.add(resultado.get(i).getNome());
             linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
-            linha.add(resultado.get(i).getEstoque().getSomaLotes());
             linha.add(resultado.get(i).getEstoque().getLotes().size());
+            linha.add(resultado.get(i).getEstoque().getSomaLotes());
             linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
         }
@@ -540,10 +540,11 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         int linha = this.tableResultadoEstoque.getSelectedRow();
         long id = (long)this.tableResultadoEstoque.getValueAt(linha, 1);
         Estoque estoque = produtoRepositorio.Abrir(id).getEstoque();
-        LoteTela lote = new LoteTela(estoque);
-        jDesktopPane1.add(lote);
-        Util.centralizaInternalFrame(lote, this.getSize());
-        lote.setVisible(true);
+        LoteTela loteTela = new LoteTela(estoque);
+        loteTela.addInternalFrameListener(this);
+        jDesktopPane1.add(loteTela);
+        Util.centralizaInternalFrame(loteTela, this.getSize());
+        loteTela.setVisible(true);
     }//GEN-LAST:event_tableResultadoEstoqueMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -609,7 +610,12 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
 
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
-        this.buscarProduto();
+        if(e.getInternalFrame().getClass() == LoteTela.class){
+            this.initTabEstoque();
+        }
+        if(e.getInternalFrame().getClass() == ProdutoEditar.class){
+            this.buscarProduto();
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ package br.edu.ifnmg.apresentacao_desktop.TelaProduto;
 
 import Util.Util;
 import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.Lote;
 import br.edu.ifnmg.auxiliares.LoteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
@@ -16,25 +17,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author gabriel
  */
-public class LoteTela extends javax.swing.JInternalFrame {
+public class LoteTela extends javax.swing.JInternalFrame implements InternalFrameListener{
 
     private Produto produto;
     private Estoque estoque;
     private ProdutoRepositorio produtoRepositorio;
-    private LoteRepositorio loteRepositorio;
+    private EstoqueRepositorio estoqueRepositorio;
     
     /**
      * Creates new form Lote
      */
     public LoteTela(Estoque estoque) {
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
-        this.loteRepositorio = RepositorioFactory.getLoteRepositorio();
+        this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         this.produto = new Produto();
         this.estoque = estoque;
         initComponents();
@@ -78,6 +81,8 @@ public class LoteTela extends javax.swing.JInternalFrame {
         tableResultadoLote = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
@@ -128,6 +133,20 @@ public class LoteTela extends javax.swing.JInternalFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        jPanel2.setBackground(new java.awt.Color(208, 208, 208));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setBackground(new java.awt.Color(109, 46, 46));
+        jButton1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Novo Lote");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 140, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -138,15 +157,18 @@ public class LoteTela extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(comboVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 58, Short.MAX_VALUE)
                 .addComponent(comboVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -178,12 +200,52 @@ public class LoteTela extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_comboVencimentoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LoteEditar loteEditar = new LoteEditar(this.estoque, "Novo Lote");
+        ProdutoTela.jDesktopPane1.add(loteEditar);
+        Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
+        loteEditar.addInternalFrameListener(this);
+        loteEditar.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboVencimento;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableResultadoLote;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {
+        this.renderizarLotes(estoque.getLotes());
+        this.estoqueRepositorio.Salvar(this.estoqueRepositorio.Abrir(this.estoque.getId()));
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {
+    }
 }

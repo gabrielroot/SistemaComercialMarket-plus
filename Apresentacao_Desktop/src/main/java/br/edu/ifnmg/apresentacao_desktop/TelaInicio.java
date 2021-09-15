@@ -209,9 +209,15 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelVender.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 104, 140, 40));
         panelVender.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 30, -1, -1));
 
+        imgVender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sell.png"))); // NOI18N
         imgVender.setToolTipText("Abrir módulo de caixa");
-        panelVender.add(imgVender, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 0, -1, 100));
+        imgVender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgVenderMouseClicked(evt);
+            }
+        });
+        panelVender.add(imgVender, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 100));
 
         panelRelatorios.setBackground(new java.awt.Color(224, 191, 191));
         panelRelatorios.setForeground(new java.awt.Color(224, 191, 191));
@@ -247,6 +253,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         imgRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboard.png"))); // NOI18N
         imgRelatorios.setToolTipText("Gerar relatórios");
+        imgRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgRelatoriosMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRelatoriosLayout = new javax.swing.GroupLayout(panelRelatorios);
         panelRelatorios.setLayout(panelRelatoriosLayout);
@@ -302,6 +313,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         imgEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/product.png"))); // NOI18N
         imgEstoque.setToolTipText("Gerir produtos, lotes e estoque");
+        imgEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgEstoqueMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelEstoqueLayout = new javax.swing.GroupLayout(panelEstoque);
         panelEstoque.setLayout(panelEstoqueLayout);
@@ -451,7 +467,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
             panelCrediarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCrediarioLayout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(34, Short.MAX_VALUE)
                 .addComponent(imgCrediario)
                 .addGap(26, 26, 26))
         );
@@ -547,6 +563,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         imgPessoas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/people.png"))); // NOI18N
         imgPessoas.setToolTipText("Gestão de todos os indivíduos envolvidos no negócio");
+        imgPessoas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgPessoasMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPessoasLayout = new javax.swing.GroupLayout(panelPessoas);
         panelPessoas.setLayout(panelPessoasLayout);
@@ -667,7 +688,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel26Layout.setHorizontalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel20)
                 .addGap(33, 33, 33))
         );
@@ -752,12 +773,12 @@ public class TelaInicio extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelCrediario, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(panelCrediario, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(24, 24, 24)
+                                .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel27, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
@@ -842,6 +863,37 @@ public class TelaInicio extends javax.swing.JInternalFrame {
             util.abrirJOptionPane("permissao", "",null);
         }
     }//GEN-LAST:event_panelEstoqueMouseClicked
+
+    private void imgVenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgVenderMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_imgVenderMouseClicked
+
+    private void imgRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgRelatoriosMouseClicked
+        TelaRelatorios telaRelatorios = new TelaRelatorios();
+        if(this.telaPrincipal.temPermissao("TELA_RELATORIOS")){
+            this.telaPrincipal.renderJInternalFrame(telaRelatorios);
+        }else{
+            util.abrirJOptionPane("permissao", "",this);
+        }
+    }//GEN-LAST:event_imgRelatoriosMouseClicked
+
+    private void imgEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgEstoqueMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_PRODUTO")){
+            ProdutoTela produtoEditar = new ProdutoTela();
+            this.telaPrincipal.renderJInternalFrame(produtoEditar);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_imgEstoqueMouseClicked
+
+    private void imgPessoasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgPessoasMouseClicked
+        TelaPessoas pessoas = new TelaPessoas(this.telaPrincipal);
+        if(telaPrincipal.temPermissao("TELA_PESSOAS")){
+            this.telaPrincipal.renderJInternalFrame(pessoas);
+        }else{
+            util.abrirJOptionPane("permissao", "",this);
+        }
+    }//GEN-LAST:event_imgPessoasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

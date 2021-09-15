@@ -11,14 +11,18 @@ import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import Util.Util;
+import br.edu.ifnmg.auxiliares.Lote;
 import java.math.BigDecimal;
+import java.util.List;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 /**
  *
  * @author gabriel
  */
-public class ProdutoEditar extends javax.swing.JInternalFrame {
-    private Produto produto;
+public class ProdutoEditar extends javax.swing.JInternalFrame{
+    static Produto produto;
     private Util util;
     private ProdutoRepositorio produtoRepositorio;
     
@@ -26,7 +30,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
      * Creates new form ProdutoEditar
      */
     public ProdutoEditar(Produto produto, String title) {
-        this.produto = produto;
+        ProdutoEditar.produto = produto;
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.util = new Util();
         initComponents();
@@ -38,12 +42,18 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
             btnBuscar.setVisible(false);
         }
         if(title.equalsIgnoreCase("buscar produto")){
+            btnAddLote.setVisible(false);
+        }
+        if(title.equalsIgnoreCase("buscar produto")){
             btnSalvar.setVisible(false);
         }
         
         this.setComponentes();
     }
 
+    public static Produto getProduto() { return produto; }
+    public static void setProduto(Produto produto) { ProdutoEditar.produto = produto; }
+    
     private void setComponentes(){
         if(this.txtTitle.getText().equalsIgnoreCase("buscar produto")){
             this.comboLocal.addItem("Todas");
@@ -55,11 +65,11 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
             this.comboUNDCompra.addItem(UnidadeMedida.values()[i].toString());
             this.comboUNDVenda.addItem(UnidadeMedida.values()[i].toString());
 
-            if(this.produto.getUnidadeMedidaCusto() == UnidadeMedida.values()[i]){
+            if(ProdutoEditar.produto.getUnidadeMedidaCusto() == UnidadeMedida.values()[i]){
                 this.comboUNDCompra.setSelectedIndex(i);
             }
             
-            if(this.produto.getUnidadeMedidaVenda() == UnidadeMedida.values()[i]){
+            if(ProdutoEditar.produto.getUnidadeMedidaVenda() == UnidadeMedida.values()[i]){
                 this.comboUNDVenda.setSelectedIndex(i);
             }
         }
@@ -67,49 +77,44 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         for(int i = 0; i < LocalizacaoProduto.values().length ; i++){
             this.comboLocal.addItem(LocalizacaoProduto.values()[i].toString());
 
-            if(this.produto.getEstoque().getLocalizacaoProduto() == LocalizacaoProduto.values()[i]){
+            if(ProdutoEditar.produto.getEstoque().getLocalizacaoProduto() == LocalizacaoProduto.values()[i]){
                 this.comboLocal.setSelectedIndex(i);
             }
         }
 
-        this.txtNome.setText(this.produto.getNome());
-        this.txtCode.setText(this.produto.getId().toString());
-        this.txtDescricao.setText(this.produto.getDescricao());
+        this.txtNome.setText(ProdutoEditar.produto.getNome());
+        this.txtCode.setText(ProdutoEditar.produto.getId().toString());
+        this.txtDescricao.setText(ProdutoEditar.produto.getDescricao());
         this.txtQTDEAtacado.setText(
-                String.valueOf(this.produto.getMinimoParaAtacado() == -1? 
+                String.valueOf(ProdutoEditar.produto.getMinimoParaAtacado() == -1? 
                 "":
-                this.produto.getMinimoParaAtacado()
+                ProdutoEditar.produto.getMinimoParaAtacado()
         ));
         this.txtQTDEEstoque.setText(
-                String.valueOf(this.produto.getEstoque().getQuantidadeMinimaDesejada() == -1? 
+                String.valueOf(ProdutoEditar.produto.getEstoque().getQuantidadeMinimaDesejada() == -1? 
                 "":
-                this.produto.getEstoque().getQuantidadeMinimaDesejada()
+                ProdutoEditar.produto.getEstoque().getQuantidadeMinimaDesejada()
         ));
         this.txtQTDEPrateleiras.setText(
-                String.valueOf(this.produto.getQuantidadePrateleira() == -1? 
+                String.valueOf(ProdutoEditar.produto.getQuantidadePrateleira() == -1? 
                 "":
-                this.produto.getQuantidadePrateleira()
+                ProdutoEditar.produto.getQuantidadePrateleira()
         ));
 
-        this.txtCompra.setText(
-                this.produto.getValorCusto() == null?
+        this.txtValorCompra.setText(
+                ProdutoEditar.produto.getValorCusto() == null?
                 null:
-                this.produto.getValorCusto().toString().replace(".", ",")
+                ProdutoEditar.produto.getValorCusto().toString().replace(".", ",")
         );
         this.txtValorAtacado.setText(
-                this.produto.getValorAtacado() == null?
+                ProdutoEditar.produto.getValorAtacado() == null?
                 null:
-                this.produto.getValorAtacado().toString().replace(".", ",")
-        );
-        this.txtValorCusto.setText(
-                this.produto.getValorCusto() == null?
-                null:
-                this.produto.getValorCusto().toString().replace(".", ",")
+                ProdutoEditar.produto.getValorAtacado().toString().replace(".", ",")
         );
         this.txtValorVarejo.setText(
-                this.produto.getValorVarejo() == null?
+                ProdutoEditar.produto.getValorVarejo() == null?
                 null:
-                this.produto.getValorVarejo().toString().replace(".", ",")
+                ProdutoEditar.produto.getValorVarejo().toString().replace(".", ",")
         );
     }
 
@@ -118,56 +123,49 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
             preencherTudo &&
             (
                 this.txtNome.getText().isEmpty() ||
-                this.txtValorCusto.getText().isEmpty() ||
+                this.txtValorCompra.getText().isEmpty() ||
                 this.txtDescricao.getText().isEmpty() ||
                 this.txtQTDEAtacado.getText().isEmpty() ||
                 this.txtQTDEEstoque.getText().isEmpty() ||
                 this.txtQTDEPrateleiras.getText().isEmpty() ||
                 this.txtValorAtacado.getText().isEmpty() ||
-                this.txtValorCusto.getText().isEmpty() ||
                 this.txtValorVarejo.getText().isEmpty()
             )
           ){
             return false;
         }
-        this.produto.setNome(this.txtNome.getText());
-        this.produto.setDescricao(this.txtDescricao.getText());
+        ProdutoEditar.produto.setNome(this.txtNome.getText());
+        ProdutoEditar.produto.setDescricao(this.txtDescricao.getText());
 
-        this.produto.setMinimoParaAtacado(
+        ProdutoEditar.produto.setMinimoParaAtacado(
                 Integer.parseInt(this.txtQTDEAtacado.getText().length() == 0?
                     "-1":
                     this.txtQTDEAtacado.getText()
                 ));
-        this.produto.getEstoque().setQuantidadeMinimaDesejada(
+        ProdutoEditar.produto.getEstoque().setQuantidadeMinimaDesejada(
                 Integer.parseInt(this.txtQTDEEstoque.getText().length() == 0?
                     "-1":
                     this.txtQTDEEstoque.getText()
                 ));
-        this.produto.setQuantidadePrateleira(Integer.parseInt(
+        ProdutoEditar.produto.setQuantidadePrateleira(Integer.parseInt(
                 this.txtQTDEPrateleiras.getText().length() == 0?
                 "-1":
                 this.txtQTDEPrateleiras.getText()
         ));
 
-        this.produto.setValorCusto(
-            this.txtCompra.getText().length() == 0?
+        ProdutoEditar.produto.setValorCusto(
+            this.txtValorCompra.getText().length() == 0?
             null:
-            new BigDecimal(this.txtCompra.getText().replace(",", "."))
+            new BigDecimal(this.txtValorCompra.getText().replace(",", "."))
         );
 
-        this.produto.setValorAtacado(
+        ProdutoEditar.produto.setValorAtacado(
             this.txtValorAtacado.getText().length() == 0?
             null:
             new BigDecimal(this.txtValorAtacado.getText().replace(",", "."))
         );
 
-        this.produto.setValorCusto(
-                this.txtValorCusto.getText().length() == 0?
-                null:
-                new BigDecimal(this.txtValorCusto.getText().replace(",", "."))
-        );
-
-        this.produto.setValorVarejo(
+        ProdutoEditar.produto.setValorVarejo(
                 this.txtValorVarejo.getText().length() == 0?
                 null:
                 new BigDecimal(
@@ -180,32 +178,32 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         
         for(int i = 0; i<LocalizacaoProduto.values().length; i++){
             if(LocalizacaoProduto.values()[i].toString().equals(this.comboLocal.getSelectedItem())){
-                this.produto.getEstoque().setLocalizacaoProduto(LocalizacaoProduto.values()[i]);
+                ProdutoEditar.produto.getEstoque().setLocalizacaoProduto(LocalizacaoProduto.values()[i]);
                 local = true;
             }
         }
         
         for(UnidadeMedida unidadeMedida : UnidadeMedida.values()){
             if(unidadeMedida.toString().equals(this.comboUNDCompra.getSelectedItem())){
-                this.produto.setUnidadeMedidaCusto(unidadeMedida);
+                ProdutoEditar.produto.setUnidadeMedidaCusto(unidadeMedida);
                 compra = true;
             }
 
             if(unidadeMedida.toString().equals(this.comboUNDVenda.getSelectedItem())){
-                this.produto.setUnidadeMedidaVenda(unidadeMedida);
+                ProdutoEditar.produto.setUnidadeMedidaVenda(unidadeMedida);
                 venda = true;
             }
         }
         
         if(this.txtTitle.getText().equalsIgnoreCase("buscar produto")){
             if(!venda){
-                this.produto.setUnidadeMedidaVenda(null);
+                ProdutoEditar.produto.setUnidadeMedidaVenda(null);
             }
             if(!compra){
-                this.produto.setUnidadeMedidaCusto(null);
+                ProdutoEditar.produto.setUnidadeMedidaCusto(null);
             }
             if(!local){
-                this.produto.getEstoque().setLocalizacaoProduto(null);
+                ProdutoEditar.produto.getEstoque().setLocalizacaoProduto(null);
             }
         }
         
@@ -246,9 +244,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         txtQTDEPrateleiras = new javax.swing.JFormattedTextField();
         txtValorAtacado = new javax.swing.JFormattedTextField();
         txtValorVarejo = new javax.swing.JFormattedTextField();
-        txtCompra = new javax.swing.JFormattedTextField();
-        txtValorCusto = new javax.swing.JFormattedTextField();
-        jLabel14 = new javax.swing.JLabel();
+        txtValorCompra = new javax.swing.JFormattedTextField();
         comboLocal = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -258,6 +254,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         btnBuscar = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
+        btnAddLote = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
@@ -373,19 +370,10 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         txtValorVarejo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.##"))));
         txtValorVarejo.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
-        txtCompra.setBackground(new java.awt.Color(255, 255, 255));
-        txtCompra.setForeground(new java.awt.Color(8, 8, 8));
-        txtCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
-        txtCompra.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-
-        txtValorCusto.setBackground(new java.awt.Color(255, 255, 255));
-        txtValorCusto.setForeground(new java.awt.Color(8, 8, 8));
-        txtValorCusto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.##"))));
-        txtValorCusto.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-
-        jLabel14.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(8, 8, 8));
-        jLabel14.setText("Valor de Custo");
+        txtValorCompra.setBackground(new java.awt.Color(255, 255, 255));
+        txtValorCompra.setForeground(new java.awt.Color(8, 8, 8));
+        txtValorCompra.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        txtValorCompra.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
         comboLocal.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
@@ -446,15 +434,13 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(ComponentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtValorAtacado)
-                                    .addComponent(txtValorCusto)
                                     .addComponent(txtValorVarejo)
                                     .addGroup(ComponentsLayout.createSequentialGroup()
                                         .addGroup(ComponentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4)
                                             .addComponent(jLabel6)
-                                            .addComponent(jLabel14)
                                             .addComponent(jLabel12)
-                                            .addComponent(txtCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtValorCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE)))))
                         .addContainerGap())))
         );
@@ -472,9 +458,9 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtValorVarejo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel14)
+                        .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtValorCompra))
                     .addComponent(comboUNDCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(ComponentsLayout.createSequentialGroup()
                         .addGroup(ComponentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -509,20 +495,15 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                                         .addGap(29, 29, 29)
                                         .addComponent(txtQTDEAtacado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addGap(18, 18, 18)
-                .addGroup(ComponentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ComponentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(ComponentsLayout.createSequentialGroup()
-                            .addComponent(jLabel15)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(comboLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(ComponentsLayout.createSequentialGroup()
-                            .addComponent(jLabel11)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtQTDEEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(ComponentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(ComponentsLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
+                        .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCompra)))
+                        .addComponent(comboLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ComponentsLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtQTDEEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -553,7 +534,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        footer.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 158, 37));
+        footer.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, 158, 37));
 
         btnDelete.setBackground(new java.awt.Color(208, 208, 208));
         btnDelete.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -564,7 +545,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                 btnDeleteActionPerformed(evt);
             }
         });
-        footer.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 158, 37));
+        footer.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 158, 37));
 
         btnSalvar.setBackground(new java.awt.Color(109, 46, 46));
         btnSalvar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -575,7 +556,18 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
-        footer.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 158, 37));
+        footer.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, 158, 37));
+
+        btnAddLote.setBackground(new java.awt.Color(184, 139, 139));
+        btnAddLote.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        btnAddLote.setForeground(new java.awt.Color(8, 8, 8));
+        btnAddLote.setText("Cadastrar Lote");
+        btnAddLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddLoteActionPerformed(evt);
+            }
+        });
+        footer.add(btnAddLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 0, 158, 37));
 
         javax.swing.GroupLayout BgLayout = new javax.swing.GroupLayout(Bg);
         Bg.setLayout(BgLayout);
@@ -618,7 +610,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.getComponentes(false);
-        ProdutoTela.setProduto(this.produto);
+        ProdutoTela.setProduto(ProdutoEditar.produto);
         this.dispose();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -628,7 +620,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if(this.util.abrirJOptionPane("confirma","",this)){
-            if(this.produtoRepositorio.Apagar(this.produto)){
+            if(this.produtoRepositorio.Apagar(ProdutoEditar.produto)){
                 util.abrirJOptionPane("sucesso","",this);
                 this.dispose();
             }else{
@@ -638,9 +630,9 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(this.util.abrirJOptionPane("confirma","",this)){
+        if(this.util.abrirJOptionPane("confirma","Deseja realmente persistir as alterações?",this)){
             if(this.getComponentes(true)){
-                if(this.produtoRepositorio.Salvar(this.produto)){
+                if(this.produtoRepositorio.Salvar(ProdutoEditar.produto)){
                     util.abrirJOptionPane("sucesso","",this);
                     this.dispose();
                 }else{
@@ -652,10 +644,19 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    private void btnAddLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLoteActionPerformed
+                this.getComponentes(false);
+                LoteEditar loteEditar = new LoteEditar();
+                ProdutoTela.jDesktopPane1.add(loteEditar);
+                Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
+                loteEditar.setVisible(true);
+    }//GEN-LAST:event_btnAddLoteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Bg;
     private javax.swing.JPanel Components;
+    private javax.swing.JButton btnAddLote;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSalvar;
@@ -667,7 +668,6 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -680,7 +680,6 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtCode;
-    private javax.swing.JFormattedTextField txtCompra;
     private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtNome;
     private javax.swing.JFormattedTextField txtQTDEAtacado;
@@ -688,7 +687,8 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtQTDEPrateleiras;
     private javax.swing.JLabel txtTitle;
     private javax.swing.JFormattedTextField txtValorAtacado;
-    private javax.swing.JFormattedTextField txtValorCusto;
+    private javax.swing.JFormattedTextField txtValorCompra;
     private javax.swing.JFormattedTextField txtValorVarejo;
     // End of variables declaration//GEN-END:variables
+
 }

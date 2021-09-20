@@ -35,11 +35,13 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
             }
             
             if(obj.getMinimoParaAtacado() >= 0){
+                if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.minimoParaAtacado = :min";
                 parametros.put("min", obj.getMinimoParaAtacado());
             }
             
             if(obj.getQuantidadePrateleira() >= 0){
+                if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.quantidadePrateleira = :qtdePrat";
                 parametros.put("qtdePrat", obj.getQuantidadePrateleira());
             }
@@ -87,6 +89,12 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
             }
             
             if(obj.getEstoque() != null){
+                if(obj.getEstoque().getQuantidadeMinimaDesejada() > -1){
+                    if(filtros.length() > 0) filtros += " AND ";
+                    filtros += "produto.estoque.quantidadeMinimaDesejada = :qtdemin";
+                    parametros.put("qtdemin", obj.getEstoque().getQuantidadeMinimaDesejada());
+                }
+                
                 if(obj.getEstoque().getLocalizacaoProduto() != null){
                     if(filtros.length() > 0) filtros += " AND ";
                     filtros += "produto.estoque.localizacaoProduto = :local";

@@ -49,9 +49,13 @@ public class Console {
     static FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
     
     public static void main(String[] args){
-        if(popularBD()){
+        try{
+            popularBD();
+            usuariosAleatorios();
+            fornecedoresAleatorios();
+            produtosFixos();
             System.out.println("Banco de dados populado com SUCESSO!!");
-        }else{
+        }catch(Exception ex){
             System.out.println("FALHA ao popular o banco de dados!!");
         }
         
@@ -269,10 +273,6 @@ public class Console {
                 "333333"
         );
         
-        usuariosAleatorios();
-        fornecedoresAleatorios();
-        produtosFixos();
-        
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
                repositorioUsuario.Salvar(usuarioAdmin) &&
@@ -409,7 +409,7 @@ public class Console {
             lotes2.add(lote2);
             lotes2.add(lote22);
             
-            estoque.setLotes(lotes2);
+            estoque2.setLotes(lotes2);
 
             Produto produto2 = new Produto("Tigela azul marinho 700ml", 
                 "Ideal para saladas ou uso como prato de pedreiro", 

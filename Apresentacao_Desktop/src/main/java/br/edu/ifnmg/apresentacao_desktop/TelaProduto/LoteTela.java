@@ -42,6 +42,7 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
         this.estoque = estoque;
         initComponents();
         renderizarLotes(estoque.getLotes());
+        this.estoqueRepositorio.Salvar(this.estoque);
     }
 
    public void renderizarLotes(List<Lote> lotes){
@@ -230,7 +231,7 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
         this.renderizarLotes(estoque.getLotes());
-        this.estoqueRepositorio.Salvar(this.estoqueRepositorio.Abrir(this.estoque.getId()));
+        this.estoqueRepositorio.Salvar(this.estoque);
     }
 
     @Override

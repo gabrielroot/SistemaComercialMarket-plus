@@ -248,8 +248,8 @@ public class LoteEditar extends javax.swing.JInternalFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(this.getComponentes()){
-            lote.setEstoque(this.estoque);
-            this.estoque.getLotes().add(lote);
+            this.lote.setEstoque(this.estoque);
+            this.estoque.getLotes().add(this.lote);
             util.abrirJOptionPane("sucesso", "Lote vinculado ao produto!", this);
             this.dispose();
         }else{

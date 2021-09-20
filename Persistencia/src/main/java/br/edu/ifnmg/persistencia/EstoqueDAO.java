@@ -7,7 +7,6 @@ package br.edu.ifnmg.persistencia;
 
 import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
-import br.edu.ifnmg.auxiliares.LoteRepositorio;
 import java.util.List;
 
 /**

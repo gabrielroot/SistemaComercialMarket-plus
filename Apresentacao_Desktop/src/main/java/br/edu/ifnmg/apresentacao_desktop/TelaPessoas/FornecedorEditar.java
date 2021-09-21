@@ -6,9 +6,6 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import Util.Util;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogConfirma;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogErro;
-import br.edu.ifnmg.apresentacao_desktop.Dialogs.DialogSucesso;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.Segmento;
@@ -17,8 +14,6 @@ import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
-import static java.lang.Integer.parseInt;
 
 /**
  *
@@ -43,8 +38,12 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         this.telaPrincipal = telaPrincipal;
         initComponents();
         setComponentes();
-        this.labelTitulo.setText(title);
         this.util = new Util();
+        this.labelTitulo.setText(title);
+        
+        if(title.equalsIgnoreCase("novo fornecedor")){
+            btnDeletar.setVisible(false);
+        }
     }
 
     private void setComponentes(){
@@ -132,13 +131,14 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         comboSegmentoEditar = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         txtCnpj = new javax.swing.JFormattedTextField();
         txtTelefone2 = new javax.swing.JFormattedTextField();
         txtTelefone1 = new javax.swing.JFormattedTextField();
         txtNascimento = new javax.swing.JFormattedTextField();
-        jButton3 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        btnDeletar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(140, 71, 71));
         setClosable(true);
@@ -154,16 +154,16 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(280, 280, 280)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelTitulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(labelTitulo)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         jPanel2.setBackground(new java.awt.Color(208, 208, 208));
@@ -207,26 +207,6 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         jLabel8.setForeground(new java.awt.Color(54, 54, 54));
         jLabel8.setText("Data de Nascimento");
 
-        jButton1.setBackground(new java.awt.Color(109, 46, 46));
-        jButton1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setBackground(new java.awt.Color(181, 181, 181));
-        jButton2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(8, 8, 8));
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         txtCnpj.setBackground(new java.awt.Color(255, 255, 255));
         txtCnpj.setForeground(new java.awt.Color(0, 0, 0));
         try {
@@ -265,15 +245,41 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         txtNascimento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtNascimento.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
-        jButton3.setBackground(new java.awt.Color(208, 208, 208));
-        jButton3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(8, 8, 8));
-        jButton3.setText("Remover");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jPanel3.setBackground(new java.awt.Color(208, 208, 208));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setBackground(new java.awt.Color(109, 46, 46));
+        jButton1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Salvar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 114, 35));
+
+        jButton2.setBackground(new java.awt.Color(181, 181, 181));
+        jButton2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(8, 8, 8));
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 114, 35));
+
+        btnDeletar.setBackground(new java.awt.Color(208, 208, 208));
+        btnDeletar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        btnDeletar.setForeground(new java.awt.Color(8, 8, 8));
+        btnDeletar.setText("Remover");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnDeletar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, 35));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -292,6 +298,8 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(txtTelefone1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -299,11 +307,10 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                                                 .addGap(18, 18, 18)
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(txtTelefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel5)))
-                                            .addComponent(jLabel6)
-                                            .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addComponent(jLabel5))))
+                                        .addGap(152, 152, 152))
                                     .addComponent(txtNome))
-                                .addGap(40, 40, 40)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,15 +319,8 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel7)
                         .addComponent(comboSegmentoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(145, 145, 145)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,12 +355,9 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboSegmentoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -400,7 +397,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         if(this.util.abrirJOptionPane("confirma","",this)){
             if(this.fornecedorRepositorio.Apagar(this.fornecedor)){
                 util.abrirJOptionPane("sucesso","",this);
@@ -409,14 +406,14 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
                 util.abrirJOptionPane("erro","",this);
             }
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeletar;
     private javax.swing.JComboBox<String> comboSegmentoEditar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -426,6 +423,7 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JFormattedTextField txtCnpj;
     private javax.swing.JTextField txtEndereco;

@@ -12,17 +12,24 @@ import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
+import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Funcionario;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.enums.LocalizacaoProduto;
+import br.edu.ifnmg.enums.UnidadeMedida;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
+import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.Lote;
+import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import Util.Util;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +41,13 @@ import java.util.List;
  * @author gabriel
  */
 public class Console {
+    static PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
+    static UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
+    static FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
+    static ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
+    static ProdutoRepositorio repositorioProduto = RepositorioFactory.getProdutoRepositorio();
+    static FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
+    
     public static void main(String[] args){
         if(popularBD()){
             System.out.println("Banco de dados populado com SUCESSO!!");
@@ -41,16 +55,31 @@ public class Console {
             System.out.println("FALHA ao popular o banco de dados!!");
         }
         
-        queryPessoa();
+
+        queries();
     }
     
-    public static void queryPessoa(){
-        PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
-        UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
-        FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
-        ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
+    public static void queries(){
         
-        System.out.println("-- Buscar usuario com Filtros --");
+        
+        System.out.println("-- Buscar produtos em que a quantidade mínima para atacado == 5 --");
+        for(Produto produto : repositorioProduto.Buscar(new Produto(
+                null, 
+                null, 
+                -1, 
+                5, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null
+        )
+        )){
+            System.out.println("    "+produto.getNome());
+        }
+        
+        System.out.println("-- Buscar usuarios em que o email == admin & UserType == Administrador --");
         for(Usuario usuario : repositorioUsuario.Buscar(new Usuario(
                 null, 
                 null, 
@@ -68,7 +97,7 @@ public class Console {
             System.out.println("    "+usuario.getNome());
         }
         
-        System.out.println("-- Buscar pessoa com Filtros --");
+        System.out.println("-- Buscar pessoa em que nome == 'Sebastião Codeiro' & NDocumento == '123456'--");
         for(Pessoa pessoa : repositorioPessoa.Buscar(new Pessoa(
                 "Sebastião Codeiro", 
                 null, 
@@ -80,7 +109,7 @@ public class Console {
             System.out.println("    "+pessoa.getNome());
         }
         
-        System.out.println("-- Buscar fornecedor com Filtros --");
+        System.out.println("-- Buscar fornecedor em que nome == 'Enrico Santos' --");
         for(Fornecedor fornecedor : repositorioFornecedor.Buscar(new Fornecedor(
                 "Enrico Santos", 
                 null, 
@@ -97,12 +126,6 @@ public class Console {
     }
      
     public static boolean popularBD(){
-        PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
-        FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
-        FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
-        UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
-        ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
-        
         List telefones = new ArrayList<Telefone>();
         telefones.add(new Telefone("3899991111"));
         telefones.add(new Telefone("3896291131"));
@@ -167,7 +190,7 @@ public class Console {
 //                funcionario.getNome(), 
 //                funcionario.getEndereco(), 
 //                funcionario.getTelefones(), 
-//                funcionario.getDataNascimento(), 
+//                funcionario.getDataNascimento(),         
 //                funcionario.getTipoPessoa(), 
 //                funcionario.getTipoDocumento(), 
 //                funcionario.getNumeroDocumento(), 
@@ -246,8 +269,9 @@ public class Console {
                 "333333"
         );
         
-        usuariosAleatorios(repositorioUsuario);
-        fornecedoresAleatorios(repositorioFornecedor);
+        usuariosAleatorios();
+        fornecedoresAleatorios();
+        produtosFixos();
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
@@ -259,7 +283,7 @@ public class Console {
                repositorioCliente.Salvar(cliente2);
      }
     
-    public static void fornecedoresAleatorios(FornecedorRepositorio repositorioFornecedor){
+    public static void fornecedoresAleatorios(){
         CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
         CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
@@ -291,7 +315,7 @@ public class Console {
             repositorioFornecedor.Salvar(fornecedor);
         }
     }
-    public static void usuariosAleatorios(UsuarioRepositorio repositorioUsuario){
+    public static void usuariosAleatorios(){
         CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
         CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
@@ -342,5 +366,63 @@ public class Console {
                     UsuarioTipo.values()[(int) (Math.random()*4)]);
             repositorioUsuario.Salvar(usuario);
         }
+    }
+    
+    public static void produtosFixos(){
+            Estoque estoque = new Estoque(
+                    LocalizacaoProduto.SETOR01, 
+                    50
+            );
+            
+            List lotes = new ArrayList();
+            Lote lote = new Lote("BR110", 5, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoque);
+            Lote lote1 = new Lote("BR140", 3, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoque);
+            Lote lote11 = new Lote("BR14012", 31, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoque);
+            lotes.add(lote);
+            lotes.add(lote1);
+            lotes.add(lote11);
+            
+            estoque.setLotes(lotes);
+
+            Produto produto = new Produto("Sandália Havaianas 44 Polegadas", 
+                "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
+                10, 
+                3, 
+                UnidadeMedida.Fardo, 
+                UnidadeMedida.Unidade, 
+                new BigDecimal("32.00"), 
+                new BigDecimal("30.00"), 
+                new BigDecimal("25.00"), 
+                estoque
+            );
+            
+            repositorioProduto.Salvar(produto);
+            
+            Estoque estoque2 = new Estoque(
+                    LocalizacaoProduto.SETOR02, 
+                    25
+            );
+            
+            List lotes2 = new ArrayList();
+            Lote lote2 = new Lote("BR130", 15, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoque2);
+            Lote lote22 = new Lote("BR1330", 3, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoque2);
+            lotes2.add(lote2);
+            lotes2.add(lote22);
+            
+            estoque.setLotes(lotes2);
+
+            Produto produto2 = new Produto("Tigela azul marinho 700ml", 
+                "Ideal para saladas ou uso como prato de pedreiro", 
+                5, 
+                2, 
+                UnidadeMedida.Fardo, 
+                UnidadeMedida.Unidade, 
+                new BigDecimal("22.00"), 
+                new BigDecimal("20.00"), 
+                new BigDecimal("15.00"), 
+                estoque2
+            );
+            
+            repositorioProduto.Salvar(produto2);
     }
 }

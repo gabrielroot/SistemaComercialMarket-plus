@@ -19,12 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author gabriel
  */
-public class TelaPessoas extends javax.swing.JInternalFrame {
+public class TelaPessoas extends javax.swing.JInternalFrame implements InternalFrameListener{
     private TelaPrincipal telaPrincipal;
     private UsuarioRepositorio usuarioRepositorio;
     private FornecedorRepositorio fornecedorRepositorio;
@@ -345,10 +347,10 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,8 +364,9 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                                 .addComponent(comboSegmento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(182, 182, 182)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,6 +597,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
         TelaClienteEditar telaCliente = new TelaClienteEditar(new Cliente(), "Novo Cliente");
         jDesktopPane1.add(telaCliente);
+        telaCliente.addInternalFrameListener(this);
         telaCliente.setVisible(true);    
         Util.centralizaInternalFrame(telaCliente, this.getSize());
         
@@ -647,6 +651,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         UsuarioEditar novo = new UsuarioEditar(telaPrincipal,"Novo Usuário",new Usuario());
         TelaPessoas.jDesktopPane1.add(novo);
         Util.centralizaInternalFrame(novo, this.getSize());
+        novo.addInternalFrameListener(this);
         novo.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -674,6 +679,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         FornecedorEditar fornecedorEditar = new FornecedorEditar(this.telaPrincipal,"Novo Fornecedor" ,new Fornecedor());
         Util.centralizaInternalFrame(fornecedorEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(fornecedorEditar);
+        fornecedorEditar.addInternalFrameListener(this);
         fornecedorEditar.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -733,6 +739,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         FornecedorEditar fornecedorEditar = new FornecedorEditar(this.telaPrincipal, "Editar Fornecedor",f);
         Util.centralizaInternalFrame(fornecedorEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(fornecedorEditar);
+        fornecedorEditar.addInternalFrameListener(this);
         fornecedorEditar.setVisible(true);
     }//GEN-LAST:event_tableResultadoFornecedoresMouseClicked
 
@@ -744,6 +751,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         UsuarioEditar usuarioEditar = new UsuarioEditar(this.telaPrincipal, "Editar Usuário",u);
         Util.centralizaInternalFrame(usuarioEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(usuarioEditar);
+        usuarioEditar.addInternalFrameListener(this);
         usuarioEditar.setVisible(true);
     }//GEN-LAST:event_tableResultadoUsuariosMouseClicked
 
@@ -757,13 +765,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
     private void tblResultadoClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoClientesMouseClicked
        
-        int linha = this.tblResultadoClientes.getSelectedRow();// seleciono a linha clicada
-        long id = (long)this.tblResultadoClientes.getValueAt(linha, 1); // seleciono a coluna 
+        int linha = this.tblResultadoClientes.getSelectedRow();
+        long id = (long)this.tblResultadoClientes.getValueAt(linha, 1);
         
         Cliente cliente = clienteRepositorio.Abrir(id); 
         TelaClienteEditar telaClienteEditar = new TelaClienteEditar(cliente, "Editar Cliente");
         Util.centralizaInternalFrame(telaClienteEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(telaClienteEditar);
+        telaClienteEditar.addInternalFrameListener(this);
         telaClienteEditar.setVisible(true);
     }//GEN-LAST:event_tblResultadoClientesMouseClicked
     
@@ -871,4 +880,43 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNomeCliente;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {
+        if(FornecedorEditar.class == e.getInternalFrame().getClass()){
+            this.buscarFornecedores();
+        }
+        
+        if(TelaClienteEditar.class == e.getInternalFrame().getClass()){
+            this.buscarCliente();
+        }
+        
+        if(UsuarioEditar.class == e.getInternalFrame().getClass()){
+            this.buscarUsuarios();
+        }
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {
+    }
 }

@@ -52,7 +52,9 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
                 this.txtEndereco.setText(enderecoCompleto.nextToken());
                 this.txtNumeroCasa.setText(enderecoCompleto.nextToken());
                 this.txtBairro.setText(enderecoCompleto.nextToken());
-                this.TxtComplemento.setText(enderecoCompleto.nextToken());      
+                
+                if(this.TxtComplemento.getText() != null)
+                    this.TxtComplemento.setText(enderecoCompleto.nextToken());
             }
 
             this.txtDataNascimento.setValue(Util.getStringDateFromCalendar(this.cliente.getDataNascimento()));

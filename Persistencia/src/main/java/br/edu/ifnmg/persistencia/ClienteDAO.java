@@ -37,13 +37,12 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
     public List<Cliente> Buscar(Cliente obj) {
         
         String jpql = "select cliente from Cliente cliente";
-  //      StringBuilder filtros = new StringBuilder();
         
         Hashtable<String, Object> parametros = new Hashtable<>();
                 
         if(obj != null){
             if(obj.getNome() != null && !obj.getNome().isEmpty()){
-                parametros.put("nome", obj.getNome());
+                parametros.put("nome", obj.getNome() + "%");
                 
             }
         }
@@ -54,7 +53,7 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
             for (String campo : parametros.keySet()) {
                 if(!filtros.isEmpty())
                     filtros += " and ";
-                jpql += "cliente." + campo + " = :" + campo;
+                jpql += "cliente." + campo + " LIKE :" + campo;
             }
             jpql += filtros;
         }

@@ -19,17 +19,20 @@ public class LoteEditar extends javax.swing.JInternalFrame {
     private Estoque estoque;
     private LoteRepositorio loteRepositorio;
     private Lote lote;
+    private Lote toEdit;
     private Util util;
     
     /**
      * Creates new form LoteEditar
      */
-    public LoteEditar(Estoque estoque, String title) {
+    public LoteEditar(Estoque estoque, Lote lote, String title) {
         this.loteRepositorio = RepositorioFactory.getLoteRepositorio();
         this.estoque = estoque;
-        this.lote = new Lote();
+        this.lote = lote;
+        this.toEdit = lote;
         this.util = new Util();
         initComponents();
+        this.setComponentes();
         
         this.labelTitle.setText(title);
         if(title.equalsIgnoreCase("novo lote")){
@@ -37,6 +40,27 @@ public class LoteEditar extends javax.swing.JInternalFrame {
         }
     }
 
+    private boolean setComponentes(){
+        this.txtCodigo.setText(this.lote.getCodigo());
+        this.txtValidade.setText(
+            this.lote.getDataValidade() != null?
+            Util.getStringDateFromCalendar(this.lote.getDataValidade()):
+            null
+        );
+        this.txtFabricacao.setText(
+            this.lote.getDataFabricacao() != null?
+            Util.getStringDateFromCalendar(this.lote.getDataFabricacao()):
+            null
+        );
+        this.txtQuantidade.setText(
+            this.lote.getQuantidade() >= 0?
+            String.valueOf(this.lote.getQuantidade()):
+            null
+        );
+        
+        return true;
+    }
+    
     private boolean getComponentes(){
         if(
             this.txtCodigo.getText().isEmpty() ||
@@ -248,8 +272,15 @@ public class LoteEditar extends javax.swing.JInternalFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(this.getComponentes()){
-            this.lote.setEstoque(this.estoque);
-            this.estoque.getLotes().add(this.lote);
+            if(this.labelTitle.getText().equalsIgnoreCase("novo lote")){
+                this.lote.setEstoque(this.estoque);
+                this.estoque.getLotes().add(this.lote);
+            }else if(this.labelTitle.getText().equalsIgnoreCase("editar lote")){
+                this.estoque.getLotes().set(
+                    this.estoque.getLotes().indexOf(toEdit), 
+                    this.lote
+                );
+            }
             util.abrirJOptionPane("sucesso", "Lote vinculado ao produto!", this);
             this.dispose();
         }else{
@@ -262,7 +293,14 @@ public class LoteEditar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        this.loteRepositorio.Apagar(this.lote);
+        if(util.abrirJOptionPane("confirma", "Deseja realmente remover este lote?", this)){
+            if(this.loteRepositorio.Apagar(this.lote)){
+                util.abrirJOptionPane("sucesso", "Removido com sucesso!", this);
+                this.dispose();
+            }else{
+                util.abrirJOptionPane("sucesso", "Erro ao remover lote", this);
+            }
+        }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
 

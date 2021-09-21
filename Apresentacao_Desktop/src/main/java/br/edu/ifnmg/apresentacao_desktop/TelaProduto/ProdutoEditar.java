@@ -11,13 +11,14 @@ import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import Util.Util;
+import br.edu.ifnmg.auxiliares.Lote;
 import java.math.BigDecimal;
 
 /**
  *
  * @author gabriel
  */
-public class ProdutoEditar extends javax.swing.JInternalFrame{
+public class ProdutoEditar extends javax.swing.JInternalFrame {
     static Produto produto;
     private Util util;
     private ProdutoRepositorio produtoRepositorio;
@@ -641,10 +642,10 @@ public class ProdutoEditar extends javax.swing.JInternalFrame{
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAddLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLoteActionPerformed
-                LoteEditar loteEditar = new LoteEditar(ProdutoEditar.produto.getEstoque(), "Novo Lote");
-                ProdutoTela.jDesktopPane1.add(loteEditar);
-                Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
-                loteEditar.setVisible(true);
+        LoteEditar loteEditar = new LoteEditar(ProdutoEditar.produto.getEstoque(), new Lote(), "Novo Lote");
+        ProdutoTela.jDesktopPane1.add(loteEditar);
+        Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
+        loteEditar.setVisible(true);
     }//GEN-LAST:event_btnAddLoteActionPerformed
 
 

@@ -31,6 +31,7 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
     private Estoque estoque;
     private ProdutoRepositorio produtoRepositorio;
     private EstoqueRepositorio estoqueRepositorio;
+    private LoteRepositorio loteRepositorio;
     
     /**
      * Creates new form Lote
@@ -38,11 +39,11 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
     public LoteTela(Estoque estoque) {
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
+        this.loteRepositorio = RepositorioFactory.getLoteRepositorio();
         this.produto = new Produto();
         this.estoque = estoque;
         initComponents();
         renderizarLotes(estoque.getLotes());
-        this.estoqueRepositorio.Salvar(this.estoque);
     }
 
    public void renderizarLotes(List<Lote> lotes){
@@ -109,6 +110,11 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableResultadoLote.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableResultadoLoteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableResultadoLote);
 
         jPanel1.setBackground(new java.awt.Color(140, 71, 71));
@@ -202,12 +208,23 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
     }//GEN-LAST:event_comboVencimentoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LoteEditar loteEditar = new LoteEditar(this.estoque, "Novo Lote");
+        LoteEditar loteEditar = new LoteEditar(this.estoque, new Lote(), "Novo Lote");
         ProdutoTela.jDesktopPane1.add(loteEditar);
         Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
         loteEditar.addInternalFrameListener(this);
         loteEditar.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tableResultadoLoteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoLoteMouseClicked
+        int linha = this.tableResultadoLote.getSelectedRow();
+        long id = (long)this.tableResultadoLote.getValueAt(linha, 1);
+        Lote l = loteRepositorio.Abrir(id); 
+        LoteEditar loteEditar = new LoteEditar(this.estoque, l, "Editar Lote");
+        ProdutoTela.jDesktopPane1.add(loteEditar);
+        Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
+        loteEditar.addInternalFrameListener(this);
+        loteEditar.setVisible(true);
+    }//GEN-LAST:event_tableResultadoLoteMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -230,8 +247,8 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
 
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
-        this.renderizarLotes(estoque.getLotes());
         this.estoqueRepositorio.Salvar(this.estoque);
+        this.renderizarLotes(this.estoque.getLotes());
     }
 
     @Override

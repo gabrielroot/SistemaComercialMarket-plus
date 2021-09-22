@@ -39,14 +39,13 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         Estoque estoque = new Estoque();
         List lotes = new ArrayList<>();
         Lote lote = new Lote();
+        this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
+        this.util = new Util();
+        
         lotes.add(lote);
         estoque.setLotes(lotes);
         ProdutoTela.produto.setEstoque(estoque);
-        this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
-        this.util = new Util();
-        this.buscarProduto();
-        initTabProdutos();
-        jDesktopPane1.setBackground(null);
+        this.initTabProdutos();
     }
 
     public static Produto getProduto() { return produto; }
@@ -89,6 +88,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
             linha.add(resultado.get(i).getEstoque().getSomaLotes());
             linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
+            System.out.println(resultado.get(i).getEstoque().getLotes().size());
         }
         tableResultadoEstoque.setModel(modelo);
     }

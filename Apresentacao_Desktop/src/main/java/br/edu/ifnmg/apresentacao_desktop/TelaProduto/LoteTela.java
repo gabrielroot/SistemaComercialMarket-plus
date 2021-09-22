@@ -218,7 +218,12 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
     private void tableResultadoLoteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoLoteMouseClicked
         int linha = this.tableResultadoLote.getSelectedRow();
         long id = (long)this.tableResultadoLote.getValueAt(linha, 1);
-        Lote l = loteRepositorio.Abrir(id); 
+        Lote l = null;
+        for(Lote find : this.estoque.getLotes()){
+            if(find.getId() == id){
+                l = find; 
+            }
+        }
         LoteEditar loteEditar = new LoteEditar(this.estoque, l, "Editar Lote");
         ProdutoTela.jDesktopPane1.add(loteEditar);
         Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());

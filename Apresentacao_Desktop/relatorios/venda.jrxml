@@ -95,10 +95,6 @@ FROM classicmodels.pagamentos
 	</queryString>
 	<title>
 		<band height="132" splitType="Stretch">
-			<image>
-				<reportElement x="456" y="0" width="99" height="132" uuid="c8b48dab-7d5c-43ee-bd0d-67e64af5eee1"/>
-				<imageExpression><![CDATA["cherry.jpg"]]></imageExpression>
-			</image>
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="451" height="95" backcolor="#000000" uuid="17682764-df02-4019-b2d7-8e75ca15e0ac"/>
 				<staticText>
@@ -106,14 +102,14 @@ FROM classicmodels.pagamentos
 					<textElement>
 						<font isBold="false"/>
 					</textElement>
-					<text><![CDATA[Cherry Title]]></text>
+					<text><![CDATA[Vendas]]></text>
 				</staticText>
 				<staticText>
 					<reportElement style="SubTitle" x="157" y="66" width="249" height="29" uuid="d3ca5a61-0a5a-4fbe-abda-ede840dea154"/>
 					<textElement>
 						<font size="22" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Cherry SubTitle]]></text>
+					<text><![CDATA[vendas]]></text>
 				</staticText>
 			</frame>
 			<frame>
@@ -126,6 +122,10 @@ FROM classicmodels.pagamentos
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
 			</frame>
+			<image>
+				<reportElement x="430" y="0" width="159" height="132" uuid="e014d683-de11-4c2b-800c-8e6f99d15c2c"/>
+				<imageExpression><![CDATA["C:\Users\aiury\OneDrive\Área de Trabalho\mkt 3.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageFooter>
@@ -160,7 +160,7 @@ FROM classicmodels.pagamentos
 		<band height="200" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<componentElement>
-				<reportElement x="0" y="0" width="555" height="200" uuid="036e8b16-d439-4259-99a9-678a8d9419c2">
+				<reportElement x="0" y="0" width="639" height="200" uuid="036e8b16-d439-4259-99a9-678a8d9419c2">
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
@@ -169,21 +169,21 @@ FROM classicmodels.pagamentos
 					<datasetRun subDataset="tableDataset" uuid="900e7c98-a2a2-49ba-88ca-60c2d3a31d4d">
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="270" uuid="9c92ecef-002a-4a8f-bb04-710e8c90030f">
+					<jr:columnGroup width="541" uuid="9c92ecef-002a-4a8f-bb04-710e8c90030f">
 						<jr:groupHeader groupName="dataPagamento">
 							<jr:cell style="Table_CH" height="25">
 								<textField>
-									<reportElement x="0" y="0" width="270" height="25" uuid="55478319-dcf9-4f59-b1b5-652728516d4e"/>
+									<reportElement x="0" y="0" width="541" height="25" uuid="55478319-dcf9-4f59-b1b5-652728516d4e"/>
 									<textFieldExpression><![CDATA[$F{dataPagamento}]]></textFieldExpression>
 								</textField>
 							</jr:cell>
 						</jr:groupHeader>
-						<jr:column width="90" uuid="b13bf17b-ba8d-40e6-bde4-5e4a6af87322">
+						<jr:column width="181" uuid="b13bf17b-ba8d-40e6-bde4-5e4a6af87322">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="Column header" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" uuid="361dd411-c3fd-4fa2-ad9a-6c6829703925"/>
+									<reportElement key="" style="Column header" x="0" y="0" width="181" height="30" forecolor="#FFFFFF" uuid="361dd411-c3fd-4fa2-ad9a-6c6829703925"/>
 									<box leftPadding="2"/>
 									<textElement>
 										<font fontName="DejaVu Sans" size="12" isBold="true"/>
@@ -194,7 +194,7 @@ FROM classicmodels.pagamentos
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="90" height="30" uuid="65cb0930-5ba2-4863-8d79-d21b33f1e59b"/>
+									<reportElement style="Detail" x="0" y="0" width="181" height="30" uuid="65cb0930-5ba2-4863-8d79-d21b33f1e59b"/>
 									<box leftPadding="2"/>
 									<textElement>
 										<font fontName="DejaVu Sans" size="12"/>
@@ -203,12 +203,12 @@ FROM classicmodels.pagamentos
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="90" uuid="08708bec-ad0f-4851-93bd-ecf71ae4bf08">
+						<jr:column width="180" uuid="08708bec-ad0f-4851-93bd-ecf71ae4bf08">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="Column header" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" uuid="cd2f141b-3ff7-45a1-a986-f07b0eb39b68"/>
+									<reportElement key="" style="Column header" x="0" y="0" width="180" height="30" forecolor="#FFFFFF" uuid="cd2f141b-3ff7-45a1-a986-f07b0eb39b68"/>
 									<box leftPadding="2"/>
 									<textElement>
 										<font fontName="DejaVu Sans" size="12" isBold="true"/>
@@ -219,7 +219,7 @@ FROM classicmodels.pagamentos
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="90" height="30" uuid="ecbc6b60-df9d-4c28-84b4-e360e28fda29"/>
+									<reportElement style="Detail" x="0" y="0" width="180" height="30" uuid="ecbc6b60-df9d-4c28-84b4-e360e28fda29"/>
 									<box leftPadding="2"/>
 									<textElement>
 										<font fontName="DejaVu Sans" size="12"/>
@@ -228,12 +228,12 @@ FROM classicmodels.pagamentos
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="90" uuid="b8d247fa-0110-456a-91e3-ec716aa4a24c">
+						<jr:column width="180" uuid="b8d247fa-0110-456a-91e3-ec716aa4a24c">
 							<jr:tableHeader style="Table_TH" height="30"/>
 							<jr:tableFooter style="Table_TH" height="30"/>
 							<jr:columnHeader style="Table_CH" height="30">
 								<staticText>
-									<reportElement key="" style="Column header" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" uuid="a8e0e0e4-8914-4f0f-8b63-38efb5ed2ef3"/>
+									<reportElement key="" style="Column header" x="0" y="0" width="180" height="30" forecolor="#FFFFFF" uuid="a8e0e0e4-8914-4f0f-8b63-38efb5ed2ef3"/>
 									<box leftPadding="2"/>
 									<textElement>
 										<font fontName="DejaVu Sans" size="12" isBold="true"/>
@@ -244,7 +244,7 @@ FROM classicmodels.pagamentos
 							<jr:columnFooter style="Table_CH" height="30"/>
 							<jr:detailCell style="Table_TD" height="30">
 								<textField>
-									<reportElement style="Detail" x="0" y="0" width="90" height="30" uuid="f03ea3be-0b34-447f-b712-0efcdac8b0b4"/>
+									<reportElement style="Detail" x="0" y="0" width="180" height="30" uuid="f03ea3be-0b34-447f-b712-0efcdac8b0b4"/>
 									<box leftPadding="2"/>
 									<textElement>
 										<font fontName="DejaVu Sans" size="12"/>

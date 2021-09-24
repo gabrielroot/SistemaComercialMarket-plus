@@ -7,6 +7,7 @@ package br.edu.ifnmg.apresentacao_desktop.TelaProduto;
 
 import Util.Util;
 import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.Lote;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
@@ -27,6 +28,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
 
     private static Produto produto;
     private ProdutoRepositorio produtoRepositorio;
+    private EstoqueRepositorio estoqueRepositorio;
     private Util util;
     
     /**
@@ -34,18 +36,19 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
      */
     public ProdutoTela() {
         initComponents();
+        
         ProdutoTela.produto = new Produto();
         Estoque estoque = new Estoque();
         List lotes = new ArrayList<>();
-        Lote lote = new Lote();
+        Lote lote = new Lote();        
         lotes.add(lote);
         estoque.setLotes(lotes);
         ProdutoTela.produto.setEstoque(estoque);
+        
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
+        this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         this.util = new Util();
-        this.buscarProduto();
-        initTabProdutos();
-        jDesktopPane1.setBackground(null);
+        this.initTabProdutos();
     }
 
     public static Produto getProduto() { return produto; }
@@ -67,25 +70,27 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
     }
     
     private void initTabEstoque(){
-        List<Produto> resultado = this.produtoRepositorio.Buscar(produto);
+        //TELA ESTOQUE NAO ATUALIZA NUM. LOTES, QUANDO NOVOS SÃO INSERIDOS
+        List<Produto> resultado = this.produtoRepositorio.Buscar(new Produto());
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
         modelo.addColumn("ID");
         modelo.addColumn("Nome");
         modelo.addColumn("Local");
-        modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("Num. Lotes");
+        modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("QTDE. Min Desejada");
         
-        for(int i=0;i<resultado.size(); i++){
+        for( int i=0; i < resultado.size(); i++ ){
             Vector linha = new Vector();
             
             linha.add((i+1));
-            linha.add(resultado.get(i).getId());
+            linha.add(resultado.get(i).getEstoque().getId());
             linha.add(resultado.get(i).getNome());
             linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
-            linha.add(resultado.get(i).getEstoque().getSomaLotes());
+            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
             linha.add(resultado.get(i).getEstoque().getLotes().size());
+            linha.add(resultado.get(i).getEstoque().getSomaLotes());
             linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
         }
@@ -357,35 +362,35 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
             .addComponent(jScrollPane1)
             .addComponent(jSeparator1)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(124, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(18, 18, 18)
-                            .addComponent(checkNome, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(checkDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(checkUNDCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(checkUNDVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(checkQTDEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 868, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(2, 2, 2)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkNome, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkUNDCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkUNDVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkQTDEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 868, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(117, 117, 117)))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,13 +399,13 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -453,9 +458,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Estoque", jPanel3);
@@ -537,13 +540,15 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void tableResultadoEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoEstoqueMouseClicked
+        EstoqueRepositorio estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         int linha = this.tableResultadoEstoque.getSelectedRow();
         long id = (long)this.tableResultadoEstoque.getValueAt(linha, 1);
-        Estoque estoque = produtoRepositorio.Abrir(id).getEstoque();
-        LoteTela lote = new LoteTela(estoque);
-        jDesktopPane1.add(lote);
-        Util.centralizaInternalFrame(lote, this.getSize());
-        lote.setVisible(true);
+        Estoque estoque = estoqueRepositorio.Abrir(id);
+        LoteTela loteTela = new LoteTela(estoque);
+        loteTela.addInternalFrameListener(this);
+        jDesktopPane1.add(loteTela);
+        Util.centralizaInternalFrame(loteTela, this.getSize());
+        loteTela.setVisible(true);
     }//GEN-LAST:event_tableResultadoEstoqueMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -563,10 +568,21 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
        this.buscarProduto();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void limparFiltros(){
+        ProdutoTela.produto = new Produto();
+        Estoque estoque = new Estoque();
+        List lotes = new ArrayList<>();
+        Lote lote = new Lote();        
+        lotes.add(lote);
+        estoque.setLotes(lotes);
+        ProdutoTela.produto.setEstoque(estoque);
+
+        this.txtNome.setText("");
+    }
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if(util.abrirJOptionPane("confirma", "Deseja realmente limpar filtros?", null)){
-            ProdutoTela.produto = new Produto();
-            this.txtNome.setText("");
+            limparFiltros();
             this.buscarProduto();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -609,7 +625,13 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
 
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
-        this.buscarProduto();
+        if(e.getInternalFrame().getClass() == LoteTela.class){
+            limparFiltros();
+            this.initTabEstoque();
+        }
+        if(e.getInternalFrame().getClass() == ProdutoEditar.class){
+            this.initTabProdutos();
+        }
     }
 
     @Override

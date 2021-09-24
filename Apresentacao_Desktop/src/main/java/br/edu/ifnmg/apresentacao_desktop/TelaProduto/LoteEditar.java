@@ -7,30 +7,66 @@ package br.edu.ifnmg.apresentacao_desktop.TelaProduto;
 
 import br.edu.ifnmg.auxiliares.Lote;
 import Util.Util;
+import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.LoteRepositorio;
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 
 /**
  *
  * @author gabriel
  */
 public class LoteEditar extends javax.swing.JInternalFrame {
+    private Estoque estoque;
+    private LoteRepositorio loteRepositorio;
     private Lote lote;
+    private Lote toEdit;
     private Util util;
     
     /**
      * Creates new form LoteEditar
      */
-    public LoteEditar() {
-        this.lote = new Lote();
+    public LoteEditar(Estoque estoque, Lote lote, String title) {
+        this.loteRepositorio = RepositorioFactory.getLoteRepositorio();
+        this.estoque = estoque;
+        this.lote = lote;
+        this.toEdit = lote;
         this.util = new Util();
         initComponents();
+        this.setComponentes();
+        
+        this.labelTitle.setText(title);
+        if(title.equalsIgnoreCase("novo lote")){
+            this.btnRemove.setVisible(false);
+        }
     }
 
+    private boolean setComponentes(){
+        this.txtCodigo.setText(this.lote.getCodigo());
+        this.txtValidade.setText(
+            this.lote.getDataValidade() != null?
+            Util.getStringDateFromCalendar(this.lote.getDataValidade()):
+            null
+        );
+        this.txtFabricacao.setText(
+            this.lote.getDataFabricacao() != null?
+            Util.getStringDateFromCalendar(this.lote.getDataFabricacao()):
+            null
+        );
+        this.txtQuantidade.setText(
+            this.lote.getQuantidade() >= 0?
+            String.valueOf(this.lote.getQuantidade()):
+            null
+        );
+        
+        return true;
+    }
+    
     private boolean getComponentes(){
         if(
-                this.txtCodigo.getText().isEmpty() ||
-                this.txtValidade.getText().isEmpty() ||
-                this.txtFabricacao.getText().isEmpty()||
-                this.txtQuantidade.getText().isEmpty()
+            this.txtCodigo.getText().isEmpty() ||
+            this.txtValidade.getText().isEmpty() ||
+            this.txtFabricacao.getText().isEmpty()||
+            this.txtQuantidade.getText().isEmpty()
           ){
             return false;
         }
@@ -54,7 +90,7 @@ public class LoteEditar extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        labelTitle = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -64,9 +100,9 @@ public class LoteEditar extends javax.swing.JInternalFrame {
         txtQuantidade = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -74,9 +110,9 @@ public class LoteEditar extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(140, 71, 71));
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Editar Lote");
+        labelTitle.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        labelTitle.setForeground(new java.awt.Color(255, 255, 255));
+        labelTitle.setText("Editar Lote");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -84,14 +120,14 @@ public class LoteEditar extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(labelTitle)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1)
+                .addComponent(labelTitle)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -144,28 +180,38 @@ public class LoteEditar extends javax.swing.JInternalFrame {
         jPanel3.setMinimumSize(new java.awt.Dimension(0, 10));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(208, 208, 208));
-        jButton1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(8, 8, 8));
-        jButton1.setText("Remover");
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 100, 40));
-
-        jButton2.setBackground(new java.awt.Color(109, 46, 46));
-        jButton2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Salvar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRemove.setBackground(new java.awt.Color(208, 208, 208));
+        btnRemove.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        btnRemove.setForeground(new java.awt.Color(8, 8, 8));
+        btnRemove.setText("Remover");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRemoveActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 100, 40));
+        jPanel3.add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 100, 40));
 
-        jButton3.setBackground(new java.awt.Color(181, 181, 181));
-        jButton3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(8, 8, 8));
-        jButton3.setText("Cancelar");
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 40));
+        btnSave.setBackground(new java.awt.Color(109, 46, 46));
+        btnSave.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
+        btnSave.setText("Salvar");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 100, 40));
+
+        btnCancel.setBackground(new java.awt.Color(181, 181, 181));
+        btnCancel.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(8, 8, 8));
+        btnCancel.setText("Cancelar");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 40));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -224,23 +270,44 @@ public class LoteEditar extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(this.getComponentes()){
-            lote.setEstoque(ProdutoEditar.getProduto().getEstoque());
-            ProdutoEditar.getProduto().getEstoque().getLotes().add(lote);
+            if(this.labelTitle.getText().equalsIgnoreCase("novo lote")){
+                this.lote.setEstoque(this.estoque);
+                this.estoque.getLotes().add(this.lote);
+            }else if(this.labelTitle.getText().equalsIgnoreCase("editar lote")){
+                this.estoque.getLotes().set(
+                    this.estoque.getLotes().indexOf(toEdit), 
+                    this.lote
+                );
+            }
             util.abrirJOptionPane("sucesso", "Lote vinculado ao produto!", this);
             this.dispose();
         }else{
             util.abrirJOptionPane("erro", "Preencha todos os campos.", this);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        if(util.abrirJOptionPane("confirma", "Deseja realmente remover este lote?", this)){
+            if(this.loteRepositorio.Apagar(this.lote)){
+                util.abrirJOptionPane("sucesso", "Removido com sucesso!", this);
+                this.dispose();
+            }else{
+                util.abrirJOptionPane("erro", "Erro ao remover lote", this);
+            }
+        }
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -248,6 +315,7 @@ public class LoteEditar extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel labelTitle;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JFormattedTextField txtFabricacao;
     private javax.swing.JFormattedTextField txtQuantidade;

@@ -11,17 +11,15 @@ import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import Util.Util;
+import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.Lote;
 import java.math.BigDecimal;
-import java.util.List;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 
 /**
  *
  * @author gabriel
  */
-public class ProdutoEditar extends javax.swing.JInternalFrame{
+public class ProdutoEditar extends javax.swing.JInternalFrame {
     static Produto produto;
     private Util util;
     private ProdutoRepositorio produtoRepositorio;
@@ -43,8 +41,6 @@ public class ProdutoEditar extends javax.swing.JInternalFrame{
         }
         if(title.equalsIgnoreCase("buscar produto")){
             btnAddLote.setVisible(false);
-        }
-        if(title.equalsIgnoreCase("buscar produto")){
             btnSalvar.setVisible(false);
         }
         
@@ -645,11 +641,10 @@ public class ProdutoEditar extends javax.swing.JInternalFrame{
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAddLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLoteActionPerformed
-                this.getComponentes(false);
-                LoteEditar loteEditar = new LoteEditar();
-                ProdutoTela.jDesktopPane1.add(loteEditar);
-                Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
-                loteEditar.setVisible(true);
+        LoteEditar loteEditar = new LoteEditar(ProdutoEditar.produto.getEstoque(), new Lote(), "Novo Lote");
+        ProdutoTela.jDesktopPane1.add(loteEditar);
+        Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
+        loteEditar.setVisible(true);
     }//GEN-LAST:event_btnAddLoteActionPerformed
 
 

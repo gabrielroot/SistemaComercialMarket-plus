@@ -33,7 +33,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     private Fornecedor fornecedor;
     private Usuario usuario;
     ArrayList tabClicked;
-    private Cliente cliente;
+    public static Cliente cliente;
     private ClienteRepositorio clienteRepositorio;
     
     
@@ -55,6 +55,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         tabClicked.add(false);
         tabClicked.add(false);
         this.buscarCliente();
+        
     }
 
     public static JDesktopPane getjDesktopPane1() { return jDesktopPane1; }
@@ -588,6 +589,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         ClienteBuscaAvancada busca = new ClienteBuscaAvancada();
+        busca.addInternalFrameListener(this);
         this.jDesktopPane1.add(busca);
         busca.setVisible(true);
         Util.centralizaInternalFrame(busca,this.getSize());
@@ -777,8 +779,10 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     }//GEN-LAST:event_tblResultadoClientesMouseClicked
     
     private void buscarCliente(){
+        if(cliente.getNome().isEmpty()){
+            cliente.setNome(this.txtNomeCliente.getText());  
+        }
         
-        cliente.setNome(this.txtNomeCliente.getText());      
         List<Cliente> resultado = this.clienteRepositorio.Buscar(cliente);
         
         DefaultTableModel modelo = new DefaultTableModel();
@@ -902,6 +906,12 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         if(UsuarioEditar.class == e.getInternalFrame().getClass()){
             this.buscarUsuarios();
         }
+        
+        if(ClienteBuscaAvancada.class == e.getInternalFrame().getClass()){
+            this.buscarCliente();
+            System.out.println(cliente.getNome()+"asdf");
+        }
+        
     }
 
     @Override

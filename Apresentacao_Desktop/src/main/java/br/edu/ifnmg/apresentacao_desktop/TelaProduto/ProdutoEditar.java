@@ -11,6 +11,7 @@ import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import Util.Util;
+import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.Lote;
 import java.math.BigDecimal;
 
@@ -40,8 +41,6 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         }
         if(title.equalsIgnoreCase("buscar produto")){
             btnAddLote.setVisible(false);
-        }
-        if(title.equalsIgnoreCase("buscar produto")){
             btnSalvar.setVisible(false);
         }
         

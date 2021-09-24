@@ -45,7 +45,7 @@ public class Estoque implements Serializable {
     private int quantidadeMinimaDesejada;
 
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
-    private List<Produto> produto;
+    private List<Produto> produtos;
     
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
     private List<Lote> lotes;
@@ -54,7 +54,7 @@ public class Estoque implements Serializable {
         this.id = 0L;
         this.localizacaoProduto = null;
         this.quantidadeMinimaDesejada = -1;
-        this.produto = new ArrayList<>();
+        this.produtos = new ArrayList<>();
         this.lotes = new ArrayList<>();
     }
 
@@ -74,8 +74,8 @@ public class Estoque implements Serializable {
     public int getQuantidadeMinimaDesejada() { return quantidadeMinimaDesejada; }
     public void setQuantidadeMinimaDesejada(int quantidadeMinimaDesejada) { this.quantidadeMinimaDesejada = quantidadeMinimaDesejada; }
 
-    public List<Produto> getProduto() { return produto; }
-    public void setProduto(List<Produto> produto) { this.produto = produto; }
+    public List<Produto> getProdutos() { return produtos; }
+    public void setProdutos(List<Produto> produto) { this.produtos = produto; }
 
     public List<Lote> getLotes() { return lotes; }
     public void setLotes(List lotes) { this.lotes = lotes; }

@@ -57,6 +57,7 @@ public class Console {
             System.out.println("Banco de dados populado com SUCESSO!!");
         }catch(Exception ex){
             System.out.println("FALHA ao popular o banco de dados!!");
+            System.out.println(ex);
         }
         
 
@@ -186,25 +187,6 @@ public class Console {
             "123",
             UsuarioTipo.Administrador
         );
-        
-//        CargoFuncionario cargo22 = new CargoFuncionario(cargo1.getTitulo(), cargo1.getFuncao(), cargo1.getComissao(), cargo1.getSalario());
-//        repositorioFuncionario.Apagar(funcionario);
-//        Usuario novoUsuario = new Usuario(
-//                funcionario.getId(),
-//                funcionario.getNome(), 
-//                funcionario.getEndereco(), 
-//                funcionario.getTelefones(), 
-//                funcionario.getDataNascimento(),         
-//                funcionario.getTipoPessoa(), 
-//                funcionario.getTipoDocumento(), 
-//                funcionario.getNumeroDocumento(), 
-//                funcionario.getSituacao(),
-//                cargo22,
-//                "emailFunc",
-//                "123",
-//                UsuarioTipo.Administrador
-//        ); 
-        
  
         Usuario usuarioCaixa = new Usuario(
             "CaixaUser",

@@ -298,7 +298,7 @@ public class LoteEditar extends javax.swing.JInternalFrame {
                 util.abrirJOptionPane("sucesso", "Removido com sucesso!", this);
                 this.dispose();
             }else{
-                util.abrirJOptionPane("sucesso", "Erro ao remover lote", this);
+                util.abrirJOptionPane("erro", "Erro ao remover lote", this);
             }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed

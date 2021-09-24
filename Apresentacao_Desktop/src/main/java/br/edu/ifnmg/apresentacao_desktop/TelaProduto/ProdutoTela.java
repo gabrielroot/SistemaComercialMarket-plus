@@ -28,6 +28,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
 
     private static Produto produto;
     private ProdutoRepositorio produtoRepositorio;
+    private EstoqueRepositorio estoqueRepositorio;
     private Util util;
     
     /**
@@ -35,16 +36,18 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
      */
     public ProdutoTela() {
         initComponents();
+        
         ProdutoTela.produto = new Produto();
         Estoque estoque = new Estoque();
         List lotes = new ArrayList<>();
-        Lote lote = new Lote();
-        this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
-        this.util = new Util();
-        
+        Lote lote = new Lote();        
         lotes.add(lote);
         estoque.setLotes(lotes);
         ProdutoTela.produto.setEstoque(estoque);
+        
+        this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
+        this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
+        this.util = new Util();
         this.initTabProdutos();
     }
 
@@ -67,7 +70,8 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
     }
     
     private void initTabEstoque(){
-        List<Produto> resultado = this.produtoRepositorio.Buscar(produto);
+        //TELA ESTOQUE NAO ATUALIZA NUM. LOTES, QUANDO NOVOS SÃO INSERIDOS
+        List<Produto> resultado = this.produtoRepositorio.Buscar(new Produto());
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
         modelo.addColumn("ID");
@@ -77,18 +81,18 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("QTDE. Min Desejada");
         
-        for(int i=0;i<resultado.size(); i++){
+        for( int i=0; i < resultado.size(); i++ ){
             Vector linha = new Vector();
             
             linha.add((i+1));
             linha.add(resultado.get(i).getEstoque().getId());
             linha.add(resultado.get(i).getNome());
             linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
+            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
             linha.add(resultado.get(i).getEstoque().getLotes().size());
             linha.add(resultado.get(i).getEstoque().getSomaLotes());
             linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
-            System.out.println(resultado.get(i).getEstoque().getLotes().size());
         }
         tableResultadoEstoque.setModel(modelo);
     }
@@ -564,10 +568,21 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
        this.buscarProduto();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void limparFiltros(){
+        ProdutoTela.produto = new Produto();
+        Estoque estoque = new Estoque();
+        List lotes = new ArrayList<>();
+        Lote lote = new Lote();        
+        lotes.add(lote);
+        estoque.setLotes(lotes);
+        ProdutoTela.produto.setEstoque(estoque);
+
+        this.txtNome.setText("");
+    }
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if(util.abrirJOptionPane("confirma", "Deseja realmente limpar filtros?", null)){
-            ProdutoTela.produto = new Produto();
-            this.txtNome.setText("");
+            limparFiltros();
             this.buscarProduto();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -611,10 +626,11 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
         if(e.getInternalFrame().getClass() == LoteTela.class){
+            limparFiltros();
             this.initTabEstoque();
         }
         if(e.getInternalFrame().getClass() == ProdutoEditar.class){
-            this.buscarProduto();
+            this.initTabProdutos();
         }
     }
 

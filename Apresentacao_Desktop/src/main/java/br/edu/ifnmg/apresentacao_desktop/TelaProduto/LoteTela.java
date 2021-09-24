@@ -27,9 +27,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class LoteTela extends javax.swing.JInternalFrame implements InternalFrameListener{
 
-    private Produto produto;
     private Estoque estoque;
-    private ProdutoRepositorio produtoRepositorio;
     private EstoqueRepositorio estoqueRepositorio;
     private LoteRepositorio loteRepositorio;
     
@@ -37,10 +35,8 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
      * Creates new form Lote
      */
     public LoteTela(Estoque estoque) {
-        this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         this.loteRepositorio = RepositorioFactory.getLoteRepositorio();
-        this.produto = new Produto();
         this.estoque = estoque;
         initComponents();
         renderizarLotes(estoque.getLotes());
@@ -85,6 +81,7 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
@@ -152,7 +149,16 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 140, 40));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 140, 40));
+
+        jButton2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jButton2.setText("Voltar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 150, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -231,10 +237,15 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
         loteEditar.setVisible(true);
     }//GEN-LAST:event_tableResultadoLoteMouseClicked
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboVencimento;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

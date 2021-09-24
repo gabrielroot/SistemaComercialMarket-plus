@@ -7,7 +7,9 @@ package br.edu.ifnmg.persistencia;
 
 import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
+import java.util.Hashtable;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -21,7 +23,35 @@ public class EstoqueDAO extends DataAccessObject<Estoque> implements EstoqueRepo
     
     @Override
     public List<Estoque> Buscar(Estoque obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String jpql = "SELECT estoque FROM Estoque estoque";
+        String filtros = "";
+        Hashtable<String, Object> parametros = new Hashtable<>();
+        
+        if(obj != null){
+            if(obj.getQuantidadeMinimaDesejada() > -1){
+                if(filtros.length() > 0) filtros += " AND ";
+                filtros += "produto.estoque.quantidadeMinimaDesejada = :qtdemin";
+                parametros.put("qtdemin", obj.getQuantidadeMinimaDesejada());
+            }
+
+            if(obj.getLocalizacaoProduto() != null){
+                if(filtros.length() > 0) filtros += " AND ";
+                filtros += "produto.estoque.localizacaoProduto = :local";
+                parametros.put("local", obj.getLocalizacaoProduto());
+            }
+        }
+                
+        if(filtros.length() > 0){
+            jpql = jpql + " WHERE " + filtros;
+        }
+        
+        Query consulta = this.manager.createQuery(jpql);
+        
+        for(String chave : parametros.keySet()){
+            consulta.setParameter(chave, parametros.get(chave));
+        }
+        
+        return consulta.getResultList();
     }
     
 }

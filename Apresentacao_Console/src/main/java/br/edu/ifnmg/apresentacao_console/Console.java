@@ -49,10 +49,15 @@ public class Console {
     static FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
     
     public static void main(String[] args){
-        if(popularBD()){
+        try{
+            popularBD();
+            usuariosAleatorios();
+            fornecedoresAleatorios();
+            produtosFixos();
             System.out.println("Banco de dados populado com SUCESSO!!");
-        }else{
+        }catch(Exception ex){
             System.out.println("FALHA ao popular o banco de dados!!");
+            System.out.println(ex);
         }
         
 
@@ -182,25 +187,6 @@ public class Console {
             "123",
             UsuarioTipo.Administrador
         );
-        
-//        CargoFuncionario cargo22 = new CargoFuncionario(cargo1.getTitulo(), cargo1.getFuncao(), cargo1.getComissao(), cargo1.getSalario());
-//        repositorioFuncionario.Apagar(funcionario);
-//        Usuario novoUsuario = new Usuario(
-//                funcionario.getId(),
-//                funcionario.getNome(), 
-//                funcionario.getEndereco(), 
-//                funcionario.getTelefones(), 
-//                funcionario.getDataNascimento(),         
-//                funcionario.getTipoPessoa(), 
-//                funcionario.getTipoDocumento(), 
-//                funcionario.getNumeroDocumento(), 
-//                funcionario.getSituacao(),
-//                cargo22,
-//                "emailFunc",
-//                "123",
-//                UsuarioTipo.Administrador
-//        ); 
-        
  
         Usuario usuarioCaixa = new Usuario(
             "CaixaUser",
@@ -268,10 +254,6 @@ public class Console {
                 TipoDocumento.CertidaoNascimento, 
                 "333333"
         );
-        
-        usuariosAleatorios();
-        fornecedoresAleatorios();
-        produtosFixos();
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
@@ -409,7 +391,7 @@ public class Console {
             lotes2.add(lote2);
             lotes2.add(lote22);
             
-            estoque.setLotes(lotes2);
+            estoque2.setLotes(lotes2);
 
             Produto produto2 = new Produto("Tigela azul marinho 700ml", 
                 "Ideal para saladas ou uso como prato de pedreiro", 

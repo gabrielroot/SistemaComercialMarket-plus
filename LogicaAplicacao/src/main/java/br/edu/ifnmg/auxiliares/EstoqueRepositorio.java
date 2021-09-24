@@ -11,5 +11,5 @@ import br.edu.ifnmg.logicaAplicacao.*;
  *
  * @author kesley
  */
-public interface LoteRepositorio extends Repositorio<Lote> {
+public interface EstoqueRepositorio extends Repositorio<Estoque> {
 }

@@ -27,12 +27,30 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
     
     /**
      * Creates new form BuscaAvancada
+     * @param cliente
      */
-    public ClienteBuscaAvancada() {
-        this.cliente = new Cliente();
+    public ClienteBuscaAvancada(Cliente cliente) {
+        this.cliente =  cliente;
         initComponents();
+        setComponetes();
     }
 
+    private void setComponetes() {
+        if(!this.cliente.getNome().isEmpty()){
+            this.txtNome.setText(this.cliente.getNome());
+        }
+        if(!this.cliente.getNumeroDocumento().isEmpty()){
+            this.txtNumeroDocumento.setText(this.cliente.getNumeroDocumento());
+        }
+        for (int i = 0; i < 2; i++) {
+            
+           if(!this.cliente.getTelefones().isEmpty()){
+                this.txtNumeroDocumento.setText(this.cliente.getTelefones().get(i).toString());
+                break;
+            }
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

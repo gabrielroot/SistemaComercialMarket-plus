@@ -37,35 +37,43 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
     public List<Cliente> Buscar(Cliente obj) {
         
         String jpql = "select cliente from Cliente cliente";
-        
+        String filtros = "";
         Hashtable<String, Object> parametros = new Hashtable<>();
                 
         if(obj != null){
             if(obj.getNome() != null && !obj.getNome().isEmpty()){
                 parametros.put("nome", obj.getNome() + "%");
-                
+                if(filtros.length() > 0)
+                    filtros += "AND";
+                filtros += "cliente.nome LIKE :nome";
             }
+            
+            if(obj.getNumeroDocumento() != null && !obj.getNumeroDocumento().isEmpty()){
+                parametros.put("numeroDocumento", obj.getNumeroDocumento());
+                if(filtros.length() > 0)
+                    filtros += " AND ";
+                filtros +="cliente.numeroDocumento = :numeroDocumento";
+            }
+            
+            /*
+            if(obj.getTelefones().get(0).toString() != null && !obj.getTelefones().get(0).toString().isEmpty()){
+                parametros.put("tefones", obj.);
+            }
+            if(obj.getTelefones().get(1).toString() != null && !obj.getTelefones().get(0).toString().isEmpty()){
+                parametros.put("tefones", obj.);
+            }*/
         }
 
-        if(!parametros.isEmpty()){         
-            String filtros = "";
-            jpql += " where ";      
-            for (String campo : parametros.keySet()) {
-                if(!filtros.isEmpty())
-                    filtros += " and ";
-                jpql += "cliente." + campo + " LIKE :" + campo;
-            }
-            jpql += filtros;
-        }
+        if(filtros.length() > 0)
+            jpql = jpql + " WHERE " + filtros;
         
-        Query sql = this.manager.createQuery(jpql);
+        Query sql = this.manager.createQuery(jpql); 
         
         if(!parametros.isEmpty()){ /// se não ta fazio faça 
             for (String campo : parametros.keySet()) {
                 sql.setParameter(campo,parametros.get(campo));
             }
         }
-        
         return sql.getResultList();
     }
 

@@ -35,7 +35,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     ArrayList tabClicked;
     public static Cliente cliente;
     private ClienteRepositorio clienteRepositorio;
-    
+    private Util util;
     
     /**
      * Creates new form Pessoas
@@ -55,6 +55,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         tabClicked.add(false);
         tabClicked.add(false);
         this.buscarCliente();
+        this.util = new Util();
         
     }
 
@@ -83,6 +84,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblResultadoClientes = new javax.swing.JTable();
+        jButton8 = new javax.swing.JButton();
         tabFuncionarios = new javax.swing.JPanel();
         tabFornecedores = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -157,6 +159,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         });
 
         jButton1.setBackground(new java.awt.Color(212, 167, 167));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +169,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         });
 
         jButton2.setBackground(new java.awt.Color(212, 167, 167));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Busca Avançada");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +179,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         });
 
         jButton3.setBackground(new java.awt.Color(212, 167, 167));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Novo");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -200,6 +205,16 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         });
         jScrollPane1.setViewportView(tblResultadoClientes);
 
+        jButton8.setBackground(new java.awt.Color(255, 255, 255));
+        jButton8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(0, 0, 0));
+        jButton8.setText("Limpar Filtros");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -208,18 +223,20 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 292, Short.MAX_VALUE)
+                        .addGap(0, 305, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(93, 93, 93)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 280, Short.MAX_VALUE))
+                        .addGap(0, 293, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -234,7 +251,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                 .addContainerGap())
@@ -372,7 +390,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
@@ -588,7 +606,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     }//GEN-LAST:event_txtNomeClienteActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ClienteBuscaAvancada busca = new ClienteBuscaAvancada();
+        ClienteBuscaAvancada busca = new ClienteBuscaAvancada(this.cliente);
         busca.addInternalFrameListener(this);
         this.jDesktopPane1.add(busca);
         busca.setVisible(true);
@@ -777,6 +795,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         telaClienteEditar.addInternalFrameListener(this);
         telaClienteEditar.setVisible(true);
     }//GEN-LAST:event_tblResultadoClientesMouseClicked
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        if(util.abrirJOptionPane("confirma","Deseja realmente limpar os filtros?", null)){
+            this.cliente = new Cliente();
+            this.txtNomeCliente.setText("");
+            buscarCliente();
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
     
     private void buscarCliente(){
         if(cliente.getNome().isEmpty()){
@@ -857,6 +883,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -909,7 +936,6 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         
         if(ClienteBuscaAvancada.class == e.getInternalFrame().getClass()){
             this.buscarCliente();
-            System.out.println(cliente.getNome()+"asdf");
         }
         
     }

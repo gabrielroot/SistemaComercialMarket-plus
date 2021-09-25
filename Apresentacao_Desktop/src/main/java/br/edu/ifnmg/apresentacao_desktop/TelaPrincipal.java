@@ -109,7 +109,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String TELA_COMPRA = "TELA_COMPRA";
         String TELA_PRODUTO = "TELA_PRODUTO";
         String TELA_FINANCEIRO = "TELA_FINANCEIRO";
-        String TELA_VENDAS = "TELA_VENDAS";
+        String TELA_CAIXA = "TELA_CAIXA";
         String TELA_PESSOAS__ABA_USUARIOS = "TELA_PESSOAS__ABA_USUARIOS";
         String TELA_PESSOAS__ABA_FORNECEDORES = "TELA_PESSOAS__ABA_FORNECEDORES";
         String TELA_PESSOAS__ABA_FUNCIONARIOS = "TELA_PESSOAS__ABA_FUNCIONARIOS";
@@ -117,10 +117,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArrayList<String> removePermissaoGerente = new ArrayList();
 
         ArrayList<String> removePermissaoAdm = new ArrayList();
-        removePermissaoAdm.add(TELA_VENDAS);
+        removePermissaoAdm.add(TELA_CAIXA);
         removePermissaoAdm.add(TELA_RELATORIOS);
         
         ArrayList<String> removePermissaoBalconista = new ArrayList();
+        removePermissaoBalconista.add(TELA_CAIXA);
         removePermissaoBalconista.add(TELA_COMPRA);
         removePermissaoBalconista.add(TELA_FINANCEIRO);
         removePermissaoBalconista.add(TELA_PRODUTO);

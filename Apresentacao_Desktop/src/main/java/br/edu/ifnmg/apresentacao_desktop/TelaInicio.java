@@ -6,9 +6,9 @@
 package br.edu.ifnmg.apresentacao_desktop;
 
 import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.TelaCaixa.CaixaTela;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
-import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 
 /**
@@ -24,6 +24,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
      */
     public TelaInicio(TelaPrincipal tela) {
         initComponents();
+        this.util = new Util();
         this.telaPrincipal = tela;
         this.labelUsuario.setText(telaPrincipal.getUsuario().getNome());
         this.labelCargoUsuario.setText("[ "+telaPrincipal.getUsuario().getUsuarioTipo().toString()+" ]");
@@ -49,7 +50,6 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelVender = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         lblVender = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         imgVender = new javax.swing.JLabel();
         panelRelatorios = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -183,6 +183,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelVender.setToolTipText("Abrir módulo de caixa");
         panelVender.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelVender.setPreferredSize(new java.awt.Dimension(120, 140));
+        panelVender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelVenderMouseClicked(evt);
+            }
+        });
         panelVender.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(98, 57, 57));
@@ -207,7 +212,6 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         panelVender.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 104, 140, 40));
-        panelVender.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 30, -1, -1));
 
         imgVender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sell.png"))); // NOI18N
@@ -865,7 +869,12 @@ public class TelaInicio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_panelEstoqueMouseClicked
 
     private void imgVenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgVenderMouseClicked
-        // TODO add your handling code here:
+        if(this.telaPrincipal.temPermissao("TELA_CAIXA")){
+            CaixaTela caixaTela = new CaixaTela();
+            this.telaPrincipal.renderJInternalFrame(caixaTela);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
     }//GEN-LAST:event_imgVenderMouseClicked
 
     private void imgRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgRelatoriosMouseClicked
@@ -895,6 +904,15 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_imgPessoasMouseClicked
 
+    private void panelVenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelVenderMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_CAIXA")){
+            CaixaTela caixaTela = new CaixaTela();
+            this.telaPrincipal.renderJInternalFrame(caixaTela);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_panelVenderMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEncerrarSessao;
@@ -906,7 +924,6 @@ public class TelaInicio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel imgRelatorios;
     private javax.swing.JLabel imgUsuario;
     private javax.swing.JLabel imgVender;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;

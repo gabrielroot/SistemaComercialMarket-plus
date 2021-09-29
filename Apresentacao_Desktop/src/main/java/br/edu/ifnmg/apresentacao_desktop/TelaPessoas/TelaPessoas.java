@@ -19,21 +19,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JDesktopPane;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author gabriel
  */
-public class TelaPessoas extends javax.swing.JInternalFrame {
+public class TelaPessoas extends javax.swing.JInternalFrame implements InternalFrameListener{
     private TelaPrincipal telaPrincipal;
     private UsuarioRepositorio usuarioRepositorio;
     private FornecedorRepositorio fornecedorRepositorio;
     private Fornecedor fornecedor;
     private Usuario usuario;
     ArrayList tabClicked;
-    private Cliente cliente;
+    public static Cliente cliente;
     private ClienteRepositorio clienteRepositorio;
-    
+    private Util util;
     
     /**
      * Creates new form Pessoas
@@ -53,6 +55,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         tabClicked.add(false);
         tabClicked.add(false);
         this.buscarCliente();
+        this.util = new Util();
+        
     }
 
     public static JDesktopPane getjDesktopPane1() { return jDesktopPane1; }
@@ -80,6 +84,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblResultadoClientes = new javax.swing.JTable();
+        jButton8 = new javax.swing.JButton();
         tabFuncionarios = new javax.swing.JPanel();
         tabFornecedores = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -154,6 +159,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         });
 
         jButton1.setBackground(new java.awt.Color(212, 167, 167));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -163,6 +169,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(212, 167, 167));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Busca Avançada");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -172,6 +179,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         });
 
         jButton3.setBackground(new java.awt.Color(212, 167, 167));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Novo");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -197,6 +205,16 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblResultadoClientes);
 
+        jButton8.setBackground(new java.awt.Color(255, 255, 255));
+        jButton8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(0, 0, 0));
+        jButton8.setText("Limpar Filtros");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -205,18 +223,20 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 292, Short.MAX_VALUE)
+                        .addGap(0, 305, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(93, 93, 93)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 280, Short.MAX_VALUE))
+                        .addGap(0, 293, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -231,7 +251,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                 .addContainerGap())
@@ -345,10 +366,10 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,13 +383,14 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
                                 .addComponent(comboSegmento, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(35, 35, 35)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(182, 182, 182)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
@@ -584,7 +606,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNomeClienteActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ClienteBuscaAvancada busca = new ClienteBuscaAvancada();
+        ClienteBuscaAvancada busca = new ClienteBuscaAvancada(this.cliente);
+        busca.addInternalFrameListener(this);
         this.jDesktopPane1.add(busca);
         busca.setVisible(true);
         Util.centralizaInternalFrame(busca,this.getSize());
@@ -594,6 +617,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
         TelaClienteEditar telaCliente = new TelaClienteEditar(new Cliente(), "Novo Cliente");
         jDesktopPane1.add(telaCliente);
+        telaCliente.addInternalFrameListener(this);
         telaCliente.setVisible(true);    
         Util.centralizaInternalFrame(telaCliente, this.getSize());
         
@@ -647,6 +671,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         UsuarioEditar novo = new UsuarioEditar(telaPrincipal,"Novo Usuário",new Usuario());
         TelaPessoas.jDesktopPane1.add(novo);
         Util.centralizaInternalFrame(novo, this.getSize());
+        novo.addInternalFrameListener(this);
         novo.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -674,6 +699,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         FornecedorEditar fornecedorEditar = new FornecedorEditar(this.telaPrincipal,"Novo Fornecedor" ,new Fornecedor());
         Util.centralizaInternalFrame(fornecedorEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(fornecedorEditar);
+        fornecedorEditar.addInternalFrameListener(this);
         fornecedorEditar.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -733,6 +759,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         FornecedorEditar fornecedorEditar = new FornecedorEditar(this.telaPrincipal, "Editar Fornecedor",f);
         Util.centralizaInternalFrame(fornecedorEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(fornecedorEditar);
+        fornecedorEditar.addInternalFrameListener(this);
         fornecedorEditar.setVisible(true);
     }//GEN-LAST:event_tableResultadoFornecedoresMouseClicked
 
@@ -744,6 +771,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
         UsuarioEditar usuarioEditar = new UsuarioEditar(this.telaPrincipal, "Editar Usuário",u);
         Util.centralizaInternalFrame(usuarioEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(usuarioEditar);
+        usuarioEditar.addInternalFrameListener(this);
         usuarioEditar.setVisible(true);
     }//GEN-LAST:event_tableResultadoUsuariosMouseClicked
 
@@ -757,19 +785,30 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
 
     private void tblResultadoClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoClientesMouseClicked
        
-        int linha = this.tblResultadoClientes.getSelectedRow();// seleciono a linha clicada
-        long id = (long)this.tblResultadoClientes.getValueAt(linha, 1); // seleciono a coluna 
+        int linha = this.tblResultadoClientes.getSelectedRow();
+        long id = (long)this.tblResultadoClientes.getValueAt(linha, 1);
         
         Cliente cliente = clienteRepositorio.Abrir(id); 
         TelaClienteEditar telaClienteEditar = new TelaClienteEditar(cliente, "Editar Cliente");
         Util.centralizaInternalFrame(telaClienteEditar, this.getSize());
         TelaPessoas.jDesktopPane1.add(telaClienteEditar);
+        telaClienteEditar.addInternalFrameListener(this);
         telaClienteEditar.setVisible(true);
     }//GEN-LAST:event_tblResultadoClientesMouseClicked
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        if(util.abrirJOptionPane("confirma","Deseja realmente limpar os filtros?", null)){
+            this.cliente = new Cliente();
+            this.txtNomeCliente.setText("");
+            buscarCliente();
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
     
     private void buscarCliente(){
+        if(cliente.getNome().isEmpty()){
+            cliente.setNome(this.txtNomeCliente.getText());  
+        }
         
-        cliente.setNome(this.txtNomeCliente.getText());      
         List<Cliente> resultado = this.clienteRepositorio.Buscar(cliente);
         
         DefaultTableModel modelo = new DefaultTableModel();
@@ -844,6 +883,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -871,4 +911,48 @@ public class TelaPessoas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNomeCliente;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {
+        if(FornecedorEditar.class == e.getInternalFrame().getClass()){
+            this.buscarFornecedores();
+        }
+        
+        if(TelaClienteEditar.class == e.getInternalFrame().getClass()){
+            this.buscarCliente();
+        }
+        
+        if(UsuarioEditar.class == e.getInternalFrame().getClass()){
+            this.buscarUsuarios();
+        }
+        
+        if(ClienteBuscaAvancada.class == e.getInternalFrame().getClass()){
+            this.buscarCliente();
+        }
+        
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {
+    }
 }

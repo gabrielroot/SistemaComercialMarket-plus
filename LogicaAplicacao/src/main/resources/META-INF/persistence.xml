@@ -3,6 +3,8 @@
   <persistence-unit name="UP" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.edu.ifnmg.auxiliares.CargoFuncionario</class>
+    <class>br.edu.ifnmg.auxiliares.Estoque</class>
+    <class>br.edu.ifnmg.auxiliares.Lote</class>
     <class>br.edu.ifnmg.auxiliares.Telefone</class>
     <class>br.edu.ifnmg.logicaAplicacao.Cliente</class>
     <class>br.edu.ifnmg.logicaAplicacao.Fornecedor</class>

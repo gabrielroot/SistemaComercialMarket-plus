@@ -30,6 +30,11 @@ import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import Util.Util;
+import br.edu.ifnmg.auxiliares.ItemVenda;
+import br.edu.ifnmg.enums.TransacaoStatus;
+import br.edu.ifnmg.enums.TransacaoTipo;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceiraRepositorio;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +52,7 @@ public class Console {
     static ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
     static ProdutoRepositorio repositorioProduto = RepositorioFactory.getProdutoRepositorio();
     static FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
+    static TransacaoFinanceiraRepositorio repositorioTransacaoFinanceira = RepositorioFactory.getTransacaoFinanceiraRepositorio();
     
     public static void main(String[] args){
         try{
@@ -54,6 +60,7 @@ public class Console {
             usuariosAleatorios();
             fornecedoresAleatorios();
             produtosFixos();
+            transacaoFinanceira();
             System.out.println("Banco de dados populado com SUCESSO!!");
         }catch(Exception ex){
             System.out.println("FALHA ao popular o banco de dados!!");
@@ -406,5 +413,40 @@ public class Console {
             );
             
             repositorioProduto.Salvar(produto2);
+    }
+
+    public static void transacaoFinanceira(){
+        Produto p1 = new Produto("Produto 1", "@#4343", 2, 3, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 0));
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, Calendar.getInstance());
+        ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
+        itemVenda.setProduto(p1);
+        itemVenda.setTransacaoFinanceira(transacaoFinanceira);
+        
+        Produto p2 = new Produto("Produto 2", "@#4343", 2, 3, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 0));
+        ItemVenda itemVenda2 = new ItemVenda(BigDecimal.valueOf(15),p2.getValorVarejo());
+        itemVenda2.setProduto(p2);
+        itemVenda2.setTransacaoFinanceira(transacaoFinanceira);
+        
+        transacaoFinanceira.getItens().add(itemVenda);
+        transacaoFinanceira.getItens().add(itemVenda2);
+        
+        System.out.println("------TRANSAÇÃO FINANCEIRA-------");
+        for(int i=0; i<transacaoFinanceira.getItens().size(); i++){
+            System.out.println("PRODUTO "+(i+1)+": "+
+                    transacaoFinanceira.getItens().get(i).getQuantidade()+"X"+
+                    transacaoFinanceira.getItens().get(i).getProduto().getValorVarejo()+"="+
+                    transacaoFinanceira.getItens().get(i).getValorTotal()
+            );
+            System.out.println("-------------");
+        }
+        
+        System.out.println("Valor da transação: R$"+
+            (transacaoFinanceira.getItens().get(0).getValorTotal().add(
+                    transacaoFinanceira.getItens().get(1).getValorTotal()
+                )
+            )
+        );
+        System.out.println("--------------------------");
+        repositorioTransacaoFinanceira.Salvar(transacaoFinanceira);
     }
 }

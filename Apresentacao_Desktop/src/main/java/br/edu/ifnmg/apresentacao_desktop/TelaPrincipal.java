@@ -5,11 +5,10 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
-import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
-import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import java.beans.PropertyVetoException;
@@ -18,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
 /**
@@ -56,10 +53,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaInicio telaPrincipal = new TelaInicio(this);
         TelaPrincipal.currentFrame = telaPrincipal;
         this.renderJInternalInicio(telaPrincipal);
-    }
-    
-    TelaPrincipal(){
-        
     }
 
     public static JInternalFrame getCurrentFrame() { return currentFrame; }
@@ -154,7 +147,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     public boolean temPermissao(String query){
         for(String permissaoNegada : permissions.get(TelaPrincipal.usuario.getUsuarioTipo())){
-            if(permissaoNegada.equals(query)){
+            if(permissaoNegada.equals(query)){      
                 return false;
             }
         }

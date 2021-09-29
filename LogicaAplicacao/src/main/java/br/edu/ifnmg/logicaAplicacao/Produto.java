@@ -6,9 +6,12 @@
 package br.edu.ifnmg.logicaAplicacao;
 
 import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.ItemVenda;
 import br.edu.ifnmg.enums.UnidadeMedida;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -67,6 +71,9 @@ public class Produto implements Serializable {
     @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "estoque_id", nullable= false)
     private Estoque estoque;
+
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "produto")
+    private List<ItemVenda> itens;
     
     public Produto() {
         this.id = 0L;
@@ -80,6 +87,7 @@ public class Produto implements Serializable {
         this.valorAtacado= null;
         this.valorCusto = null;
         this.estoque = new Estoque();
+        this.itens = new ArrayList<>();
     }
 
     public Produto(
@@ -104,6 +112,7 @@ public class Produto implements Serializable {
         this.valorAtacado = valorAtacado;
         this.valorCusto = valorCusto;
         this.estoque = estoque;
+        this.itens = new ArrayList<>();
     }
     
     public Long getId() { return this.id; }
@@ -120,9 +129,6 @@ public class Produto implements Serializable {
     
     public UnidadeMedida getUnidadeMedidaVenda() { return this.unidadeMedidaVenda; }
     public void setUnidadeMedidaVenda(UnidadeMedida unidadeMedidaVenda) { this.unidadeMedidaVenda = unidadeMedidaVenda; }
-    
-    public BigDecimal getValorVenda() { return this.valorVarejo; }
-    public void setValorVenda(BigDecimal valorVenda) { this.valorVarejo = valorVenda; }
 
     public BigDecimal getValorAtacado() { return valorAtacado; }
     public void setValorAtacado(BigDecimal valorAtacado) { this.valorAtacado = valorAtacado; }
@@ -141,8 +147,9 @@ public class Produto implements Serializable {
 
     public int getQuantidadePrateleira() { return quantidadePrateleira; }
     public void setQuantidadePrateleira(int quantidadePrateleira) { this.quantidadePrateleira = quantidadePrateleira; }
-    
-    
+
+    public List<ItemVenda> getItens() { return itens; }
+    public void setItens(List<ItemVenda> itens) { this.itens = itens;}
     
     @Override
     public int hashCode() {

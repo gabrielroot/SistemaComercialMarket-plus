@@ -1,50 +1,15 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogSucesso.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPrincipal.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Busca.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\FuncionarioSelecionar.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogConfirma.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\UsuarioEditar.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\ClienteBuscaAvancada.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Login.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogErro.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaRelatorios\TelaRelatorios.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaInicio.java
-C:\Users\luana\Documents\projetoDsc\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogPermissao.java
-=======
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/TelaPessoas.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogSucesso.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogErro.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/TelaClienteEditar.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPrincipal.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaInicio.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/FornecedorEditar.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/ClienteBuscaAvancada.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogPermissao.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/UsuarioEditar.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Login.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/Dialogs/DialogConfirma.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/Util/Util.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaRelatorios/TelaRelatorios.java
-/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/SistemaComercialMarket-plus/Apresentacao_Desktop/src/main/java/br/edu/ifnmg/apresentacao_desktop/TelaPessoas/FuncionarioSelecionar.java
->>>>>>> 9f99cd87dfe2c5b5bcbb2494c621150bbc28cb69
-=======
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\ClienteBuscaAvancada.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogSucesso.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPrincipal.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogErro.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Login.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogPermissao.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\FornecedorEditar.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaRelatorios\TelaRelatorios.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\Util\Util.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaInicio.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\FuncionarioSelecionar.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogConfirma.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\UsuarioEditar.java
-E:\Nova pasta (4)\NetBeansProjects\sistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas.java
->>>>>>> 5fc6683183b21b787fc3ab7b8db1f86463039e54
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\FornecedorEditar.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Login.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\UsuarioEditar.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaRelatorios\TelaRelatorios.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\ClienteBuscaAvancada.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogPermissao.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPrincipal.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaClienteEditar.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaInicio.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogSucesso.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogErro.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\TelaPessoas.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\TelaPessoas\FuncionarioSelecionar.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\br\edu\ifnmg\apresentacao_desktop\Dialogs\DialogConfirma.java
+C:\Users\luana\Documents\projetoMarketplus\SistemaComercialMarket-plus\Apresentacao_Desktop\src\main\java\Util\Util.java

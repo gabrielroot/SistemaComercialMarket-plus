@@ -417,7 +417,23 @@ public class Console {
 
     public static void transacaoFinanceira(){
         Produto p1 = new Produto("Produto 1", "@#4343", 2, 3, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 0));
-        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, Calendar.getInstance());
+        
+        Usuario user = new Usuario(
+            "TransacaoCaixa",
+            "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            null,
+            Calendar.getInstance(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CNH,
+            "5646112173",
+            FuncionarioSituacao.Ativo,
+            new CargoFuncionario(),    
+            "transacaoCaixa",
+            "123",
+            UsuarioTipo.Caixa
+        );
+        
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance());
         ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
         itemVenda.setProduto(p1);
         itemVenda.setTransacaoFinanceira(transacaoFinanceira);
@@ -446,6 +462,8 @@ public class Console {
                 )
             )
         );
+        
+        System.out.println("Usuário: "+ transacaoFinanceira.getUsuario().getNome());
         System.out.println("--------------------------");
         repositorioTransacaoFinanceira.Salvar(transacaoFinanceira);
     }

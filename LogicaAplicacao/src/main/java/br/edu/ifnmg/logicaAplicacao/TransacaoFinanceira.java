@@ -21,6 +21,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -60,6 +62,10 @@ public class TransacaoFinanceira implements Serializable {
     
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "transacaoFinanceira")
     private List<ItemVenda> itens;
+    
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", nullable= false)
+    private Usuario usuario;
 
     public TransacaoFinanceira() {
         this.id = 0L;
@@ -67,16 +73,19 @@ public class TransacaoFinanceira implements Serializable {
         this.transacaoStatus = null;
         this.data = Calendar.getInstance();
         this.itens = new ArrayList<>();
+        this.usuario = new Usuario();
     }
 
     public TransacaoFinanceira(
             TransacaoTipo transacaoTipo, 
-            TransacaoStatus transacaoStatus, 
+            TransacaoStatus transacaoStatus,
+            Usuario usuario,
             Calendar data
     ) {
         this.transacaoTipo = transacaoTipo;
         this.transacaoStatus = transacaoStatus;
         this.data = data;
+        this.usuario = usuario;
         this.itens = new ArrayList<>();
     }
 
@@ -91,6 +100,11 @@ public class TransacaoFinanceira implements Serializable {
 
     public List<ItemVenda> getItens() { return itens; }
     public void setItens(List<ItemVenda> itens) { this.itens = itens;}
+
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+    
+    
     
     @Override
     public int hashCode() {

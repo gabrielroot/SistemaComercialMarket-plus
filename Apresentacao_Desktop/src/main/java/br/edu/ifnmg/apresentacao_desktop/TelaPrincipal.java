@@ -61,7 +61,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public static Usuario getUsuario() { return usuario; }
     public static void setUsuario(Usuario usuario) { TelaPrincipal.usuario = usuario; }
 
-
     public void renderJInternalInicio(JInternalFrame frame){
         this.add(frame);
         frame.setVisible(true);

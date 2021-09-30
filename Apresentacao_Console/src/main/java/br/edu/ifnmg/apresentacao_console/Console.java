@@ -78,7 +78,6 @@ public class Console {
         for(Produto produto : repositorioProduto.Buscar(new Produto(
                 null, 
                 null, 
-                -1, 
                 5, 
                 null, 
                 null, 
@@ -364,9 +363,9 @@ public class Console {
             );
             
             List lotes = new ArrayList();
-            Lote lote = new Lote("BR110", 5, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoque);
-            Lote lote1 = new Lote("BR140", 3, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoque);
-            Lote lote11 = new Lote("BR14012", 31, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoque);
+            Lote lote = new Lote("BR110", 5, 2, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoque);
+            Lote lote1 = new Lote("BR140", 3, 1, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoque);
+            Lote lote11 = new Lote("BR14012", 31, 0, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoque);
             lotes.add(lote);
             lotes.add(lote1);
             lotes.add(lote11);
@@ -376,7 +375,6 @@ public class Console {
             Produto produto = new Produto("Sandália Havaianas 44 Polegadas", 
                 "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
                 10, 
-                3, 
                 UnidadeMedida.Fardo, 
                 UnidadeMedida.Unidade, 
                 new BigDecimal("32.00"), 
@@ -393,8 +391,8 @@ public class Console {
             );
             
             List lotes2 = new ArrayList();
-            Lote lote2 = new Lote("BR130", 15, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoque2);
-            Lote lote22 = new Lote("BR1330", 3, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoque2);
+            Lote lote2 = new Lote("BR130", 15, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoque2);
+            Lote lote22 = new Lote("BR1330", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoque2);
             lotes2.add(lote2);
             lotes2.add(lote22);
             
@@ -403,7 +401,6 @@ public class Console {
             Produto produto2 = new Produto("Tigela azul marinho 700ml", 
                 "Ideal para saladas ou uso como prato de pedreiro", 
                 5, 
-                2, 
                 UnidadeMedida.Fardo, 
                 UnidadeMedida.Unidade, 
                 new BigDecimal("22.00"), 
@@ -416,7 +413,7 @@ public class Console {
     }
 
     public static void transacaoFinanceira(){
-        Produto p1 = new Produto("Produto 1", "@#4343", 2, 3, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 0));
+        Produto p1 = new Produto("Produto 1", "@#4343", 2, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 0));
         
         Usuario user = new Usuario(
             "TransacaoCaixa",
@@ -438,7 +435,7 @@ public class Console {
         itemVenda.setProduto(p1);
         itemVenda.setTransacaoFinanceira(transacaoFinanceira);
         
-        Produto p2 = new Produto("Produto 2", "@#4343", 2, 3, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 0));
+        Produto p2 = new Produto("Produto 2", "@#4343", 2, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 0));
         ItemVenda itemVenda2 = new ItemVenda(BigDecimal.valueOf(15),p2.getValorVarejo());
         itemVenda2.setProduto(p2);
         itemVenda2.setTransacaoFinanceira(transacaoFinanceira);

@@ -44,9 +44,6 @@ public class Produto implements Serializable {
     
     @Column(length=1000, nullable=true)
     private String descricao;
-    
-    @Column()
-    private int quantidadePrateleira;
 
     @Column()
     private int minimoParaAtacado;
@@ -79,7 +76,6 @@ public class Produto implements Serializable {
         this.id = 0L;
         this.nome = "";
         this.descricao = "";
-        this.quantidadePrateleira = -1;
         this.minimoParaAtacado = -1;
         this.unidadeMedidaCusto = null;
         this.unidadeMedidaVenda = null;
@@ -93,7 +89,6 @@ public class Produto implements Serializable {
     public Produto(
             String nome, 
             String descricao, 
-            int quantidadePrateleira,
             int minimoParaAtacado, 
             UnidadeMedida unidadeMedidaCusto, 
             UnidadeMedida unidadeMedidaVenda, 
@@ -104,7 +99,6 @@ public class Produto implements Serializable {
     ) {
         this.nome = nome;
         this.descricao = descricao;
-        this.quantidadePrateleira = quantidadePrateleira;
         this.minimoParaAtacado = minimoParaAtacado;
         this.unidadeMedidaCusto = unidadeMedidaCusto;
         this.unidadeMedidaVenda = unidadeMedidaVenda;
@@ -144,9 +138,6 @@ public class Produto implements Serializable {
 
     public Estoque getEstoque() { return estoque; }
     public void setEstoque(Estoque estoque) { this.estoque = estoque; }
-
-    public int getQuantidadePrateleira() { return quantidadePrateleira; }
-    public void setQuantidadePrateleira(int quantidadePrateleira) { this.quantidadePrateleira = quantidadePrateleira; }
 
     public List<ItemVenda> getItens() { return itens; }
     public void setItens(List<ItemVenda> itens) { this.itens = itens;}

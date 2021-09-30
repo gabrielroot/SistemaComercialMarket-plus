@@ -40,12 +40,6 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 parametros.put("min", obj.getMinimoParaAtacado());
             }
             
-            if(obj.getQuantidadePrateleira() >= 0){
-                if(filtros.length() > 0) filtros += " AND ";
-                filtros += "produto.quantidadePrateleira = :qtdePrat";
-                parametros.put("qtdePrat", obj.getQuantidadePrateleira());
-            }
-            
             if(obj.getNome() != null && obj.getNome().length() > 0){
                 if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.nome LIKE :nome";
@@ -108,10 +102,16 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                         parametros.put("code", obj.getEstoque().getLotes().get(0).getCodigo() + "%");
                     }
                     
-                    if(obj.getEstoque().getLotes().get(0).getQuantidade() > -1){
+                    if(obj.getEstoque().getLotes().get(0).getEmEstoque()> -1){
                         if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.quantidade = :qt";
-                        parametros.put("qt", obj.getEstoque().getLotes().get(0).getQuantidade());
+                        filtros += "produto.estoque.lote.quantidade = :emEstq";
+                        parametros.put("emEstq", obj.getEstoque().getLotes().get(0).getEmEstoque());
+                    }
+                    
+                    if(obj.getEstoque().getLotes().get(0).getNasPrateleiras()> -1){
+                        if(filtros.length() > 0) filtros += " AND ";
+                        filtros += "produto.estoque.lote.quantidade = :nasPrat";
+                        parametros.put("nasPrat", obj.getEstoque().getLotes().get(0).getNasPrateleiras());
                     }
 
                     if(obj.getEstoque().getLotes().get(0).getDataValidade() != null){
@@ -141,5 +141,4 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
         
         return consulta.getResultList();
     }
-
 }

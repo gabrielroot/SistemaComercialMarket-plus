@@ -47,7 +47,8 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
         modelo.addColumn("#");
         modelo.addColumn("ID");
         modelo.addColumn("Lote");
-        modelo.addColumn("Quantidade");
+        modelo.addColumn("Em Estoque");
+        modelo.addColumn("Nas Prateleiras");
         modelo.addColumn("Fabricação");
         modelo.addColumn("Vencimento");
         
@@ -57,7 +58,8 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
             linha.add((i+1));
             linha.add(estoque.getLotes().get(i).getId());
             linha.add(estoque.getLotes().get(i).getCodigo());
-            linha.add(estoque.getLotes().get(i).getQuantidade());
+            linha.add(estoque.getLotes().get(i).getEmEstoque());
+            linha.add(estoque.getLotes().get(i).getNasPrateleiras());
             linha.add(Util.getStringDateFromCalendar(lotes.get(i).getDataFabricacao()));
             linha.add(Util.getStringDateFromCalendar(lotes.get(i).getDataValidade()));
             modelo.addRow(linha);
@@ -176,7 +178,7 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 58, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(comboVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)

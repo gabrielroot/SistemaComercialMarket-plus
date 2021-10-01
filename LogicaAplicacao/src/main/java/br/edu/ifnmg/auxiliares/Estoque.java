@@ -19,8 +19,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -83,7 +81,15 @@ public class Estoque implements Serializable {
     public int getSomaLotes() { 
         int sum = 0;
         for(Lote lote: this.lotes){
-            sum += lote.getQuantidade();
+            sum += lote.getEmEstoque();
+        }
+        return sum; 
+    }
+    
+    public int getSomaPrateleiras() { 
+        int sum = 0;
+        for(Lote lote: this.lotes){
+            sum += lote.getNasPrateleiras();
         }
         return sum; 
     }

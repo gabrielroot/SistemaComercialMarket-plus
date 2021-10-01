@@ -5,11 +5,10 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
-import java.util.List;
-
 /**
  *
- * @author kesley
+ * @author gabriel
  */
-public interface ProdutoRepositorio extends Repositorio<Produto> {
+public interface TransacaoFinanceiraRepositorio extends Repositorio<TransacaoFinanceira> {
+    
 }

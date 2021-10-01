@@ -13,6 +13,8 @@ import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceiraRepositorio;
 import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,6 +39,7 @@ public class RepositorioFactory {
     private static ProdutoRepositorio produto;
     private static LoteRepositorio lote;
     private static EstoqueRepositorio estoque;
+    private static TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio;
 //    private static CargoFuncionario cargo;
     
     static {
@@ -136,6 +139,14 @@ public class RepositorioFactory {
             estoque = (EstoqueRepositorio) getInstancia(nomeclasse);
         }
         return estoque;
+    }
+    
+    public static TransacaoFinanceiraRepositorio getTransacaoFinanceiraRepositorio() {
+        if(transacaoFinanceiraRepositorio == null){
+            String nomeclasse = propriedades.getProperty("TransacaoFinanceiraRepositorio");
+            transacaoFinanceiraRepositorio = (TransacaoFinanceiraRepositorio) getInstancia(nomeclasse);
+        }
+        return transacaoFinanceiraRepositorio;
     }
     
     /*public static CargoFuncionario getCargoFuncionario() {

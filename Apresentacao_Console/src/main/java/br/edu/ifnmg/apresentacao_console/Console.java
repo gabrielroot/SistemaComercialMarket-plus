@@ -448,17 +448,12 @@ public class Console {
             System.out.println("PRODUTO "+(i+1)+": "+
                     transacaoFinanceira.getItens().get(i).getQuantidade()+"X"+
                     transacaoFinanceira.getItens().get(i).getProduto().getValorVarejo()+"="+
-                    transacaoFinanceira.getItens().get(i).getValorTotal()
+                    transacaoFinanceira.getItens().get(i).getSubTotal()
             );
             System.out.println("-------------");
         }
         
-        System.out.println("Valor da transação: R$"+
-            (transacaoFinanceira.getItens().get(0).getValorTotal().add(
-                    transacaoFinanceira.getItens().get(1).getValorTotal()
-                )
-            )
-        );
+        System.out.println("Valor da transação: R$"+ transacaoFinanceira.getValorTotal());
         
         System.out.println("Usuário: "+ transacaoFinanceira.getUsuario().getNome());
         System.out.println("--------------------------");

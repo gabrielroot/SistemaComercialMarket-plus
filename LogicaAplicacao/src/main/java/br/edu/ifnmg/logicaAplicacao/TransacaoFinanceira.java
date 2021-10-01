@@ -9,6 +9,7 @@ import br.edu.ifnmg.auxiliares.ItemVenda;
 import br.edu.ifnmg.enums.TransacaoStatus;
 import br.edu.ifnmg.enums.TransacaoTipo;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -104,7 +105,16 @@ public class TransacaoFinanceira implements Serializable {
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
     
-    
+    public BigDecimal getValorTotal(){
+        BigDecimal sum = null;
+        for(int i = 0; i < this.itens.size(); i++){
+            sum = sum == null ? 
+                    itens.get(i).getSubTotal() : 
+                    sum.add(itens.get(i).getSubTotal());
+        }
+        
+        return sum == null ? new BigDecimal("0.0") : sum;
+    }
     
     @Override
     public int hashCode() {

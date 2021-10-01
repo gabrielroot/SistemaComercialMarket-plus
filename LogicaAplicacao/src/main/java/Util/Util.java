@@ -21,11 +21,17 @@ import javax.swing.JOptionPane;
  */
 public class Util {
 
+    public static String formatStringToReal(String valor) {
+        return valor.contains(".")?
+                "R$ "+valor.replace(".", ","):
+                "R$ "+valor+",00";
+    }
+
     /**
      * 
      * @param date
      * @return Object Calendar
-     */
+     */    
     public static String getStringDateFromCalendar(Calendar date) {
         String dia = String.valueOf(date.get(Calendar.DAY_OF_MONTH)).length() == 1?
                 "0" + String.valueOf(date.get(Calendar.DAY_OF_MONTH)):

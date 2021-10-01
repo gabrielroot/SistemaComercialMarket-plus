@@ -6,28 +6,39 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
 import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
+import br.edu.ifnmg.auxiliares.ItemVenda;
+import br.edu.ifnmg.enums.TransacaoStatus;
+import br.edu.ifnmg.enums.TransacaoTipo;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author gabriel
  */
-public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener{
+public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener, InternalFrameListener{
+    TransacaoFinanceira transacaoFinanceira;
     ProdutoRepositorio produtoRepositorio;
     List<Produto> produtosAdicionados;
     /**
      * Creates new form CaixaTela
      */
     public CaixaTela() {
+        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance());
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.produtosAdicionados = new ArrayList<>();
         initComponents();
@@ -36,18 +47,25 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         this.body.addKeyListener(this);
     }
 
-    private void renderProdutos(List<Produto> produtos){
+    private void renderProdutos(List<ItemVenda> item){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
         modelo.addColumn("ID");
         modelo.addColumn("Nome");
+        modelo.addColumn("Quantidade");
+        //TODO: É UMA VENDA A VAREJO?ATACADO? (RENDERIZAÇÃO CONDICIONAL)        
+        modelo.addColumn("Valor Varejo");
+        modelo.addColumn("Subtotal");
         
-        for( int i=0; i < produtos.size(); i++ ){
+        for( int i=0; i < item.size(); i++ ){
             Vector linha = new Vector();
             
             linha.add((i+1));
-            linha.add(produtos.get(i));
-            linha.add(produtos.get(i).getNome());
+            linha.add(item.get(i).getProduto().getId());
+            linha.add(item.get(i).getProduto().getNome());
+            linha.add(item.get(i).getQuantidade());
+            linha.add(item.get(i).getProduto().getValorVarejo());
+            linha.add(item.get(i).getSubTotal());
             modelo.addRow(linha);
         }
         tableResultadoProdutos.setModel(modelo);
@@ -93,7 +111,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         txtCancelCompra = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
@@ -144,13 +162,10 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         tableResultadoProdutos.setForeground(new java.awt.Color(0, 0, 0));
         tableResultadoProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "#", "ID", "Nome", "Valor Varejo", "Quantidade"
             }
         ));
         jScrollPane1.setViewportView(tableResultadoProdutos);
@@ -203,7 +218,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
         txtCancelItem.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         txtCancelItem.setForeground(new java.awt.Color(8, 8, 8));
-        txtCancelItem.setText("- Cancelar Item");
+        txtCancelItem.setText("                  ");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrowDown.png"))); // NOI18N
 
@@ -295,9 +310,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
         jPanel8.setBackground(new java.awt.Color(167, 167, 167));
 
-        jLabel6.setFont(new java.awt.Font("sansserif", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(8, 8, 8));
-        jLabel6.setText("R$ 20,00");
+        txtTotal.setFont(new java.awt.Font("sansserif", 1, 24)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(8, 8, 8));
+        txtTotal.setText("R$ 0,00");
 
         jPanel9.setBackground(new java.awt.Color(107, 45, 45));
 
@@ -354,7 +369,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -364,7 +379,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(txtTotal)
                         .addGap(0, 3, Short.MAX_VALUE))
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -409,10 +424,10 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                     .addGroup(contentLayout.createSequentialGroup()
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addGap(18, 18, 18)
                         .addComponent(txtNotFound)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1142, Short.MAX_VALUE))
@@ -430,8 +445,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                         .addComponent(txtNotFound, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -482,25 +497,36 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     private void txtCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodeKeyPressed
         this.txtNotFound.setText("");
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
-            try{
-                Produto encontrado = this.produtoRepositorio.Abrir(Long.parseLong(this.txtCode.getText()));
-                if(encontrado != null){
-                    this.produtosAdicionados.add(encontrado);
-                    this.renderProdutos(produtosAdicionados);
-                    this.txtCode.setText("");
-                }else{
-                    this.txtCode.selectAll();
-                    txtNotFound.setText("Produto não encontrado!");
-                }
-            }catch(NumberFormatException ex){
-                this.txtCode.selectAll();
-                txtNotFound.setText("Apenas números, por favor!");
-            }
+            this.buscarProduto();
         }
     }//GEN-LAST:event_txtCodeKeyPressed
 
+    private void buscarProduto(){
+        try{
+            Produto produtoEncontrado = this.produtoRepositorio.Abrir(Long.parseLong(this.txtCode.getText()));
+            if(produtoEncontrado != null){
+                ItemVenda itemVenda = new ItemVenda(BigDecimal.valueOf(1),produtoEncontrado.getValorVarejo());
+                itemVenda.setProduto(produtoEncontrado);
+                itemVenda.setTransacaoFinanceira(transacaoFinanceira);
+                transacaoFinanceira.getItens().add(itemVenda);
+
+                this.renderProdutos(transacaoFinanceira.getItens());
+                this.txtCode.setText("");
+
+                this.txtTotal.setText(Util.formatStringToReal(this.transacaoFinanceira.getValorTotal().toString()));
+            }else{
+                this.txtCode.selectAll();
+                txtNotFound.setText("Produto não encontrado!");
+            }
+        }catch(NumberFormatException ex){
+            this.txtCode.selectAll();
+            txtNotFound.setText("Apenas números, por favor!");
+        }
+    }
+    
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
         ListarProdutos listarProdutos = new ListarProdutos();
+        listarProdutos.addInternalFrameListener(this);
         CaixaTela.jDesktopPane1.add(listarProdutos);
         Util.centralizaInternalFrame(listarProdutos, this.getSize());
         listarProdutos.setVisible(true);
@@ -519,7 +545,6 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -535,9 +560,10 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     private javax.swing.JTable tableResultadoProdutos;
     private javax.swing.JLabel txtCancelCompra;
     private javax.swing.JLabel txtCancelItem;
-    private javax.swing.JTextField txtCode;
+    protected static javax.swing.JTextField txtCode;
     private javax.swing.JLabel txtNotFound;
     private javax.swing.JLabel txtProdutos;
+    private javax.swing.JLabel txtTotal;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -550,6 +576,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         if(e.getKeyCode() == java.awt.event.KeyEvent.VK_UP){
             ListarProdutos listarProdutos = new ListarProdutos();
             CaixaTela.jDesktopPane1.add(listarProdutos);
+            listarProdutos.addInternalFrameListener(this);
             Util.centralizaInternalFrame(listarProdutos, this.getSize());
             listarProdutos.setVisible(true);
         }
@@ -557,6 +584,45 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
     @Override
     public void keyReleased(KeyEvent e) {
+        
+    }
+    
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+        
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {
+
+    }
+
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {
+        if(e.getInternalFrame().getClass() == ListarProdutos.class){
+            if(this.txtCode.getText().length() > 0){
+                this.buscarProduto();
+            }
+        }
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {
+        
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+        
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {
+        
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {
         
     }
 }

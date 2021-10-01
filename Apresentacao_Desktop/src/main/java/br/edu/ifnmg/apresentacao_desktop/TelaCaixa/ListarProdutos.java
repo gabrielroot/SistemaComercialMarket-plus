@@ -105,6 +105,16 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableViewProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableViewProdutosMouseClicked(evt);
+            }
+        });
+        tableViewProdutos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tableViewProdutosKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableViewProdutos);
 
         jPanel2.setBackground(new java.awt.Color(140, 71, 71));
@@ -169,6 +179,25 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tableViewProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableViewProdutosMouseClicked
+        int linha = tableViewProdutos.getSelectedRow();
+        String id = tableViewProdutos.getValueAt(linha, 1).toString();
+        
+        CaixaTela.txtCode.setText(id);
+        this.dispose();
+    }//GEN-LAST:event_tableViewProdutosMouseClicked
+
+    private void tableViewProdutosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableViewProdutosKeyPressed
+        System.out.println(tableViewProdutos.getSelectedRow());
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER && tableViewProdutos.getSelectedRow() >= 0){
+           int linha = tableViewProdutos.getSelectedRow();
+            String id = tableViewProdutos.getValueAt(linha, 1).toString();
+
+            CaixaTela.txtCode.setText(id);
+            this.dispose();
+       }
+    }//GEN-LAST:event_tableViewProdutosKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

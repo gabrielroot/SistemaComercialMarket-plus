@@ -37,7 +37,7 @@ public class ItemVenda implements Serializable {
     private BigDecimal quantidade;
     
     @Column(precision=8, scale=2)
-    private BigDecimal valorTotal;
+    private BigDecimal subTotal;
     
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "produto_id", nullable= false)
@@ -50,14 +50,14 @@ public class ItemVenda implements Serializable {
     public ItemVenda() {
         this.id = 0L;
         this.quantidade = null;
-        this.valorTotal = null;
+        this.subTotal = null;
         this.produto = new Produto();
         this.transacaoFinanceira = new TransacaoFinanceira();
     }
 
     public ItemVenda(BigDecimal quantidade, BigDecimal valorUnitario) {
         this.quantidade = quantidade;
-        this.valorTotal = quantidade.multiply(valorUnitario);
+        this.subTotal = quantidade.multiply(valorUnitario);
         this.produto = new Produto();
         this.transacaoFinanceira = new TransacaoFinanceira();
     }
@@ -68,8 +68,8 @@ public class ItemVenda implements Serializable {
     public BigDecimal getQuantidade() { return quantidade; }
     public void setQuantidade(BigDecimal quantidade) { this.quantidade = quantidade; }
 
-    public BigDecimal getValorTotal() { return valorTotal; }
-    public void setValorTotal(BigDecimal valorTotal) { this.valorTotal = valorTotal; }
+    public BigDecimal getSubTotal() { return subTotal; }
+    public void setSubTotal(BigDecimal subTotal) { this.subTotal = subTotal; }
 
     public Produto getProduto() { return produto; }
     public void setProduto(Produto produto) { this.produto = produto; }
@@ -100,7 +100,7 @@ public class ItemVenda implements Serializable {
 
     @Override
     public String toString() {
-        return this.valorTotal.toString();
+        return this.subTotal.toString();
     }
     
 }

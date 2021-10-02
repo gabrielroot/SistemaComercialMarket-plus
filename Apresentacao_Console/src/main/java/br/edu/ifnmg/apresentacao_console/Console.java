@@ -40,13 +40,15 @@ public class Console {
         }
         
         queryPessoa();
+        
+        
     }
     
     public static void queryPessoa(){
         PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
         UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
         FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
-        
+        FuncionarioRepositorio repositorioFuncionario= RepositorioFactory.getFuncionarioRepositorio();
         System.out.println("-- Buscar usuario com Filtros --");
         for(Usuario usuario : repositorioUsuario.Buscar(new Usuario(
                 null, 
@@ -79,7 +81,7 @@ public class Console {
         
         System.out.println("-- Buscar fornecedor com Filtros --");
         for(Fornecedor fornecedor : repositorioFornecedor.Buscar(new Fornecedor(
-                "Enrico Santos", 
+                "Enrico ", 
                 null, 
                 null, 
                 null, 
@@ -91,6 +93,15 @@ public class Console {
             System.out.println("    "+fornecedor.getNome());
         }
         
+        System.out.println("////////////////BUSCA FUNCIONARIO//////////////////");
+        Funcionario func = new Funcionario();
+        func.setNome("");
+        //func.setCargo("Faxineiro");
+        
+        for(Funcionario func1 : repositorioFuncionario.Buscar(func)){
+            System.out.println(func1.getNome()+func1.getCargo().getTitulo());
+        }
+                
     }
      
     public static boolean popularBD(){

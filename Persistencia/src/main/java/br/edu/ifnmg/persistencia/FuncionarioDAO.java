@@ -24,41 +24,68 @@ public class FuncionarioDAO extends DataAccessObject<Funcionario> implements Fun
     @Override
     public List<Funcionario> Buscar(Funcionario obj) {
         String jpql=("SELECT funcionario FROM Funcionario funcionario");
-        String filtros="";
+        String filtros =""; 
         Hashtable<String, Object> parametros = new Hashtable<>();
         
         if(obj!=null){
             
-            if(obj.getNome().length()>0){
-                filtros+= "funcionario.nome LIKE :nome";
+            if(obj.getNome() !=null & obj.getNome().length()>0){
+                if(filtros.length()>0)
+                    filtros += " and ";
+                filtros+="funcionario.nome LIKE :nome";
                 parametros.put("nome",obj.getNome()+ "%");
             }
-        
-            if(obj.getNumeroDocumento()!=null){
-                if(obj.getNumeroDocumento().length()>0){
-                    filtros += "and";
-                    filtros += "funcionario.numeroDocumento LIKE :numero";
-                    parametros.put("numero", obj.getNumeroDocumento()+ "%");
-                }
+            
+            if(obj.getCargo().getTitulo() != null & obj.getCargo().getTitulo().length()>0){
+                if(filtros.length()>0)
+                    filtros+=" and ";
+                filtros+="funcionario.cargo.titulo LIKE :titulo";
+                parametros.put("cargo", obj.getCargo().getTitulo()+"%");
             }
         }
-        if(filtros.length()>0)
-            jpql=jpql+ " WHERE "+ filtros;
-        
+        if(filtros.length()>0){
+            jpql=jpql + " where " + filtros;
+        }
+            
+        jpql += " ORDER BY funcionario.nome";  
+         
         Query consulta=this.manager.createQuery(jpql);
         
-        for(String chave: parametros.keySet())
-            consulta.setParameter(chave,parametros.get(chave));
+        for(String campo: parametros.keySet())
+            consulta.setParameter(campo,parametros.get(campo));
         
         return consulta.getResultList();
     }
-    
+    /*
     @Override
     public Funcionario BuscarPorNome(String nome){
         Query consulta = this.manager.createQuery("select funcionario from Funcionario funcionario where funcionario.nome =:parametro");
         consulta.setParameter("parametro", nome);
         return (Funcionario) consulta.getSingleResult();
     }
+
+    @Override
+    public List<Funcionario> Buscar() {
+        String jpql=("SELECT funcionario FROM Funcionario funcionario");
+        Query consulta=this.manager.createQuery(jpql);
+        return consulta.getResultList();
+    }
+
+    */
+
+
+    
+
+  
+    
+
+  
+
+    
+
+   
+
+    
 
     
     

@@ -101,7 +101,7 @@ public class Funcionario extends Pessoa implements Serializable  {
     public void setSituacao(FuncionarioSituacao fs) { this.situacao = fs; }
 
     public CargoFuncionario getCargo() { return cargo; }
-    public void setCargo(CargoFuncionario cargo) { this.cargo = cargo; }
+    public void setCargo(String cargo) { this.cargo.setTitulo(cargo); }
 
     public int getVersao() {  return versao;   }
 

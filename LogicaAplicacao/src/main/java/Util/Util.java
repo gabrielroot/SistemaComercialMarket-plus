@@ -1,12 +1,20 @@
 package Util;
 
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import static java.lang.Integer.parseInt;
 import java.util.Calendar;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 
 /*
@@ -135,12 +143,46 @@ public class Util {
         return result;
     }
     
-    public String abrirInputDialog(String valor, JInternalFrame frame){
-        return JOptionPane.showInputDialog(
-            frame, 
-            valor, 
-            "Solicitar permissão", 
-            JOptionPane.WARNING_MESSAGE
+    public String abrirInputPasswordDialog(String valor, boolean passwordInput, JInternalFrame frame){
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel(valor);
+        label.setFont(new java.awt.Font("sansserif", 0, 20));
+        JPasswordField pass = new JPasswordField(15);
+        JTextField txt = new JTextField();
+
+        panel.add(label);
+        panel.setLayout(new GridLayout(2,1));
+
+        pass.setFont(new java.awt.Font("sansserif", 0, 16));
+        pass.setPreferredSize(new java.awt.Dimension(250,40));
+        txt.setFont(new java.awt.Font("sansserif", 0, 16));
+        txt.setPreferredSize(new java.awt.Dimension(250,40));
+
+        if(passwordInput){
+            panel.add(pass);
+            pass.requestFocus();
+        }else{
+            panel.add(txt);
+            txt.requestFocus();
+        }
+        String[] options = new String[]{"Cancel", "OK"};
+        int option = JOptionPane.showOptionDialog(frame, panel, "Cancelar Compra - Solicitar Permissão",
+                                 JOptionPane.NO_OPTION, 
+                                 JOptionPane.PLAIN_MESSAGE,
+                                 icone("/key.png"), 
+                                 options, 
+                                 options[1]
         );
+        if(option == 1){
+            if(passwordInput){
+                char[] password = pass.getPassword();
+                return new String(password);
+            }else{
+                return txt.getText();
+            }
+        }
+        
+        return "";
     }
+
 }

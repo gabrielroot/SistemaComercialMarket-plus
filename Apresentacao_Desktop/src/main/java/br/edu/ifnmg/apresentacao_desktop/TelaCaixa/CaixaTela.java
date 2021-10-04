@@ -7,6 +7,8 @@ package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
 import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
+import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.ItemVenda;
 import br.edu.ifnmg.auxiliares.ItemVendaRepositorio;
 import br.edu.ifnmg.enums.TransacaoStatus;
@@ -14,15 +16,18 @@ import br.edu.ifnmg.enums.TransacaoTipo;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
+import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +39,9 @@ import javax.swing.table.DefaultTableModel;
 public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener, InternalFrameListener{
     static TransacaoFinanceira transacaoFinanceira;
     ProdutoRepositorio produtoRepositorio;
+    EstoqueRepositorio estoqueRepositorio;
     ItemVendaRepositorio itemVendaRepositorio;
+    Util util;
     /**
      * Creates new form CaixaTela
      */
@@ -42,10 +49,17 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance());
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
+        this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
+        this.util = new Util();
         initComponents();
-        this.txtCode.requestFocusInWindow();
         this.txtCode.addKeyListener(this);
-        this.body.addKeyListener(this);
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+              txtCode.requestFocusInWindow();
+            }
+        });
+        listagemRapidaProdutos();
     }
 
     public static boolean isVarejo(ItemVenda itemVenda){
@@ -113,13 +127,13 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         bottom = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         txtCancelItem = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         txtProdutos = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         txtCancelCompra = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         txtTotal = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
@@ -127,10 +141,14 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         jPanel11 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableAllProducts = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(208, 208, 208));
 
         jDesktopPane1.setBackground(new java.awt.Color(208, 208, 208));
+        jDesktopPane1.setFocusable(false);
 
         body.setBackground(new java.awt.Color(208, 208, 208));
 
@@ -145,9 +163,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         headLayout.setHorizontalGroup(
             headLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(576, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(576, Short.MAX_VALUE))
         );
         headLayout.setVerticalGroup(
             headLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,11 +180,16 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         txtCode.setBackground(new java.awt.Color(255, 255, 255));
         txtCode.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         txtCode.setForeground(new java.awt.Color(0, 0, 0));
+        txtCode.setFocusCycleRoot(true);
+        txtCode.setFocusTraversalPolicyProvider(true);
+        txtCode.requestFocusInWindow();
         txtCode.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCodeKeyPressed(evt);
             }
         });
+
+        jScrollPane1.setFocusable(false);
 
         tableResultadoProdutos.setBackground(new java.awt.Color(255, 255, 255));
         tableResultadoProdutos.setForeground(new java.awt.Color(0, 0, 0));
@@ -178,6 +201,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 "#", "ID", "Nome", "Valor Varejo", "Quantidade"
             }
         ));
+        tableResultadoProdutos.setFocusable(false);
         tableResultadoProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableResultadoProdutosMouseClicked(evt);
@@ -235,7 +259,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         txtCancelItem.setForeground(new java.awt.Color(8, 8, 8));
         txtCancelItem.setText("                  ");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrowDown.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrowLeft.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -243,7 +267,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCancelItem)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -252,9 +276,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCancelItem)
-                    .addComponent(jLabel4))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(txtCancelItem))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -295,12 +319,17 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
         jPanel7.setBackground(new java.awt.Color(240, 240, 240));
         jPanel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel7MouseClicked(evt);
+            }
+        });
 
         txtCancelCompra.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         txtCancelCompra.setForeground(new java.awt.Color(8, 8, 8));
         txtCancelCompra.setText("- Cancelar Compra");
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrowLeft.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrowDown.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -308,7 +337,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCancelCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -317,9 +346,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCancelCompra)
-                    .addComponent(jLabel5))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtCancelCompra))
                 .addContainerGap())
         );
 
@@ -348,7 +377,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         );
 
         jPanel11.setBackground(new java.awt.Color(107, 45, 45));
-        jPanel11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel9.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -413,7 +442,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90))
+                .addGap(52, 52, 52))
         );
         bottomLayout.setVerticalGroup(
             bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,9 +462,11 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         content.setLayout(contentLayout);
         contentLayout.setHorizontalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(bottom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(contentLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(contentLayout.createSequentialGroup()
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -444,10 +475,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txtNotFound)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1142, Short.MAX_VALUE))
-                .addContainerGap())
-            .addComponent(bottom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         contentLayout.setVerticalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -459,27 +487,65 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                         .addComponent(txtCode, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtNotFound, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        tableAllProducts.setBackground(new java.awt.Color(255, 255, 255));
+        tableAllProducts.setForeground(new java.awt.Color(8, 8, 8));
+        tableAllProducts.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome"
+            }
+        ));
+        tableAllProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tableAllProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableAllProductsMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tableAllProducts);
+
+        jLabel11.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("Todos os Produtos:");
 
         javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);
         body.setLayout(bodyLayout);
         bodyLayout.setHorizontalGroup(
             bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(bodyLayout.createSequentialGroup()
+                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bodyLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(92, 92, 92))))
         );
         bodyLayout.setVerticalGroup(
             bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bodyLayout.createSequentialGroup()
                 .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bodyLayout.createSequentialGroup()
+                        .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(bodyLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))))
         );
 
         jDesktopPane1.setLayer(body, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -509,12 +575,43 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        cancelarCompra();
+    }//GEN-LAST:event_jPanel7MouseClicked
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        ListarProdutos listarProdutos = new ListarProdutos();
+        listarProdutos.addInternalFrameListener(this);
+        CaixaTela.jDesktopPane1.add(listarProdutos);
+        Util.centralizaInternalFrame(listarProdutos, this.getSize());
+        listarProdutos.setVisible(true);
+    }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void tableResultadoProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoProdutosMouseClicked
+        int linha = tableResultadoProdutos.getSelectedRow();
+        int idx = (int) tableResultadoProdutos.getValueAt(linha, 0);
+
+        EditarListaPedido editarListaPedido = new EditarListaPedido(transacaoFinanceira.getItens().get(idx-1));
+        editarListaPedido.addInternalFrameListener(this);
+        CaixaTela.jDesktopPane1.add(editarListaPedido);
+        Util.centralizaInternalFrame(editarListaPedido, this.getSize());
+        editarListaPedido.setVisible(true);
+    }//GEN-LAST:event_tableResultadoProdutosMouseClicked
+
     private void txtCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodeKeyPressed
         this.txtNotFound.setText("");
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
             this.buscarProduto();
         }
     }//GEN-LAST:event_txtCodeKeyPressed
+
+    private void tableAllProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAllProductsMouseClicked
+        int linha = tableAllProducts.getSelectedRow();
+        String id = tableAllProducts.getValueAt(linha, 0).toString();
+        
+        CaixaTela.txtCode.setText(id);
+        this.buscarProduto();
+    }//GEN-LAST:event_tableAllProductsMouseClicked
 
     private void buscarProduto(){
         try{
@@ -543,26 +640,42 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         this.txtTotal.setText(Util.formatStringToReal(this.transacaoFinanceira.getValorTotal().toString()));
     }
     
-    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-        ListarProdutos listarProdutos = new ListarProdutos();
-        listarProdutos.addInternalFrameListener(this);
-        CaixaTela.jDesktopPane1.add(listarProdutos);
-        Util.centralizaInternalFrame(listarProdutos, this.getSize());
-        listarProdutos.setVisible(true);
-    }//GEN-LAST:event_jPanel6MouseClicked
-
-    private void tableResultadoProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoProdutosMouseClicked
-        int linha = tableResultadoProdutos.getSelectedRow();
-        int idx = (int) tableResultadoProdutos.getValueAt(linha, 0);
+    private void cancelarCompra(){
+        UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         
-        EditarListaPedido editarListaPedido = new EditarListaPedido(transacaoFinanceira.getItens().get(idx-1));
-        editarListaPedido.addInternalFrameListener(this);
-        CaixaTela.jDesktopPane1.add(editarListaPedido);
-        Util.centralizaInternalFrame(editarListaPedido, this.getSize());
-        editarListaPedido.setVisible(true);
-    }//GEN-LAST:event_tableResultadoProdutosMouseClicked
+        String email = util.abrirInputPasswordDialog("Informe o EMAIL do administrador", false, this);
+        if(email != null){
+            String senha = util.abrirInputPasswordDialog("Informe a SENHA do administrador", true, this);
+            if(usuarioRepositorio.Autenticar(email, senha) != null){
+                CaixaTela.transacaoFinanceira.getItens().clear();
+                this.renderProdutos(transacaoFinanceira.getItens());
+                this.atualizarTotal();
+                util.abrirJOptionPane("sucesso","",this);
+            }else if(!senha.isEmpty()){
+                util.abrirJOptionPane("erro", "Email ou senha incorretos", this);
+            }
+        }
+    }
 
-
+    public void listagemRapidaProdutos(){
+        List<Produto> resultado = this.produtoRepositorio.Buscar(new Produto());
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Código");
+        modelo.addColumn("Nome");
+        
+        for(int i=0;i<resultado.size(); i++){
+            Estoque estoqueResultado = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());
+            if(estoqueResultado.getSomaPrateleiras() > 0){
+                Vector linha = new Vector();
+            
+                linha.add(resultado.get(i).getId());
+                linha.add(resultado.get(i).getNome());
+                modelo.addRow(linha);
+            }
+        }
+        tableAllProducts.setModel(modelo);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel body;
     private javax.swing.JPanel bottom;
@@ -571,10 +684,11 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     public static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -587,10 +701,12 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable tableAllProducts;
     private javax.swing.JTable tableResultadoProdutos;
     private javax.swing.JLabel txtCancelCompra;
     private javax.swing.JLabel txtCancelItem;
-    protected static javax.swing.JTextField txtCode;
+    public static javax.swing.JTextField txtCode;
     private javax.swing.JLabel txtNotFound;
     private javax.swing.JLabel txtProdutos;
     private javax.swing.JLabel txtTotal;
@@ -609,6 +725,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             listarProdutos.addInternalFrameListener(this);
             Util.centralizaInternalFrame(listarProdutos, this.getSize());
             listarProdutos.setVisible(true);
+        }else if(e.getKeyCode() == java.awt.event.KeyEvent.VK_DOWN){
+            cancelarCompra();
         }
     }
 
@@ -629,6 +747,12 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+              txtCode.requestFocusInWindow();
+            }
+        });
+        
         if(e.getInternalFrame().getClass() == ListarProdutos.class){
             if(this.txtCode.getText().length() > 0){
                 this.buscarProduto();

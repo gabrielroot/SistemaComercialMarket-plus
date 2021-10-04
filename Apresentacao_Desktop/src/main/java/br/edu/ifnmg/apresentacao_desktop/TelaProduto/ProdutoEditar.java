@@ -11,6 +11,7 @@ import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.TelaCaixa.ListarProdutos;
 import br.edu.ifnmg.auxiliares.Lote;
 import java.math.BigDecimal;
 
@@ -577,6 +578,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.getComponentes(false);
         ProdutoTela.setProduto(ProdutoEditar.produto);
+        ListarProdutos.produto = ProdutoEditar.produto;
         this.dispose();
     }//GEN-LAST:event_btnBuscarActionPerformed
 

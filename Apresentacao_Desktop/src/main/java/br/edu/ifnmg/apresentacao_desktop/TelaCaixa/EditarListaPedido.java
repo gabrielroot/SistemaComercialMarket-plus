@@ -83,13 +83,13 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         jLabel2 = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtQuantidade = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtSubTotal = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        txtQuantidade = new javax.swing.JFormattedTextField();
 
         setClosable(true);
 
@@ -136,15 +136,6 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         jLabel3.setForeground(new java.awt.Color(134, 134, 134));
         jLabel3.setText("Valor");
 
-        txtQuantidade.setBackground(new java.awt.Color(255, 255, 255));
-        txtQuantidade.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        txtQuantidade.setForeground(new java.awt.Color(8, 8, 8));
-        txtQuantidade.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtQuantidadeMouseClicked(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(8, 8, 8));
         jLabel4.setText("Quantidade");
@@ -187,6 +178,11 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
             }
         });
 
+        txtQuantidade.setBackground(new java.awt.Color(255, 255, 255));
+        txtQuantidade.setForeground(new java.awt.Color(8, 8, 8));
+        txtQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtQuantidade.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -196,15 +192,15 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(137, 137, 137)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
-                            .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtValor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                             .addComponent(jLabel2)
-                            .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCode, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                             .addComponent(jLabel5)
-                            .addComponent(txtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSubTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                             .addComponent(jLabel4)
-                            .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtQuantidade, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(102, 102, 102)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -264,19 +260,15 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         salvarOperacao();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void txtQuantidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtQuantidadeMouseClicked
-       salvarOperacao();
-    }//GEN-LAST:event_txtQuantidadeMouseClicked
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         
-        String email = util.abrirInputDialog("Informe o email do administrador", this);
-        if(email != null){
-            String senha = util.abrirInputDialog("Informe a senha do administrador", this);
+        String email = util.abrirInputPasswordDialog("Informe o EMAIL do administrador", false, this);
+        if(!email.isEmpty()){
+            String senha = util.abrirInputPasswordDialog("Informe a SENHA do administrador", true, this);
             if(usuarioRepositorio.Autenticar(email, senha) != null){
                 CaixaTela.transacaoFinanceira.getItens().remove(itemVenda);
-            }else{
+            }else if(!senha.isEmpty()){
                 util.abrirJOptionPane("erro", "Email ou senha incorretos", this);
             }
         }
@@ -296,7 +288,7 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtCode;
     private javax.swing.JLabel txtProductName;
-    private javax.swing.JTextField txtQuantidade;
+    private javax.swing.JFormattedTextField txtQuantidade;
     private javax.swing.JTextField txtSubTotal;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables

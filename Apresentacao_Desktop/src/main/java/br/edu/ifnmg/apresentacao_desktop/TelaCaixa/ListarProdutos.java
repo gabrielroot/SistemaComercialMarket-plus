@@ -4,6 +4,8 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
+import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
@@ -11,30 +13,42 @@ import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author gabriel
  */
-public class ListarProdutos extends javax.swing.JInternalFrame implements KeyListener{
-    ProdutoRepositorio produtoRepositorio;
-    EstoqueRepositorio estoqueRepositorio;
+public class ListarProdutos extends javax.swing.JInternalFrame implements KeyListener, InternalFrameListener{
+    private ProdutoRepositorio produtoRepositorio;
+    private EstoqueRepositorio estoqueRepositorio;
+    public static Produto produto;
     /**
      * Creates new form ListarProdutos
      */
     public ListarProdutos() {
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
+        this.produto = new Produto();
         initComponents();
         initTable();
-        this.tableViewProdutos.addKeyListener(this);
+        this.btnBuscaAvancada.addKeyListener(this);
+        try {
+            this.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(ListarProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void initTable(){
-        List<Produto> resultado = this.produtoRepositorio.Buscar(new Produto());
+        List<Produto> resultado = this.produtoRepositorio.Buscar(this.produto);
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
         modelo.addColumn("Código");
@@ -81,6 +95,7 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
         tableViewProdutos = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btnBuscaAvancada = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -123,7 +138,7 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("LISTAGEM DE PRODUTOS");
+        jLabel1.setText("LISTAGEM AVANÇADA DE PRODUTOS");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -142,6 +157,14 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
                 .addGap(21, 21, 21))
         );
 
+        btnBuscaAvancada.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        btnBuscaAvancada.setText("Busca Avançada");
+        btnBuscaAvancada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscaAvancadaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -150,16 +173,22 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1177, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1230, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBuscaAvancada, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnBuscaAvancada, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -200,8 +229,16 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
        }
     }//GEN-LAST:event_tableViewProdutosKeyPressed
 
+    private void btnBuscaAvancadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaAvancadaActionPerformed
+        ProdutoEditar produtoEditar = new ProdutoEditar(produto, "Buscar Produto");
+        CaixaTela.jDesktopPane1.add(produtoEditar);
+        produtoEditar.addInternalFrameListener(this);
+        produtoEditar.setVisible(true);
+    }//GEN-LAST:event_btnBuscaAvancadaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscaAvancada;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -224,6 +261,41 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
 
     @Override
     public void keyReleased(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+       
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {
+       
+    }
+
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {
+        this.initTable();
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {
+        
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+      
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {
+       
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {
         
     }
 }

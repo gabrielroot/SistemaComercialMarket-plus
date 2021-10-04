@@ -42,10 +42,10 @@ public class Estoque implements Serializable {
     @Column()
     private int quantidadeMinimaDesejada;
 
-    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.EAGER ,mappedBy = "estoque")
     private List<Produto> produtos;
     
-    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "estoque")
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.EAGER ,mappedBy = "estoque")
     private List<Lote> lotes;
 
     public Estoque() {

@@ -76,7 +76,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     public boolean renderJInternalFrame(JInternalFrame frame){
         if(TelaPrincipal.getCurrentFrame().getClass() != frame.getClass()){
-            TelaPrincipal.getCurrentFrame().setVisible(false);
+            TelaPrincipal.getCurrentFrame().dispose();
             TelaPrincipal.setCurrentFrame(frame);
             this.add(frame);
             frame.setVisible(true);

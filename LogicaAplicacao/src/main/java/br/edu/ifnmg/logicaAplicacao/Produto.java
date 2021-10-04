@@ -69,7 +69,7 @@ public class Produto implements Serializable {
     @JoinColumn(name = "estoque_id", nullable= false)
     private Estoque estoque;
 
-    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "produto")
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.EAGER ,mappedBy = "produto")
     private List<ItemVenda> itens;
     
     public Produto() {

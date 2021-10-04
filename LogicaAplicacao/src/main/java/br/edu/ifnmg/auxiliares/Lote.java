@@ -6,9 +6,7 @@
 package br.edu.ifnmg.auxiliares;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -51,7 +48,7 @@ public class Lote implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar dataValidade;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "estoque_id", nullable= false)
     private Estoque estoque;
 

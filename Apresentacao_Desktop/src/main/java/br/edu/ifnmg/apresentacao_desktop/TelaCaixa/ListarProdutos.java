@@ -4,6 +4,8 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
+import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
@@ -19,11 +21,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ListarProdutos extends javax.swing.JInternalFrame implements KeyListener{
     ProdutoRepositorio produtoRepositorio;
+    EstoqueRepositorio estoqueRepositorio;
     /**
      * Creates new form ListarProdutos
      */
     public ListarProdutos() {
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
+        this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         initComponents();
         initTable();
         this.tableViewProdutos.addKeyListener(this);
@@ -44,14 +48,15 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
         modelo.addColumn("VAL. Compra");
         
         for(int i=0;i<resultado.size(); i++){
-            if(resultado.get(i).getEstoque().getSomaPrateleiras() > 0){
+            Estoque estoqueResultado = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());
+            if(estoqueResultado.getSomaPrateleiras() > 0){
                 Vector linha = new Vector();
             
                 linha.add((i+1));
                 linha.add(resultado.get(i).getId());
                 linha.add(resultado.get(i).getNome());
                 linha.add(resultado.get(i).getDescricao());
-                linha.add(resultado.get(i).getEstoque().getSomaPrateleiras());
+                linha.add(estoqueResultado.getSomaPrateleiras());
                 linha.add(resultado.get(i).getMinimoParaAtacado());
                 linha.add(resultado.get(i).getUnidadeMedidaCusto());
                 linha.add(resultado.get(i).getUnidadeMedidaVenda());
@@ -189,7 +194,6 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
     }//GEN-LAST:event_tableViewProdutosMouseClicked
 
     private void tableViewProdutosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableViewProdutosKeyPressed
-        System.out.println(tableViewProdutos.getSelectedRow());
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER && tableViewProdutos.getSelectedRow() >= 0){
            int linha = tableViewProdutos.getSelectedRow();
             String id = tableViewProdutos.getValueAt(linha, 1).toString();

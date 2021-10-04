@@ -56,22 +56,7 @@ public class FuncionarioDAO extends DataAccessObject<Funcionario> implements Fun
         
         return consulta.getResultList();
     }
-    /*
-    @Override
-    public Funcionario BuscarPorNome(String nome){
-        Query consulta = this.manager.createQuery("select funcionario from Funcionario funcionario where funcionario.nome =:parametro");
-        consulta.setParameter("parametro", nome);
-        return (Funcionario) consulta.getSingleResult();
-    }
-
-    @Override
-    public List<Funcionario> Buscar() {
-        String jpql=("SELECT funcionario FROM Funcionario funcionario");
-        Query consulta=this.manager.createQuery(jpql);
-        return consulta.getResultList();
-    }
-
-    */
+    
 
 
     

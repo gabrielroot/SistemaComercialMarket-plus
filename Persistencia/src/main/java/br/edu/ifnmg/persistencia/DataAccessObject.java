@@ -59,6 +59,7 @@ public abstract class DataAccessObject<T> implements Repositorio<T>{
             return true;
             
         } catch(Exception ex){
+            System.out.println(ex);
             transacao.rollback();
             
             return false;

@@ -78,20 +78,22 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         modelo.addColumn("Nome");
         modelo.addColumn("Local");
         modelo.addColumn("Num. Lotes");
-        modelo.addColumn("QTDE. em Estoque");
+        modelo.addColumn("Em Estoque");
+        modelo.addColumn("Nas Prateleiras");
         modelo.addColumn("QTDE. Min Desejada");
         
         for( int i=0; i < resultado.size(); i++ ){
+            Estoque resultEstoque = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());
             Vector linha = new Vector();
             
             linha.add((i+1));
             linha.add(resultado.get(i).getEstoque().getId());
             linha.add(resultado.get(i).getNome());
-            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
-            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
-            linha.add(resultado.get(i).getEstoque().getLotes().size());
-            linha.add(resultado.get(i).getEstoque().getSomaLotes());
-            linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
+            linha.add(resultEstoque.getLocalizacaoProduto());
+            linha.add(resultEstoque.getLotes().size());
+            linha.add(resultEstoque.getSomaLotes());
+            linha.add(resultEstoque.getSomaPrateleiras());
+            linha.add(resultEstoque.getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
         }
         tableResultadoEstoque.setModel(modelo);
@@ -116,6 +118,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         modelo.addColumn("QTDE. MÍN. em Estoque");
         
         for(int i=0;i<resultado.size(); i++){
+            Estoque resultadoEstoque = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());
             Vector linha = new Vector();
             
             linha.add((i+1));
@@ -124,7 +127,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
                 linha.add(resultado.get(i).getNome());
             if(checkDescricao.isSelected())
                 linha.add(resultado.get(i).getDescricao());
-            linha.add(resultado.get(i).getQuantidadePrateleira());
+            linha.add(resultadoEstoque.getSomaPrateleiras());
             linha.add(resultado.get(i).getMinimoParaAtacado());
             if(checkUNDCompra.isSelected())
                 linha.add(resultado.get(i).getUnidadeMedidaCusto());
@@ -133,10 +136,10 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
             linha.add(resultado.get(i).getValorVarejo().toString().replace(".", ","));
             linha.add(resultado.get(i).getValorAtacado().toString().replace(".", ","));
             linha.add(resultado.get(i).getValorCusto().toString().replace(".", ","));
-            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
+            linha.add(resultadoEstoque.getLocalizacaoProduto());
             if(checkQTDEstoque.isSelected())
-                linha.add(resultado.get(i).getEstoque().getSomaLotes());
-            linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
+                linha.add(resultadoEstoque.getSomaLotes());
+            linha.add(resultadoEstoque.getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
         }
         tblResultadoProdutos.setModel(modelo);

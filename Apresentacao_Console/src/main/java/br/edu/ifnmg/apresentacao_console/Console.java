@@ -21,6 +21,19 @@ import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import Util.Util;
+import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.ItemVenda;
+import br.edu.ifnmg.auxiliares.Lote;
+import br.edu.ifnmg.enums.LocalizacaoProduto;
+import br.edu.ifnmg.enums.TransacaoStatus;
+import br.edu.ifnmg.enums.TransacaoTipo;
+import br.edu.ifnmg.enums.UnidadeMedida;
+import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
+import br.edu.ifnmg.logicaAplicacao.Produto;
+import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceiraRepositorio;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,23 +45,47 @@ import java.util.List;
  * @author gabriel
  */
 public class Console {
+
+    static PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
+    static UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
+    static FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
+    static ClienteRepositorio repositorioCliente = RepositorioFactory.getClienteRepositorio();
+    static ProdutoRepositorio repositorioProduto = RepositorioFactory.getProdutoRepositorio();
+    static FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
+    static TransacaoFinanceiraRepositorio repositorioTransacaoFinanceira = RepositorioFactory.getTransacaoFinanceiraRepositorio();
+    
     public static void main(String[] args){
-        if(popularBD()){
+        try{
+            popularBD();
+            usuariosAleatorios();
+            fornecedoresAleatorios();
+            produtosFixos();
+            transacaoFinanceira();
             System.out.println("Banco de dados populado com SUCESSO!!");
-        }else{
+        }catch(Exception ex){
             System.out.println("FALHA ao popular o banco de dados!!");
+            System.out.println(ex);
+        }
+        queries();
+      
+    }   
+    public static void queries(){
+        System.out.println("-- Buscar produtos em que a quantidade mínima para atacado == 5 --");
+        for(Produto produto : repositorioProduto.Buscar(new Produto(
+                null, 
+                null, 
+                5, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null, 
+                null
+        )
+        )){
+            System.out.println("    "+produto.getNome());
         }
         
-        queryPessoa();
-        
-        
-    }
-    
-    public static void queryPessoa(){
-        PessoaRepositorio repositorioPessoa = RepositorioFactory.getPessoaRepositorio();
-        UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
-        FornecedorRepositorio repositorioFornecedor = RepositorioFactory.getFornecedorRepositorio();
-        FuncionarioRepositorio repositorioFuncionario= RepositorioFactory.getFuncionarioRepositorio();
         System.out.println("-- Buscar usuario com Filtros --");
         for(Usuario usuario : repositorioUsuario.Buscar(new Usuario(
                 null, 
@@ -166,26 +203,8 @@ public class Console {
             "123",
             UsuarioTipo.Administrador
         );
-        
-//        CargoFuncionario cargo22 = new CargoFuncionario(cargo1.getTitulo(), cargo1.getFuncao(), cargo1.getComissao(), cargo1.getSalario());
-//        repositorioFuncionario.Apagar(funcionario);
-//        Usuario novoUsuario = new Usuario(
-//                funcionario.getId(),
-//                funcionario.getNome(), 
-//                funcionario.getEndereco(), 
-//                funcionario.getTelefones(), 
-//                funcionario.getDataNascimento(), 
-//                funcionario.getTipoPessoa(), 
-//                funcionario.getTipoDocumento(), 
-//                funcionario.getNumeroDocumento(), 
-//                funcionario.getSituacao(),
-//                cargo22,
-//                "emailFunc",
-//                "123",
-//                UsuarioTipo.Administrador
-//        ); 
-        
- 
+         
+         
         Usuario usuarioCaixa = new Usuario(
             "CaixaUser",
             "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
@@ -231,8 +250,8 @@ public class Console {
             UsuarioTipo.Balconista
         );
         
-        usuariosAleatorios(repositorioUsuario);
-        fornecedoresAleatorios(repositorioFornecedor);
+        usuariosAleatorios();
+        fornecedoresAleatorios();
         
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario)&&
@@ -242,7 +261,7 @@ public class Console {
                repositorioUsuario.Salvar(usuarioBalconista);
      }
     
-    public static void fornecedoresAleatorios(FornecedorRepositorio repositorioFornecedor){
+    public static void fornecedoresAleatorios(){
         CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
         CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
@@ -274,7 +293,7 @@ public class Console {
             repositorioFornecedor.Salvar(fornecedor);
         }
     }
-    public static void usuariosAleatorios(UsuarioRepositorio repositorioUsuario){
+    public static void usuariosAleatorios(){
         CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
         CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
@@ -326,4 +345,109 @@ public class Console {
             repositorioUsuario.Salvar(usuario);
         }
     }
+    
+    public static void produtosFixos(){
+            Estoque estoque = new Estoque(
+                    LocalizacaoProduto.SETOR01, 
+                    50
+            );
+            
+            List lotes = new ArrayList();
+            Lote lote = new Lote("BR110", 5, 2, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoque);
+            Lote lote1 = new Lote("BR140", 3, 1, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoque);
+            Lote lote11 = new Lote("BR14012", 31, 0, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoque);
+            lotes.add(lote);
+            lotes.add(lote1);
+            lotes.add(lote11);
+            
+            estoque.setLotes(lotes);
+
+            Produto produto = new Produto("Sandália Havaianas 44 Polegadas", 
+                "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
+                10, 
+                UnidadeMedida.Fardo, 
+                UnidadeMedida.Unidade, 
+                new BigDecimal("32.00"), 
+                new BigDecimal("30.00"), 
+                new BigDecimal("25.00"), 
+                estoque
+            );
+            
+            repositorioProduto.Salvar(produto);
+            
+            Estoque estoque2 = new Estoque(
+                    LocalizacaoProduto.SETOR02, 
+                    25
+            );
+            
+            List lotes2 = new ArrayList();
+            Lote lote2 = new Lote("BR130", 15, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoque2);
+            Lote lote22 = new Lote("BR1330", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoque2);
+            lotes2.add(lote2);
+            lotes2.add(lote22);
+            
+            estoque2.setLotes(lotes2);
+
+            Produto produto2 = new Produto("Tigela azul marinho 700ml", 
+                "Ideal para saladas ou uso como prato de pedreiro", 
+                5, 
+                UnidadeMedida.Fardo, 
+                UnidadeMedida.Unidade, 
+                new BigDecimal("22.00"), 
+                new BigDecimal("20.00"), 
+                new BigDecimal("15.00"), 
+                estoque2
+            );
+            
+            repositorioProduto.Salvar(produto2);
+    }
+
+    public static void transacaoFinanceira(){
+        Produto p1 = new Produto("Produto 1", "@#4343", 2, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 0));
+        
+        Usuario user = new Usuario(
+            "TransacaoCaixa",
+            "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            null,
+            Calendar.getInstance(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CNH,
+            "5646112173",
+            FuncionarioSituacao.Ativo,
+            new CargoFuncionario(),    
+            "transacaoCaixa",
+            "123",
+            UsuarioTipo.Caixa
+        );
+        
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance());
+        ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
+        itemVenda.setProduto(p1);
+        itemVenda.setTransacaoFinanceira(transacaoFinanceira);
+        
+        Produto p2 = new Produto("Produto 2", "@#4343", 2, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 0));
+        ItemVenda itemVenda2 = new ItemVenda(BigDecimal.valueOf(15),p2.getValorVarejo());
+        itemVenda2.setProduto(p2);
+        itemVenda2.setTransacaoFinanceira(transacaoFinanceira);
+        
+        transacaoFinanceira.getItens().add(itemVenda);
+        transacaoFinanceira.getItens().add(itemVenda2);
+        
+        System.out.println("------TRANSAÇÃO FINANCEIRA-------");
+        for(int i=0; i<transacaoFinanceira.getItens().size(); i++){
+            System.out.println("PRODUTO "+(i+1)+": "+
+                    transacaoFinanceira.getItens().get(i).getQuantidade()+"X"+
+                    transacaoFinanceira.getItens().get(i).getProduto().getValorVarejo()+"="+
+                    transacaoFinanceira.getItens().get(i).getSubTotal()
+            );
+            System.out.println("-------------");
+        }
+        
+        System.out.println("Valor da transação: R$"+ transacaoFinanceira.getValorTotal());
+        
+        System.out.println("Usuário: "+ transacaoFinanceira.getUsuario().getNome());
+        System.out.println("--------------------------");
+        repositorioTransacaoFinanceira.Salvar(transacaoFinanceira);
+    }
+
 }

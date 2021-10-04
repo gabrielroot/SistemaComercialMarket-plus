@@ -45,7 +45,6 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
         modelo.addColumn("UND. Venda");
         modelo.addColumn("VAL. Varejo");
         modelo.addColumn("VAL. Atacado");
-        modelo.addColumn("VAL. Compra");
         
         for(int i=0;i<resultado.size(); i++){
             Estoque estoqueResultado = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());
@@ -58,11 +57,9 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
                 linha.add(resultado.get(i).getDescricao());
                 linha.add(estoqueResultado.getSomaPrateleiras());
                 linha.add(resultado.get(i).getMinimoParaAtacado());
-                linha.add(resultado.get(i).getUnidadeMedidaCusto());
                 linha.add(resultado.get(i).getUnidadeMedidaVenda());
                 linha.add(resultado.get(i).getValorVarejo().toString().replace(".", ","));
                 linha.add(resultado.get(i).getValorAtacado().toString().replace(".", ","));
-                linha.add(resultado.get(i).getValorCusto().toString().replace(".", ","));
                 modelo.addRow(linha);
             }
         }

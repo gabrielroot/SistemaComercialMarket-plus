@@ -134,4 +134,13 @@ public class Util {
 
         return result;
     }
+    
+    public String abrirInputDialog(String valor, JInternalFrame frame){
+        return JOptionPane.showInputDialog(
+            frame, 
+            valor, 
+            "Solicitar permissão", 
+            JOptionPane.WARNING_MESSAGE
+        );
+    }
 }

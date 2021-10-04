@@ -7,8 +7,8 @@ package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
 import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
-import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.ItemVenda;
+import br.edu.ifnmg.auxiliares.ItemVendaRepositorio;
 import br.edu.ifnmg.enums.TransacaoStatus;
 import br.edu.ifnmg.enums.TransacaoTipo;
 import br.edu.ifnmg.logicaAplicacao.Produto;
@@ -32,30 +32,34 @@ import javax.swing.table.DefaultTableModel;
  * @author gabriel
  */
 public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener, InternalFrameListener{
-    TransacaoFinanceira transacaoFinanceira;
+    static TransacaoFinanceira transacaoFinanceira;
     ProdutoRepositorio produtoRepositorio;
-    List<Produto> produtosAdicionados;
+    ItemVendaRepositorio itemVendaRepositorio;
     /**
      * Creates new form CaixaTela
      */
     public CaixaTela() {
         this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance());
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
-        this.produtosAdicionados = new ArrayList<>();
+        this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
         initComponents();
         this.txtCode.requestFocusInWindow();
         this.txtCode.addKeyListener(this);
         this.body.addKeyListener(this);
     }
 
+    public static boolean isVarejo(ItemVenda itemVenda){
+        return BigDecimal.valueOf(itemVenda.getProduto().getMinimoParaAtacado()).compareTo(itemVenda.getQuantidade()) >= 0;
+    }
+    
     private void renderProdutos(List<ItemVenda> item){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
-        modelo.addColumn("ID");
+        modelo.addColumn("CÓD. Produto");
         modelo.addColumn("Nome");
         modelo.addColumn("Quantidade");
-        //TODO: É UMA VENDA A VAREJO?ATACADO? (RENDERIZAÇÃO CONDICIONAL)        
-        modelo.addColumn("Valor Varejo");
+        modelo.addColumn("Min. P/ Atacado");
+        modelo.addColumn("Valor");
         modelo.addColumn("Subtotal");
         
         for( int i=0; i < item.size(); i++ ){
@@ -65,7 +69,12 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             linha.add(item.get(i).getProduto().getId());
             linha.add(item.get(i).getProduto().getNome());
             linha.add(item.get(i).getQuantidade());
-            linha.add(item.get(i).getProduto().getValorVarejo());
+            linha.add(item.get(i).getProduto().getMinimoParaAtacado());
+            if(isVarejo(item.get(i))){
+                linha.add("Varejo: " + item.get(i).getProduto().getValorVarejo());
+            }else{
+                linha.add("Atacado: " + item.get(i).getProduto().getValorAtacado());
+            }
             linha.add(item.get(i).getSubTotal());
             modelo.addRow(linha);
         }
@@ -169,6 +178,11 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 "#", "ID", "Nome", "Valor Varejo", "Quantidade"
             }
         ));
+        tableResultadoProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableResultadoProdutosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableResultadoProdutos);
 
         jPanel10.setBackground(new java.awt.Color(107, 45, 45));
@@ -514,7 +528,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 this.renderProdutos(transacaoFinanceira.getItens());
                 this.txtCode.setText("");
 
-                this.txtTotal.setText(Util.formatStringToReal(this.transacaoFinanceira.getValorTotal().toString()));
+                atualizarTotal();
             }else{
                 this.txtCode.selectAll();
                 txtNotFound.setText("Produto não encontrado!");
@@ -525,6 +539,10 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         }
     }
     
+    private void atualizarTotal(){
+        this.txtTotal.setText(Util.formatStringToReal(this.transacaoFinanceira.getValorTotal().toString()));
+    }
+    
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
         ListarProdutos listarProdutos = new ListarProdutos();
         listarProdutos.addInternalFrameListener(this);
@@ -532,6 +550,17 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         Util.centralizaInternalFrame(listarProdutos, this.getSize());
         listarProdutos.setVisible(true);
     }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void tableResultadoProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoProdutosMouseClicked
+        int linha = tableResultadoProdutos.getSelectedRow();
+        int idx = (int) tableResultadoProdutos.getValueAt(linha, 0);
+        
+        EditarListaPedido editarListaPedido = new EditarListaPedido(transacaoFinanceira.getItens().get(idx-1));
+        editarListaPedido.addInternalFrameListener(this);
+        CaixaTela.jDesktopPane1.add(editarListaPedido);
+        Util.centralizaInternalFrame(editarListaPedido, this.getSize());
+        editarListaPedido.setVisible(true);
+    }//GEN-LAST:event_tableResultadoProdutosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -604,6 +633,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             if(this.txtCode.getText().length() > 0){
                 this.buscarProduto();
             }
+        }else if(e.getInternalFrame().getClass() == EditarListaPedido.class){
+            this.renderProdutos(transacaoFinanceira.getItens());
+            this.atualizarTotal();
         }
     }
 

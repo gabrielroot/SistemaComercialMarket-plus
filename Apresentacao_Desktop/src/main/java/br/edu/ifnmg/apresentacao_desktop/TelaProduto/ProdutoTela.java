@@ -70,7 +70,6 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
     }
     
     private void initTabEstoque(){
-        //TELA ESTOQUE NAO ATUALIZA NUM. LOTES, QUANDO NOVOS SÃO INSERIDOS
         List<Produto> resultado = this.produtoRepositorio.Buscar(new Produto());
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");

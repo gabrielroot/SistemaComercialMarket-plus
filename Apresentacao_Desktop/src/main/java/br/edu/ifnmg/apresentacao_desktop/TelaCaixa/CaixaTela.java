@@ -505,6 +505,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             }
         ));
         tableAllProducts.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tableAllProducts.setFocusable(false);
         tableAllProducts.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableAllProductsMouseClicked(evt);
@@ -644,7 +645,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         
         String email = util.abrirInputPasswordDialog("Informe o EMAIL do administrador", false, this);
-        if(email != null){
+        if(!email.isEmpty()){
             String senha = util.abrirInputPasswordDialog("Informe a SENHA do administrador", true, this);
             if(usuarioRepositorio.Autenticar(email, senha) != null){
                 CaixaTela.transacaoFinanceira.getItens().clear();

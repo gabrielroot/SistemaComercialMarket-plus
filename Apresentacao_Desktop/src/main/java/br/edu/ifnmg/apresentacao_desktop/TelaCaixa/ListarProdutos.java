@@ -4,6 +4,7 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
+import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
 import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.auxiliares.Estoque;
@@ -232,6 +233,7 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
     private void btnBuscaAvancadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaAvancadaActionPerformed
         ProdutoEditar produtoEditar = new ProdutoEditar(produto, "Buscar Produto");
         CaixaTela.jDesktopPane1.add(produtoEditar);
+        Util.centralizaInternalFrame(produtoEditar, this.getSize());
         produtoEditar.addInternalFrameListener(this);
         produtoEditar.setVisible(true);
     }//GEN-LAST:event_btnBuscaAvancadaActionPerformed

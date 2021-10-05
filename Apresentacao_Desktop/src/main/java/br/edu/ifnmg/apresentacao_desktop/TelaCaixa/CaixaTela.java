@@ -21,11 +21,10 @@ import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.Vector;
 import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameEvent;
@@ -62,8 +61,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         listagemRapidaProdutos();
     }
 
-    public static boolean isVarejo(ItemVenda itemVenda){
-        return BigDecimal.valueOf(itemVenda.getProduto().getMinimoParaAtacado()).compareTo(itemVenda.getQuantidade()) >= 0;
+    public static boolean isAtacado(ItemVenda itemVenda){
+        return itemVenda.getQuantidade().compareTo(BigDecimal.valueOf(itemVenda.getProduto().getMinimoParaAtacado())) >= 0;
     }
     
     private void renderProdutos(List<ItemVenda> item){
@@ -84,10 +83,10 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             linha.add(item.get(i).getProduto().getNome());
             linha.add(item.get(i).getQuantidade());
             linha.add(item.get(i).getProduto().getMinimoParaAtacado());
-            if(isVarejo(item.get(i))){
-                linha.add("Varejo: " + item.get(i).getProduto().getValorVarejo());
-            }else{
+            if(isAtacado(item.get(i))){
                 linha.add("Atacado: " + item.get(i).getProduto().getValorAtacado());
+            }else{
+                linha.add("Varejo: " + item.get(i).getProduto().getValorVarejo());
             }
             linha.add(item.get(i).getSubTotal());
             modelo.addRow(linha);
@@ -618,10 +617,33 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         try{
             Produto produtoEncontrado = this.produtoRepositorio.Abrir(Long.parseLong(this.txtCode.getText()));
             if(produtoEncontrado != null){
-                ItemVenda itemVenda = new ItemVenda(BigDecimal.valueOf(1),produtoEncontrado.getValorVarejo());
-                itemVenda.setProduto(produtoEncontrado);
-                itemVenda.setTransacaoFinanceira(transacaoFinanceira);
-                transacaoFinanceira.getItens().add(itemVenda);
+                ItemVenda itemVenda = null;
+                if(produtoEncontrado.getMinimoParaAtacado() > 1){
+                    itemVenda = new ItemVenda(BigDecimal.valueOf(1),produtoEncontrado.getValorVarejo());
+                }else{
+                    itemVenda = new ItemVenda(BigDecimal.valueOf(1),produtoEncontrado.getValorAtacado());
+                }
+                
+                boolean bool = false;
+                
+                for(ItemVenda item : transacaoFinanceira.getItens()){
+                    if(Objects.equals(item.getProduto().getId(), produtoEncontrado.getId())){
+                        item.setQuantidade(item.getQuantidade().add(BigDecimal.ONE));
+                        if(isAtacado(item)){
+                            item.setSubTotal(item.getSubTotal(item.getProduto().getValorAtacado()));
+                        }else{
+                            item.setSubTotal(item.getSubTotal(item.getProduto().getValorVarejo()));
+                        }
+                        bool = true;
+                        break;
+                    }
+                }
+                
+                if(!bool){
+                    itemVenda.setProduto(produtoEncontrado);
+                    itemVenda.setTransacaoFinanceira(transacaoFinanceira);
+                    transacaoFinanceira.getItens().add(itemVenda);
+                }
 
                 this.renderProdutos(transacaoFinanceira.getItens());
                 this.txtCode.setText("");

@@ -34,7 +34,7 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         this.txtProductName.setText(itemVenda.getProduto().getNome());
         this.txtQuantidade.setText(itemVenda.getQuantidade().toString());
         this.txtSubTotal.setText(itemVenda.getSubTotal().toString());
-        if(CaixaTela.isVarejo(itemVenda)){
+        if(CaixaTela.isAtacado(itemVenda)){
             this.txtValor.setText(itemVenda.getProduto().getValorVarejo().toString());
         }else{
             this.txtValor.setText(itemVenda.getProduto().getValorAtacado().toString());
@@ -51,10 +51,10 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         }
         
         itemVenda.setQuantidade(new BigDecimal(this.txtQuantidade.getText()));
-        if(CaixaTela.isVarejo(itemVenda)){
-            itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorVarejo()));
-        }else{
+        if(CaixaTela.isAtacado(itemVenda)){
             itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorAtacado()));
+        }else{
+            itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorVarejo()));
         }
         
         return true;

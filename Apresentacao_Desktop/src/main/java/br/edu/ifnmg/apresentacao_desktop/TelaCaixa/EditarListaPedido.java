@@ -50,11 +50,17 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
             return false;
         }
         
-        itemVenda.setQuantidade(new BigDecimal(this.txtQuantidade.getText()));
-        if(CaixaTela.isAtacado(itemVenda)){
-            itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorAtacado()));
+        if(BigDecimal.valueOf(itemVenda.getProduto().getEstoque().getSomaPrateleiras()+1).compareTo(new BigDecimal(this.txtQuantidade.getText())) > 0){
+            itemVenda.setQuantidade(new BigDecimal(this.txtQuantidade.getText()));
+            if(CaixaTela.isAtacado(itemVenda)){
+                itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorAtacado()));
+            }else{
+                itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorVarejo()));
+            }
         }else{
-            itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorVarejo()));
+            this.txtQuantidade.setText(String.valueOf(itemVenda.getProduto().getEstoque().getSomaPrateleiras()));
+            util.abrirJOptionPane("erro", "Quantidade não disponível nas prateleiras", this);
+            return false;
         }
         
         return true;

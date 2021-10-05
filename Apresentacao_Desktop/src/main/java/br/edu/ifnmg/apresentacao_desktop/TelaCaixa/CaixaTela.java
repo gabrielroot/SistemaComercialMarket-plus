@@ -269,7 +269,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCancelItem)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,14 +434,13 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         bottomLayout.setHorizontalGroup(
             bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bottomLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addContainerGap()
                 .addGroup(bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         bottomLayout.setVerticalGroup(
             bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,14 +522,14 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(bodyLayout.createSequentialGroup()
                 .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bodyLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bodyLayout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(92, 92, 92))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bodyLayout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jLabel11)))
+                .addContainerGap())
         );
         bodyLayout.setVerticalGroup(
             bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -542,9 +541,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                         .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(bodyLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(34, 34, 34)
                         .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))))
         );
 
@@ -601,19 +600,20 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     private void txtCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodeKeyPressed
         this.txtNotFound.setText("");
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
-            this.buscarProduto();
+            this.adicionarProduto();
         }
     }//GEN-LAST:event_txtCodeKeyPressed
 
     private void tableAllProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAllProductsMouseClicked
+        this.txtNotFound.setText("");
         int linha = tableAllProducts.getSelectedRow();
         String id = tableAllProducts.getValueAt(linha, 0).toString();
         
         CaixaTela.txtCode.setText(id);
-        this.buscarProduto();
+        this.adicionarProduto();
     }//GEN-LAST:event_tableAllProductsMouseClicked
 
-    private void buscarProduto(){
+    private void adicionarProduto(){
         try{
             Produto produtoEncontrado = this.produtoRepositorio.Abrir(Long.parseLong(this.txtCode.getText()));
             if(produtoEncontrado != null){
@@ -628,14 +628,19 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 
                 for(ItemVenda item : transacaoFinanceira.getItens()){
                     if(Objects.equals(item.getProduto().getId(), produtoEncontrado.getId())){
-                        item.setQuantidade(item.getQuantidade().add(BigDecimal.ONE));
-                        if(isAtacado(item)){
-                            item.setSubTotal(item.getSubTotal(item.getProduto().getValorAtacado()));
+                        if(BigDecimal.valueOf(produtoEncontrado.getEstoque().getSomaPrateleiras()+1).compareTo(item.getQuantidade()) > 0){
+                            item.setQuantidade(item.getQuantidade().add(BigDecimal.ONE));
+                            if(isAtacado(item)){
+                                item.setSubTotal(item.getSubTotal(item.getProduto().getValorAtacado()));
+                            }else{
+                                item.setSubTotal(item.getSubTotal(item.getProduto().getValorVarejo()));
+                            }
+                            bool = true;
+                            break;
                         }else{
-                            item.setSubTotal(item.getSubTotal(item.getProduto().getValorVarejo()));
+                            this.txtNotFound.setText("Quantidade não disponível nas prateleiras");
+                            return;
                         }
-                        bool = true;
-                        break;
                     }
                 }
                 
@@ -778,7 +783,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         
         if(e.getInternalFrame().getClass() == ListarProdutos.class){
             if(this.txtCode.getText().length() > 0){
-                this.buscarProduto();
+                this.adicionarProduto();
             }
         }else if(e.getInternalFrame().getClass() == EditarListaPedido.class){
             this.renderProdutos(transacaoFinanceira.getItens());

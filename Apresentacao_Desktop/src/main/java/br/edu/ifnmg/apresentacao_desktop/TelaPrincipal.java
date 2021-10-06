@@ -11,6 +11,7 @@ import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
+import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +54,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaInicio telaPrincipal = new TelaInicio(this);
         TelaPrincipal.currentFrame = telaPrincipal;
         this.renderJInternalInicio(telaPrincipal);
+         Toolkit tk = Toolkit.getDefaultToolkit();
+                            tk.beep();
     }
 
     public static JInternalFrame getCurrentFrame() { return currentFrame; }

@@ -16,9 +16,11 @@ import br.edu.ifnmg.enums.TransacaoTipo;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceiraRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
@@ -52,6 +54,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         this.util = new Util();
         initComponents();
         this.txtCode.addKeyListener(this);
+        this.painelRealizarPgto.addKeyListener(this);
+        this.painelRepetir.addKeyListener(this);
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -124,7 +128,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         bottom = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        painelRepetir = new javax.swing.JPanel();
         txtCancelItem = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -137,7 +141,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         txtTotal = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        painelRealizarPgto = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -251,31 +255,36 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
         bottom.setBackground(new java.awt.Color(208, 208, 208));
 
-        jPanel5.setBackground(new java.awt.Color(240, 240, 240));
-        jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        painelRepetir.setBackground(new java.awt.Color(240, 240, 240));
+        painelRepetir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        painelRepetir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelRepetirMouseClicked(evt);
+            }
+        });
 
         txtCancelItem.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         txtCancelItem.setForeground(new java.awt.Color(8, 8, 8));
-        txtCancelItem.setText("                  ");
+        txtCancelItem.setText("- Repetir último");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrowLeft.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelRepetirLayout = new javax.swing.GroupLayout(painelRepetir);
+        painelRepetir.setLayout(painelRepetirLayout);
+        painelRepetirLayout.setHorizontalGroup(
+            painelRepetirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRepetirLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCancelItem)
                 .addContainerGap(75, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        painelRepetirLayout.setVerticalGroup(
+            painelRepetirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelRepetirLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(painelRepetirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
                     .addComponent(txtCancelItem))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -375,8 +384,13 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel11.setBackground(new java.awt.Color(107, 45, 45));
-        jPanel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        painelRealizarPgto.setBackground(new java.awt.Color(107, 45, 45));
+        painelRealizarPgto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        painelRealizarPgto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelRealizarPgtoMouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -385,21 +399,21 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrowRight.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelRealizarPgtoLayout = new javax.swing.GroupLayout(painelRealizarPgto);
+        painelRealizarPgto.setLayout(painelRealizarPgtoLayout);
+        painelRealizarPgtoLayout.setHorizontalGroup(
+            painelRealizarPgtoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRealizarPgtoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+        painelRealizarPgtoLayout.setVerticalGroup(
+            painelRealizarPgtoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRealizarPgtoLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelRealizarPgtoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)))
         );
@@ -414,7 +428,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 .addGap(18, 18, 18)
                 .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelRealizarPgto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,7 +440,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                         .addGap(0, 3, Short.MAX_VALUE))
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(painelRealizarPgto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout bottomLayout = new javax.swing.GroupLayout(bottom);
@@ -438,7 +452,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 .addGroup(bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(painelRepetir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -446,7 +460,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelRepetir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -613,6 +627,30 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         this.adicionarProduto();
     }//GEN-LAST:event_tableAllProductsMouseClicked
 
+    private void painelRealizarPgtoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRealizarPgtoMouseClicked
+        finalizarCompra();
+    }//GEN-LAST:event_painelRealizarPgtoMouseClicked
+
+    private void painelRepetirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRepetirMouseClicked
+        adicionarProduto();
+    }//GEN-LAST:event_painelRepetirMouseClicked
+
+    private void finalizarCompra(){
+        for(ItemVenda i : transacaoFinanceira.getItens()){
+            System.out.println("    Nome: "+i.getProduto().getNome());
+            System.out.println("    Subtotal: "+i.getSubTotal());
+            System.out.println("");
+        }
+        System.out.println("");
+        System.out.println("Total: "+transacaoFinanceira.getValorTotal());
+        System.out.println("Usuario: "+transacaoFinanceira.getUsuario().getNome());
+        UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
+        transacaoFinanceira.setUsuario(usuarioRepositorio.Abrir(transacaoFinanceira.getUsuario().getId()));
+        TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio = RepositorioFactory.getTransacaoFinanceiraRepositorio();
+        transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
+        util.abrirJOptionPane("sucesso","Compra \"finalizada\". Veja a saída no console!",this);
+    }
+    
     private void adicionarProduto(){
         try{
             Produto produtoEncontrado = this.produtoRepositorio.Abrir(Long.parseLong(this.txtCode.getText()));
@@ -628,17 +666,19 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 
                 for(ItemVenda item : transacaoFinanceira.getItens()){
                     if(Objects.equals(item.getProduto().getId(), produtoEncontrado.getId())){
-                        if(BigDecimal.valueOf(produtoEncontrado.getEstoque().getSomaPrateleiras()+1).compareTo(item.getQuantidade()) > 0){
+                        if(BigDecimal.valueOf(produtoEncontrado.getEstoque().getSomaPrateleiras()).compareTo(item.getQuantidade().add(BigDecimal.ONE)) >= 0){
                             item.setQuantidade(item.getQuantidade().add(BigDecimal.ONE));
                             if(isAtacado(item)){
                                 item.setSubTotal(item.getSubTotal(item.getProduto().getValorAtacado()));
                             }else{
                                 item.setSubTotal(item.getSubTotal(item.getProduto().getValorVarejo()));
                             }
+                            Toolkit tk = Toolkit.getDefaultToolkit();
+                            tk.beep();
                             bool = true;
                             break;
                         }else{
-                            this.txtNotFound.setText("Quantidade não disponível nas prateleiras");
+                            this.txtNotFound.setText("Sem mais nas prateleiras");
                             return;
                         }
                     }
@@ -661,6 +701,23 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         }catch(NumberFormatException ex){
             this.txtCode.selectAll();
             txtNotFound.setText("Apenas números, por favor!");
+        }
+    }
+    
+    private void repetirUltimoProduto(){
+        if(this.transacaoFinanceira.getItens().size() > 0){
+            ItemVenda it = this.transacaoFinanceira.getItens().get(this.transacaoFinanceira.getItens().size() -1);
+            if(BigDecimal.valueOf(it.getProduto().getEstoque().getSomaPrateleiras()).compareTo(it.getQuantidade().add(BigDecimal.ONE)) >= 0){
+                it.setQuantidade(it.getQuantidade().add(BigDecimal.ONE));
+                it.setSubTotal(it.getSubTotal(it.getProduto().getValorVarejo()));
+
+                this.renderProdutos(transacaoFinanceira.getItens());
+                this.atualizarTotal();
+            }else{
+                this.txtNotFound.setText("Sem mais nas prateleiras");
+            }
+        }else{
+                this.txtNotFound.setText("Nenhum produto foi adicionado ainda");
         }
     }
     
@@ -721,15 +778,15 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel painelRealizarPgto;
+    private javax.swing.JPanel painelRepetir;
     private javax.swing.JTable tableAllProducts;
     private javax.swing.JTable tableResultadoProdutos;
     private javax.swing.JLabel txtCancelCompra;
@@ -747,14 +804,25 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == java.awt.event.KeyEvent.VK_UP){
-            ListarProdutos listarProdutos = new ListarProdutos();
-            CaixaTela.jDesktopPane1.add(listarProdutos);
-            listarProdutos.addInternalFrameListener(this);
-            Util.centralizaInternalFrame(listarProdutos, this.getSize());
-            listarProdutos.setVisible(true);
-        }else if(e.getKeyCode() == java.awt.event.KeyEvent.VK_DOWN){
-            cancelarCompra();
+        switch (e.getKeyCode()) {
+            case java.awt.event.KeyEvent.VK_UP:
+                ListarProdutos listarProdutos = new ListarProdutos();
+                CaixaTela.jDesktopPane1.add(listarProdutos);
+                listarProdutos.addInternalFrameListener(this);
+                Util.centralizaInternalFrame(listarProdutos, this.getSize());
+                listarProdutos.setVisible(true);
+                break;
+            case java.awt.event.KeyEvent.VK_DOWN:
+                cancelarCompra();
+                break;
+            case java.awt.event.KeyEvent.VK_RIGHT:
+                finalizarCompra();
+                break;
+            case java.awt.event.KeyEvent.VK_LEFT:
+                 repetirUltimoProduto();
+                break;
+            default:
+                break;
         }
     }
 

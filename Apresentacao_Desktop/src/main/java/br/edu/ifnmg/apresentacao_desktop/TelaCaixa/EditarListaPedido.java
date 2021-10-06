@@ -50,7 +50,7 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
             return false;
         }
         
-        if(BigDecimal.valueOf(itemVenda.getProduto().getEstoque().getSomaPrateleiras()+1).compareTo(new BigDecimal(this.txtQuantidade.getText())) > 0){
+        if(BigDecimal.valueOf(itemVenda.getProduto().getEstoque().getSomaPrateleiras()).compareTo(new BigDecimal(this.txtQuantidade.getText())) >= 0){
             itemVenda.setQuantidade(new BigDecimal(this.txtQuantidade.getText()));
             if(CaixaTela.isAtacado(itemVenda)){
                 itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorAtacado()));

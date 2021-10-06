@@ -77,7 +77,6 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
 
         jButton1.setBackground(new java.awt.Color(181, 181, 181));
         jButton1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Cancelar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -90,7 +89,6 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
             }
         });
 
-        txtNome.setBackground(new java.awt.Color(255, 255, 255));
         txtNome.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,15 +124,18 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(54, 54, 54));
         jLabel2.setText("Nome");
 
-        txtNumeroDocumento.setBackground(new java.awt.Color(255, 255, 255));
         txtNumeroDocumento.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        txtNumeroDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumeroDocumentoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
         jLabel3.setText("Número do Documento");
 
-        txtTelefone.setBackground(new java.awt.Color(255, 255, 255));
         txtTelefone.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
@@ -238,6 +239,10 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void txtNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroDocumentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumeroDocumentoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

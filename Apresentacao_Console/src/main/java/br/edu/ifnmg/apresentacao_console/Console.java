@@ -132,11 +132,12 @@ public class Console {
         
         System.out.println("////////////////BUSCA FUNCIONARIO//////////////////");
         Funcionario func = new Funcionario();
-        func.setNome("");
-        //func.setCargo("Faxineiro");
+        func.setNome("A");
+        func.setCargo("C");
+        func.setSituacao(FuncionarioSituacao.Ativo);
         
         for(Funcionario func1 : repositorioFuncionario.Buscar(func)){
-            System.out.println(func1.getNome()+func1.getCargo().getTitulo());
+            System.out.println( func1.getNome()+ "\t" +func1.getCargo().getTitulo() + " \t" + func1.getSituacao());
         }
                 
     }

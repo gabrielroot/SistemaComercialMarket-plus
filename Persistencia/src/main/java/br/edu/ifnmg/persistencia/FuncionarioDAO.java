@@ -40,7 +40,13 @@ public class FuncionarioDAO extends DataAccessObject<Funcionario> implements Fun
                 if(filtros.length()>0)
                     filtros+=" and ";
                 filtros+="funcionario.cargo.titulo LIKE :titulo";
-                parametros.put("cargo", obj.getCargo().getTitulo()+"%");
+                parametros.put("titulo", obj.getCargo().getTitulo()+"%");
+            }
+            if(obj.getSituacao()!= null){
+                if(filtros.length()>0)
+                    filtros+=" and ";
+                filtros += "funcionario.situacao = :situacao";
+                parametros.put("situacao", obj.getSituacao() );
             }
         }
         if(filtros.length()>0){
@@ -56,6 +62,7 @@ public class FuncionarioDAO extends DataAccessObject<Funcionario> implements Fun
         
         return consulta.getResultList();
     }
+    
     
 
 

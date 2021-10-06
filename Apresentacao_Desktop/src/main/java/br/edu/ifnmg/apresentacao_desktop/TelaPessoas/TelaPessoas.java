@@ -7,6 +7,8 @@ package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 import Util.Util;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
+import br.edu.ifnmg.auxiliares.CargoFuncionario;
+import br.edu.ifnmg.enums.FuncionarioSituacao;
 import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
@@ -14,6 +16,7 @@ import br.edu.ifnmg.logicaAplicacao.Fornecedor;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Funcionario;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
+import static br.edu.ifnmg.logicaAplicacao.Funcionario_.cargo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
@@ -41,6 +44,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     private ClienteRepositorio clienteRepositorio;
     private Util util;
     
+    private CargoFuncionario cargo;
     /**
      * Creates new form Pessoas
      */
@@ -95,11 +99,15 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         jLabel7 = new javax.swing.JLabel();
         txtNomeFuncionario = new javax.swing.JTextField();
         btnBuscarFuncionario = new javax.swing.JButton();
-        btnBuscaAvancadaFuncionario = new javax.swing.JButton();
         btnLimparFiltrosFuncionario = new javax.swing.JButton();
-        btnNovoFuncionario = new javax.swing.JButton();
+        btnNovoCargo = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblResultado = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        ComboSituacao = new javax.swing.JComboBox<>();
+        txtCargo = new javax.swing.JTextField();
+        btnNovoFuncionario1 = new javax.swing.JButton();
         tabFornecedores = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         txtNome = new javax.swing.JTextField();
@@ -305,11 +313,6 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
             }
         });
 
-        btnBuscaAvancadaFuncionario.setBackground(new java.awt.Color(212, 167, 167));
-        btnBuscaAvancadaFuncionario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnBuscaAvancadaFuncionario.setText("Busca Avançada");
-        btnBuscaAvancadaFuncionario.setToolTipText("");
-
         btnLimparFiltrosFuncionario.setBackground(new java.awt.Color(212, 167, 167));
         btnLimparFiltrosFuncionario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnLimparFiltrosFuncionario.setText("Limpar Filtros");
@@ -320,12 +323,12 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
             }
         });
 
-        btnNovoFuncionario.setBackground(new java.awt.Color(212, 167, 167));
-        btnNovoFuncionario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnNovoFuncionario.setText("Novo");
-        btnNovoFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        btnNovoCargo.setBackground(new java.awt.Color(212, 167, 167));
+        btnNovoCargo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnNovoCargo.setText(" Novo Cargo");
+        btnNovoCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoFuncionarioActionPerformed(evt);
+                btnNovoCargoActionPerformed(evt);
             }
         });
 
@@ -354,46 +357,92 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         });
         jScrollPane4.setViewportView(tblResultado);
 
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabel8.setText("Situação:");
+
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabel9.setText("Cargo:");
+
+        ComboSituacao.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        ComboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativo", "Demitido" }));
+
+        txtCargo.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCargoActionPerformed(evt);
+            }
+        });
+
+        btnNovoFuncionario1.setBackground(new java.awt.Color(212, 167, 167));
+        btnNovoFuncionario1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnNovoFuncionario1.setText(" Novo Funcionário");
+        btnNovoFuncionario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoFuncionario1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabFuncionariosLayout = new javax.swing.GroupLayout(tabFuncionarios);
         tabFuncionarios.setLayout(tabFuncionariosLayout);
         tabFuncionariosLayout.setHorizontalGroup(
             tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabFuncionariosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(tabFuncionariosLayout.createSequentialGroup()
-                        .addComponent(btnBuscarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(btnBuscaAvancadaFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(btnLimparFiltrosFuncionario)
-                        .addGap(56, 56, 56)
-                        .addComponent(btnNovoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtNomeFuncionario))
-                .addGap(307, 307, 307))
             .addGroup(tabFuncionariosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(129, 129, 129)
+                .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabFuncionariosLayout.createSequentialGroup()
+                        .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(txtNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(136, 136, 136)
+                        .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ComboSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addGap(158, 158, 158))
+                    .addGroup(tabFuncionariosLayout.createSequentialGroup()
+                        .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(tabFuncionariosLayout.createSequentialGroup()
+                                .addComponent(btnNovoFuncionario1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(btnNovoCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(tabFuncionariosLayout.createSequentialGroup()
+                                .addComponent(btnBuscarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(108, 108, 108)
+                                .addComponent(btnLimparFiltrosFuncionario)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         tabFuncionariosLayout.setVerticalGroup(
             tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabFuncionariosLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(43, 43, 43)
                 .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
+                    .addComponent(btnNovoCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovoFuncionario1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscaAvancadaFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(tabFuncionariosLayout.createSequentialGroup()
+                        .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNomeFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComboSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(tabFuncionariosLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(tabFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLimparFiltrosFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNovoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                .addGap(36, 36, 36))
+                    .addComponent(btnBuscarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Funcionários", tabFuncionarios);
@@ -434,6 +483,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
 
         comboSegmento.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         comboSegmento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        comboSegmento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSegmentoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel6.setText("Segmento");
@@ -905,7 +959,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void btnLimparFiltrosFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparFiltrosFuncionarioActionPerformed
-        txtNomeFuncionario.setText(" ");
+        txtNomeFuncionario.setText("");
+        txtCargo.setText("");
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("NOME");
@@ -915,14 +970,25 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         tblResultado.setModel(modelo);
     }//GEN-LAST:event_btnLimparFiltrosFuncionarioActionPerformed
 
-    private void btnNovoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoFuncionarioActionPerformed
-        FuncionarioEditar tela= new FuncionarioEditar(new Funcionario());
-    }//GEN-LAST:event_btnNovoFuncionarioActionPerformed
+    private void btnNovoCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoCargoActionPerformed
+        
+    }//GEN-LAST:event_btnNovoCargoActionPerformed
 
     private void btnBuscarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFuncionarioActionPerformed
         funcionario.setNome(txtNomeFuncionario.getText());
-        List<Funcionario> resultado= funcionarioRepositorio.Buscar(funcionario);
+        funcionario.setCargo(txtCargo.getText());
         
+        FuncionarioSituacao filter = null;
+        for(FuncionarioSituacao situacao: FuncionarioSituacao.values()){
+            if(this.ComboSituacao.getSelectedItem().equals(situacao.toString())){
+                filter = situacao;
+                break;
+            }
+        }
+        funcionario.setSituacao(filter);
+        
+        List<Funcionario> resultado= funcionarioRepositorio.Buscar(funcionario);
+       
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("NOME");
@@ -950,6 +1016,18 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     private void jTabbedPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTabbedPane1AncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jTabbedPane1AncestorAdded
+
+    private void comboSegmentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSegmentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboSegmentoActionPerformed
+
+    private void txtCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCargoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCargoActionPerformed
+
+    private void btnNovoFuncionario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoFuncionario1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNovoFuncionario1ActionPerformed
     
     private void buscarCliente(){
         if(cliente.getNome().isEmpty()){
@@ -1021,10 +1099,11 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscaAvancadaFuncionario;
+    private javax.swing.JComboBox<String> ComboSituacao;
     private javax.swing.JButton btnBuscarFuncionario;
     private javax.swing.JButton btnLimparFiltrosFuncionario;
-    private javax.swing.JButton btnNovoFuncionario;
+    private javax.swing.JButton btnNovoCargo;
+    private javax.swing.JButton btnNovoFuncionario1;
     private javax.swing.JComboBox<String> comboSegmento;
     private javax.swing.JComboBox<String> comboTipoUsuario;
     private javax.swing.JButton jButton1;
@@ -1043,6 +1122,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1061,6 +1142,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     private javax.swing.JTable tableResultadoUsuarios;
     private javax.swing.JTable tblResultado;
     private javax.swing.JTable tblResultadoClientes;
+    private javax.swing.JTextField txtCargo;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNomeCliente;

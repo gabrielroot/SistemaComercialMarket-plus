@@ -5,9 +5,17 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
+import Util.Util;
+import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.logicaAplicacao.Cliente;
+import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 
 /**
  *
@@ -15,13 +23,34 @@ import java.util.logging.Logger;
  */
 public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
 
+    private Cliente cliente;
+    
     /**
      * Creates new form BuscaAvancada
+     * @param cliente
      */
-    public ClienteBuscaAvancada() {
+    public ClienteBuscaAvancada(Cliente cliente) {
+        this.cliente =  cliente;
         initComponents();
+        setComponetes();
     }
 
+    private void setComponetes() {
+        if(!this.cliente.getNome().isEmpty()){
+            this.txtNome.setText(this.cliente.getNome());
+        }
+        if(!this.cliente.getNumeroDocumento().isEmpty()){
+            this.txtNumeroDocumento.setText(this.cliente.getNumeroDocumento());
+        }
+        for (int i = 0; i < 2; i++) {
+            
+           if(!this.cliente.getTelefones().isEmpty()){
+                this.txtNumeroDocumento.setText(this.cliente.getTelefones().get(i).toString());
+                break;
+            }
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,13 +61,13 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtNumeroDocumento = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtTelefone = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
@@ -61,8 +90,13 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        txtNome.setBackground(new java.awt.Color(255, 255, 255));
+        txtNome.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(140, 71, 71));
 
@@ -92,16 +126,16 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(54, 54, 54));
         jLabel2.setText("Nome");
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        txtNumeroDocumento.setBackground(new java.awt.Color(255, 255, 255));
+        txtNumeroDocumento.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
         jLabel3.setText("Número do Documento");
 
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        txtTelefone.setBackground(new java.awt.Color(255, 255, 255));
+        txtTelefone.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -112,6 +146,11 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         jButton2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,12 +161,12 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(txtTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                        .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addContainerGap(26, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
@@ -143,15 +182,15 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,6 +213,32 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        buscaAvancadaCliente();
+        TelaPessoas.cliente = this.cliente;
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void buscaAvancadaCliente(){
+        
+        if(this.txtNome.getText() != null){
+           this.cliente.setNome(this.txtNome.getText());
+        }
+        if(this.txtNumeroDocumento.getText() != null){
+            this.cliente.setNumeroDocumento(this.txtNumeroDocumento.getText());
+        }
+        if(this.txtTelefone.getText() != null){
+            ArrayList<Telefone> telefones = new ArrayList<>();
+            Telefone telefone = new Telefone(this.txtTelefone.getText());
+            telefones.add(telefone);
+            this.cliente.setTelefones(telefones);
+        }
+    }
+    
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -183,8 +248,8 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtNumeroDocumento;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }

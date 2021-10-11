@@ -7,7 +7,6 @@ package br.edu.ifnmg.persistencia;
 
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
-import java.math.BigDecimal;
 import java.util.Hashtable;
 import java.util.List;
 import javax.persistence.Query;
@@ -35,6 +34,7 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
             }
             
             if(obj.getMinimoParaAtacado() >= 0){
+                if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.minimoParaAtacado = :min";
                 parametros.put("min", obj.getMinimoParaAtacado());
             }
@@ -43,6 +43,12 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.nome LIKE :nome";
                 parametros.put("nome", obj.getNome() + "%");
+            }
+            
+            if(obj.getDescricao()!= null && obj.getDescricao().length() > 0){
+                if(filtros.length() > 0) filtros += " AND ";
+                filtros += "produto.descricao LIKE :desc";
+                parametros.put("desc", obj.getDescricao() + "%");
             }
 
             if(obj.getUnidadeMedidaVenda() != null){
@@ -69,37 +75,23 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 parametros.put("va", obj.getValorAtacado());
             }
             
+            if(obj.getValorCusto()!= null){
+                if(filtros.length() > 0) filtros += " AND ";
+                filtros += "produto.valorCusto = :vc";
+                parametros.put("vc", obj.getValorCusto());
+            }
+            
             if(obj.getEstoque() != null){
+                if(obj.getEstoque().getQuantidadeMinimaDesejada() > -1){
+                    if(filtros.length() > 0) filtros += " AND ";
+                    filtros += "produto.estoque.quantidadeMinimaDesejada = :qtdemin";
+                    parametros.put("qtdemin", obj.getEstoque().getQuantidadeMinimaDesejada());
+                }
+                
                 if(obj.getEstoque().getLocalizacaoProduto() != null){
                     if(filtros.length() > 0) filtros += " AND ";
                     filtros += "produto.estoque.localizacaoProduto = :local";
                     parametros.put("local", obj.getEstoque().getLocalizacaoProduto());
-                }
-                
-                if(obj.getEstoque().getLotes() != null){
-                    if(obj.getEstoque().getLotes().get(0).getCodigo() != null && obj.getEstoque().getLotes().get(0).getCodigo().length() > 0){
-                        if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.codigo LIKE :code";
-                        parametros.put("code", obj.getEstoque().getLotes().get(0).getCodigo() + "%");
-                    }
-                    
-                    if(obj.getEstoque().getLotes().get(0).getQuantidade() > -1){
-                        if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.quantidade = :qt";
-                        parametros.put("qt", obj.getEstoque().getLotes().get(0).getQuantidade());
-                    }
-
-                    if(obj.getEstoque().getLotes().get(0).getDataValidade() != null){
-                        if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.dataValidade = :validade";
-                        parametros.put("validade", obj.getEstoque().getLotes().get(0).getDataValidade());
-                    }
-
-                    if(obj.getEstoque().getLotes().get(0).getDataFabricacao() != null){
-                        if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.dataFabricacao = :fab";
-                        parametros.put("fab", obj.getEstoque().getLotes().get(0).getDataFabricacao());
-                    }
                 }
             }
         }
@@ -116,5 +108,4 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
         
         return consulta.getResultList();
     }
-
 }

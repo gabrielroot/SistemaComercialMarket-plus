@@ -12,13 +12,17 @@ import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -40,6 +44,9 @@ public class Usuario extends Funcionario implements Serializable {
     @Column(nullable=false)
     private UsuarioTipo usuarioTipo;
     
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "usuario")
+    private List<TransacaoFinanceira> transacoesFinanceiras;
+    
     @Version
     private long versao;
 
@@ -49,6 +56,7 @@ public class Usuario extends Funcionario implements Serializable {
         this.email = "";
         this.senha = "";
         this.usuarioTipo = UsuarioTipo.Administrador;
+        this.transacoesFinanceiras = new ArrayList<>();
     }
     
     public Usuario(
@@ -79,6 +87,7 @@ public class Usuario extends Funcionario implements Serializable {
         this.email = email;
         this.senha = senha;
         this.usuarioTipo = usuarioTipo;
+        this.transacoesFinanceiras = new ArrayList<>();
     }
     
     public Usuario(
@@ -111,6 +120,7 @@ public class Usuario extends Funcionario implements Serializable {
         this.email = email;
         this.senha = senha;
         this.usuarioTipo = usuarioTipo;
+        this.transacoesFinanceiras = new ArrayList<>();
     }
     
 
@@ -123,7 +133,10 @@ public class Usuario extends Funcionario implements Serializable {
     public UsuarioTipo getUsuarioTipo() { return usuarioTipo; }
     public void setUsuarioTipo(UsuarioTipo usuarioTipo) { this.usuarioTipo = usuarioTipo; }
 
-        @Override
+    public List<TransacaoFinanceira> getTransacoesFinanceiras() { return transacoesFinanceiras; }
+    public void setTransacoesFinanceiras(List<TransacaoFinanceira> transacoesFinanceiras) { this.transacoesFinanceiras = transacoesFinanceiras; }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + Objects.hashCode(this.senha);

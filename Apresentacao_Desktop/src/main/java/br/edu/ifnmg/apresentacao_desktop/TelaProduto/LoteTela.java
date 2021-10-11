@@ -7,6 +7,7 @@ package br.edu.ifnmg.apresentacao_desktop.TelaProduto;
 
 import Util.Util;
 import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.Lote;
 import br.edu.ifnmg.auxiliares.LoteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
@@ -16,26 +17,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author gabriel
  */
-public class LoteTela extends javax.swing.JInternalFrame {
+public class LoteTela extends javax.swing.JInternalFrame implements InternalFrameListener{
 
-    private Produto produto;
     private Estoque estoque;
-    private ProdutoRepositorio produtoRepositorio;
+    private EstoqueRepositorio estoqueRepositorio;
     private LoteRepositorio loteRepositorio;
     
     /**
      * Creates new form Lote
      */
     public LoteTela(Estoque estoque) {
-        this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
+        this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         this.loteRepositorio = RepositorioFactory.getLoteRepositorio();
-        this.produto = new Produto();
         this.estoque = estoque;
         initComponents();
         renderizarLotes(estoque.getLotes());
@@ -46,7 +47,8 @@ public class LoteTela extends javax.swing.JInternalFrame {
         modelo.addColumn("#");
         modelo.addColumn("ID");
         modelo.addColumn("Lote");
-        modelo.addColumn("QTDE. em Estoque");
+        modelo.addColumn("Em Estoque");
+        modelo.addColumn("Nas Prateleiras");
         modelo.addColumn("Fabricação");
         modelo.addColumn("Vencimento");
         
@@ -56,7 +58,8 @@ public class LoteTela extends javax.swing.JInternalFrame {
             linha.add((i+1));
             linha.add(estoque.getLotes().get(i).getId());
             linha.add(estoque.getLotes().get(i).getCodigo());
-            linha.add(estoque.getLotes().get(i).getQuantidade());
+            linha.add(estoque.getLotes().get(i).getEmEstoque());
+            linha.add(estoque.getLotes().get(i).getNasPrateleiras());
             linha.add(Util.getStringDateFromCalendar(lotes.get(i).getDataFabricacao()));
             linha.add(Util.getStringDateFromCalendar(lotes.get(i).getDataValidade()));
             modelo.addRow(linha);
@@ -78,7 +81,11 @@ public class LoteTela extends javax.swing.JInternalFrame {
         tableResultadoLote = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
 
         comboVencimento.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -102,6 +109,11 @@ public class LoteTela extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableResultadoLote.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableResultadoLoteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableResultadoLote);
 
         jPanel1.setBackground(new java.awt.Color(140, 71, 71));
@@ -127,6 +139,29 @@ public class LoteTela extends javax.swing.JInternalFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        jPanel2.setBackground(new java.awt.Color(208, 208, 208));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setBackground(new java.awt.Color(109, 46, 46));
+        jButton1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Novo Lote");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 140, 40));
+
+        jButton2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jButton2.setText("Voltar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 150, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,6 +172,7 @@ public class LoteTela extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(comboVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,7 +181,9 @@ public class LoteTela extends javax.swing.JInternalFrame {
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(comboVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -177,12 +215,77 @@ public class LoteTela extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_comboVencimentoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LoteEditar loteEditar = new LoteEditar(this.estoque, new Lote(), "Novo Lote");
+        ProdutoTela.jDesktopPane1.add(loteEditar);
+        Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
+        loteEditar.addInternalFrameListener(this);
+        loteEditar.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tableResultadoLoteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoLoteMouseClicked
+        int linha = this.tableResultadoLote.getSelectedRow();
+        long id = (long)this.tableResultadoLote.getValueAt(linha, 1);
+        Lote l = null;
+        for(Lote find : this.estoque.getLotes()){
+            if(find.getId() == id){
+                l = find; 
+            }
+        }
+        LoteEditar loteEditar = new LoteEditar(this.estoque, l, "Editar Lote");
+        ProdutoTela.jDesktopPane1.add(loteEditar);
+        Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
+        loteEditar.addInternalFrameListener(this);
+        loteEditar.setVisible(true);
+    }//GEN-LAST:event_tableResultadoLoteMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboVencimento;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableResultadoLote;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {
+        ProdutoRepositorio produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
+        Produto p = new Produto();
+        p.setEstoque(this.estoque);
+        
+        this.estoqueRepositorio.Salvar(this.estoque);
+        this.renderizarLotes(this.estoque.getLotes());
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {
+    }
 }

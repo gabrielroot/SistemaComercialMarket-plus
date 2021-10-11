@@ -741,13 +741,13 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         String email = util.abrirInputPasswordDialog("Informe o EMAIL do administrador", false, this);
         if(!email.isEmpty()){
             String senha = util.abrirInputPasswordDialog("Informe a SENHA do administrador", true, this);
-            if(usuarioRepositorio.Autenticar(email, senha) != null){
+            if(usuarioRepositorio.ValidarAdmin(email, senha) != null){
                 CaixaTela.transacaoFinanceira.getItens().clear();
                 this.renderProdutos(transacaoFinanceira.getItens());
                 this.atualizarTotal();
                 util.abrirJOptionPane("sucesso","",this);
             }else if(!senha.isEmpty()){
-                util.abrirJOptionPane("erro", "Email ou senha incorretos", this);
+                util.abrirJOptionPane("erro", "Email ou senha incorretos. Certifique-se de que é um Administrador", this);
             }
         }
     }

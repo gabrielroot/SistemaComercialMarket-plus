@@ -11,14 +11,17 @@ import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.TelaCaixa.ListarProdutos;
 import br.edu.ifnmg.auxiliares.Lote;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.math.BigDecimal;
 
 /**
  *
  * @author gabriel
  */
-public class ProdutoEditar extends javax.swing.JInternalFrame {
+public class ProdutoEditar extends javax.swing.JInternalFrame implements KeyListener{
     static Produto produto;
     private Util util;
     private ProdutoRepositorio produtoRepositorio;
@@ -44,6 +47,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
         }
         
         this.setComponentes();
+        this.txtNome.addKeyListener(this);
     }
 
     public static Produto getProduto() { return produto; }
@@ -577,6 +581,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.getComponentes(false);
         ProdutoTela.setProduto(ProdutoEditar.produto);
+        ListarProdutos.produto = ProdutoEditar.produto;
         this.dispose();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -653,5 +658,22 @@ public class ProdutoEditar extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtValorCompra;
     private javax.swing.JFormattedTextField txtValorVarejo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ESCAPE){
+            this.dispose();
+        }
+    }
 
 }

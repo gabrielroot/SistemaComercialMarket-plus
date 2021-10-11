@@ -12,3 +12,13 @@ O desenvolvimento desse software busca resolver alguns problemas relacionados ao
 Será necessário ter as tecnologias mencionadas acima instaladas.
 
 ### Execução
+
+## Capturas
+### Tela Principal
+![TelaPrincipal](homeScreen.png "TelaPrincipal")
+### Tela de Login
+![loginScreen](loginScreen.png "loginScreen")]
+### Tela de Gerenciamento de pessoas
+![peopleScreen](peopleScreen.png "peopleScreen")
+### Tela de Gestão de Estoque
+![productScreen](productScreen.png "productScreen")

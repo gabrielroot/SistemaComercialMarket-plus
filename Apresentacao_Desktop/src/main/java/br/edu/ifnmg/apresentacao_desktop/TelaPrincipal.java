@@ -11,6 +11,8 @@ import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
+import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
        
         TelaPrincipal.usuario = usuario;
         
-        initDesenvolvedor();
+        initDesenvolvedor(true);
    
         TelaPrincipal.permissions = new HashMap<>();
         TelaPrincipal.initRemovePermissions();
@@ -137,15 +139,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaPrincipal.permissions.put(UsuarioTipo.Balconista, removePermissaoBalconista);
         TelaPrincipal.permissions.put(UsuarioTipo.Caixa, removePermissaoCaixa);
     }
-    public boolean initDesenvolvedor(){
-        if(TelaPrincipal.usuario.getId() == 0){
-            TelaPrincipal.usuario.setNome("Desenvolvedor");
-            TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Gerente);
+    public void initDesenvolvedor(boolean iniciarDev){
+        if(TelaPrincipal.usuario.getId() == 0 && iniciarDev){
             System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
+            UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
+            Usuario dev = usuarioRepositorio.Abrir(1000L);
+            TelaPrincipal.setUsuario(dev);
             
-            return true;
+        }else{
+            System.exit(0);
         }
-        return false;
     }
     public boolean temPermissao(String query){
         for(String permissaoNegada : permissions.get(TelaPrincipal.usuario.getUsuarioTipo())){

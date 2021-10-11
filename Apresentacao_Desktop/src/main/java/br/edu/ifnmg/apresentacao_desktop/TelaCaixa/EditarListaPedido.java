@@ -37,9 +37,9 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         this.txtQuantidade.setText(itemVenda.getQuantidade().toString());
         this.txtSubTotal.setText(itemVenda.getSubTotal().toString());
         if(CaixaTela.isAtacado(itemVenda)){
-            this.txtValor.setText(itemVenda.getProduto().getValorVarejo().toString());
-        }else{
             this.txtValor.setText(itemVenda.getProduto().getValorAtacado().toString());
+        }else{
+            this.txtValor.setText(itemVenda.getProduto().getValorVarejo().toString());
         }
         
         
@@ -51,7 +51,6 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
             util.abrirJOptionPane("erro", "A quantidade deve ser maior que 0", this);
             return false;
         }
-        //Buscar estoque separadamente
         EstoqueRepositorio estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         Estoque itemEstoque = estoqueRepositorio.Abrir(itemVenda.getProduto().getEstoque().getId());
         if(BigDecimal.valueOf(itemEstoque.getSomaPrateleiras()).compareTo(new BigDecimal(this.txtQuantidade.getText())) >= 0){

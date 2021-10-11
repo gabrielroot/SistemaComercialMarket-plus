@@ -5,6 +5,7 @@
  */
 package br.edu.ifnmg.persistencia;
 
+import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import java.util.Hashtable;
@@ -74,6 +75,27 @@ public class UsuarioDAO extends DataAccessObject<Usuario> implements UsuarioRepo
         Query sql =  this.manager.createQuery("SELECT usuario from Usuario usuario WHERE usuario.email = :email and usuario.senha = :senha");
         sql.setParameter("email", email);
         sql.setParameter("senha", senha);
+        
+        Usuario user = null;
+        
+        try{
+            List<Usuario> users = sql.getResultList();
+            if(users.size() > 0){
+                user = (Usuario) users.get(0);
+            }
+        }catch(NoResultException ex){
+            System.out.println(ex);
+        }
+        
+        return user;
+    }
+    
+    @Override
+    public Usuario ValidarAdmin(String email, String senha){
+        Query sql =  this.manager.createQuery("SELECT usuario from Usuario usuario WHERE usuario.email = :email and usuario.senha = :senha and usuario.usuarioTipo = :tipo");
+        sql.setParameter("email", email);
+        sql.setParameter("senha", senha);
+        sql.setParameter("tipo", UsuarioTipo.Administrador);
         
         Usuario user = null;
         

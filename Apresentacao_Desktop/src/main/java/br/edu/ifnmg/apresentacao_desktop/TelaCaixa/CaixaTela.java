@@ -648,7 +648,12 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         transacaoFinanceira.setUsuario(usuarioRepositorio.Abrir(transacaoFinanceira.getUsuario().getId()));
         TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio = RepositorioFactory.getTransacaoFinanceiraRepositorio();
         transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
+        
         util.abrirJOptionPane("sucesso","Compra \"finalizada\". Veja a saída no console!",this);
+
+        transacaoFinanceira.getItens().clear();
+        this.renderProdutos(transacaoFinanceira.getItens());
+        this.atualizarTotal();
     }
     
     private void adicionarProduto(){
@@ -666,8 +671,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 
                 for(ItemVenda item : transacaoFinanceira.getItens()){
                     if(Objects.equals(item.getProduto().getId(), produtoEncontrado.getId())){
-                        //buscar estoque separadamente
-                        if(BigDecimal.valueOf(produtoEncontrado.getEstoque().getSomaPrateleiras()).compareTo(item.getQuantidade().add(BigDecimal.ONE)) >= 0){
+                        Estoque itemEstoque = estoqueRepositorio.Abrir(item.getProduto().getEstoque().getId());
+                        if(BigDecimal.valueOf(itemEstoque.getSomaPrateleiras()).compareTo(item.getQuantidade().add(BigDecimal.ONE)) >= 0){
                             item.setQuantidade(item.getQuantidade().add(BigDecimal.ONE));
                             if(isAtacado(item)){
                                 item.setSubTotal(item.getSubTotal(item.getProduto().getValorAtacado()));

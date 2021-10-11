@@ -1,6 +1,8 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
 import Util.Util;
+import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.ItemVenda;
 import br.edu.ifnmg.auxiliares.ItemVendaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
@@ -50,7 +52,9 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
             return false;
         }
         //Buscar estoque separadamente
-        if(BigDecimal.valueOf(itemVenda.getProduto().getEstoque().getSomaPrateleiras()).compareTo(new BigDecimal(this.txtQuantidade.getText())) >= 0){
+        EstoqueRepositorio estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
+        Estoque itemEstoque = estoqueRepositorio.Abrir(itemVenda.getProduto().getEstoque().getId());
+        if(BigDecimal.valueOf(itemEstoque.getSomaPrateleiras()).compareTo(new BigDecimal(this.txtQuantidade.getText())) >= 0){
             itemVenda.setQuantidade(new BigDecimal(this.txtQuantidade.getText()));
             if(CaixaTela.isAtacado(itemVenda)){
                 itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorAtacado()));
@@ -58,7 +62,7 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
                 itemVenda.setSubTotal(new BigDecimal(this.txtQuantidade.getText()).multiply(itemVenda.getProduto().getValorVarejo()));
             }
         }else{
-            this.txtQuantidade.setText(String.valueOf(itemVenda.getProduto().getEstoque().getSomaPrateleiras()));
+            this.txtQuantidade.setText(String.valueOf(itemEstoque.getSomaPrateleiras()));
             util.abrirJOptionPane("erro", "Quantidade não disponível nas prateleiras", this);
             return false;
         }

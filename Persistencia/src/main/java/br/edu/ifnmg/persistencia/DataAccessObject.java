@@ -36,7 +36,6 @@ public abstract class DataAccessObject<T> implements Repositorio<T>{
                 transacao.rollback();
                 transacao.begin();
                 this.manager.persist(obj);
-                System.out.println("Passou");
             }
 
             transacao.commit();
@@ -53,11 +52,8 @@ public abstract class DataAccessObject<T> implements Repositorio<T>{
     
     private boolean Merge(T obj){
         try{
-            System.out.println("Criando merge.");
             this.manager.merge(obj);
-
         }catch(Exception ex){
-            System.out.println("Erro merge. Criando novo");
             return false;
         }
         return true;

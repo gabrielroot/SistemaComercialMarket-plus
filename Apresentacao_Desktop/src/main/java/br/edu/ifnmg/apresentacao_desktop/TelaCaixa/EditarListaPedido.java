@@ -49,7 +49,7 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
             util.abrirJOptionPane("erro", "A quantidade deve ser maior que 0", this);
             return false;
         }
-        
+        //Buscar estoque separadamente
         if(BigDecimal.valueOf(itemVenda.getProduto().getEstoque().getSomaPrateleiras()).compareTo(new BigDecimal(this.txtQuantidade.getText())) >= 0){
             itemVenda.setQuantidade(new BigDecimal(this.txtQuantidade.getText()));
             if(CaixaTela.isAtacado(itemVenda)){
@@ -122,10 +122,7 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(txtProductName)
-                .addContainerGap(22, Short.MAX_VALUE))
+            .addComponent(txtProductName, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
         );
 
         jLabel2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N

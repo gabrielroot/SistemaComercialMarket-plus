@@ -31,9 +31,14 @@ public abstract class DataAccessObject<T> implements Repositorio<T>{
         EntityTransaction transacao = this.manager.getTransaction();
         try {
             transacao.begin();
-            
-            this.manager.persist(obj);
-            
+
+            if(!Merge(obj)){
+                transacao.rollback();
+                transacao.begin();
+                this.manager.persist(obj);
+                System.out.println("Passou");
+            }
+
             transacao.commit();
             
             return true;
@@ -44,6 +49,18 @@ public abstract class DataAccessObject<T> implements Repositorio<T>{
             
             return false;
         }
+    }
+    
+    private boolean Merge(T obj){
+        try{
+            System.out.println("Criando merge.");
+            this.manager.merge(obj);
+
+        }catch(Exception ex){
+            System.out.println("Erro merge. Criando novo");
+            return false;
+        }
+        return true;
     }
 
     @Override

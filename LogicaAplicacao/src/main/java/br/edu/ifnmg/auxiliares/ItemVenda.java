@@ -70,6 +70,11 @@ public class ItemVenda implements Serializable {
 
     public BigDecimal getSubTotal() { return subTotal; }
     public BigDecimal getSubTotal(BigDecimal valorUnitario) { return quantidade.multiply(valorUnitario); }
+    
+    /**
+     *
+     * @param subTotal
+     */
     public void setSubTotal(BigDecimal subTotal) { this.subTotal = subTotal; }
 
     public Produto getProduto() { return produto; }

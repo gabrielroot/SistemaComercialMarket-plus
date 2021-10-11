@@ -8,12 +8,12 @@ package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
  *
  * @author gabriel
  */
-public class VendaAtacado extends javax.swing.JInternalFrame {
+public class AutenticarCliente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VendaAtacado
      */
-    public VendaAtacado() {
+    public AutenticarCliente() {
         initComponents();
     }
 
@@ -80,9 +80,11 @@ public class VendaAtacado extends javax.swing.JInternalFrame {
         jPasswordField1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(8, 8, 8));
 
+        jButton1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButton1.setText("Cancelar");
 
         jButton2.setBackground(new java.awt.Color(140, 71, 71));
+        jButton2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Autenticar");
 
@@ -93,7 +95,7 @@ public class VendaAtacado extends javax.swing.JInternalFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))

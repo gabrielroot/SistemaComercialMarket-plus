@@ -166,9 +166,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         headLayout.setHorizontalGroup(
             headLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headLayout.createSequentialGroup()
-                .addContainerGap(576, Short.MAX_VALUE)
+                .addContainerGap(579, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(576, Short.MAX_VALUE))
+                .addContainerGap(579, Short.MAX_VALUE))
         );
         headLayout.setVerticalGroup(
             headLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,15 +337,14 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         txtCancelCompra.setForeground(new java.awt.Color(8, 8, 8));
         txtCancelCompra.setText("- Cancelar Compra");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrowDown.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/esc.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCancelCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -354,10 +353,11 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtCancelCompra))
-                .addContainerGap())
+                .addComponent(txtCancelCompra)
+                .addGap(16, 16, 16))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(167, 167, 167));
@@ -453,7 +453,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(painelRepetir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         bottomLayout.setVerticalGroup(
@@ -666,6 +666,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 
                 for(ItemVenda item : transacaoFinanceira.getItens()){
                     if(Objects.equals(item.getProduto().getId(), produtoEncontrado.getId())){
+                        //buscar estoque separadamente
                         if(BigDecimal.valueOf(produtoEncontrado.getEstoque().getSomaPrateleiras()).compareTo(item.getQuantidade().add(BigDecimal.ONE)) >= 0){
                             item.setQuantidade(item.getQuantidade().add(BigDecimal.ONE));
                             if(isAtacado(item)){
@@ -709,7 +710,11 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             ItemVenda it = this.transacaoFinanceira.getItens().get(this.transacaoFinanceira.getItens().size() -1);
             if(BigDecimal.valueOf(it.getProduto().getEstoque().getSomaPrateleiras()).compareTo(it.getQuantidade().add(BigDecimal.ONE)) >= 0){
                 it.setQuantidade(it.getQuantidade().add(BigDecimal.ONE));
-                it.setSubTotal(it.getSubTotal(it.getProduto().getValorVarejo()));
+                if(CaixaTela.isAtacado(it)){
+                    it.setSubTotal(it.getSubTotal(it.getProduto().getValorAtacado()));
+                }else{
+                    it.setSubTotal(it.getSubTotal(it.getProduto().getValorVarejo()));
+                }
 
                 this.renderProdutos(transacaoFinanceira.getItens());
                 this.atualizarTotal();
@@ -812,7 +817,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 Util.centralizaInternalFrame(listarProdutos, this.getSize());
                 listarProdutos.setVisible(true);
                 break;
-            case java.awt.event.KeyEvent.VK_DOWN:
+            case java.awt.event.KeyEvent.VK_ESCAPE:
                 cancelarCompra();
                 break;
             case java.awt.event.KeyEvent.VK_RIGHT:

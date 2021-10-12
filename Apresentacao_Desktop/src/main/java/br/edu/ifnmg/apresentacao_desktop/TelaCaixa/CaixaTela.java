@@ -632,7 +632,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     }//GEN-LAST:event_painelRealizarPgtoMouseClicked
 
     private void painelRepetirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRepetirMouseClicked
-        adicionarProduto();
+        repetirUltimoProduto();
     }//GEN-LAST:event_painelRepetirMouseClicked
 
     private void finalizarCompra(){
@@ -713,7 +713,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     private void repetirUltimoProduto(){
         if(this.transacaoFinanceira.getItens().size() > 0){
             ItemVenda it = this.transacaoFinanceira.getItens().get(this.transacaoFinanceira.getItens().size() -1);
-            if(BigDecimal.valueOf(it.getProduto().getEstoque().getSomaPrateleiras()).compareTo(it.getQuantidade().add(BigDecimal.ONE)) >= 0){
+            Estoque itemEstoque = estoqueRepositorio.Abrir(it.getProduto().getEstoque().getId());
+            if(BigDecimal.valueOf(itemEstoque.getSomaPrateleiras()).compareTo(it.getQuantidade().add(BigDecimal.ONE)) >= 0){
                 it.setQuantidade(it.getQuantidade().add(BigDecimal.ONE));
                 if(CaixaTela.isAtacado(it)){
                     it.setSubTotal(it.getSubTotal(it.getProduto().getValorAtacado()));

@@ -6,9 +6,9 @@
 package br.edu.ifnmg.apresentacao_desktop;
 
 import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.TelaCaixa.CaixaTela;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
-import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 
 /**
@@ -24,6 +24,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
      */
     public TelaInicio(TelaPrincipal tela) {
         initComponents();
+        this.util = new Util();
         this.telaPrincipal = tela;
         this.labelUsuario.setText(telaPrincipal.getUsuario().getNome());
         this.labelCargoUsuario.setText("[ "+telaPrincipal.getUsuario().getUsuarioTipo().toString()+" ]");
@@ -49,7 +50,6 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelVender = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         lblVender = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         imgVender = new javax.swing.JLabel();
         panelRelatorios = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -180,9 +180,14 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelVender.setBackground(new java.awt.Color(224, 191, 191));
         panelVender.setForeground(new java.awt.Color(224, 191, 191));
-        panelVender.setToolTipText("");
+        panelVender.setToolTipText("Abrir módulo de caixa");
         panelVender.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelVender.setPreferredSize(new java.awt.Dimension(120, 140));
+        panelVender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelVenderMouseClicked(evt);
+            }
+        });
         panelVender.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(98, 57, 57));
@@ -207,14 +212,20 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         panelVender.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 104, 140, 40));
-        panelVender.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 30, -1, -1));
 
+        imgVender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sell.png"))); // NOI18N
-        panelVender.add(imgVender, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 0, -1, 100));
+        imgVender.setToolTipText("Abrir módulo de caixa");
+        imgVender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgVenderMouseClicked(evt);
+            }
+        });
+        panelVender.add(imgVender, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 100));
 
         panelRelatorios.setBackground(new java.awt.Color(224, 191, 191));
         panelRelatorios.setForeground(new java.awt.Color(224, 191, 191));
-        panelRelatorios.setToolTipText("");
+        panelRelatorios.setToolTipText("Gerar relatórios");
         panelRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelRelatorios.setPreferredSize(new java.awt.Dimension(120, 140));
         panelRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -245,6 +256,12 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboard.png"))); // NOI18N
+        imgRelatorios.setToolTipText("Gerar relatórios");
+        imgRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgRelatoriosMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRelatoriosLayout = new javax.swing.GroupLayout(panelRelatorios);
         panelRelatorios.setLayout(panelRelatoriosLayout);
@@ -266,7 +283,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelEstoque.setBackground(new java.awt.Color(224, 191, 191));
         panelEstoque.setForeground(new java.awt.Color(224, 191, 191));
-        panelEstoque.setToolTipText("");
+        panelEstoque.setToolTipText("Gerir produtos, lotes e estoque");
         panelEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelEstoque.setPreferredSize(new java.awt.Dimension(120, 140));
         panelEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -299,6 +316,12 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/product.png"))); // NOI18N
+        imgEstoque.setToolTipText("Gerir produtos, lotes e estoque");
+        imgEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgEstoqueMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelEstoqueLayout = new javax.swing.GroupLayout(panelEstoque);
         panelEstoque.setLayout(panelEstoqueLayout);
@@ -321,7 +344,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelComprar.setBackground(new java.awt.Color(224, 191, 191));
         panelComprar.setForeground(new java.awt.Color(224, 191, 191));
-        panelComprar.setToolTipText("");
+        panelComprar.setToolTipText("Transação financeira de compra com fornecedores");
         panelComprar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelComprar.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -349,6 +372,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supplier.png"))); // NOI18N
+        imgComprar.setToolTipText("Transação financeira de compra com fornecedores");
 
         javax.swing.GroupLayout panelComprarLayout = new javax.swing.GroupLayout(panelComprar);
         panelComprar.setLayout(panelComprarLayout);
@@ -371,7 +395,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel10.setBackground(new java.awt.Color(224, 191, 191));
         jPanel10.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel10.setToolTipText("");
+        jPanel10.setToolTipText("[VOID]");
         jPanel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel10.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -413,7 +437,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelCrediario.setBackground(new java.awt.Color(224, 191, 191));
         panelCrediario.setForeground(new java.awt.Color(224, 191, 191));
-        panelCrediario.setToolTipText("");
+        panelCrediario.setToolTipText("Gerir crediário de clientes");
         panelCrediario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelCrediario.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -439,6 +463,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgCrediario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/crediario.png"))); // NOI18N
+        imgCrediario.setToolTipText("Gerir crediário de clientes");
 
         javax.swing.GroupLayout panelCrediarioLayout = new javax.swing.GroupLayout(panelCrediario);
         panelCrediario.setLayout(panelCrediarioLayout);
@@ -446,7 +471,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
             panelCrediarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCrediarioLayout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(34, Short.MAX_VALUE)
                 .addComponent(imgCrediario)
                 .addGap(26, 26, 26))
         );
@@ -460,7 +485,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelFinanceiro.setBackground(new java.awt.Color(224, 191, 191));
         panelFinanceiro.setForeground(new java.awt.Color(224, 191, 191));
-        panelFinanceiro.setToolTipText("");
+        panelFinanceiro.setToolTipText("Gerir fluxo monetário");
         panelFinanceiro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelFinanceiro.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -486,6 +511,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance.png"))); // NOI18N
+        imgFinanceiro.setToolTipText("Gerir fluxo monetário");
 
         javax.swing.GroupLayout panelFinanceiroLayout = new javax.swing.GroupLayout(panelFinanceiro);
         panelFinanceiro.setLayout(panelFinanceiroLayout);
@@ -507,7 +533,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         panelPessoas.setBackground(new java.awt.Color(224, 191, 191));
         panelPessoas.setForeground(new java.awt.Color(224, 191, 191));
-        panelPessoas.setToolTipText("");
+        panelPessoas.setToolTipText("Gestão de todos os indivíduos envolvidos no negócio");
         panelPessoas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelPessoas.setPreferredSize(new java.awt.Dimension(120, 140));
         panelPessoas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -540,6 +566,12 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         );
 
         imgPessoas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/people.png"))); // NOI18N
+        imgPessoas.setToolTipText("Gestão de todos os indivíduos envolvidos no negócio");
+        imgPessoas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgPessoasMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPessoasLayout = new javax.swing.GroupLayout(panelPessoas);
         panelPessoas.setLayout(panelPessoasLayout);
@@ -561,7 +593,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel21.setBackground(new java.awt.Color(224, 191, 191));
         jPanel21.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel21.setToolTipText("");
+        jPanel21.setToolTipText("[VOID]");
         jPanel21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel21.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -603,7 +635,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel23.setBackground(new java.awt.Color(224, 191, 191));
         jPanel23.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel23.setToolTipText("");
+        jPanel23.setToolTipText("[VOID]");
         jPanel23.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel23.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -645,7 +677,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel25.setBackground(new java.awt.Color(224, 191, 191));
         jPanel25.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel25.setToolTipText("");
+        jPanel25.setToolTipText("[VOID]");
         jPanel25.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel25.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -660,7 +692,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         jPanel26Layout.setHorizontalGroup(
             jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel26Layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel20)
                 .addGap(33, 33, 33))
         );
@@ -687,7 +719,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         jPanel27.setBackground(new java.awt.Color(224, 191, 191));
         jPanel27.setForeground(new java.awt.Color(224, 191, 191));
-        jPanel27.setToolTipText("");
+        jPanel27.setToolTipText("[VOID]");
         jPanel27.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel27.setPreferredSize(new java.awt.Dimension(120, 140));
 
@@ -745,12 +777,12 @@ public class TelaInicio extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelCrediario, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(panelCrediario, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(24, 24, 24)
+                                .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel27, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
@@ -836,6 +868,51 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_panelEstoqueMouseClicked
 
+    private void imgVenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgVenderMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_CAIXA")){
+            CaixaTela caixaTela = new CaixaTela();
+            this.telaPrincipal.renderJInternalFrame(caixaTela);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_imgVenderMouseClicked
+
+    private void imgRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgRelatoriosMouseClicked
+        TelaRelatorios telaRelatorios = new TelaRelatorios();
+        if(this.telaPrincipal.temPermissao("TELA_RELATORIOS")){
+            this.telaPrincipal.renderJInternalFrame(telaRelatorios);
+        }else{
+            util.abrirJOptionPane("permissao", "",this);
+        }
+    }//GEN-LAST:event_imgRelatoriosMouseClicked
+
+    private void imgEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgEstoqueMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_PRODUTO")){
+            ProdutoTela produtoEditar = new ProdutoTela();
+            this.telaPrincipal.renderJInternalFrame(produtoEditar);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_imgEstoqueMouseClicked
+
+    private void imgPessoasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgPessoasMouseClicked
+        TelaPessoas pessoas = new TelaPessoas(this.telaPrincipal);
+        if(telaPrincipal.temPermissao("TELA_PESSOAS")){
+            this.telaPrincipal.renderJInternalFrame(pessoas);
+        }else{
+            util.abrirJOptionPane("permissao", "",this);
+        }
+    }//GEN-LAST:event_imgPessoasMouseClicked
+
+    private void panelVenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelVenderMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_CAIXA")){
+            CaixaTela caixaTela = new CaixaTela();
+            this.telaPrincipal.renderJInternalFrame(caixaTela);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_panelVenderMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEncerrarSessao;
@@ -847,7 +924,6 @@ public class TelaInicio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel imgRelatorios;
     private javax.swing.JLabel imgUsuario;
     private javax.swing.JLabel imgVender;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;

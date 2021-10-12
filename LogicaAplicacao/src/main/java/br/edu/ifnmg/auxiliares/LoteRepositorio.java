@@ -6,7 +6,6 @@
 package br.edu.ifnmg.auxiliares;
 
 import br.edu.ifnmg.logicaAplicacao.*;
-import java.util.List;
 
 /**
  *

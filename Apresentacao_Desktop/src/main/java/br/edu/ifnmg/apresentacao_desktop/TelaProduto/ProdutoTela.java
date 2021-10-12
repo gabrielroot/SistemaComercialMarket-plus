@@ -7,9 +7,8 @@ package br.edu.ifnmg.apresentacao_desktop.TelaProduto;
 
 import Util.Util;
 import br.edu.ifnmg.auxiliares.Estoque;
+import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.Lote;
-import br.edu.ifnmg.enums.LocalizacaoProduto;
-import br.edu.ifnmg.enums.UnidadeMedida;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
@@ -17,18 +16,19 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import javax.swing.JInternalFrame;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author gabriel
  */
-public class ProdutoTela extends javax.swing.JInternalFrame {
+public class ProdutoTela extends javax.swing.JInternalFrame implements InternalFrameListener{
 
-    private Produto produto;
-    private Lote lote;
+    private static Produto produto;
     private ProdutoRepositorio produtoRepositorio;
+    private EstoqueRepositorio estoqueRepositorio;
     private Util util;
     
     /**
@@ -36,13 +36,23 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
      */
     public ProdutoTela() {
         initComponents();
-        this.produto = new Produto();
+        
+        ProdutoTela.produto = new Produto();
+        Estoque estoque = new Estoque();
+        List lotes = new ArrayList<>();
+        Lote lote = new Lote();        
+        lotes.add(lote);
+        estoque.setLotes(lotes);
+        ProdutoTela.produto.setEstoque(estoque);
+        
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
+        this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         this.util = new Util();
-        this.buscarProduto();
-        initTabProdutos();
-        jDesktopPane1.setBackground(null);
+        this.initTabProdutos();
     }
+
+    public static Produto getProduto() { return produto; }
+    public static void setProduto(Produto produto) { ProdutoTela.produto = produto; }
     
     private void initTab(){
         switch(jTabbedPane1.getSelectedIndex()){
@@ -56,76 +66,43 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
     }
     
     private void initTabProdutos(){
-        for(LocalizacaoProduto segmento: LocalizacaoProduto.values()){
-            this.comboLocalizacaoProduto.addItem(segmento.toString());
-        }
-        
-        for(UnidadeMedida unidadeMedida: UnidadeMedida.values()){
-            this.comboUnidadeVenda.addItem(unidadeMedida.toString());
-        }
-        
         buscarProduto();
     }
     
     private void initTabEstoque(){
-        List<Produto> resultado = this.produtoRepositorio.Buscar(produto);
+        List<Produto> resultado = this.produtoRepositorio.Buscar(new Produto());
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
         modelo.addColumn("ID");
         modelo.addColumn("Nome");
         modelo.addColumn("Local");
-        modelo.addColumn("QTDE. em Estoque");
+        modelo.addColumn("Num. Lotes");
+        modelo.addColumn("Em Estoque");
+        modelo.addColumn("Nas Prateleiras");
         modelo.addColumn("QTDE. Min Desejada");
-        modelo.addColumn("Data de Vencimento");
         
-        for(int i=0;i<resultado.size(); i++){
+        for( int i=0; i < resultado.size(); i++ ){
+            Estoque resultEstoque = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());
             Vector linha = new Vector();
             
             linha.add((i+1));
-            linha.add(resultado.get(i).getId());
+            linha.add(resultado.get(i).getEstoque().getId());
             linha.add(resultado.get(i).getNome());
-            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
-            linha.add(resultado.get(i).getEstoque().getSomaLotes());
-            linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
-            linha.add(Util.getStringDateFromCalendar(resultado.get(i).getEstoque().getLotes().get(0).getDataValidade()));
+            linha.add(resultEstoque.getLocalizacaoProduto());
+            linha.add(resultEstoque.getLotes().size());
+            linha.add(resultEstoque.getSomaLotes());
+            linha.add(resultEstoque.getSomaPrateleiras());
+            linha.add(resultEstoque.getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
         }
         tableResultadoEstoque.setModel(modelo);
     }
     
-    private void buscarProduto(){
-        Estoque estoque = new Estoque();
-        List lotes = new ArrayList<>();
-        Lote lote = new Lote();
-        lotes.add(lote);
-        
-        this.produto.setNome(this.txtNome.getText());    
-        
-        LocalizacaoProduto filter = null;
-        for(LocalizacaoProduto local: LocalizacaoProduto.values()){
-            if(this.comboLocalizacaoProduto.getSelectedItem().equals(local.toString())){
-                filter = local;
-                break;
-            }
-        }
-        estoque.setLocalizacaoProduto(filter);
-        
-        estoque.setLotes(lotes);
-        produto.setEstoque(estoque);
-        
-        UnidadeMedida filter2 = null;
-        for(UnidadeMedida unidade: UnidadeMedida.values()){
-            if(this.comboUnidadeVenda.getSelectedItem().equals(unidade.toString())){
-                filter2 = unidade;
-                break;
-            }
-        }
-        produto.setUnidadeMedidaVenda(filter2);
-        
-        List<Produto> resultado = this.produtoRepositorio.Buscar(produto);
+    public void buscarProduto(){
+        List<Produto> resultado = this.produtoRepositorio.Buscar(ProdutoTela.produto);
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
-        modelo.addColumn("ID");
+        modelo.addColumn("Código");
         if(checkNome.isSelected()) modelo.addColumn("Nome");
         if(checkDescricao.isSelected()) modelo.addColumn("Descrição");
         modelo.addColumn("QTDE. nas Prateleiras");
@@ -138,9 +115,9 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         modelo.addColumn("Local");
         if(checkQTDEstoque.isSelected()) modelo.addColumn("QTDE. em Estoque");
         modelo.addColumn("QTDE. MÍN. em Estoque");
-        modelo.addColumn("Data de Vencimento");
         
         for(int i=0;i<resultado.size(); i++){
+            Estoque resultadoEstoque = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());
             Vector linha = new Vector();
             
             linha.add((i+1));
@@ -149,20 +126,19 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
                 linha.add(resultado.get(i).getNome());
             if(checkDescricao.isSelected())
                 linha.add(resultado.get(i).getDescricao());
-            linha.add(resultado.get(i).getQuantidadePrateleira());
+            linha.add(resultadoEstoque.getSomaPrateleiras());
             linha.add(resultado.get(i).getMinimoParaAtacado());
             if(checkUNDCompra.isSelected())
                 linha.add(resultado.get(i).getUnidadeMedidaCusto());
             if(checkUNDVenda.isSelected())
                 linha.add(resultado.get(i).getUnidadeMedidaVenda());
-            linha.add(resultado.get(i).getValorVarejo());
-            linha.add(resultado.get(i).getValorAtacado());
-            linha.add(resultado.get(i).getValorCusto());
-            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
+            linha.add(resultado.get(i).getValorVarejo().toString().replace(".", ","));
+            linha.add(resultado.get(i).getValorAtacado().toString().replace(".", ","));
+            linha.add(resultado.get(i).getValorCusto().toString().replace(".", ","));
+            linha.add(resultadoEstoque.getLocalizacaoProduto());
             if(checkQTDEstoque.isSelected())
-                linha.add(resultado.get(i).getEstoque().getLotes().get(0).getQuantidade());  //QUANTIDADE EM ESTOQUE == SOMA DE TODOS OS LOTES
-            linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
-            linha.add(Util.getStringDateFromCalendar(resultado.get(i).getEstoque().getLotes().get(0).getDataValidade()));
+                linha.add(resultadoEstoque.getSomaLotes());
+            linha.add(resultadoEstoque.getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
         }
         tblResultadoProdutos.setModel(modelo);
@@ -202,12 +178,9 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        comboUnidadeVenda = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        comboLocalizacaoProduto = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableResultadoEstoque = new javax.swing.JTable();
@@ -241,7 +214,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
-        jTabbedPane1.setForeground(new java.awt.Color(0, 0, 0));
+        jTabbedPane1.setForeground(new java.awt.Color(54, 54, 54));
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane1MouseClicked(evt);
@@ -345,25 +318,21 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         jButton2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jButton2.setForeground(new java.awt.Color(8, 8, 8));
         jButton2.setText("Busca Avançada");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(181, 181, 181));
         jButton3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jButton3.setForeground(new java.awt.Color(8, 8, 8));
         jButton3.setText("Novo Produto");
-
-        comboUnidadeVenda.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        comboUnidadeVenda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
-
-        jLabel3.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(8, 8, 8));
-        jLabel3.setText("Unidade de Venda:");
-
-        comboLocalizacaoProduto.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        comboLocalizacaoProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
-
-        jLabel4.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(8, 8, 8));
-        jLabel4.setText("Local:");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         txtNome.setBackground(new java.awt.Color(255, 255, 255));
         txtNome.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -377,6 +346,16 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(8, 8, 8));
         jLabel2.setText("Nome:");
+
+        jButton4.setBackground(new java.awt.Color(208, 208, 208));
+        jButton4.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(8, 8, 8));
+        jButton4.setText("Limpar Filtros");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -400,48 +379,34 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(checkQTDEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(comboUnidadeVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(comboLocalizacaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 868, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(117, 117, 117)))
                 .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboUnidadeVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboLocalizacaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -479,6 +444,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableResultadoEstoque.setToolTipText("Clique para ver os lotes do produto");
         tableResultadoEstoque.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableResultadoEstoqueMouseClicked(evt);
@@ -494,9 +460,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Estoque", jPanel3);
@@ -534,13 +498,18 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ProdutoTela.produto.setNome(this.txtNome.getText());
         this.buscarProduto();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tblResultadoProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoProdutosMouseClicked
-        this.util = new Util();
-        ProdutoEditar produtoEditar = new ProdutoEditar();
-        this.jDesktopPane1.add(produtoEditar);
+        int linha = this.tblResultadoProdutos.getSelectedRow();
+        long id = (long)this.tblResultadoProdutos.getValueAt(linha, 1);
+        Produto p = produtoRepositorio.Abrir(id); 
+        ProdutoEditar produtoEditar = new ProdutoEditar(p, "Editar Produto");
+        ProdutoTela.jDesktopPane1.add(produtoEditar);
+        Util.centralizaInternalFrame(produtoEditar, this.getSize());
+        produtoEditar.addInternalFrameListener(this);
         produtoEditar.setVisible(true);
     }//GEN-LAST:event_tblResultadoProdutosMouseClicked
 
@@ -573,14 +542,52 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void tableResultadoEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoEstoqueMouseClicked
+        EstoqueRepositorio estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         int linha = this.tableResultadoEstoque.getSelectedRow();
         long id = (long)this.tableResultadoEstoque.getValueAt(linha, 1);
-        Estoque estoque = produtoRepositorio.Abrir(id).getEstoque();
-        LoteTela lote = new LoteTela(estoque);
-        jDesktopPane1.add(lote);
-        Util.centralizaInternalFrame(lote, this.getSize());
-        lote.setVisible(true);
+        Estoque estoque = estoqueRepositorio.Abrir(id);
+        LoteTela loteTela = new LoteTela(estoque);
+        loteTela.addInternalFrameListener(this);
+        jDesktopPane1.add(loteTela);
+        Util.centralizaInternalFrame(loteTela, this.getSize());
+        loteTela.setVisible(true);
     }//GEN-LAST:event_tableResultadoEstoqueMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       ProdutoEditar produtoEditar = new ProdutoEditar(new Produto(), "Novo Produto");
+       jDesktopPane1.add(produtoEditar);
+       Util.centralizaInternalFrame(produtoEditar, this.getSize());
+       produtoEditar.addInternalFrameListener(this);
+       produtoEditar.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       ProdutoEditar produtoEditar = new ProdutoEditar(ProdutoTela.produto, "Buscar Produto");
+       jDesktopPane1.add(produtoEditar);
+       produtoEditar.addInternalFrameListener(this);
+       Util.centralizaInternalFrame(produtoEditar, this.getSize());
+       produtoEditar.setVisible(true);
+       this.buscarProduto();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void limparFiltros(){
+        ProdutoTela.produto = new Produto();
+        Estoque estoque = new Estoque();
+        List lotes = new ArrayList<>();
+        Lote lote = new Lote();        
+        lotes.add(lote);
+        estoque.setLotes(lotes);
+        ProdutoTela.produto.setEstoque(estoque);
+
+        this.txtNome.setText("");
+    }
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if(util.abrirJOptionPane("confirma", "Deseja realmente limpar filtros?", null)){
+            limparFiltros();
+            this.buscarProduto();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -589,16 +596,13 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox checkQTDEstoque;
     private javax.swing.JCheckBox checkUNDCompra;
     private javax.swing.JCheckBox checkUNDVenda;
-    private javax.swing.JComboBox<String> comboLocalizacaoProduto;
-    private javax.swing.JComboBox<String> comboUnidadeVenda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private static javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JButton jButton4;
+    protected static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -612,4 +616,40 @@ public class ProdutoTela extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblResultadoProdutos;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {
+        if(e.getInternalFrame().getClass() == LoteTela.class){
+            limparFiltros();
+            this.initTabEstoque();
+        }
+        if(e.getInternalFrame().getClass() == ProdutoEditar.class){
+            this.initTabProdutos();
+        }
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {
+    }
+
 }

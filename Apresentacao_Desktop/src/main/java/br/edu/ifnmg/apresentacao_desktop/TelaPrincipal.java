@@ -5,21 +5,21 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
-import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 import Util.Util;
+import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
-import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
+import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
+import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
 /**
@@ -41,7 +41,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
        
         TelaPrincipal.usuario = usuario;
         
-        initDesenvolvedor();
+        initDesenvolvedor(true);
    
         TelaPrincipal.permissions = new HashMap<>();
         TelaPrincipal.initRemovePermissions();
@@ -56,10 +56,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaInicio telaPrincipal = new TelaInicio(this);
         TelaPrincipal.currentFrame = telaPrincipal;
         this.renderJInternalInicio(telaPrincipal);
-    }
-    
-    TelaPrincipal(){
-        
+         Toolkit tk = Toolkit.getDefaultToolkit();
+                            tk.beep();
     }
 
     public static JInternalFrame getCurrentFrame() { return currentFrame; }
@@ -67,7 +65,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     public static Usuario getUsuario() { return usuario; }
     public static void setUsuario(Usuario usuario) { TelaPrincipal.usuario = usuario; }
-
 
     public void renderJInternalInicio(JInternalFrame frame){
         this.add(frame);
@@ -84,7 +81,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
     public boolean renderJInternalFrame(JInternalFrame frame){
         if(TelaPrincipal.getCurrentFrame().getClass() != frame.getClass()){
-            TelaPrincipal.getCurrentFrame().setVisible(false);
+            TelaPrincipal.getCurrentFrame().dispose();
             TelaPrincipal.setCurrentFrame(frame);
             this.add(frame);
             frame.setVisible(true);
@@ -109,7 +106,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String TELA_COMPRA = "TELA_COMPRA";
         String TELA_PRODUTO = "TELA_PRODUTO";
         String TELA_FINANCEIRO = "TELA_FINANCEIRO";
-        String TELA_VENDAS = "TELA_VENDAS";
+        String TELA_CAIXA = "TELA_CAIXA";
         String TELA_PESSOAS__ABA_USUARIOS = "TELA_PESSOAS__ABA_USUARIOS";
         String TELA_PESSOAS__ABA_FORNECEDORES = "TELA_PESSOAS__ABA_FORNECEDORES";
         String TELA_PESSOAS__ABA_FUNCIONARIOS = "TELA_PESSOAS__ABA_FUNCIONARIOS";
@@ -117,10 +114,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArrayList<String> removePermissaoGerente = new ArrayList();
 
         ArrayList<String> removePermissaoAdm = new ArrayList();
-        removePermissaoAdm.add(TELA_VENDAS);
+        removePermissaoAdm.add(TELA_CAIXA);
         removePermissaoAdm.add(TELA_RELATORIOS);
         
         ArrayList<String> removePermissaoBalconista = new ArrayList();
+        removePermissaoBalconista.add(TELA_CAIXA);
         removePermissaoBalconista.add(TELA_COMPRA);
         removePermissaoBalconista.add(TELA_FINANCEIRO);
         removePermissaoBalconista.add(TELA_PRODUTO);
@@ -141,19 +139,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaPrincipal.permissions.put(UsuarioTipo.Balconista, removePermissaoBalconista);
         TelaPrincipal.permissions.put(UsuarioTipo.Caixa, removePermissaoCaixa);
     }
-    public boolean initDesenvolvedor(){
-        if(TelaPrincipal.usuario.getId() == 0){
-            TelaPrincipal.usuario.setNome("Desenvolvedor");
-            TelaPrincipal.usuario.setUsuarioTipo(UsuarioTipo.Gerente);
+    public void initDesenvolvedor(boolean iniciarDev){
+        if(TelaPrincipal.usuario.getId() == 0 && iniciarDev){
             System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
+            UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
+            Usuario dev = usuarioRepositorio.Abrir(1000L);
+            TelaPrincipal.setUsuario(dev);
             
-            return true;
+        }else{
+            System.exit(0);
         }
-        return false;
     }
     public boolean temPermissao(String query){
         for(String permissaoNegada : permissions.get(TelaPrincipal.usuario.getUsuarioTipo())){
-            if(permissaoNegada.equals(query)){
+            if(permissaoNegada.equals(query)){      
                 return false;
             }
         }

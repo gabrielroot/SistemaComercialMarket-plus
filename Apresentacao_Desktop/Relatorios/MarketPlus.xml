@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl"><name>SistemaComercialMarket+</name><driver>com.mysql.jdbc.Driver</driver><username>root</username><password>market+</password><savePassword>true</savePassword><url>jdbc:mysql://172.18.0.2/marketPlus</url><database></database><serverAddress></serverAddress><classpath>/home/gabriel/Documentos/FACULDADE/7°/DSC/Trabalho/mysql-connector-java-8.0.26/mysql-connector-java-8.0.26.jar</classpath></jdbcDataAdapter>

@@ -53,15 +53,7 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
                 if(filtros.length() > 0)
                     filtros += " AND ";
                 filtros +="cliente.numeroDocumento = :numeroDocumento";
-            }
-            
-            /*
-            if(obj.getTelefones().get(0).toString() != null && !obj.getTelefones().get(0).toString().isEmpty()){
-                parametros.put("tefones", obj.);
-            }
-            if(obj.getTelefones().get(1).toString() != null && !obj.getTelefones().get(0).toString().isEmpty()){
-                parametros.put("tefones", obj.);
-            }*/
+            }   
         }
 
         if(filtros.length() > 0)
@@ -69,7 +61,7 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
         
         Query sql = this.manager.createQuery(jpql); 
         
-        if(!parametros.isEmpty()){ /// se não ta fazio faça 
+        if(!parametros.isEmpty()){    
             for (String campo : parametros.keySet()) {
                 sql.setParameter(campo,parametros.get(campo));
             }

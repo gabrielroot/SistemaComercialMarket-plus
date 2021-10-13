@@ -9,18 +9,28 @@ import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoTela;
 import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.TelaRelatorios;
 import br.edu.ifnmg.apresentacao_desktop.TelaPessoas.TelaPessoas;
+import br.edu.ifnmg.apresentacao_desktop.TelaRelatorios.Vencimento;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -58,6 +68,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.renderJInternalInicio(telaPrincipal);
          Toolkit tk = Toolkit.getDefaultToolkit();
                             tk.beep();
+                            
+        this.carregarRelatorio("Relatorios/Vencimento.jrxml", null);
     }
 
     public static JInternalFrame getCurrentFrame() { return currentFrame; }
@@ -160,6 +172,40 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return true;
     }
 
+    public int carregarRelatorio(String caminho_relatorio, Map parametros) {
+        try {
+            // Carrega o Driver do MySQL
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            // Cria uma conexão com o SGBD
+            Connection conexao = DriverManager.getConnection("jdbc:mysql://172.18.0.2:3306/marketPlus","root","market+");
+            
+            // Abrindo e compilando o arquivo do relatório
+            JasperReport relatorio = JasperCompileManager.compileReport(caminho_relatorio);
+            
+            // Preencher com dados o relatório
+            JasperPrint relatorio_preenchido = JasperFillManager.fillReport(relatorio, parametros, conexao);
+            
+            // Mostra a tela de visualização do relatório
+            JasperViewer.viewReport(relatorio_preenchido);
+            
+            // Fechar a conexão com o SGBD
+            conexao.close();
+            System.out.println("Relatorio carregado");
+        } catch (JRException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            return 1;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            return 2;
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            return 3;
+        }
+        
+        return 0;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -172,6 +218,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         menuRelatorios = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -255,6 +302,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 menuRelatoriosMousePressed(evt);
             }
         });
+
+        jMenuItem1.setText("Produtos Vencidos");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseClicked(evt);
+            }
+        });
+        menuRelatorios.add(jMenuItem1);
+
         jMenuBar1.add(menuRelatorios);
 
         setJMenuBar(jMenuBar1);
@@ -317,6 +373,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             util.abrirJOptionPane("permissao", "",null);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+       if(temPermissao("TELA_RELATORIOS")){
+            Vencimento vencimento = new Vencimento();
+            this.renderJInternalFrame(vencimento);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jMenuItem1MouseClicked
     
     /**
      * @param args the command line arguments
@@ -355,6 +420,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

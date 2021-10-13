@@ -6,9 +6,7 @@
 package br.edu.ifnmg.auxiliares;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,7 +37,10 @@ public class Lote implements Serializable {
     private String codigo;
     
     @Column()
-    private int quantidade;
+    private int emEstoque;
+    
+    @Column()
+    private int nasPrateleiras;
     
     @Temporal(TemporalType.DATE)
     private Calendar dataFabricacao;
@@ -55,15 +55,17 @@ public class Lote implements Serializable {
     public Lote() {
         this.id = 0L;
         this.codigo = "";
-        this.quantidade = -1;
+        this.emEstoque = -1;
+        this.nasPrateleiras = -1;
         this.dataValidade = null;
         this.dataFabricacao = null;
         this.estoque = new Estoque();
     }
 
-    public Lote(String codigo, int quantidade, Calendar dataValidade, Calendar dataFabricacao, Estoque estoque) {
+    public Lote(String codigo, int emEstoque,int nasPrateleiras, Calendar dataValidade, Calendar dataFabricacao, Estoque estoque) {
         this.codigo = codigo;
-        this.quantidade = quantidade;
+        this.emEstoque = emEstoque;
+        this.nasPrateleiras = nasPrateleiras;
         this.dataValidade = dataValidade;
         this.dataFabricacao = dataFabricacao;
         this.estoque = estoque;
@@ -78,8 +80,11 @@ public class Lote implements Serializable {
     public Estoque getEstoque() { return estoque; }
     public void setEstoque(Estoque estoque) { this.estoque = estoque; }
 
-    public int getQuantidade() { return quantidade; }
-    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
+    public int getEmEstoque() { return emEstoque; }
+    public void setEmEstoque(int quantidade) { this.emEstoque = quantidade; }
+
+    public int getNasPrateleiras() { return nasPrateleiras; }
+    public void setNasPrateleiras(int nasPrateleiras) { this.nasPrateleiras = nasPrateleiras; }
 
     public String getCodigo() { return codigo; }
     public void setCodigo(String codigo) { this.codigo = codigo; }

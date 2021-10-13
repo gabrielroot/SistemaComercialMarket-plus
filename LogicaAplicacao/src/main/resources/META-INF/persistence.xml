@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.edu.ifnmg.auxiliares.CargoFuncionario</class>
     <class>br.edu.ifnmg.auxiliares.Estoque</class>
+    <class>br.edu.ifnmg.auxiliares.ItemVenda</class>
     <class>br.edu.ifnmg.auxiliares.Lote</class>
     <class>br.edu.ifnmg.auxiliares.Telefone</class>
     <class>br.edu.ifnmg.logicaAplicacao.Cliente</class>
@@ -12,6 +13,7 @@
     <class>br.edu.ifnmg.logicaAplicacao.Pagamento</class>
     <class>br.edu.ifnmg.logicaAplicacao.Pessoa</class>
     <class>br.edu.ifnmg.logicaAplicacao.Produto</class>
+    <class>br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira</class>
     <class>br.edu.ifnmg.logicaAplicacao.Usuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/marketPlus?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

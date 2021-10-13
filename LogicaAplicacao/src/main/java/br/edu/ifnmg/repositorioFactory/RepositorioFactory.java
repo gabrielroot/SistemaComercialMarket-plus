@@ -6,6 +6,7 @@
 package br.edu.ifnmg.repositorioFactory;
 
 import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
+import br.edu.ifnmg.auxiliares.ItemVendaRepositorio;
 import br.edu.ifnmg.auxiliares.LoteRepositorio;
 import br.edu.ifnmg.auxiliares.TelefoneRepositorio;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
@@ -14,6 +15,7 @@ import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceiraRepositorio;
 import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,6 +40,8 @@ public class RepositorioFactory {
     private static ProdutoRepositorio produto;
     private static LoteRepositorio lote;
     private static EstoqueRepositorio estoque;
+    private static ItemVendaRepositorio itemVenda;
+    private static TransacaoFinanceiraRepositorio transacaoFinanceira;
 //    private static CargoFuncionario cargo;
     private static TelefoneRepositorio telefone;
     
@@ -138,6 +142,22 @@ public class RepositorioFactory {
             estoque = (EstoqueRepositorio) getInstancia(nomeclasse);
         }
         return estoque;
+    }
+    
+    public static TransacaoFinanceiraRepositorio getTransacaoFinanceiraRepositorio() {
+        if(transacaoFinanceira == null){
+            String nomeclasse = propriedades.getProperty("TransacaoFinanceiraRepositorio");
+            transacaoFinanceira = (TransacaoFinanceiraRepositorio) getInstancia(nomeclasse);
+        }
+        return transacaoFinanceira;
+    }
+    
+    public static ItemVendaRepositorio getItemVendaRepositorio() {
+        if(itemVenda == null){
+            String nomeclasse = propriedades.getProperty("ItemVendaRepositorio");
+            itemVenda = (ItemVendaRepositorio) getInstancia(nomeclasse);
+        }
+        return itemVenda;
     }
     
     /*public static CargoFuncionario getCargoFuncionario() {

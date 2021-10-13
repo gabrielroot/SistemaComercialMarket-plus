@@ -7,7 +7,6 @@ package br.edu.ifnmg.persistencia;
 
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
-import java.math.BigDecimal;
 import java.util.Hashtable;
 import java.util.List;
 import javax.persistence.Query;
@@ -38,12 +37,6 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                 if(filtros.length() > 0) filtros += " AND ";
                 filtros += "produto.minimoParaAtacado = :min";
                 parametros.put("min", obj.getMinimoParaAtacado());
-            }
-            
-            if(obj.getQuantidadePrateleira() >= 0){
-                if(filtros.length() > 0) filtros += " AND ";
-                filtros += "produto.quantidadePrateleira = :qtdePrat";
-                parametros.put("qtdePrat", obj.getQuantidadePrateleira());
             }
             
             if(obj.getNome() != null && obj.getNome().length() > 0){
@@ -100,32 +93,6 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
                     filtros += "produto.estoque.localizacaoProduto = :local";
                     parametros.put("local", obj.getEstoque().getLocalizacaoProduto());
                 }
-                
-                if(obj.getEstoque().getLotes() != null && obj.getEstoque().getLotes().size() > 0){
-                    if(obj.getEstoque().getLotes().get(0).getCodigo() != null && obj.getEstoque().getLotes().get(0).getCodigo().length() > 0){
-                        if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.codigo LIKE :code";
-                        parametros.put("code", obj.getEstoque().getLotes().get(0).getCodigo() + "%");
-                    }
-                    
-                    if(obj.getEstoque().getLotes().get(0).getQuantidade() > -1){
-                        if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.quantidade = :qt";
-                        parametros.put("qt", obj.getEstoque().getLotes().get(0).getQuantidade());
-                    }
-
-                    if(obj.getEstoque().getLotes().get(0).getDataValidade() != null){
-                        if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.dataValidade = :validade";
-                        parametros.put("validade", obj.getEstoque().getLotes().get(0).getDataValidade());
-                    }
-
-                    if(obj.getEstoque().getLotes().get(0).getDataFabricacao() != null){
-                        if(filtros.length() > 0) filtros += " AND ";
-                        filtros += "produto.estoque.lote.dataFabricacao = :fab";
-                        parametros.put("fab", obj.getEstoque().getLotes().get(0).getDataFabricacao());
-                    }
-                }
             }
         }
         
@@ -141,5 +108,4 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
         
         return consulta.getResultList();
     }
-
 }

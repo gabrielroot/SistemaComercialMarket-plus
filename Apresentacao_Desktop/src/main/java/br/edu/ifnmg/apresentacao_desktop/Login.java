@@ -5,7 +5,6 @@
  */
 package br.edu.ifnmg.apresentacao_desktop;
 
-import br.edu.ifnmg.apresentacao_desktop.TelaProduto.ProdutoEditar;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
@@ -148,7 +147,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(160, 63, 65));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/close.png"))); // NOI18N
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel2MouseClicked(evt);
@@ -157,7 +156,7 @@ public class Login extends javax.swing.JFrame {
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 40, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/minimize.png"))); // NOI18N
-        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);

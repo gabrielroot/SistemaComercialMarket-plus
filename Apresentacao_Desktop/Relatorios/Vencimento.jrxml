@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Vencimento" language="javascript" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1d812f8-46b9-465e-9829-19e343ea617d">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YG1hcmtldFBsdXNgLmVzdG9xdWUgLDQxMywxMjAsYWNjZWFiOTQtNjYyZS00OTM1LTlkMzItZGZk
+ZDdlMTlmNDQ2O2BtYXJrZXRQbHVzYC5sb3RlICwyMzUsNjAsMjFlZDViMWEtZjcyZC00Mjc1LWJh
+ZTgtMTdhYmVhYjA2MDQyO2BtYXJrZXRQbHVzYC5wcm9kdXRvICwxNSwxNSw1ZjYxYjIzNy0zODdm
+LTQ4NmItODQ1MS00OTllYzU4NmQzZjQ7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SistemaComercial - Market+"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="689"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="297"/>
+	<parameter name="nome_parametro" class="java.lang.Double" evaluationTime="Early">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT `marketPlus`.lote.`CODIGO`,
+	`marketPlus`.lote.`DATAFABRICACAO`,
+	`marketPlus`.lote.`DATAVALIDADE`,
+	`marketPlus`.lote.`EMESTOQUE`,
+	`marketPlus`.lote.`NASPRATELEIRAS`,
+	`marketPlus`.produto.`NOME`,
+	`marketPlus`.produto.`DESCRICAO`,
+	`marketPlus`.estoque.`LOCALIZACAOPRODUTO`
+FROM `marketPlus`.lote
+	INNER JOIN `marketPlus`.estoque ON 
+	 `marketPlus`.lote.estoque_id = `marketPlus`.estoque.`ID` 
+	INNER JOIN `marketPlus`.produto ON 
+	 `marketPlus`.produto.estoque_id = `marketPlus`.lote.estoque_id
+	 WHERE `marketPlus`.lote.`DATAVALIDADE` < NOW()]]>
+	</queryString>
+	<field name="CODIGO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CODIGO"/>
+		<property name="com.jaspersoft.studio.field.label" value="CODIGO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lote"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATAFABRICACAO" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DATAFABRICACAO"/>
+		<property name="com.jaspersoft.studio.field.label" value="DATAFABRICACAO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lote"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATAVALIDADE" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="DATAVALIDADE"/>
+		<property name="com.jaspersoft.studio.field.label" value="DATAVALIDADE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lote"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMESTOQUE" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="EMESTOQUE"/>
+		<property name="com.jaspersoft.studio.field.label" value="EMESTOQUE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lote"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NASPRATELEIRAS" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="NASPRATELEIRAS"/>
+		<property name="com.jaspersoft.studio.field.label" value="NASPRATELEIRAS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="lote"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOME"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRICAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESCRICAO"/>
+		<property name="com.jaspersoft.studio.field.label" value="DESCRICAO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LOCALIZACAOPRODUTO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="LOCALIZACAOPRODUTO"/>
+		<property name="com.jaspersoft.studio.field.label" value="LOCALIZACAOPRODUTO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="estoque"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="DATAFABRICACAO"/>
+	<sortField name="DATAVALIDADE"/>
+	<sortField name="NASPRATELEIRAS"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-20" y="-20" width="595" height="120" backcolor="#DEDCDC" uuid="786b6a1a-6cc9-45ce-98f5-f1f4bb817d2f"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="130" y="40" width="430" height="55" forecolor="#8A7676" uuid="8533c533-bc9d-486a-b46d-227f8985e187"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[A N° 1 no ramo do varejo e atacado]]></text>
+			</staticText>
+			<image>
+				<reportElement x="-20" y="-20" width="150" height="115" uuid="1eac8ea2-23f0-431f-8c2d-7789abfd21b7"/>
+				<imageExpression><![CDATA["https://raw.githubusercontent.com/MuriloNascimentoFerreira/SistemaComercialMarket-plus/main/Apresentacao_Desktop/src/main/resources/logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="130" y="0" width="430" height="30" forecolor="#240C0B" uuid="508cf63f-10de-462d-aa05-cca4f1e60455"/>
+				<textElement textAlignment="Center">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Market+ - rede de atacado e varejo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="560" height="30" uuid="9a01c6e3-7bfd-4d93-a62d-82715e055d52"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de produtos vencidos]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="170" y="45" width="210" height="1" forecolor="#877978" uuid="6fb687cc-446a-4f27-88e4-220115df0949"/>
+			</rectangle>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="200" height="30" uuid="1c594b2e-bbcc-4fc0-9f1e-00c910019995">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d636451a-93ae-4069-b984-f2bafa1d5937"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="70" height="30" uuid="650e8b3d-4d68-45f6-b6b0-f3e0657f781d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1b63096f-8c60-4dc1-83f9-de08e5a04352"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EM ESTOQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="0" width="92" height="30" uuid="53cc608a-29a0-4762-8055-73dca0b71936">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3630b2b7-0696-4a84-b13f-0ee2106e57dc"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAS PRATELEIRAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="0" width="100" height="30" uuid="b2f1316b-1bfa-490c-ad6a-e81c1dac21b4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="755982a9-1578-4ad2-b318-c44b4c4f6fe9"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA VALIDADE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="100" height="30" uuid="9fbf19b0-6bd0-4d29-bf92-9685ab343784">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9262538-dbe3-4c22-aba1-5456d5471b46"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA FABRICAÇÃO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="200" height="29" uuid="9c2b88e5-9f9f-4ae0-a91f-aa43d561a649">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d636451a-93ae-4069-b984-f2bafa1d5937"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="-1" width="70" height="30" uuid="261c0e73-e19b-487d-9b89-a744a0969039">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1b63096f-8c60-4dc1-83f9-de08e5a04352"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{EMESTOQUE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="-1" width="82" height="30" uuid="9305d407-ffb5-433e-8d6b-c13fc4b77dda">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3630b2b7-0696-4a84-b13f-0ee2106e57dc"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NASPRATELEIRAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="0" width="100" height="30" uuid="203bedc3-57ad-4518-9cdf-55c776b58524">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="755982a9-1578-4ad2-b318-c44b4c4f6fe9"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{DATAVALIDADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="-1" width="100" height="30" uuid="a60a16ee-acc3-4454-91ac-439d175fa27c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9262538-dbe3-4c22-aba1-5456d5471b46"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{DATAFABRICACAO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

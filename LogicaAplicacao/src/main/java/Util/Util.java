@@ -72,6 +72,8 @@ public class Util {
         
         return img;
     }    
+    
+    
 
     /**
      *
@@ -127,5 +129,9 @@ public class Util {
         }
 
         return result;
+    }
+    
+    public static String getNumeroTelefoneSemFormatacao(String numero){
+        return numero.replace("(","").replace(")","").replace(" ","");
     }
 }

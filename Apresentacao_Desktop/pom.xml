@@ -26,6 +26,16 @@
             <artifactId>jasperreports-metadata</artifactId>
             <version>6.17.0</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.birt.runtime</groupId>
+            <artifactId>org.mozilla.javascript</artifactId>
+            <version>1.7.5.v201504281450</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

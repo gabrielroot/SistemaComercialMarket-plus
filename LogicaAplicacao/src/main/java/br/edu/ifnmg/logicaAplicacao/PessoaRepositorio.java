@@ -5,11 +5,13 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import br.edu.ifnmg.auxiliares.Telefone;
 import java.util.List;
 
 /**
  *
  * @author gabriel
  */
-public interface PessoaRepositorio extends Repositorio<Pessoa>{
+public interface PessoaRepositorio extends Repositorio<Pessoa> {
+    public Pessoa buscarPessoaTelefone(Telefone telefone);
 }

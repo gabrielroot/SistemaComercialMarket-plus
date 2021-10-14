@@ -114,7 +114,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         modelo.addColumn("VAL. Compra");
         modelo.addColumn("Local");
         if(checkQTDEstoque.isSelected()) modelo.addColumn("QTDE. em Estoque");
-        modelo.addColumn("QTDE. MÍN. em Estoque");
+        modelo.addColumn("QTDE. MÍN. Desejável");
         
         for(int i=0;i<resultado.size(); i++){
             Estoque resultadoEstoque = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());

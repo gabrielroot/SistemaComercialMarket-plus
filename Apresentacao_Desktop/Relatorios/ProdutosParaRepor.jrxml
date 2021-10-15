@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProdutosParaRepor" language="javascript" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1d812f8-46b9-465e-9829-19e343ea617d">
-	<property name="com.jaspersoft.studio.data.sql.tables">
-		<![CDATA[YG1hcmtldFBsdXNgLmVzdG9xdWUgLDQxMywxMjAsZjdjYzUzMTktNmQ3OS00MWQ2LTgxZGUtYmQ4
-NTUxNmE2ZmQyO2BtYXJrZXRQbHVzYC5sb3RlICwyMzUsNjAsOTI2NGQwNzktNTI2NC00OThiLWJk
-NDQtYTUzYjIyYWRjMTU4O2BtYXJrZXRQbHVzYC5wcm9kdXRvICwxNSwxNSxmOWEyOTY5ZC1jZmRl
-LTRkYzUtYWIwOC04Yjk5MjE1ZjUyNzI7]]>
-	</property>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SistemaComercial - Market+"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="566"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="420"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="681"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="305"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT `marketPlus`.estoque.`QUANTIDADEMINIMADESEJADA`,
-	SUM( `marketPlus`.lote.`EMESTOQUE`) AS SOMAESTOQUE,
-	SUM( `marketPlus`.lote.`NASPRATELEIRAS`) AS SOMAPRATELEIRAS,
-	SUM( `marketPlus`.lote.`EMESTOQUE` + `marketPlus`.lote.`NASPRATELEIRAS`) AS QUANTIDADETOTAL,
-	`marketPlus`.produto.`NOME`
-FROM `marketPlus`.lote
-	INNER JOIN `marketPlus`.estoque ON 
-	 `marketPlus`.lote.estoque_id = `marketPlus`.estoque.`ID` 
-	INNER JOIN `marketPlus`.produto ON 
-	 `marketPlus`.produto.estoque_id = `marketPlus`.lote.estoque_id 
-GROUP BY `marketPlus`.estoque.`ID`
-HAVING 
-	 SOMAPRATELEIRAS + SOMAESTOQUE  < `marketPlus`.estoque.`QUANTIDADEMINIMADESEJADA`]]>
+		<![CDATA[SELECT * FROM (
+	SELECT `marketPlus`.estoque.`QUANTIDADEMINIMADESEJADA`,
+		SUM( COALESCE(`marketPlus`.lote.`EMESTOQUE`,0)) AS SOMAESTOQUE,
+		SUM( COALESCE(`marketPlus`.lote.`NASPRATELEIRAS`,0)) AS SOMAPRATELEIRAS,
+		SUM( COALESCE(`marketPlus`.lote.`EMESTOQUE` + `marketPlus`.lote.`NASPRATELEIRAS`,0)) AS QUANTIDADETOTAL,
+		`marketPlus`.produto.`NOME`
+	FROM `marketPlus`.estoque
+		LEFT JOIN `marketPlus`.lote ON 
+		 `marketPlus`.lote.estoque_id = `marketPlus`.estoque.`ID` 
+		LEFT JOIN `marketPlus`.produto ON 
+		 `marketPlus`.produto.estoque_id = `marketPlus`.`estoque`.`ID` 
+	GROUP BY `marketPlus`.estoque.`ID`
+	HAVING 
+		 SOMAPRATELEIRAS + SOMAESTOQUE  < `marketPlus`.estoque.`QUANTIDADEMINIMADESEJADA`
+) subQuery
+WHERE subQuery.QUANTIDADETOTAL < subQuery.QUANTIDADEMINIMADESEJADA]]>
 	</queryString>
 	<field name="QUANTIDADEMINIMADESEJADA" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="QUANTIDADEMINIMADESEJADA"/>

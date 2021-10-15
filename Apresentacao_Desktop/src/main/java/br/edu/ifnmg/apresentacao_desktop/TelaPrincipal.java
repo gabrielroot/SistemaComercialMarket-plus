@@ -214,6 +214,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuRelatorios = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -298,6 +299,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 menuRelatoriosMousePressed(evt);
             }
         });
+        menuRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRelatoriosActionPerformed(evt);
+            }
+        });
 
         jMenuItem1.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem1.setText("Produtos Vencidos");
@@ -331,6 +337,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuRelatorios.add(jMenuItem2);
 
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jMenuItem7.setText("Vendas por funcionarios");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        menuRelatorios.add(jMenuItem7);
+
         jMenuBar1.add(menuRelatorios);
 
         setJMenuBar(jMenuBar1);
@@ -356,17 +371,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuItemPessoasActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void menuRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseClicked
-    }//GEN-LAST:event_menuRelatoriosMouseClicked
-
-    private void menuRelatoriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMousePressed
-
-    }//GEN-LAST:event_menuRelatoriosMousePressed
-
     private void menuMarketPlusMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMarketPlusMousePressed
         TelaInicio telaPrincipal = new TelaInicio(this);
         this.renderJInternalFrame(telaPrincipal);
@@ -375,10 +379,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void menuMarketPlusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMarketPlusMouseExited
         menuMarketPlus.setSelected(false);
     }//GEN-LAST:event_menuMarketPlusMouseExited
-
-    private void menuRelatoriosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseExited
-        menuRelatorios.setSelected(false);
-    }//GEN-LAST:event_menuRelatoriosMouseExited
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
        if(temPermissao("TELA_PRODUTO")){
@@ -389,9 +389,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+    private void menuRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatoriosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuRelatoriosActionPerformed
 
-    }//GEN-LAST:event_jMenuItem1MouseClicked
+    private void menuRelatoriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMousePressed
+
+    }//GEN-LAST:event_menuRelatoriosMousePressed
+
+    private void menuRelatoriosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseExited
+        menuRelatorios.setSelected(false);
+    }//GEN-LAST:event_menuRelatoriosMouseExited
+
+    private void menuRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseClicked
+
+    }//GEN-LAST:event_menuRelatoriosMouseClicked
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if(temPermissao("TELA_RELATORIOS")){
+            this.carregarRelatorio("Relatorios/ProdutosAVencer.jrxml", null);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
+
+    }//GEN-LAST:event_jMenuItem2MouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         if(temPermissao("TELA_RELATORIOS")){
@@ -401,17 +425,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
 
-    }//GEN-LAST:event_jMenuItem2MouseClicked
+    }//GEN-LAST:event_jMenuItem1MouseClicked
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        if(temPermissao("TELA_RELATORIOS")){
-            this.carregarRelatorio("Relatorios/ProdutosAVencer.jrxml", null);
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+         if(temPermissao("TELA_RELATORIOS")){
+            this.carregarRelatorio("Relatorios/Vendasporfuncionarios.jrxml", null);
         }else{
             util.abrirJOptionPane("permissao", "",null);
         }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -455,6 +479,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu menuGerenciamento;
     private javax.swing.JMenuItem menuItemPessoas;
     private javax.swing.JMenu menuMarketPlus;

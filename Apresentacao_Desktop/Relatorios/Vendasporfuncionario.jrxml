@@ -14,12 +14,13 @@ NThjOWE5LTRhNDgtNDU4Ny1hODZhLWE1NTExMzM5NTRhNzs=]]>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MarketPlus.xml"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT marketplus.usuario.`EMAIL`,
-	SUM(marketplus.item_venda.`SUBTOTAL`) AS `SUBTOTAL`
+	SUM(COALESCE(marketplus.item_venda.`SUBTOTAL`,0)) AS `SUBTOTAL`
 	FROM marketplus.item_venda
 	INNER JOIN marketplus.transacao_financeira ON 
 	 marketplus.item_venda.`transacaoFinanceira_id` = marketplus.transacao_financeira.`ID` 
 	INNER JOIN marketplus.usuario ON 
-	 marketplus.usuario.`ID` = marketplus.transacao_financeira.usuario_id]]>
+	 marketplus.usuario.`ID` = marketplus.transacao_financeira.usuario_id
+	 GROUP BY marketplus.usuario.`EMAIL`]]>
 	</queryString>
 	<field name="EMAIL" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="EMAIL"/>
@@ -119,7 +120,8 @@ NThjOWE5LTRhNDgtNDU4Ny1hODZhLWE1NTExMzM5NTRhNzs=]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a9c6c5c1-a9f6-4276-8ca5-08bed6e59a46"/>
 				</reportElement>
 				<box>
-					<pen lineWidth="0.5"/>
+					<pen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
 				</box>
 				<textFieldExpression><![CDATA[$F{SUBTOTAL}]]></textFieldExpression>
 			</textField>

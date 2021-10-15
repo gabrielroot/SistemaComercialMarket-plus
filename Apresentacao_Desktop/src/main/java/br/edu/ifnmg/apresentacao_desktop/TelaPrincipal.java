@@ -153,12 +153,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaPrincipal.permissions.put(UsuarioTipo.Caixa, removePermissaoCaixa);
     }
     public void initDesenvolvedor(boolean iniciarDev){
-        if(TelaPrincipal.usuario.getId() == 0 && iniciarDev){
-            System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
-            UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
-            Usuario dev = usuarioRepositorio.Abrir(1000L);
-            TelaPrincipal.setUsuario(dev);
-            
+        if(iniciarDev){
+            if(TelaPrincipal.usuario.getId() == 0){
+                System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
+                UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
+                Usuario dev = usuarioRepositorio.Abrir(1000L);
+                TelaPrincipal.setUsuario(dev);
+            }
         }else{
             System.exit(0);
         }
@@ -177,7 +178,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         try {
             // Carrega o Driver do MySQL
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conexao = DriverManager.getConnection("jdbc:mysql://172.18.0.2:3306/marketPlus","root","market+");
+            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/marketplus","root","market+");
             
             // Abrindo e compilando o arquivo do relatório
             JasperReport relatorio = JasperCompileManager.compileReport(caminho_relatorio);
@@ -215,6 +216,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -299,6 +301,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 menuRelatoriosMousePressed(evt);
             }
         });
+        menuRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRelatoriosActionPerformed(evt);
+            }
+        });
 
         jMenuItem1.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem1.setText("Produtos Vencidos");
@@ -336,17 +343,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem6.setText("Produtos para Repor");
         jMenuItem6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem6.setPreferredSize(new java.awt.Dimension(240, 33));
-        jMenuItem6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem6MouseClicked(evt);
-            }
-        });
+        
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
             }
         });
         menuRelatorios.add(jMenuItem6);
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jMenuItem7.setText("Vendas por funcionarios");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        menuRelatorios.add(jMenuItem7);
 
         jMenuBar1.add(menuRelatorios);
 
@@ -397,10 +408,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuMarketPlus.setSelected(false);
     }//GEN-LAST:event_menuMarketPlusMouseExited
 
-    private void menuRelatoriosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseExited
-        menuRelatorios.setSelected(false);
-    }//GEN-LAST:event_menuRelatoriosMouseExited
-
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
        if(temPermissao("TELA_PRODUTO")){
             ProdutoTela produtoEditar = new ProdutoTela();
@@ -410,21 +417,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+    private void menuRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatoriosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuRelatoriosActionPerformed
 
-    }//GEN-LAST:event_jMenuItem1MouseClicked
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        if(temPermissao("TELA_RELATORIOS")){
-            this.carregarRelatorio("Relatorios/ProdutosVencidos.jrxml", null);
-        }else{
-            util.abrirJOptionPane("permissao", "",null);
-        }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
-
-    }//GEN-LAST:event_jMenuItem2MouseClicked
+    private void menuRelatoriosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatoriosMouseExited
+        menuRelatorios.setSelected(false);
+    }//GEN-LAST:event_menuRelatoriosMouseExited
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         if(temPermissao("TELA_RELATORIOS")){
@@ -434,9 +433,29 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem6MouseClicked
+    private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
 
-    }//GEN-LAST:event_jMenuItem6MouseClicked
+    }//GEN-LAST:event_jMenuItem2MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if(temPermissao("TELA_RELATORIOS")){
+            this.carregarRelatorio("Relatorios/ProdutosVencidos.jrxml", null);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+
+    }//GEN-LAST:event_jMenuItem1MouseClicked
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+         if(temPermissao("TELA_RELATORIOS")){
+            this.carregarRelatorio("Relatorios/Vendasporfuncionario.jrxml", null);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -481,6 +500,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu menuGerenciamento;
     private javax.swing.JMenuItem menuItemPessoas;
     private javax.swing.JMenu menuMarketPlus;

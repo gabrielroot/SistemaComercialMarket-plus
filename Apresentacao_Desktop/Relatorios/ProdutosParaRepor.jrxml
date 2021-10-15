@@ -7,19 +7,19 @@
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="305"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT * FROM (
-	SELECT `marketPlus`.estoque.`QUANTIDADEMINIMADESEJADA`,
-		SUM( COALESCE(`marketPlus`.lote.`EMESTOQUE`,0)) AS SOMAESTOQUE,
-		SUM( COALESCE(`marketPlus`.lote.`NASPRATELEIRAS`,0)) AS SOMAPRATELEIRAS,
-		SUM( COALESCE(`marketPlus`.lote.`EMESTOQUE` + `marketPlus`.lote.`NASPRATELEIRAS`,0)) AS QUANTIDADETOTAL,
-		`marketPlus`.produto.`NOME`
-	FROM `marketPlus`.estoque
-		LEFT JOIN `marketPlus`.lote ON 
-		 `marketPlus`.lote.estoque_id = `marketPlus`.estoque.`ID` 
-		LEFT JOIN `marketPlus`.produto ON 
-		 `marketPlus`.produto.estoque_id = `marketPlus`.`estoque`.`ID` 
-	GROUP BY `marketPlus`.estoque.`ID`
+	SELECT `marketplus`.estoque.`QUANTIDADEMINIMADESEJADA`,
+		SUM( COALESCE(`marketplus`.lote.`EMESTOQUE`,0)) AS SOMAESTOQUE,
+		SUM( COALESCE(`marketplus`.lote.`NASPRATELEIRAS`,0)) AS SOMAPRATELEIRAS,
+		SUM( COALESCE(`marketplus`.lote.`EMESTOQUE` + `marketplus`.lote.`NASPRATELEIRAS`,0)) AS QUANTIDADETOTAL,
+		`marketplus`.produto.`NOME`
+	FROM `marketplus`.estoque
+		LEFT JOIN `marketplus`.lote ON 
+		 `marketplus`.lote.estoque_id = `marketplus`.estoque.`ID` 
+		LEFT JOIN `marketplus`.produto ON 
+		 `marketplus`.produto.estoque_id = `marketplus`.`estoque`.`ID` 
+	GROUP BY `marketplus`.estoque.`ID`
 	HAVING 
-		 SOMAPRATELEIRAS + SOMAESTOQUE  < `marketPlus`.estoque.`QUANTIDADEMINIMADESEJADA`
+		 SOMAPRATELEIRAS + SOMAESTOQUE  < `marketplus`.estoque.`QUANTIDADEMINIMADESEJADA`
 ) subQuery
 WHERE subQuery.QUANTIDADETOTAL < subQuery.QUANTIDADEMINIMADESEJADA]]>
 	</queryString>

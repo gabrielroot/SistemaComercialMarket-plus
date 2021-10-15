@@ -64,8 +64,8 @@ public abstract class DataAccessObject<T> implements Repositorio<T>{
         EntityTransaction transacao = this.manager.getTransaction();
         try {
             transacao.begin();
-            
-            this.manager.remove(obj);
+            T entity = this.manager.merge(obj);
+            this.manager.remove(entity);
             
             transacao.commit();
             

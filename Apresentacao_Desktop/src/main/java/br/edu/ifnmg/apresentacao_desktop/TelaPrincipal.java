@@ -431,7 +431,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
          if(temPermissao("TELA_RELATORIOS")){
-            this.carregarRelatorio("Relatorios/Vendasporfuncionarios.jrxml", null);
+            this.carregarRelatorio("Relatorios/Vendasporfuncionario.jrxml", null);
         }else{
             util.abrirJOptionPane("permissao", "",null);
         }

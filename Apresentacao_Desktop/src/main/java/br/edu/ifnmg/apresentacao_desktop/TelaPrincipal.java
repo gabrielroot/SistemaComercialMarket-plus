@@ -217,6 +217,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -343,13 +344,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem6.setText("Produtos para Repor");
         jMenuItem6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem6.setPreferredSize(new java.awt.Dimension(240, 33));
-        
+        jMenuItem6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem6MouseClicked(evt);
+            }
+        });
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
             }
         });
         menuRelatorios.add(jMenuItem6);
+
         jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jMenuItem7.setText("Vendas por funcionarios");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -358,6 +364,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         menuRelatorios.add(jMenuItem7);
+
+        jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jMenuItem8.setText("Produtos mais e menos vendidos");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        menuRelatorios.add(jMenuItem8);
 
         jMenuBar1.add(menuRelatorios);
 
@@ -456,6 +471,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             util.abrirJOptionPane("permissao", "",null);
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        if(temPermissao("TELA_RELATORIOS")){
+            this.carregarRelatorio("Relatorios/maisemenos.jrxml", null);
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -501,6 +524,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenu menuGerenciamento;
     private javax.swing.JMenuItem menuItemPessoas;
     private javax.swing.JMenu menuMarketPlus;

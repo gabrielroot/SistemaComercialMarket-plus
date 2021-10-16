@@ -5,6 +5,8 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
 import static br.edu.ifnmg.apresentacao_desktop.TelaCaixa.CaixaTela.cliente;
+import br.edu.ifnmg.enums.FormaPagamento;
+import br.edu.ifnmg.enums.TipoPagamento;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.Pagamento;
 import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
@@ -32,18 +34,22 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
     
     private void setComponetes(Cliente cliente){
         
-        /*
-        if(CaixaTela.cliente != null){//se for cliente real --> todo tipo de venda.
+        if(CaixaTela.cliente != null){
             if(cliente.getIdentificaoDoCliente().equals("0") &&
-                    CaixaTela.cliente.getSenha().equals("0")){//se for cliente padrão só venda a vista ou no cartão
-            // quer dizer que é o cliente padrão.
-            //logo só pode comprar a vista.
-                System.out.println("Cliente padrão!");
-            
+                    CaixaTela.cliente.getSenha().equals("0")){
+                
+                this.cbxTipoPagamento.addItem(TipoPagamento.AVista.toString());       
+                this.cbxFormaPagamento.addItem(FormaPagamento.Dinheiro.toString());
+                this.cbxFormaPagamento.addItem(FormaPagamento.Cartao.toString());   
+                
             }else if(!CaixaTela.cliente.getIdentificaoDoCliente().equals("0") && 
                     !CaixaTela.cliente.getSenha().equals("0")){
                 
-                pagamentoCompleto();
+                this.cbxTipoPagamento.addItem(TipoPagamento.AVista.toString());
+                this.cbxTipoPagamento.addItem(TipoPagamento.APrazo.toString());
+                this.cbxFormaPagamento.addItem(FormaPagamento.Dinheiro.toString());
+                this.cbxFormaPagamento.addItem(FormaPagamento.Cartao.toString());
+                this.cbxFormaPagamento.addItem(FormaPagamento.Crediario.toString());
                 
             } 
             
@@ -51,7 +57,7 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
           //  falha na autenticação
           System.out.println("nenhum cliente encontrado!");
         }
-        */
+        
     }
 
     /**
@@ -128,7 +134,6 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
         cbxTipoPagamento.setBackground(new java.awt.Color(255, 255, 255));
         cbxTipoPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cbxTipoPagamento.setForeground(new java.awt.Color(0, 0, 0));
-        cbxTipoPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "À vista", "À prazo", " " }));
         cbxTipoPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxTipoPagamentoActionPerformed(evt);
@@ -138,7 +143,6 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
         cbxFormaPagamento.setBackground(new java.awt.Color(255, 255, 255));
         cbxFormaPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cbxFormaPagamento.setForeground(new java.awt.Color(0, 0, 0));
-        cbxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Cartão", "Crediario", " " }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

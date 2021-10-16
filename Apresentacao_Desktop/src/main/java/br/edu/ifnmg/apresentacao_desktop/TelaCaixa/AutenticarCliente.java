@@ -209,7 +209,7 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         if(CaixaTela.cliente == null){
             util.abrirJOptionPane("erro", "Nenhum cliente encontrado!",this);
             CaixaTela.cliente = new Cliente();
-        }else{
+        }else {
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -7,9 +7,20 @@ package br.edu.ifnmg.enums;
 
 /**
  *
- * @author kesley
+ * @author kesley, murilo
  */
 public enum TipoPagamento {
-    AVista,
-    APrazo
+    AVista("À vista"),
+    APrazo("A Prazo");
+    
+    private String descricao;
+
+    private TipoPagamento(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return descricao;
+    }
 }

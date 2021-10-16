@@ -10,7 +10,19 @@ package br.edu.ifnmg.enums;
  * @author kesley
  */
 public enum FormaPagamento {
-    Cartao,
-    Crediario,
-    Dinheiro
+    Cartao("Cartão"),
+    Crediario("Crediário"),
+    Dinheiro("Dinheiro");
+    
+    private String descricao;
+
+    private FormaPagamento(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return descricao;
+    }
+    
 }

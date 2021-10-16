@@ -25,7 +25,7 @@ import javax.persistence.Table;
  * @author gabriel
  */
 @Entity
-@Table(name="itemVenda")
+@Table(name="item_venda")
 public class ItemVenda implements Serializable {
 
     private static final long serialVersionUID = 1L;

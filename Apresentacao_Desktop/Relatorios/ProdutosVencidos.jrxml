@@ -6,20 +6,20 @@
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="566"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="420"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT `marketPlus`.lote.`CODIGO`,
-	`marketPlus`.lote.`DATAFABRICACAO`,
-	`marketPlus`.lote.`DATAVALIDADE`,
-	`marketPlus`.lote.`EMESTOQUE`,
-	`marketPlus`.lote.`NASPRATELEIRAS`,
-	`marketPlus`.produto.`NOME`,
-	`marketPlus`.produto.`DESCRICAO`,
-	`marketPlus`.estoque.`LOCALIZACAOPRODUTO`
-FROM `marketPlus`.lote
-	INNER JOIN `marketPlus`.estoque ON 
-	 `marketPlus`.lote.estoque_id = `marketPlus`.estoque.`ID` 
-	INNER JOIN `marketPlus`.produto ON 
-	 `marketPlus`.produto.estoque_id = `marketPlus`.lote.estoque_id
-	 WHERE `marketPlus`.lote.`DATAVALIDADE` < NOW()]]>
+		<![CDATA[SELECT `marketplus`.lote.`CODIGO`,
+	`marketplus`.lote.`DATAFABRICACAO`,
+	`marketplus`.lote.`DATAVALIDADE`,
+	`marketplus`.lote.`EMESTOQUE`,
+	`marketplus`.lote.`NASPRATELEIRAS`,
+	`marketplus`.produto.`NOME`,
+	`marketplus`.produto.`DESCRICAO`,
+	`marketplus`.estoque.`LOCALIZACAOPRODUTO`
+FROM `marketplus`.lote
+	INNER JOIN `marketplus`.estoque ON 
+	 `marketplus`.lote.estoque_id = `marketplus`.estoque.`ID` 
+	INNER JOIN `marketplus`.produto ON 
+	 `marketplus`.produto.estoque_id = `marketplus`.lote.estoque_id
+	 WHERE `marketplus`.lote.`DATAVALIDADE` < NOW()]]>
 	</queryString>
 	<field name="CODIGO" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="CODIGO"/>

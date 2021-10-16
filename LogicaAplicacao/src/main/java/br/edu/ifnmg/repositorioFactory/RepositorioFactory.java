@@ -12,6 +12,7 @@ import br.edu.ifnmg.auxiliares.TelefoneRepositorio;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
+import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
@@ -44,6 +45,7 @@ public class RepositorioFactory {
     private static TransacaoFinanceiraRepositorio transacaoFinanceira;
 //    private static CargoFuncionario cargo;
     private static TelefoneRepositorio telefone;
+    private static PagamentoRepositorio pagamento;
     
     static {
         FileReader leitorArquivo = null;
@@ -174,5 +176,13 @@ public class RepositorioFactory {
             telefone = (TelefoneRepositorio) getInstancia(nomeclasse);
         }
         return telefone;
+    }
+    
+    public static PagamentoRepositorio getPagamentoRepositorio() {
+        if(pagamento == null){
+            String nomeclasse = propriedades.getProperty("PagamentoRepositorio");
+            pagamento = (PagamentoRepositorio) getInstancia(nomeclasse);
+        }
+        return pagamento;
     }
 }

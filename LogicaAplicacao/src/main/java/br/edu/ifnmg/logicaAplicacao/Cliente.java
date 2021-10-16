@@ -22,7 +22,7 @@ public class Cliente extends Pessoa implements Serializable  {
     private static final long serialVersionUID = 1L;
     
     @Column(length=250, nullable=false, unique=true)
-    private String identificaoDoCliente;
+    private String identificacaoDoCliente;
    
     @Column(length=250, nullable=false)
     private String senha;
@@ -30,11 +30,11 @@ public class Cliente extends Pessoa implements Serializable  {
     
     public Cliente() {
         super();
-        this.identificaoDoCliente = "";
+        this.identificacaoDoCliente = "";
         this.senha = "";
     }
 
-    public Cliente(String identificaoDoCliente, 
+    public Cliente(String identificacaoDoCliente, 
             String senha, 
             String nome, 
             String endereco,
@@ -44,13 +44,13 @@ public class Cliente extends Pessoa implements Serializable  {
             TipoDocumento tipoDocumento, 
             String numeroDocumento) {
         super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
-        this.identificaoDoCliente = identificaoDoCliente;
+        this.identificacaoDoCliente = identificacaoDoCliente;
         this.senha = senha;
     }
     
-    public String getIdentificaoDoCliente() { return this.identificaoDoCliente; }
+    public String getIdentificaoDoCliente() { return this.identificacaoDoCliente; }
 
-    public void setIdentificaoDoCliente(String identificaoDoCliente) { this.identificaoDoCliente = identificaoDoCliente; }
+    public void setIdentificaoDoCliente(String identificaoDoCliente) { this.identificacaoDoCliente = identificaoDoCliente; }
 
     public void setSenha(String senha) { this.senha = senha;}
     
@@ -59,7 +59,7 @@ public class Cliente extends Pessoa implements Serializable  {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.identificaoDoCliente);
+        hash = 47 * hash + Objects.hashCode(this.identificacaoDoCliente);
         return hash;
     }
 
@@ -75,7 +75,7 @@ public class Cliente extends Pessoa implements Serializable  {
             return false;
         }
         final Cliente other = (Cliente) obj;
-        if (!Objects.equals(this.identificaoDoCliente, other.identificaoDoCliente)) {
+        if (!Objects.equals(this.identificacaoDoCliente, other.identificacaoDoCliente)) {
             return false;
         }
         return true;
@@ -83,7 +83,7 @@ public class Cliente extends Pessoa implements Serializable  {
 
     @Override
     public String toString() {
-        return this.identificaoDoCliente;
+        return this.identificacaoDoCliente;
     }
     
 }

@@ -11,8 +11,13 @@ import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.ItemVenda;
 import br.edu.ifnmg.auxiliares.ItemVendaRepositorio;
+import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.enums.TipoDocumento;
+import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.enums.TransacaoStatus;
 import br.edu.ifnmg.enums.TransacaoTipo;
+import br.edu.ifnmg.logicaAplicacao.Cliente;
+import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
@@ -24,6 +29,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +45,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener, InternalFrameListener{
     static TransacaoFinanceira transacaoFinanceira;
+    static Cliente cliente;
+    
+    ClienteRepositorio clienteRepositorio;
     ProdutoRepositorio produtoRepositorio;
     EstoqueRepositorio estoqueRepositorio;
     ItemVendaRepositorio itemVendaRepositorio;
@@ -47,10 +56,12 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
      * Creates new form CaixaTela
      */
     public CaixaTela() {
-        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance());
+        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), new Cliente());
+        this.cliente = new Cliente();
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
+        this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
         this.util = new Util();
         initComponents();
         this.txtCode.addKeyListener(this);
@@ -628,7 +639,14 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     }//GEN-LAST:event_tableAllProductsMouseClicked
 
     private void painelRealizarPgtoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRealizarPgtoMouseClicked
-        finalizarCompra();
+        
+        AutenticarCliente autenticarCliente = new AutenticarCliente(this.cliente);
+        autenticarCliente.addInternalFrameListener(this);
+        jDesktopPane1.add(autenticarCliente);
+        autenticarCliente.setVisible(true);
+        Util.centralizaInternalFrame(autenticarCliente,this.getSize());
+
+//        finalizarCompra();
     }//GEN-LAST:event_painelRealizarPgtoMouseClicked
 
     private void painelRepetirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRepetirMouseClicked
@@ -772,6 +790,19 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         tableAllProducts.setModel(modelo);
     }
     
+    private void realizarPagamento() {
+        PagamentoTela pagamentoTela = new PagamentoTela(cliente);
+        pagamentoTela.addInternalFrameListener(this);
+        CaixaTela.jDesktopPane1.add(pagamentoTela);
+        Util.centralizaInternalFrame(pagamentoTela, this.getSize());
+        pagamentoTela.setVisible(true);
+    }
+    
+    private void pagamentoCompleto() {
+        //todos tipos de pagamentos
+       
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel body;
     private javax.swing.JPanel bottom;
@@ -867,6 +898,12 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         }else if(e.getInternalFrame().getClass() == EditarListaPedido.class){
             this.renderProdutos(transacaoFinanceira.getItens());
             this.atualizarTotal();
+        }
+        
+        if(e.getInternalFrame().getClass() == AutenticarCliente.class){
+            if(!cliente.getIdentificaoDoCliente().isEmpty()){
+                this.realizarPagamento();
+            }
         }
     }
 

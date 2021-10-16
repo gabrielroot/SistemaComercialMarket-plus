@@ -444,7 +444,7 @@ public class Console {
             UsuarioTipo.Caixa
         );
         
-        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance());
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),new Cliente());
         ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
         itemVenda.setProduto(p1);
         itemVenda.setTransacaoFinanceira(transacaoFinanceira);

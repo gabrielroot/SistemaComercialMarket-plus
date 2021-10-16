@@ -13,9 +13,9 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
         super(Cliente.class);
     }
     
-    public Cliente Autenticar(String identificacaoCliente, String senha){
-        Query sql =  this.manager.createQuery("SELECT cliente from Cliente cliente WHERE cliente.identificacaoCliente = :email and cliente.senha = :senha");
-        sql.setParameter("identificacaoCliente", identificacaoCliente);
+    public Cliente Autenticar(String identificacaoDoCliente, String senha){
+        Query sql =  this.manager.createQuery("SELECT cliente from Cliente cliente WHERE cliente.identificacaoDoCliente = :identificacaoDoCliente and cliente.senha = :senha");
+        sql.setParameter("identificacaoDoCliente", identificacaoDoCliente);
         sql.setParameter("senha", senha);
         
         Cliente user = null;
@@ -67,6 +67,28 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
             }
         }
         return sql.getResultList();
+    }
+
+    @Override
+    public boolean Abrir(String identificacaoCliente) {
+        Query sql =  this.manager.createQuery("SELECT cliente from Cliente cliente WHERE"
+                + " cliente.identificacaoDoCliente = :identificacaoDoCliente");
+        sql.setParameter("identificacaoDoCliente", identificacaoCliente);
+        try {
+            
+            Cliente resultado = (Cliente)sql.getSingleResult();
+            
+            if(resultado != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+            
+        } catch(Exception ex){
+            return false;
+        }
+     
     }
 
 }

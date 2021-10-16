@@ -85,7 +85,7 @@ WHERE subQuery.QUANTIDADETOTAL < subQuery.QUANTIDADEMINIMADESEJADA]]>
 				<textElement textAlignment="Center">
 					<font size="19" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Produtos com estoque total abaixo do desejado]]></text>
+				<text><![CDATA[Produtos com quantidade total abaixo da desejada]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement x="100" y="45" width="360" height="1" forecolor="#877978" uuid="6fb687cc-446a-4f27-88e4-220115df0949"/>

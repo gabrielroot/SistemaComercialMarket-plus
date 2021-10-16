@@ -135,10 +135,10 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
             linha.add(resultado.get(i).getValorVarejo().toString().replace(".", ","));
             linha.add(resultado.get(i).getValorAtacado().toString().replace(".", ","));
             linha.add(resultado.get(i).getValorCusto().toString().replace(".", ","));
-            linha.add(resultadoEstoque.getLocalizacaoProduto());
+            linha.add(resultado.get(i).getEstoque().getLocalizacaoProduto());
             if(checkQTDEstoque.isSelected())
                 linha.add(resultadoEstoque.getSomaLotes());
-            linha.add(resultadoEstoque.getQuantidadeMinimaDesejada());
+            linha.add(resultado.get(i).getEstoque().getQuantidadeMinimaDesejada());
             modelo.addRow(linha);
         }
         tblResultadoProdutos.setModel(modelo);
@@ -513,6 +513,24 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
         produtoEditar.setVisible(true);
     }//GEN-LAST:event_tblResultadoProdutosMouseClicked
 
+    private boolean produtoIsEmpty(){
+        return (
+            ProdutoTela.produto.getNome().isEmpty() &&
+            ProdutoTela.produto.getDescricao().isEmpty() &&
+
+            ProdutoTela.produto.getValorVarejo() == null &&
+            ProdutoTela.produto.getValorCusto() == null &&
+            ProdutoTela.produto.getValorAtacado() == null &&
+
+            ProdutoTela.produto.getMinimoParaAtacado() == -1 &&
+            ProdutoTela.produto.getEstoque().getQuantidadeMinimaDesejada() == -1 &&
+
+            ProdutoTela.produto.getEstoque().getLocalizacaoProduto() == null &&
+            ProdutoTela.produto.getUnidadeMedidaCusto() == null &&
+            ProdutoTela.produto.getUnidadeMedidaVenda()== null
+        );
+    }
+    
     private void checkDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkDescricaoActionPerformed
         this.buscarProduto();
     }//GEN-LAST:event_checkDescricaoActionPerformed
@@ -567,7 +585,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
        produtoEditar.addInternalFrameListener(this);
        Util.centralizaInternalFrame(produtoEditar, this.getSize());
        produtoEditar.setVisible(true);
-       this.buscarProduto();
+//       this.buscarProduto();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void limparFiltros(){
@@ -632,7 +650,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
             this.initTabEstoque();
         }
         if(e.getInternalFrame().getClass() == ProdutoEditar.class){
-            this.initTabProdutos();
+            this.buscarProduto();
         }
     }
 

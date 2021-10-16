@@ -585,7 +585,6 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
        produtoEditar.addInternalFrameListener(this);
        Util.centralizaInternalFrame(produtoEditar, this.getSize());
        produtoEditar.setVisible(true);
-//       this.buscarProduto();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void limparFiltros(){

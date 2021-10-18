@@ -324,7 +324,8 @@ public class LoteEditar extends javax.swing.JInternalFrame {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         if(util.abrirJOptionPane("confirma", "Deseja realmente remover este lote?", this)){
-            if(this.estoque.getLotes().remove(this.lote)){
+            this.estoque.getLotes().remove(this.lote);
+            if(this.loteRepositorio.Apagar(lote)){
                 util.abrirJOptionPane("sucesso", "Removido com sucesso!", this);
                 this.dispose();
             }else{

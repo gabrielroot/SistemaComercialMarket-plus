@@ -25,7 +25,7 @@ import javax.persistence.Table;
  * @author gabriel
  */
 @Entity
-@Table(name="itemVenda")
+@Table(name="item_venda")
 public class ItemVenda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,11 +39,11 @@ public class ItemVenda implements Serializable {
     @Column(precision=8, scale=2)
     private BigDecimal subTotal;
     
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "produto_id", nullable= false)
     private Produto produto;
     
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "transacaoFinanceira_id", nullable= false)
     private TransacaoFinanceira transacaoFinanceira;
 
@@ -68,7 +68,23 @@ public class ItemVenda implements Serializable {
     public BigDecimal getQuantidade() { return quantidade; }
     public void setQuantidade(BigDecimal quantidade) { this.quantidade = quantidade; }
 
+    /**
+     *
+     * @return Subtotal armazenado
+     */
     public BigDecimal getSubTotal() { return subTotal; }
+    
+    /**
+     *
+     * @param valorUnitario
+     * @return Subtotal calculado
+     */
+    public BigDecimal getSubTotal(BigDecimal valorUnitario) { return quantidade.multiply(valorUnitario); }
+    
+    /**
+     *
+     * @param subTotal
+     */
     public void setSubTotal(BigDecimal subTotal) { this.subTotal = subTotal; }
 
     public Produto getProduto() { return produto; }

@@ -29,6 +29,7 @@ import br.edu.ifnmg.enums.LocalizacaoProduto;
 import br.edu.ifnmg.enums.TransacaoStatus;
 import br.edu.ifnmg.enums.TransacaoTipo;
 import br.edu.ifnmg.enums.UnidadeMedida;
+import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
@@ -165,7 +166,9 @@ public class Console {
         CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
         CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("0.00"), new BigDecimal("1600.00"));
         CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("0.00"), new BigDecimal("2200.00"));
-        CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
+        CargoFuncionario cargo4 = new CargoFuncionario("Gerente", "Gerenciar", new BigDecimal("0.00"), new BigDecimal("1200.00"));
+        CargoFuncionario cargo5 = new CargoFuncionario("Dev", "Desenvolvedor do sistema", new BigDecimal("0.00"), new BigDecimal("12000.00"));
+        CargoFuncionario cargo6 = new CargoFuncionario("Balconista", "Gerenciamento de clientes", new BigDecimal("0.00"), new BigDecimal("1200.00"));
         
         Funcionario funcionario = new Funcionario(
             "Antônio Gomes",
@@ -199,7 +202,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            cargo2,    
+            cargo3,    
             "admin",
             "123",
             UsuarioTipo.Administrador
@@ -215,7 +218,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            cargo3,    
+            cargo2,    
             "caixa",
             "123",
             UsuarioTipo.Caixa
@@ -236,6 +239,24 @@ public class Console {
             UsuarioTipo.Gerente
         );
         
+                
+        Usuario usuarioDev = new Usuario(
+            "Desenvolvedor",
+            "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
+            null,
+            Calendar.getInstance(),
+            TipoPessoa.Fisica,
+            TipoDocumento.CNH,
+            "564612173",
+            FuncionarioSituacao.Ativo,
+            cargo5,    
+            "desenvolvedor",
+            "123",
+            UsuarioTipo.Gerente
+        );
+        
+        usuarioDev.setId(1000L);
+        
         Usuario usuarioBalconista = new Usuario(
             "BalconistaUser",
             "Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
@@ -245,7 +266,7 @@ public class Console {
             TipoDocumento.CNH,
             "564612173",
             FuncionarioSituacao.Ativo,
-            cargo4,    
+            cargo6,    
             "balconista",
             "123",
             UsuarioTipo.Balconista
@@ -254,30 +275,32 @@ public class Console {
         usuariosAleatorios();
         fornecedoresAleatorios();
         
+        Cliente cliente3 = new Cliente("0", 
+                "0", 
+                "0", 
+                "0",
+                null,
+                Calendar.getInstance(),
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento, 
+                "0"
+        );
+        
         return repositorioPessoa.Salvar(pessoa) &&
-               repositorioFuncionario.Salvar(funcionario)&&
+
+               repositorioFuncionario.Salvar(funcionario) &&
+               repositorioUsuario.Salvar(usuarioDev) &&
                repositorioUsuario.Salvar(usuarioAdmin) &&
                repositorioUsuario.Salvar(usuarioCaixa) &&
                repositorioUsuario.Salvar(usuarioGerente) &&
-               repositorioUsuario.Salvar(usuarioBalconista);
+               repositorioUsuario.Salvar(usuarioBalconista) &&
+              
+               repositorioCliente.Salvar(cliente3);
      }
     
     public static void fornecedoresAleatorios(){
-        CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
-        CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
-        CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
-        CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
-        
-        Telefone telefone01 = new Telefone("(38) 9 9991-8711");
-        Telefone telefone02 = new Telefone("(38) 9 9629-1131");
-
         List telefones = new ArrayList<Telefone>();
-        telefones.add(telefone01);
-        telefones.add(telefone02);
-        
         Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", "Marcela Fernandes", "Gustavo Barbosa", "Ana Laura Castro", "Ana Carolina Silveira", "Maria Luiza Barros", "Gustavo Rocha", "Luiz Felipe Moura", "Thiago Castro", "Pietro da Paz", "Yago da Costa", "Pietro da Mota", "Gabriel da Mata", "João Miguel Peixoto", "Breno da Luz", "André Peixoto", "Yuri Fogaça", "Sabrina Moreira", "Bárbara Dias", "Vitor Gabriel Barbosa", "Ana Castro", "Emilly Barbosa", "Vitória Silveira", "Vitor Gomes", "Bruno Moreira", "Ana Lívia Farias", "Benício Pires", "Lara Castro", "Sabrina Moraes", "Fernanda Porto", "Pietra Viana", "Luiz Fernando Ribeiro", "Maitê Pinto", "Sophie Almeida", "Stephany da Cunha", "Raul da Rocha", "Maria Vitória Viana", "Gustavo Henrique Nogueira", "Theo Cavalcanti", "Enzo Rodrigues", "Guilherme Rocha", "Davi Lucca Rodrigues", "Bruno da Mata"};
-        Object[] c = {cargo1, cargo2, cargo3, cargo4};
-        List cargos = Arrays.asList(c);
         Object[] enderecos = {"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12", "Lontra, Minas Gerais. Avenida Água viva N° 145", "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
         
         for(int i=0; i<50; i++){
@@ -295,10 +318,6 @@ public class Console {
         }
     }
     public static void usuariosAleatorios(){
-        CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
-        CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
-        CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
-        CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
         
         Telefone telefone01 = new Telefone("3899991111");        
         Telefone telefone02 = new Telefone("3896291131");
@@ -321,13 +340,24 @@ public class Console {
             "Gustavo Henrique Nogueira", "Theo Cavalcanti", "Enzo Rodrigues", "Guilherme Rocha",
             "Davi Lucca Rodrigues", "Bruno da Mata"};
         
-        Object[] c = {cargo1, cargo2, cargo3, cargo4};
-        List cargos = Arrays.asList(c);
         Object[] enderecos = {"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12",
             "Lontra, Minas Gerais. Avenida Água viva N° 145",
             "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
         
         for(int i=0; i<50; i++){
+            CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
+            CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
+            CargoFuncionario cargo3 = new CargoFuncionario("Administrador", "Administrar", new BigDecimal("5.00"), new BigDecimal("2200.00"));
+            CargoFuncionario cargo4 = new CargoFuncionario("Segurança", "Controle do fluxo de pessoas", new BigDecimal("0.00"), new BigDecimal("1200.00"));
+            Object[] c = {cargo1, cargo2, cargo3, cargo4};
+            List cargos = Arrays.asList(c);
+            
+            telefone01 = new Telefone("3899991111");        
+            telefone02 = new Telefone("3896291131");
+
+            telefones.add(telefone01);
+            telefones.add(telefone02);
+
             Usuario usuario = new Usuario(
                     nomes[i].toString(), 
                     enderecos[(int) (Math.random()*3)].toString(), 
@@ -348,20 +378,20 @@ public class Console {
     }
     
     public static void produtosFixos(){
-            Estoque estoque = new Estoque(
+            Estoque estoqueSandalia = new Estoque(
                     LocalizacaoProduto.SETOR01, 
                     50
             );
             
             List lotes = new ArrayList();
-            Lote lote = new Lote("BR110", 5, 2, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoque);
-            Lote lote1 = new Lote("BR140", 3, 1, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoque);
-            Lote lote11 = new Lote("BR14012", 31, 0, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoque);
+            Lote lote = new Lote("BR110", 5, 2, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoqueSandalia);
+            Lote lote1 = new Lote("BR140", 3, 1, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoqueSandalia);
+            Lote lote11 = new Lote("BR14012", 31, 0, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoqueSandalia);
             lotes.add(lote);
             lotes.add(lote1);
             lotes.add(lote11);
             
-            estoque.setLotes(lotes);
+            estoqueSandalia.setLotes(lotes);
 
             Produto produto = new Produto("Sandália Havaianas 44 Polegadas", 
                 "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
@@ -371,23 +401,23 @@ public class Console {
                 new BigDecimal("32.00"), 
                 new BigDecimal("30.00"), 
                 new BigDecimal("25.00"), 
-                estoque
+                estoqueSandalia
             );
             
             repositorioProduto.Salvar(produto);
             
-            Estoque estoque2 = new Estoque(
+            Estoque estoqueTigela = new Estoque(
                     LocalizacaoProduto.SETOR02, 
                     25
             );
             
             List lotes2 = new ArrayList();
-            Lote lote2 = new Lote("BR130", 15, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoque2);
-            Lote lote22 = new Lote("BR1330", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoque2);
+            Lote lote2 = new Lote("BR130", 15, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoqueTigela);
+            Lote lote22 = new Lote("BR1330", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoqueTigela);
             lotes2.add(lote2);
             lotes2.add(lote22);
             
-            estoque2.setLotes(lotes2);
+            estoqueTigela.setLotes(lotes2);
 
             Produto produto2 = new Produto("Tigela azul marinho 700ml", 
                 "Ideal para saladas ou uso como prato de pedreiro", 
@@ -397,14 +427,39 @@ public class Console {
                 new BigDecimal("22.00"), 
                 new BigDecimal("20.00"), 
                 new BigDecimal("15.00"), 
-                estoque2
+                estoqueTigela
             );
             
             repositorioProduto.Salvar(produto2);
+            
+            Estoque estoqueRefri = new Estoque(
+                    LocalizacaoProduto.SETOR02, 
+                    100
+            );
+            List lotes3 = new ArrayList();
+            Lote lote33 = new Lote("BR230", 151, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoqueRefri);
+            Lote lote333 = new Lote("BR1430", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoqueRefri);
+            lotes3.add(lote33);
+            lotes3.add(lote333);
+            
+            estoqueRefri.setLotes(lotes3);
+
+            Produto produto3 = new Produto("Fanta Uva 2L", 
+                "Nova variação da fanta Laranja", 
+                5, 
+                UnidadeMedida.Fardo, 
+                UnidadeMedida.Litro, 
+                new BigDecimal("5.00"), 
+                new BigDecimal("4.50"), 
+                new BigDecimal("27.00"), 
+                estoqueRefri
+            );
+            
+            repositorioProduto.Salvar(produto3);
     }
 
     public static void transacaoFinanceira(){
-        Produto p1 = new Produto("Produto 1", "@#4343", 2, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 0));
+        Produto p1 = new Produto("Papel Higiênico Classe A Macio", "Tão macio quanto bumbum de neném", 5, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 300));
         
         Usuario user = new Usuario(
             "TransacaoCaixa",
@@ -421,12 +476,15 @@ public class Console {
             UsuarioTipo.Caixa
         );
         
-        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance());
+        UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
+        usuarioRepositorio.Salvar(user);
+        
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"));
         ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
         itemVenda.setProduto(p1);
         itemVenda.setTransacaoFinanceira(transacaoFinanceira);
         
-        Produto p2 = new Produto("Produto 2", "@#4343", 2, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 0));
+        Produto p2 = new Produto("Papel Higiênico Classe D", "Áspero quanto uma lixa de parede", 6, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 500));
         ItemVenda itemVenda2 = new ItemVenda(BigDecimal.valueOf(15),p2.getValorVarejo());
         itemVenda2.setProduto(p2);
         itemVenda2.setTransacaoFinanceira(transacaoFinanceira);

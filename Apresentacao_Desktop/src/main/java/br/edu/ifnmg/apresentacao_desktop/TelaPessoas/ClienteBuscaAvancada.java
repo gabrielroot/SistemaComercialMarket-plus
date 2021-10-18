@@ -138,16 +138,10 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
         jLabel3.setText("Número do Documento");
-
-
-        txtTelefone.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-
-
         lblTelefone.setBackground(new java.awt.Color(0, 0, 0));
         lblTelefone.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         lblTelefone.setForeground(new java.awt.Color(54, 54, 54));
         lblTelefone.setText("Telefone");
-
 
         jButton2.setBackground(new java.awt.Color(109, 46, 46));
         jButton2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -264,14 +258,16 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
 
+    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefoneActionPerformed
+
 
     private void txtNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroDocumentoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroDocumentoActionPerformed
 
-    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefoneActionPerformed
+   
 
 
 

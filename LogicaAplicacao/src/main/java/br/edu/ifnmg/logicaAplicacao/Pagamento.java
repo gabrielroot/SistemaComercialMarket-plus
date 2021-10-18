@@ -106,7 +106,7 @@ public class Pagamento implements Serializable {
 
     @Override
     public String toString() {
-        return id.toString();
+        return data.toString();
     }
     
 }

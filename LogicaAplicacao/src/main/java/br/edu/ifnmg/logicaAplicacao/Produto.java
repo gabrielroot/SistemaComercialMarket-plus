@@ -65,7 +65,7 @@ public class Produto implements Serializable {
     @Column(precision=8, scale=2)
     private BigDecimal valorCusto;
     
-    @ManyToOne(cascade= CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "estoque_id", nullable= false)
     private Estoque estoque;
 
@@ -164,7 +164,7 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return this.id.toString();
+        return this.nome;
     }
     
 }

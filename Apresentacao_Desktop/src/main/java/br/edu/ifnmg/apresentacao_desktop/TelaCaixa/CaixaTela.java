@@ -661,8 +661,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         System.out.println("");
         System.out.println("Total: "+transacaoFinanceira.getValorTotal());
         System.out.println("Usuario: "+transacaoFinanceira.getUsuario().getNome());
-        UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
-        transacaoFinanceira.setUsuario(usuarioRepositorio.Abrir(transacaoFinanceira.getUsuario().getId()));
+       
         TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio = RepositorioFactory.getTransacaoFinanceiraRepositorio();
         transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
         

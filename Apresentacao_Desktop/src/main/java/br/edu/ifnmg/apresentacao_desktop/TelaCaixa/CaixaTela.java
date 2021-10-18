@@ -56,7 +56,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
      * Creates new form CaixaTela
      */
     public CaixaTela() {
-        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), new Cliente());
+        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), clienteRepositorio.Abrir("0"));
         this.cliente = new Cliente();
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
@@ -646,7 +646,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         autenticarCliente.setVisible(true);
         Util.centralizaInternalFrame(autenticarCliente,this.getSize());
 
-//        finalizarCompra();
+       finalizarCompra();
     }//GEN-LAST:event_painelRealizarPgtoMouseClicked
 
     private void painelRepetirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRepetirMouseClicked
@@ -796,11 +796,6 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         CaixaTela.jDesktopPane1.add(pagamentoTela);
         Util.centralizaInternalFrame(pagamentoTela, this.getSize());
         pagamentoTela.setVisible(true);
-    }
-    
-    private void pagamentoCompleto() {
-        //todos tipos de pagamentos
-       
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

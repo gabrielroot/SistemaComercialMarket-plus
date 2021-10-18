@@ -281,6 +281,17 @@ public class Console {
                 "333333"
         );
         
+        Cliente cliente3 = new Cliente("0", 
+                "0", 
+                "0", 
+                "0",
+                null,
+                Calendar.getInstance(),
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento, 
+                "0"
+        );
+        
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
                repositorioUsuario.Salvar(usuarioDev) &&
@@ -289,7 +300,8 @@ public class Console {
                repositorioUsuario.Salvar(usuarioGerente) &&
                repositorioUsuario.Salvar(usuarioBalconista) &&
                repositorioCliente.Salvar(cliente1) &&
-               repositorioCliente.Salvar(cliente2);
+               repositorioCliente.Salvar(cliente2) &&
+               repositorioCliente.Salvar(cliente3) ;
      }
     
     public static void fornecedoresAleatorios(){
@@ -469,7 +481,7 @@ public class Console {
             UsuarioTipo.Caixa
         );
         
-        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),new Cliente());
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),(repositorioCliente.Abrir("0")));
         ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
         itemVenda.setProduto(p1);
         itemVenda.setTransacaoFinanceira(transacaoFinanceira);

@@ -42,7 +42,6 @@ public class ProdutoEditar extends javax.swing.JInternalFrame implements KeyList
             btnBuscar.setVisible(false);
         }
         if(title.equalsIgnoreCase("buscar produto")){
-            btnAddLote.setVisible(false);
             btnSalvar.setVisible(false);
         }
         
@@ -240,7 +239,6 @@ public class ProdutoEditar extends javax.swing.JInternalFrame implements KeyList
         btnBuscar = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
-        btnAddLote = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
@@ -339,12 +337,12 @@ public class ProdutoEditar extends javax.swing.JInternalFrame implements KeyList
 
         txtValorAtacado.setBackground(new java.awt.Color(255, 255, 255));
         txtValorAtacado.setForeground(new java.awt.Color(8, 8, 8));
-        txtValorAtacado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.##"))));
+        txtValorAtacado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtValorAtacado.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
         txtValorVarejo.setBackground(new java.awt.Color(255, 255, 255));
         txtValorVarejo.setForeground(new java.awt.Color(8, 8, 8));
-        txtValorVarejo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###.##"))));
+        txtValorVarejo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         txtValorVarejo.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
         txtValorCompra.setBackground(new java.awt.Color(255, 255, 255));
@@ -515,7 +513,7 @@ public class ProdutoEditar extends javax.swing.JInternalFrame implements KeyList
                 btnDeleteActionPerformed(evt);
             }
         });
-        footer.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 158, 37));
+        footer.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 158, 37));
 
         btnSalvar.setBackground(new java.awt.Color(109, 46, 46));
         btnSalvar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -527,17 +525,6 @@ public class ProdutoEditar extends javax.swing.JInternalFrame implements KeyList
             }
         });
         footer.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, 158, 37));
-
-        btnAddLote.setBackground(new java.awt.Color(184, 139, 139));
-        btnAddLote.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        btnAddLote.setForeground(new java.awt.Color(8, 8, 8));
-        btnAddLote.setText("Cadastrar Lote");
-        btnAddLote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddLoteActionPerformed(evt);
-            }
-        });
-        footer.add(btnAddLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 0, 158, 37));
 
         javax.swing.GroupLayout BgLayout = new javax.swing.GroupLayout(Bg);
         Bg.setLayout(BgLayout);
@@ -615,18 +602,10 @@ public class ProdutoEditar extends javax.swing.JInternalFrame implements KeyList
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void btnAddLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddLoteActionPerformed
-        LoteEditar loteEditar = new LoteEditar(ProdutoEditar.produto.getEstoque(), new Lote(), "Novo Lote");
-        ProdutoTela.jDesktopPane1.add(loteEditar);
-        Util.centralizaInternalFrame(loteEditar, this.getParent().getSize());
-        loteEditar.setVisible(true);
-    }//GEN-LAST:event_btnAddLoteActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Bg;
     private javax.swing.JPanel Components;
-    private javax.swing.JButton btnAddLote;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSalvar;

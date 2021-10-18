@@ -39,11 +39,11 @@ public class ItemVenda implements Serializable {
     @Column(precision=8, scale=2)
     private BigDecimal subTotal;
     
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "produto_id", nullable= false)
     private Produto produto;
     
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "transacaoFinanceira_id", nullable= false)
     private TransacaoFinanceira transacaoFinanceira;
 

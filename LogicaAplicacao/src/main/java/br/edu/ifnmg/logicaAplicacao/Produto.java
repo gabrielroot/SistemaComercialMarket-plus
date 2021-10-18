@@ -65,7 +65,7 @@ public class Produto implements Serializable {
     @Column(precision=8, scale=2)
     private BigDecimal valorCusto;
     
-    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "estoque_id", nullable= false)
     private Estoque estoque;
 

@@ -70,25 +70,19 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
     }
 
     @Override
-    public boolean Abrir(String identificacaoCliente) {
+    public Cliente Abrir(String identificacaoCliente) {
+        Cliente resultado = null;
+        
         Query sql =  this.manager.createQuery("SELECT cliente from Cliente cliente WHERE"
                 + " cliente.identificacaoDoCliente = :identificacaoDoCliente");
         sql.setParameter("identificacaoDoCliente", identificacaoCliente);
         try {
-            
-            Cliente resultado = (Cliente)sql.getSingleResult();
-            
-            if(resultado != null){
-                return true;
-            }
-            else{
-                return false;
-            }
-            
+            resultado = (Cliente)sql.getSingleResult();
         } catch(Exception ex){
-            return false;
+            resultado =  null;
         }
-     
+        
+        return resultado;
     }
 
 }

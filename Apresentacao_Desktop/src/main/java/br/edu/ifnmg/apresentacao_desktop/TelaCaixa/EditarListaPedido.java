@@ -35,11 +35,11 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         this.txtCode.setText(itemVenda.getProduto().getId().toString());
         this.txtProductName.setText(itemVenda.getProduto().getNome());
         this.txtQuantidade.setText(itemVenda.getQuantidade().toString());
-        this.txtSubTotal.setText(itemVenda.getSubTotal().toString());
+        this.txtSubTotal.setText(Util.formatStringToReal(itemVenda.getSubTotal().toString()));
         if(CaixaTela.isAtacado(itemVenda)){
-            this.txtValor.setText(itemVenda.getProduto().getValorAtacado().toString());
+            this.txtValor.setText(Util.formatStringToReal(itemVenda.getProduto().getValorAtacado().toString()));
         }else{
-            this.txtValor.setText(itemVenda.getProduto().getValorVarejo().toString());
+            this.txtValor.setText(Util.formatStringToReal(itemVenda.getProduto().getValorVarejo().toString()));
         }
         
         

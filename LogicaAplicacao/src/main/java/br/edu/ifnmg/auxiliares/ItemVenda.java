@@ -68,7 +68,17 @@ public class ItemVenda implements Serializable {
     public BigDecimal getQuantidade() { return quantidade; }
     public void setQuantidade(BigDecimal quantidade) { this.quantidade = quantidade; }
 
+    /**
+     *
+     * @return Subtotal armazenado
+     */
     public BigDecimal getSubTotal() { return subTotal; }
+    
+    /**
+     *
+     * @param valorUnitario
+     * @return Subtotal calculado
+     */
     public BigDecimal getSubTotal(BigDecimal valorUnitario) { return quantidade.multiply(valorUnitario); }
     
     /**

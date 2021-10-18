@@ -99,11 +99,11 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             linha.add(item.get(i).getQuantidade());
             linha.add(item.get(i).getProduto().getMinimoParaAtacado());
             if(isAtacado(item.get(i))){
-                linha.add("Atacado: " + item.get(i).getProduto().getValorAtacado());
+                linha.add("Atacado: " + Util.formatStringToReal(item.get(i).getProduto().getValorAtacado().toString()));
             }else{
-                linha.add("Varejo: " + item.get(i).getProduto().getValorVarejo());
+                linha.add("Varejo: " + Util.formatStringToReal(item.get(i).getProduto().getValorVarejo().toString()));
             }
-            linha.add(item.get(i).getSubTotal());
+            linha.add(Util.formatStringToReal(item.get(i).getSubTotal().toString()));
             modelo.addRow(linha);
         }
         tableResultadoProdutos.setModel(modelo);

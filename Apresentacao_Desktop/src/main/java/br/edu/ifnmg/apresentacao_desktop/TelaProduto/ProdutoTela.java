@@ -70,7 +70,7 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
     }
     
     private void initTabEstoque(){
-        List<Produto> resultado = this.produtoRepositorio.Buscar(new Produto());
+        List<Produto> resultado = this.produtoRepositorio.Buscar(ProdutoTela.produto);
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
         modelo.addColumn("ID");

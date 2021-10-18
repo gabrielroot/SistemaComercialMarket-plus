@@ -645,7 +645,6 @@ public class ProdutoTela extends javax.swing.JInternalFrame implements InternalF
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
         if(e.getInternalFrame().getClass() == LoteTela.class){
-            limparFiltros();
             this.initTabEstoque();
         }
         if(e.getInternalFrame().getClass() == ProdutoEditar.class){

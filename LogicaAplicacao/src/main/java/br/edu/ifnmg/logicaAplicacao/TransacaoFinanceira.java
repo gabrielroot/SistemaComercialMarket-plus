@@ -64,11 +64,11 @@ public class TransacaoFinanceira implements Serializable {
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "transacaoFinanceira")
     private List<ItemVenda> itens;
     
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", nullable= false)
     private Usuario usuario;
     
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id", nullable= false)
     private Cliente cliente;
 

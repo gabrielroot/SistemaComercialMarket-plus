@@ -31,7 +31,7 @@
   <SubComponents>
     <Container class="javax.swing.JDesktopPane" name="jDesktopPane1">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
 
       <Layout>
@@ -170,7 +170,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="0" pref="305" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="302" max="32767" attributes="0"/>
                                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -185,7 +185,7 @@
                                               </Group>
                                               <Component id="txtNomeCliente" min="-2" pref="506" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="0" pref="288" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="291" max="32767" attributes="0"/>
                                       </Group>
                                       <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                                   </Group>
@@ -366,10 +366,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtNomeFuncionario" min="-2" pref="356" max="-2" attributes="0"/>
+                                          <Component id="txtNomeFuncionario" min="-2" pref="401" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -378,7 +378,7 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="ComboSituacao" min="-2" max="-2" attributes="0"/>
+                                          <Component id="comboSituacao" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
@@ -388,13 +388,10 @@
                                           <Component id="jScrollPane4" min="-2" pref="1162" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="btnNovoFuncionario1" min="-2" pref="167" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                              <Component id="btnNovoCargo" min="-2" pref="167" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="btnBuscarFuncionario" min="-2" pref="97" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
-                                              <Component id="btnLimparFiltrosFuncionario" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
+                                              <Component id="btnBuscarFuncionario" min="-2" pref="110" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="246" max="-2" attributes="0"/>
+                                              <Component id="btnLimparFiltrosFuncionario" min="-2" pref="135" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
@@ -406,12 +403,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnNovoCargo" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                                  <Component id="btnNovoFuncionario1" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
@@ -421,7 +413,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="txtNomeFuncionario" min="-2" max="-2" attributes="0"/>
-                                          <Component id="ComboSituacao" min="-2" max="-2" attributes="0"/>
+                                          <Component id="comboSituacao" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -431,9 +423,10 @@
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnLimparFiltrosFuncionario" alignment="0" min="-2" pref="38" max="-2" attributes="0"/>
-                                  <Component id="btnBuscarFuncionario" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Component id="btnBuscarFuncionario" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Component id="btnNovoFuncionario1" min="-2" pref="38" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Component id="jScrollPane4" pref="187" max="32767" attributes="0"/>
@@ -465,7 +458,7 @@
                     <Component class="javax.swing.JButton" name="btnBuscarFuncionario">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="a7" green="a7" red="d4" type="rgb"/>
+                          <Color blue="47" green="47" red="8c" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
@@ -490,20 +483,6 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLimparFiltrosFuncionarioActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="btnNovoCargo">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="a7" green="a7" red="d4" type="rgb"/>
-                        </Property>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Segoe UI" size="14" style="0"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value=" Novo Cargo"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovoCargoActionPerformed"/>
                       </Events>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane4">
@@ -551,6 +530,9 @@
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblResultadoMouseClicked"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -570,7 +552,7 @@
                         <Property name="text" type="java.lang.String" value="Cargo:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="ComboSituacao">
+                    <Component class="javax.swing.JComboBox" name="comboSituacao">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="SansSerif" size="18" style="0"/>
@@ -646,7 +628,7 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace pref="78" max="32767" attributes="0"/>
+                                  <EmptySpace pref="34" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jScrollPane3" min="-2" pref="1114" max="-2" attributes="0"/>
                                       <Group type="102" alignment="1" attributes="0">
@@ -672,14 +654,14 @@
                                           <EmptySpace min="-2" pref="182" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="79" max="32767" attributes="0"/>
+                                  <EmptySpace pref="34" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace pref="217" max="32767" attributes="0"/>
+                                  <EmptySpace pref="40" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -859,7 +841,7 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace pref="291" max="32767" attributes="0"/>
+                                  <EmptySpace pref="247" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="jScrollPane2" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
@@ -884,7 +866,7 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="291" max="32767" attributes="0"/>
+                                  <EmptySpace pref="246" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>

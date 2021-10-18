@@ -107,12 +107,12 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         
         ArrayList<Telefone> telefones = new ArrayList();
         if(this.txtTelefone1.getValue() != null){
-            Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString());
+            Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString() );
             telefones.add(telefone1);
         }
         
         if(this.txtTelefone2.getValue() != null){
-            Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString());
+            Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString() );
             telefones.add(telefone2);
         }
         

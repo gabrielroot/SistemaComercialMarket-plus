@@ -102,7 +102,7 @@ public class Funcionario extends Pessoa implements Serializable  {
 
     public CargoFuncionario getCargo() { return cargo; }
     public void setCargo(String cargo) { this.cargo.setTitulo(cargo); }
-
+    public void setCargo(CargoFuncionario cargo){ this.cargo=cargo;}
     public int getVersao() {  return versao;   }
 
     public void setVersao(int versao) {    this.versao = versao;  }
@@ -133,5 +133,7 @@ public class Funcionario extends Pessoa implements Serializable  {
     public String toString() {
         return this.getNome().toString();
     }
+
+    
     
 }

@@ -60,7 +60,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
         this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
-        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), clienteRepositorio.Abrir("0"));
+        CaixaTela.cliente = clienteRepositorio.Abrir("0");
+        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), CaixaTela.cliente);
         this.util = new Util();
         initComponents();
         this.txtCode.addKeyListener(this);

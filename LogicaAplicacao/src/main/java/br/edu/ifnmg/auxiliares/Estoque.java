@@ -45,7 +45,7 @@ public class Estoque implements Serializable {
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.EAGER ,mappedBy = "estoque")
     private List<Produto> produtos;
     
-    @OneToMany( cascade=CascadeType.MERGE, fetch = FetchType.EAGER ,mappedBy = "estoque")
+    @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.EAGER ,mappedBy = "estoque")
     private List<Lote> lotes;
 
     public Estoque() {

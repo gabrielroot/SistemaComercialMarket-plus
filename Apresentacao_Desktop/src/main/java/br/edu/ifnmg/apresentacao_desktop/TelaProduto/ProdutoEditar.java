@@ -12,6 +12,7 @@ import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import Util.Util;
 import br.edu.ifnmg.apresentacao_desktop.TelaCaixa.ListarProdutos;
+import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.Lote;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

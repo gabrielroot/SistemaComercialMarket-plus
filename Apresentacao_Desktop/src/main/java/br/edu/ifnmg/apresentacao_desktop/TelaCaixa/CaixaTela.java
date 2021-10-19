@@ -56,12 +56,12 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
      * Creates new form CaixaTela
      */
     public CaixaTela() {
-        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), clienteRepositorio.Abrir("0"));
         this.cliente = new Cliente();
+        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), cliente);
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
-        this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
+        this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();    
         this.util = new Util();
         initComponents();
         this.txtCode.addKeyListener(this);
@@ -646,7 +646,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         autenticarCliente.setVisible(true);
         Util.centralizaInternalFrame(autenticarCliente,this.getSize());
 
-       finalizarCompra();
+        //finalizarCompra();
     }//GEN-LAST:event_painelRealizarPgtoMouseClicked
 
     private void painelRepetirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRepetirMouseClicked
@@ -662,8 +662,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         System.out.println("");
         System.out.println("Total: "+transacaoFinanceira.getValorTotal());
         System.out.println("Usuario: "+transacaoFinanceira.getUsuario().getNome());
-        UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
-        transacaoFinanceira.setUsuario(usuarioRepositorio.Abrir(transacaoFinanceira.getUsuario().getId()));
+       
+        transacaoFinanceira.setCliente(cliente);
         TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio = RepositorioFactory.getTransacaoFinanceiraRepositorio();
         transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
         

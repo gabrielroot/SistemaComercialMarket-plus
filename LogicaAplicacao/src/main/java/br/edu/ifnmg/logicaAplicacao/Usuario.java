@@ -107,7 +107,6 @@ public class Usuario extends Funcionario implements Serializable {
             UsuarioTipo usuarioTipo
     ) {
         super(
-            id,
             nome, 
             endereco, 
             telefones, 

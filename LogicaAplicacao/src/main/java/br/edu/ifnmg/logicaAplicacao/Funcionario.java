@@ -48,7 +48,7 @@ public class Funcionario extends Pessoa implements Serializable  {
     @Column(nullable=false)
     private FuncionarioSituacao situacao;
     
-    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "cargoFuncionario_id", nullable= false)
     private CargoFuncionario cargo;
     
@@ -91,7 +91,7 @@ public class Funcionario extends Pessoa implements Serializable  {
         FuncionarioSituacao situacao, 
         CargoFuncionario cargo) {
         
-        super(id, nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
+        super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
         this.situacao = situacao;
         this.cargo = cargo;
         this.versao=1;

@@ -56,12 +56,12 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
      * Creates new form CaixaTela
      */
     public CaixaTela() {
+        this.cliente = new Cliente();
+        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), cliente);
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
-        this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
-        CaixaTela.cliente = clienteRepositorio.Abrir("0");
-        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), CaixaTela.cliente);
+        this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();    
         this.util = new Util();
         initComponents();
         this.txtCode.addKeyListener(this);
@@ -646,7 +646,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         autenticarCliente.setVisible(true);
         Util.centralizaInternalFrame(autenticarCliente,this.getSize());
 
-//        finalizarCompra();
+        //finalizarCompra();
     }//GEN-LAST:event_painelRealizarPgtoMouseClicked
 
     private void painelRepetirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRepetirMouseClicked
@@ -663,6 +663,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         System.out.println("Total: "+transacaoFinanceira.getValorTotal());
         System.out.println("Usuario: "+transacaoFinanceira.getUsuario().getNome());
        
+        transacaoFinanceira.setCliente(cliente);
         TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio = RepositorioFactory.getTransacaoFinanceiraRepositorio();
         transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
         
@@ -795,11 +796,6 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         CaixaTela.jDesktopPane1.add(pagamentoTela);
         Util.centralizaInternalFrame(pagamentoTela, this.getSize());
         pagamentoTela.setVisible(true);
-    }
-    
-    private void pagamentoCompleto() {
-        //todos tipos de pagamentos
-       
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

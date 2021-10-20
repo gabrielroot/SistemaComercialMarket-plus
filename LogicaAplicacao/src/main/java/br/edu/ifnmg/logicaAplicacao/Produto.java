@@ -164,7 +164,7 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return this.id.toString();
+        return this.nome;
     }
     
 }

@@ -4,19 +4,55 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
+import Util.Util;
+import static br.edu.ifnmg.apresentacao_desktop.TelaCaixa.CaixaTela.cliente;
+import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.enums.TipoDocumento;
+import br.edu.ifnmg.enums.TipoPessoa;
+import br.edu.ifnmg.logicaAplicacao.Cliente;
+import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
+import br.edu.ifnmg.logicaAplicacao.Pagamento;
+import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
+import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 /**
  *
  * @author gabriel
  */
 public class AutenticarCliente extends javax.swing.JInternalFrame {
-
+    Cliente clienteTeste;
+    ClienteRepositorio clienteRepositorio;
+    Pagamento pagamento;
+    PagamentoRepositorio pagamentoRepositorio;
+    Util util;
     /**
      * Creates new form VendaAtacado
      */
-    public AutenticarCliente() {
+    public AutenticarCliente(Cliente cliente) {
+        clienteRepositorio = RepositorioFactory.getClienteRepositorio();
+        pagamento = new Pagamento();
+        util = new Util();
         initComponents();
+        setComponetes(cliente);
     }
 
+    private void setComponetes(Cliente cliente){
+        if(cliente.getNome() != null && !cliente.getNome().isEmpty()){
+        this.txtIdentificacaoCliente.setText(cliente.getIdentificaoDoCliente());
+        this.txtSenhaCliente.setText(cliente.getSenha());
+        }else{
+            this.txtIdentificacaoCliente.setText("0");
+            this.txtSenhaCliente.setText("0");
+        }
+    }
+    
+    private void getComponetes(Cliente cliente){
+        cliente.setIdentificaoDoCliente(txtIdentificacaoCliente.getText());
+        cliente.setSenha(String.valueOf(this.txtSenhaCliente.getPassword()));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,9 +66,9 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtIdentificacaoCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtSenhaCliente = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -68,25 +104,35 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(8, 8, 8));
         jLabel2.setText("Identificação do Cliente");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(8, 8, 8));
+        txtIdentificacaoCliente.setBackground(new java.awt.Color(255, 255, 255));
+        txtIdentificacaoCliente.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        txtIdentificacaoCliente.setForeground(new java.awt.Color(8, 8, 8));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(8, 8, 8));
         jLabel3.setText("Senha");
 
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(8, 8, 8));
+        txtSenhaCliente.setBackground(new java.awt.Color(255, 255, 255));
+        txtSenhaCliente.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        txtSenhaCliente.setForeground(new java.awt.Color(8, 8, 8));
 
         jButton1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(140, 71, 71));
         jButton2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Autenticar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -102,10 +148,10 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPasswordField1)
+                    .addComponent(txtSenhaCliente)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIdentificacaoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -115,11 +161,11 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
                 .addGap(52, 52, 52)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtIdentificacaoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSenhaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,6 +187,37 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.clienteTeste = new Cliente();
+        this.getComponetes(this.clienteTeste);
+        
+         if(clienteTeste.getIdentificaoDoCliente().equals("0") && 
+                 clienteTeste.getSenha().equals("0") ){
+            clienteTeste.setNome("0");
+            clienteTeste.setEndereco("0");
+            clienteTeste.setTelefones(new ArrayList<Telefone>());
+            clienteTeste.setDataNascimento(Calendar.getInstance());
+            clienteTeste.setTipoPessoa(TipoPessoa.Fisica);
+            clienteTeste.setTipoDocumento(TipoDocumento.CertidaoNascimento);
+            clienteTeste.setNumeroDocumento("0");
+            if(clienteRepositorio.Abrir(clienteTeste.getIdentificaoDoCliente()) == null){
+                clienteRepositorio.Salvar(clienteTeste);
+            }
+        }
+        
+        CaixaTela.cliente = clienteRepositorio.Autenticar(this.clienteTeste.getIdentificaoDoCliente(),this.clienteTeste.getSenha());  
+        if(CaixaTela.cliente == null){
+            util.abrirJOptionPane("erro", "Nenhum cliente encontrado!",this);
+            CaixaTela.cliente = new Cliente();
+        }else {
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -150,7 +227,7 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtIdentificacaoCliente;
+    private javax.swing.JPasswordField txtSenhaCliente;
     // End of variables declaration//GEN-END:variables
 }

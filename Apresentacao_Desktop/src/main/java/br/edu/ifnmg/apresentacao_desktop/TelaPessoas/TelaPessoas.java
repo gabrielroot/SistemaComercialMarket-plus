@@ -7,11 +7,14 @@ package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 import Util.Util;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.apresentacao_desktop.TelaPrincipal;
+import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.auxiliares.TelefoneRepositorio;
 import br.edu.ifnmg.enums.Segmento;
 import br.edu.ifnmg.enums.UsuarioTipo;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Fornecedor;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
+import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
@@ -36,6 +39,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     public static Cliente cliente;
     private ClienteRepositorio clienteRepositorio;
     private Util util;
+    private TelefoneRepositorio telefoneRepositorio; 
+    private PessoaRepositorio pessoaRepositorio;
     
     /**
      * Creates new form Pessoas
@@ -56,6 +61,8 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         tabClicked.add(false);
         this.buscarCliente();
         this.util = new Util();
+        this.telefoneRepositorio = RepositorioFactory.getTelefoneRepositorio();
+        this.pessoaRepositorio = RepositorioFactory.getPessoaRepositorio();
         
     }
 
@@ -810,6 +817,12 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
         }
         
         List<Cliente> resultado = this.clienteRepositorio.Buscar(cliente);
+        
+        /*if(cliente.getTelefones().size() == 1){
+            
+            this.cliente = (Cliente)this.pessoaRepositorio.buscarPessoaTelefone(this.cliente.getTelefones().get(0));
+            
+        }*/
         
         DefaultTableModel modelo = new DefaultTableModel();
         

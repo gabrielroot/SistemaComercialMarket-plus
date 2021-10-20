@@ -34,7 +34,7 @@ import javax.persistence.TemporalType;
  * @author gabriel
  */
 @Entity
-@Table(name="transacaoFinanceira")
+@Table(name="transacao_financeira")
 public class TransacaoFinanceira implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,9 +64,13 @@ public class TransacaoFinanceira implements Serializable {
     @OneToMany( cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "transacaoFinanceira")
     private List<ItemVenda> itens;
     
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", nullable= false)
     private Usuario usuario;
+    
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cliente_id", nullable= false)
+    private Cliente cliente;
 
     public TransacaoFinanceira() {
         this.id = 0L;
@@ -75,19 +79,22 @@ public class TransacaoFinanceira implements Serializable {
         this.data = Calendar.getInstance();
         this.itens = new ArrayList<>();
         this.usuario = new Usuario();
+        this.cliente = new Cliente();
     }
 
     public TransacaoFinanceira(
             TransacaoTipo transacaoTipo, 
             TransacaoStatus transacaoStatus,
             Usuario usuario,
-            Calendar data
+            Calendar data,
+            Cliente cliente
     ) {
         this.transacaoTipo = transacaoTipo;
         this.transacaoStatus = transacaoStatus;
         this.data = data;
         this.usuario = usuario;
         this.itens = new ArrayList<>();
+        this.cliente = cliente;
     }
 
     public TransacaoTipo getTransacaoTipo() { return transacaoTipo; }
@@ -104,6 +111,9 @@ public class TransacaoFinanceira implements Serializable {
 
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
     
     public BigDecimal getValorTotal(){
         BigDecimal sum = null;

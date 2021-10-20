@@ -16,7 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 @Entity
-@Table(name="cargoFuncionario")
+@Table(name="cargo_funcionario")
 public class CargoFuncionario implements Serializable {
 
     private static final long serialVersionUID = 1L;

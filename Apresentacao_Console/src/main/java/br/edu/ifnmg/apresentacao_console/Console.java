@@ -242,7 +242,7 @@ public class Console {
             UsuarioTipo.Gerente
         );
         
-        usuarioDev.setId(1000L);
+        usuarioDev.setId(1001L);
         
         Usuario usuarioBalconista = new Usuario(
             "BalconistaUser",
@@ -281,6 +281,17 @@ public class Console {
                 "333333"
         );
         
+        Cliente cliente3 = new Cliente("0", 
+                "0", 
+                "0", 
+                "0",
+                null,
+                Calendar.getInstance(),
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento, 
+                "0"
+        );
+        
         return repositorioPessoa.Salvar(pessoa) &&
                repositorioFuncionario.Salvar(funcionario) &&
                repositorioUsuario.Salvar(usuarioDev) &&
@@ -289,7 +300,9 @@ public class Console {
                repositorioUsuario.Salvar(usuarioGerente) &&
                repositorioUsuario.Salvar(usuarioBalconista) &&
                repositorioCliente.Salvar(cliente1) &&
-               repositorioCliente.Salvar(cliente2);
+               repositorioCliente.Salvar(cliente2) &&
+               repositorioCliente.Salvar(cliente3) ;
+
      }
     
     public static void fornecedoresAleatorios(){
@@ -371,20 +384,20 @@ public class Console {
     }
     
     public static void produtosFixos(){
-            Estoque estoque = new Estoque(
+            Estoque estoqueSandalia = new Estoque(
                     LocalizacaoProduto.SETOR01, 
                     50
             );
             
             List lotes = new ArrayList();
-            Lote lote = new Lote("BR110", 5, 2, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoque);
-            Lote lote1 = new Lote("BR140", 3, 1, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoque);
-            Lote lote11 = new Lote("BR14012", 31, 0, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoque);
+            Lote lote = new Lote("BR110", 5, 2, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoqueSandalia);
+            Lote lote1 = new Lote("BR140", 3, 1, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoqueSandalia);
+            Lote lote11 = new Lote("BR14012", 31, 0, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoqueSandalia);
             lotes.add(lote);
             lotes.add(lote1);
             lotes.add(lote11);
             
-            estoque.setLotes(lotes);
+            estoqueSandalia.setLotes(lotes);
 
             Produto produto = new Produto("Sandália Havaianas 44 Polegadas", 
                 "Feita com borracha de pneu de trator, acompanhada de um kit prego para pequenos reparos", 
@@ -394,23 +407,23 @@ public class Console {
                 new BigDecimal("32.00"), 
                 new BigDecimal("30.00"), 
                 new BigDecimal("25.00"), 
-                estoque
+                estoqueSandalia
             );
             
             repositorioProduto.Salvar(produto);
             
-            Estoque estoque2 = new Estoque(
+            Estoque estoqueTigela = new Estoque(
                     LocalizacaoProduto.SETOR02, 
                     25
             );
             
             List lotes2 = new ArrayList();
-            Lote lote2 = new Lote("BR130", 15, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoque2);
-            Lote lote22 = new Lote("BR1330", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoque2);
+            Lote lote2 = new Lote("BR130", 15, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoqueTigela);
+            Lote lote22 = new Lote("BR1330", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoqueTigela);
             lotes2.add(lote2);
             lotes2.add(lote22);
             
-            estoque2.setLotes(lotes2);
+            estoqueTigela.setLotes(lotes2);
 
             Produto produto2 = new Produto("Tigela azul marinho 700ml", 
                 "Ideal para saladas ou uso como prato de pedreiro", 
@@ -420,14 +433,39 @@ public class Console {
                 new BigDecimal("22.00"), 
                 new BigDecimal("20.00"), 
                 new BigDecimal("15.00"), 
-                estoque2
+                estoqueTigela
             );
             
             repositorioProduto.Salvar(produto2);
+            
+            Estoque estoqueRefri = new Estoque(
+                    LocalizacaoProduto.SETOR02, 
+                    100
+            );
+            List lotes3 = new ArrayList();
+            Lote lote33 = new Lote("BR230", 151, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoqueRefri);
+            Lote lote333 = new Lote("BR1430", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoqueRefri);
+            lotes3.add(lote33);
+            lotes3.add(lote333);
+            
+            estoqueRefri.setLotes(lotes3);
+
+            Produto produto3 = new Produto("Fanta Uva 2L", 
+                "Nova variação da fanta Laranja", 
+                5, 
+                UnidadeMedida.Fardo, 
+                UnidadeMedida.Litro, 
+                new BigDecimal("5.00"), 
+                new BigDecimal("4.50"), 
+                new BigDecimal("27.00"), 
+                estoqueRefri
+            );
+            
+            repositorioProduto.Salvar(produto3);
     }
 
     public static void transacaoFinanceira(){
-        Produto p1 = new Produto("Produto 1", "@#4343", 2, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 0));
+        Produto p1 = new Produto("Papel Higiênico Classe A Macio", "Tão macio quanto bumbum de neném", 5, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN, new Estoque(LocalizacaoProduto.SETOR01, 300));
         
         Usuario user = new Usuario(
             "TransacaoCaixa",
@@ -444,12 +482,17 @@ public class Console {
             UsuarioTipo.Caixa
         );
         
-        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance());
+
+        UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
+        usuarioRepositorio.Salvar(user);
+        
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"));
+
         ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
         itemVenda.setProduto(p1);
         itemVenda.setTransacaoFinanceira(transacaoFinanceira);
         
-        Produto p2 = new Produto("Produto 2", "@#4343", 2, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 0));
+        Produto p2 = new Produto("Papel Higiênico Classe D", "Áspero quanto uma lixa de parede", 6, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 500));
         ItemVenda itemVenda2 = new ItemVenda(BigDecimal.valueOf(15),p2.getValorVarejo());
         itemVenda2.setProduto(p2);
         itemVenda2.setTransacaoFinanceira(transacaoFinanceira);

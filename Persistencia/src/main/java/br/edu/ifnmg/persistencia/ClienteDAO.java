@@ -13,9 +13,9 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
         super(Cliente.class);
     }
     
-    public Cliente Autenticar(String identificacaoCliente, String senha){
-        Query sql =  this.manager.createQuery("SELECT cliente from Cliente cliente WHERE cliente.identificacaoCliente = :email and cliente.senha = :senha");
-        sql.setParameter("identificacaoCliente", identificacaoCliente);
+    public Cliente Autenticar(String identificacaoDoCliente, String senha){
+        Query sql =  this.manager.createQuery("SELECT cliente from Cliente cliente WHERE cliente.identificacaoDoCliente = :identificacaoDoCliente and cliente.senha = :senha");
+        sql.setParameter("identificacaoDoCliente", identificacaoDoCliente);
         sql.setParameter("senha", senha);
         
         Cliente user = null;
@@ -53,15 +53,7 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
                 if(filtros.length() > 0)
                     filtros += " AND ";
                 filtros +="cliente.numeroDocumento = :numeroDocumento";
-            }
-            
-            /*
-            if(obj.getTelefones().get(0).toString() != null && !obj.getTelefones().get(0).toString().isEmpty()){
-                parametros.put("tefones", obj.);
-            }
-            if(obj.getTelefones().get(1).toString() != null && !obj.getTelefones().get(0).toString().isEmpty()){
-                parametros.put("tefones", obj.);
-            }*/
+            }   
         }
 
         if(filtros.length() > 0)
@@ -69,12 +61,30 @@ public class ClienteDAO extends DataAccessObject<Cliente> implements ClienteRepo
         
         Query sql = this.manager.createQuery(jpql); 
         
-        if(!parametros.isEmpty()){ /// se não ta fazio faça 
+        if(!parametros.isEmpty()){    
             for (String campo : parametros.keySet()) {
                 sql.setParameter(campo,parametros.get(campo));
             }
         }
         return sql.getResultList();
+    }
+
+    @Override
+    public Cliente Abrir(String identificacaoCliente) {
+        
+        Cliente resultado;
+        
+        Query sql =  this.manager.createQuery("SELECT cliente from Cliente cliente WHERE"
+                + " cliente.identificacaoDoCliente = :identificacaoDoCliente");
+        sql.setParameter("identificacaoDoCliente", identificacaoCliente);
+        
+        try {
+                  
+            resultado = (Cliente)sql.getSingleResult();
+        } catch(Exception ex){
+            resultado =  null;
+        }
+        return resultado;
     }
 
 }

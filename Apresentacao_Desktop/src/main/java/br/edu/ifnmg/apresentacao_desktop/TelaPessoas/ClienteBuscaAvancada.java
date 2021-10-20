@@ -8,8 +8,6 @@ package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 import Util.Util;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
-import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
-import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,14 +22,20 @@ import javax.swing.JInternalFrame;
 public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
 
     private Cliente cliente;
-    
+    private Telefone telefone;
+  
     /**
      * Creates new form BuscaAvancada
      * @param cliente
      */
     public ClienteBuscaAvancada(Cliente cliente) {
         this.cliente =  cliente;
+        this.telefone = new Telefone();
         initComponents();
+        
+        this.txtTelefone.setVisible(false);//até resolver buscarAvançada por telefone
+        this.lblTelefone.setVisible(false);//esses campos ficam invisiveis.
+        
         setComponetes();
     }
 
@@ -42,6 +46,7 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         if(!this.cliente.getNumeroDocumento().isEmpty()){
             this.txtNumeroDocumento.setText(this.cliente.getNumeroDocumento());
         }
+        
         for (int i = 0; i < 2; i++) {
             
            if(!this.cliente.getTelefones().isEmpty()){
@@ -67,9 +72,9 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNumeroDocumento = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtTelefone = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblTelefone = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        txtTelefone = new javax.swing.JFormattedTextField();
 
         setBackground(new java.awt.Color(208, 208, 208));
         setClosable(true);
@@ -134,13 +139,10 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
         jLabel3.setText("Número do Documento");
 
-        txtTelefone.setBackground(new java.awt.Color(255, 255, 255));
-        txtTelefone.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-
-        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(54, 54, 54));
-        jLabel4.setText("Telefone");
+        lblTelefone.setBackground(new java.awt.Color(0, 0, 0));
+        lblTelefone.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lblTelefone.setForeground(new java.awt.Color(54, 54, 54));
+        lblTelefone.setText("Telefone");
 
         jButton2.setBackground(new java.awt.Color(109, 46, 46));
         jButton2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -152,28 +154,40 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
             }
         });
 
+        txtTelefone.setBackground(new java.awt.Color(255, 255, 255));
+        try {
+            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)# ########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtTelefone.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefoneActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
-                        .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(26, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblTelefone)
+                    .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,10 +202,10 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTelefone)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -215,6 +229,7 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         buscaAvancadaCliente();
+        buscarTelefone();
         TelaPessoas.cliente = this.cliente;
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -227,17 +242,26 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
         if(this.txtNumeroDocumento.getText() != null){
             this.cliente.setNumeroDocumento(this.txtNumeroDocumento.getText());
         }
-        if(this.txtTelefone.getText() != null){
+        if(this.txtTelefone.getValue() != null){
             ArrayList<Telefone> telefones = new ArrayList<>();
-            Telefone telefone = new Telefone(this.txtTelefone.getText());
+            Telefone telefone = new Telefone(this.txtTelefone.getValue().toString() );
             telefones.add(telefone);
             this.cliente.setTelefones(telefones);
+            System.out.println("Telefone"+cliente.getTelefones().get(0).getNumero());
         }
+    }
+    
+    private void buscarTelefone(){
+        
     }
     
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefoneActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -246,10 +270,10 @@ public class ClienteBuscaAvancada extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTelefone;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNumeroDocumento;
-    private javax.swing.JTextField txtTelefone;
+    private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }

@@ -86,6 +86,8 @@ public class Util {
         
         return img;
     }    
+    
+    
 
     /**
      *
@@ -143,9 +145,9 @@ public class Util {
         return result;
     }
     
-    public String abrirInputPasswordDialog(String valor, boolean passwordInput, JInternalFrame frame){
+    public String abrirInputPasswordDialog(String mensagem, boolean isPasswordInput, JInternalFrame frame){
         JPanel panel = new JPanel();
-        JLabel label = new JLabel(valor);
+        JLabel label = new JLabel(mensagem);
         label.setFont(new java.awt.Font("sansserif", 0, 20));
         JPasswordField pass = new JPasswordField(15);
         JTextField txt = new JTextField();
@@ -158,7 +160,7 @@ public class Util {
         txt.setFont(new java.awt.Font("sansserif", 0, 16));
         txt.setPreferredSize(new java.awt.Dimension(250,40));
 
-        if(passwordInput){
+        if(isPasswordInput){
             panel.add(pass);
             pass.requestFocus();
         }else{
@@ -174,7 +176,7 @@ public class Util {
                                  options[1]
         );
         if(option == 1){
-            if(passwordInput){
+            if(isPasswordInput){
                 char[] password = pass.getPassword();
                 return new String(password);
             }else{
@@ -184,5 +186,4 @@ public class Util {
         
         return "";
     }
-
 }

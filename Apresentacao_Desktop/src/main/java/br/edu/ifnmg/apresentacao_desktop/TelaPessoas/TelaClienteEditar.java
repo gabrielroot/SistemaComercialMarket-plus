@@ -43,7 +43,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     }
     
     private void setComponentes(){
-        if(!this.cliente.getNome().isEmpty()){
+        if(!this.cliente.getNome().isEmpty() && !this.cliente.getNome().equals("0")){
             System.out.println("");
             this.txtNome.setText(this.cliente.getNome());
 

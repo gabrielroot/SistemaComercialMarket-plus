@@ -310,7 +310,7 @@ public class Console {
         Cliente cliente3 = new Cliente("0", 
                 "0", 
                 "0", 
-                "0",
+                "0,0, 0,0",
                 null,
                 Calendar.getInstance(),
                 TipoPessoa.Fisica, 

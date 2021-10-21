@@ -25,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,14 +42,6 @@ public class TransacaoFinanceira implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
@@ -71,6 +64,10 @@ public class TransacaoFinanceira implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id", nullable= false)
     private Cliente cliente;
+    
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pagamento_id", nullable = false, referencedColumnName = "id")
+    private Pagamento pagamento;
 
     public TransacaoFinanceira() {
         this.id = 0L;
@@ -80,6 +77,7 @@ public class TransacaoFinanceira implements Serializable {
         this.itens = new ArrayList<>();
         this.usuario = new Usuario();
         this.cliente = new Cliente();
+        this.pagamento = new Pagamento();
     }
 
     public TransacaoFinanceira(
@@ -87,7 +85,8 @@ public class TransacaoFinanceira implements Serializable {
             TransacaoStatus transacaoStatus,
             Usuario usuario,
             Calendar data,
-            Cliente cliente
+            Cliente cliente,
+            Pagamento pagamento
     ) {
         this.transacaoTipo = transacaoTipo;
         this.transacaoStatus = transacaoStatus;
@@ -95,8 +94,12 @@ public class TransacaoFinanceira implements Serializable {
         this.usuario = usuario;
         this.itens = new ArrayList<>();
         this.cliente = cliente;
+        this.pagamento = pagamento;
     }
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    
     public TransacaoTipo getTransacaoTipo() { return transacaoTipo; }
     public void setTransacaoTipo(TransacaoTipo transacaoTipo) { this.transacaoTipo = transacaoTipo; }
 
@@ -114,6 +117,9 @@ public class TransacaoFinanceira implements Serializable {
 
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
+    public Pagamento getPagamento() { return pagamento; }
+    public void setPagamento(Pagamento pagamento) { this.pagamento = pagamento; }
     
     public BigDecimal getValorTotal(){
         BigDecimal sum = null;

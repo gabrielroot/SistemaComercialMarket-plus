@@ -31,8 +31,15 @@ import br.edu.ifnmg.logicaAplicacao.Usuario;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import Util.Util;
 import br.edu.ifnmg.auxiliares.ItemVenda;
+import br.edu.ifnmg.auxiliares.Parcela;
+import br.edu.ifnmg.enums.FormaPagamento;
+import br.edu.ifnmg.enums.TipoPagamento;
 import br.edu.ifnmg.enums.TransacaoStatus;
 import br.edu.ifnmg.enums.TransacaoTipo;
+import br.edu.ifnmg.logicaAplicacao.Pagamento;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediario;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorDinheiro;
+import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
 import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceiraRepositorio;
 import java.math.BigDecimal;
@@ -86,7 +93,8 @@ public class Console {
                 null, 
                 null
         )
-        )){
+        ))
+        {
             System.out.println("    "+produto.getNome());
         }
         
@@ -486,7 +494,26 @@ public class Console {
         UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         usuarioRepositorio.Salvar(user);
         
-        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"));
+        PagamentoPorDinheiro pagamentoDinheiro = new PagamentoPorDinheiro();
+        pagamentoDinheiro.setData(Calendar.getInstance());
+        pagamentoDinheiro.setFormaPagamento(FormaPagamento.Cartao);
+        pagamentoDinheiro.setTipo(TipoPagamento.AVista);
+        pagamentoDinheiro.setValorPagamento(BigDecimal.TEN);
+        pagamentoDinheiro.setValorRecebido(BigDecimal.TEN);
+        pagamentoDinheiro.setTroco(BigDecimal.ZERO);
+        
+        PagamentoPorCrediario pagamento = new PagamentoPorCrediario();
+        pagamento.setData(Calendar.getInstance());
+        pagamento.setFormaPagamento(FormaPagamento.Cartao);
+        pagamento.setTipo(TipoPagamento.AVista);
+        pagamento.setValorPagamento(BigDecimal.TEN);
+        pagamento.setNumeroParcelas(2);
+        pagamento.setVencimento(Calendar.getInstance());
+        pagamento.setParcelas(new ArrayList<Parcela>());
+        
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"), pagamentoDinheiro);
+        
+        TransacaoFinanceira transacaoFinanceiraDois = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"), pagamento);
 
         ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
         itemVenda.setProduto(p1);
@@ -515,5 +542,6 @@ public class Console {
         System.out.println("Usuário: "+ transacaoFinanceira.getUsuario().getNome());
         System.out.println("--------------------------");
         repositorioTransacaoFinanceira.Salvar(transacaoFinanceira);
+        repositorioTransacaoFinanceira.Salvar(transacaoFinanceiraDois);
     }
 }

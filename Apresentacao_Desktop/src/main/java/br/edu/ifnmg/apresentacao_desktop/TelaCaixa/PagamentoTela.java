@@ -9,8 +9,12 @@ import br.edu.ifnmg.enums.FormaPagamento;
 import br.edu.ifnmg.enums.TipoPagamento;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.Pagamento;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediario;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorDinheiro;
 import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
+import java.util.Calendar;
 
 /**
  *
@@ -18,15 +22,15 @@ import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
  */
 public class PagamentoTela extends javax.swing.JInternalFrame {
 
-    private Pagamento pagamento;
-    private PagamentoRepositorio pagamentoRepositorio;
+    PagamentoPorDinheiro pagamentoPorDinheiro;
+    PagamentoPorCrediario pagamentoPorCrediario;
     /**
      * Creates new form
      * @param cliente
      */
     public PagamentoTela(Cliente cliente) {
-        pagamento = new Pagamento();
-        pagamentoRepositorio = RepositorioFactory.getPagamentoRepositorio();
+        pagamentoPorCrediario = new PagamentoPorCrediario();
+        pagamentoPorDinheiro = new PagamentoPorDinheiro();
         
         initComponents();
         setComponetes(cliente);
@@ -50,14 +54,9 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
                 this.cbxFormaPagamento.addItem(FormaPagamento.Dinheiro.toString());
                 this.cbxFormaPagamento.addItem(FormaPagamento.Cartao.toString());
                 this.cbxFormaPagamento.addItem(FormaPagamento.Crediario.toString());
-                
             } 
-            
-        }else {
-          //  falha na autenticação
-          System.out.println("nenhum cliente encontrado!");
         }
-        
+       
     }
 
     /**
@@ -209,15 +208,29 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
-        // se cbx.tipoPagamentogetText == a vista && cbxFormadePamento == dinheiro
-        // dinheiro recebido 
-        //troco
         //finalizar venda
         
         // se for cartão só registrar
         
         //se for crediario só guardar o cliente
         
+        if(this.cbxTipoPagamento.getSelectedItem().toString().equals(
+                TipoPagamento.AVista.toString()) ){
+            if(cbxFormaPagamento.getSelectedItem().toString().equals(
+                        FormaPagamento.Dinheiro.toString())){
+                pagamentoPorDinheiro.setData(Calendar.getInstance());
+                pagamentoPorDinheiro.setTipo(TipoPagamento.AVista);
+                pagamentoPorDinheiro.setFormaPagamento(FormaPagamento.Dinheiro);
+                CaixaTela.pagamento = pagamentoPorDinheiro;
+                
+                this.dispose();
+            }     
+           
+        }else if(this.cbxTipoPagamento.getSelectedItem().toString().equals(
+                TipoPagamento.APrazo.toString()) ){
+            
+           
+        }    
         
     }//GEN-LAST:event_btnProximoActionPerformed
 

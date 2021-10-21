@@ -16,6 +16,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,6 +40,7 @@ public class PagamentoPorCrediario extends Pagamento implements Serializable {
     private int numeroParcelas;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Parcela.class)
+    @JoinColumn(nullable = false)
     private List<Parcela> parcelas;
     
     public PagamentoPorCrediario() {
@@ -47,6 +49,9 @@ public class PagamentoPorCrediario extends Pagamento implements Serializable {
         this.parcelas = new ArrayList<>();
     }
 
+    public List<Parcela> getParcelas() { return parcelas; }
+    public void setParcelas(List<Parcela> parcelas) { this.parcelas = parcelas; }
+    
     public Calendar getVencimento() {return vencimento; }
     public void setVencimento(Calendar vencimento) {this.vencimento = vencimento; }
 

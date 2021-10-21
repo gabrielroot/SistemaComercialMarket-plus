@@ -157,7 +157,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if(TelaPrincipal.usuario.getId() == 0){
                 System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
                 UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
-                Usuario dev = usuarioRepositorio.Abrir(1000L);
+                Usuario dev = usuarioRepositorio.Abrir(1001L);
                 TelaPrincipal.setUsuario(dev);
             }
         }else if(TelaPrincipal.usuario.getId() == 0){

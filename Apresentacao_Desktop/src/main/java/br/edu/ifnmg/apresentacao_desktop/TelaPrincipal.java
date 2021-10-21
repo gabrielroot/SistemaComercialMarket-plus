@@ -48,6 +48,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
        
         TelaPrincipal.usuario = usuario;
+        this.util = new Util();
         
         initDesenvolvedor(true);
    
@@ -59,7 +60,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.setExtendedState(this.MAXIMIZED_BOTH);
         this.setTitle("Market +");
         
-        this.util = new Util();
         
         TelaInicio telaPrincipal = new TelaInicio(this);
         TelaPrincipal.currentFrame = telaPrincipal;
@@ -160,7 +160,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 Usuario dev = usuarioRepositorio.Abrir(1000L);
                 TelaPrincipal.setUsuario(dev);
             }
-        }else{
+        }else if(TelaPrincipal.usuario.getId() == 0){
+            util.abrirJOptionPane("informacao", "Tentando iniciar o programa sem autenticação. encerrando...", null);
             System.exit(0);
         }
     }

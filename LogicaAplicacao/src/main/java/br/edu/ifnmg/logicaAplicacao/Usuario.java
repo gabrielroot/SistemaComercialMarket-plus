@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -34,7 +35,7 @@ import javax.persistence.Version;
 @Table(name = "usuario")
 public class Usuario extends Funcionario implements Serializable {
     
-    @Column(length = 250, nullable = false, unique = true)
+    @Column(length = 250, nullable = false)
     private String email;
     
     @Column(length = 250, nullable = false)
@@ -106,7 +107,6 @@ public class Usuario extends Funcionario implements Serializable {
             UsuarioTipo usuarioTipo
     ) {
         super(
-            id,
             nome, 
             endereco, 
             telefones, 

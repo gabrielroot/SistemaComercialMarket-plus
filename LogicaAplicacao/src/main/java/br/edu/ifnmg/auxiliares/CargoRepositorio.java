@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifnmg.logicaAplicacao;
+package br.edu.ifnmg.auxiliares;
 
-import java.util.List;
+import br.edu.ifnmg.logicaAplicacao.*;
 
 /**
  *
- * @author kesley
+ * @author luana
  */
-public interface FuncionarioRepositorio extends Repositorio<Funcionario> {
-   
-   
+public interface CargoRepositorio extends Repositorio<CargoFuncionario> {
+
+    
+    
 }

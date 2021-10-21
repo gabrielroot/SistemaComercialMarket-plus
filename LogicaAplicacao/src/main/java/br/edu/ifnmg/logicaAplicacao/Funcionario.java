@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,6 +26,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -36,7 +40,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name="funcionario")
-@DiscriminatorValue("fun")
+
 public class Funcionario extends Pessoa implements Serializable  {
     private static final long serialVersionUID = 1L;
     
@@ -44,7 +48,7 @@ public class Funcionario extends Pessoa implements Serializable  {
     @Column(nullable=false)
     private FuncionarioSituacao situacao;
     
-    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "cargoFuncionario_id", nullable= false)
     private CargoFuncionario cargo;
     
@@ -87,7 +91,7 @@ public class Funcionario extends Pessoa implements Serializable  {
         FuncionarioSituacao situacao, 
         CargoFuncionario cargo) {
         
-        super(id, nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
+        super(nome, endereco, telefones, dataNascimento, tipoPessoa, tipoDocumento, numeroDocumento);
         this.situacao = situacao;
         this.cargo = cargo;
         this.versao=1;
@@ -97,8 +101,8 @@ public class Funcionario extends Pessoa implements Serializable  {
     public void setSituacao(FuncionarioSituacao fs) { this.situacao = fs; }
 
     public CargoFuncionario getCargo() { return cargo; }
-    public void setCargo(CargoFuncionario cargo) { this.cargo = cargo; }
-
+    public void setCargo(String cargo) { this.cargo.setTitulo(cargo); }
+    public void setCargo(CargoFuncionario cargo){ this.cargo=cargo;}
     public int getVersao() {  return versao;   }
 
     public void setVersao(int versao) {    this.versao = versao;  }
@@ -129,5 +133,7 @@ public class Funcionario extends Pessoa implements Serializable  {
     public String toString() {
         return this.getNome().toString();
     }
+
+    
     
 }

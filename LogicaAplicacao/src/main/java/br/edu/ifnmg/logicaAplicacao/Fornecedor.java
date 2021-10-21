@@ -27,7 +27,6 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name="fornecedor")
-@DiscriminatorValue("for")
 public class Fornecedor extends Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;

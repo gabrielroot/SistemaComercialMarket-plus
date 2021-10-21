@@ -18,12 +18,12 @@
     <class>br.edu.ifnmg.logicaAplicacao.Produto</class>
     <class>br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira</class>
     <class>br.edu.ifnmg.logicaAplicacao.Usuario</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/marketPlus?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
-      <property name="javax.persistence.jdbc.user" value="marketPlus"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="market+"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

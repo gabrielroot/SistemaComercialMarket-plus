@@ -285,6 +285,28 @@ public class Console {
         usuariosAleatorios();
         fornecedoresAleatorios();
         
+        Cliente cliente1 = new Cliente("zeroberto", 
+                "1234",
+                "Ze Roberto", 
+                "Avenida Floriano Peixoto,12, centro, apartamento 04", 
+                null,
+                Calendar.getInstance(), 
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento,
+                "333333"
+        );
+        
+        Cliente cliente2 = new Cliente("mila", 
+                "1234", 
+                "Kamila", 
+                "Avenida costa silva,14, centro, apartamento 07",
+                null,
+                Calendar.getInstance(),
+                TipoPessoa.Fisica, 
+                TipoDocumento.CertidaoNascimento, 
+                "333333"
+        );
+        
         Cliente cliente3 = new Cliente("0", 
                 "0", 
                 "0", 
@@ -305,8 +327,8 @@ public class Console {
                repositorioUsuario.Salvar(usuarioGerente) &&
                repositorioUsuario.Salvar(usuarioBalconista) &&
 
-               //repositorioCliente.Salvar(cliente1) &&
-               //repositorioCliente.Salvar(cliente2) &&
+               repositorioCliente.Salvar(cliente1) &&
+               repositorioCliente.Salvar(cliente2) &&
                repositorioCliente.Salvar(cliente3) ;
 
 
@@ -337,8 +359,8 @@ public class Console {
         Telefone telefone02 = new Telefone("3896291131");
 
         List telefones = new ArrayList<Telefone>();
-        telefones.add(telefone01);
-        telefones.add(telefone02);
+      //  telefones.add(telefone01);
+       // telefones.add(telefone02);
         
         Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", 
             "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", 
@@ -369,8 +391,8 @@ public class Console {
             telefone01 = new Telefone("3899991111");        
             telefone02 = new Telefone("3896291131");
 
-            telefones.add(telefone01);
-            telefones.add(telefone02);
+       //     telefones.add(telefone01);
+        //    telefones.add(telefone02);
 
             Usuario usuario = new Usuario(
                     nomes[i].toString(), 
@@ -490,7 +512,6 @@ public class Console {
             UsuarioTipo.Caixa
         );
         
-
         UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         usuarioRepositorio.Salvar(user);
         

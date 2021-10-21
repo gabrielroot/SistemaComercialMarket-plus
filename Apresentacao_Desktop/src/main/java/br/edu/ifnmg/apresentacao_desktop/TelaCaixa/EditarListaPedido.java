@@ -72,6 +72,7 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
     private void salvarOperacao(){
         if(getComponentes()){
             util.abrirJOptionPane("sucesso", "A quantidade foi alterada!", this);
+            CaixaTela.playSoundEffect();
             this.dispose();
         }
     }

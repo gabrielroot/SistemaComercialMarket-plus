@@ -255,7 +255,7 @@ public class Console {
             UsuarioTipo.Gerente
         );
         
-        usuarioDev.setId(1000L);
+        usuarioDev.setId(1001L);
         
         Usuario usuarioBalconista = new Usuario(
             "BalconistaUser",
@@ -294,8 +294,12 @@ public class Console {
                repositorioUsuario.Salvar(usuarioCaixa) &&
                repositorioUsuario.Salvar(usuarioGerente) &&
                repositorioUsuario.Salvar(usuarioBalconista) &&
-              
-               repositorioCliente.Salvar(cliente3);
+
+               //repositorioCliente.Salvar(cliente1) &&
+               //repositorioCliente.Salvar(cliente2) &&
+               repositorioCliente.Salvar(cliente3) ;
+
+
      }
     
     public static void fornecedoresAleatorios(){
@@ -476,10 +480,12 @@ public class Console {
             UsuarioTipo.Caixa
         );
         
+
         UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         usuarioRepositorio.Salvar(user);
         
         TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"));
+
         ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
         itemVenda.setProduto(p1);
         itemVenda.setTransacaoFinanceira(transacaoFinanceira);

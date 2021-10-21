@@ -200,7 +200,7 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
             clienteTeste.setTipoPessoa(TipoPessoa.Fisica);
             clienteTeste.setTipoDocumento(TipoDocumento.CertidaoNascimento);
             clienteTeste.setNumeroDocumento("0");
-            if(clienteRepositorio.Abrir(clienteTeste.getIdentificaoDoCliente()) != null){
+            if(clienteRepositorio.Abrir(clienteTeste.getIdentificaoDoCliente()) == null){
                 clienteRepositorio.Salvar(clienteTeste);
             }
         }

@@ -5,12 +5,17 @@
  */
 package br.edu.ifnmg.auxiliares;
 
+import br.edu.ifnmg.logicaAplicacao.Pessoa;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -30,19 +35,29 @@ public class Telefone implements Serializable {
     @Column(length=250, nullable=false)
     private String numero;
     
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name ="pessoa_id")
+    private Pessoa pessoa;
+    
     @Version
     private long versao;
     
     public Telefone() {
+        this.id = 0L;
         this.numero = "";
         this.versao = 1;
+        this.pessoa = new Pessoa();
     }
 
     public Telefone(String numero) {
+        this.id = 0L;
         this.numero = numero;
+        this.versao = 1;
+        this.pessoa = new Pessoa();
     }
 
-    
+    public Pessoa getPessoa() { return pessoa; }
+    public void setPessoa(Pessoa pessoa) {this.pessoa = pessoa; }
     
     public void setId(Long id) { this.id = id; }
     public Long getId() { return this.id; }

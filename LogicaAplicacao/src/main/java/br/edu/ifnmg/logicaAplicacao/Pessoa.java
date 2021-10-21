@@ -53,7 +53,7 @@ public class Pessoa implements Serializable {
     @Column(length=250)
     private String endereco;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Telefone.class)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pessoa")
     private List<Telefone> telefones;
     
     @Temporal(TemporalType.DATE)

@@ -32,8 +32,10 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +44,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 /**
  *
@@ -85,7 +89,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     public static boolean isAtacado(ItemVenda itemVenda){
         return itemVenda.getQuantidade().compareTo(BigDecimal.valueOf(itemVenda.getProduto().getMinimoParaAtacado())) >= 0;
     }
-    
+
     private void renderProdutos(List<ItemVenda> item){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
@@ -622,6 +626,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         int idx = (int) tableResultadoProdutos.getValueAt(linha, 0);
 
         EditarListaPedido editarListaPedido = new EditarListaPedido(transacaoFinanceira.getItens().get(idx-1));
+        System.out.println(transacaoFinanceira.getItens().get(idx-1).getProduto().getNome());
         editarListaPedido.addInternalFrameListener(this);
         CaixaTela.jDesktopPane1.add(editarListaPedido);
         Util.centralizaInternalFrame(editarListaPedido, this.getSize());
@@ -706,8 +711,6 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                             }else{
                                 item.setSubTotal(item.getSubTotal(item.getProduto().getValorVarejo()));
                             }
-                            Toolkit tk = Toolkit.getDefaultToolkit();
-                            tk.beep();
                             bool = true;
                             break;
                         }else{
@@ -725,7 +728,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
                 this.renderProdutos(transacaoFinanceira.getItens());
                 this.txtCode.setText("");
-
+                
+                this.playSoundEffect();
                 atualizarTotal();
             }else{
                 this.txtCode.selectAll();
@@ -734,6 +738,21 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         }catch(NumberFormatException ex){
             this.txtCode.selectAll();
             txtNotFound.setText("Apenas números, por favor!");
+        }
+    }
+    
+    public static void playSoundEffect(){
+        Player player;
+        try {
+            FileInputStream fileInputStream = new FileInputStream("piscadinha.mp3");
+                player = new Player(fileInputStream);
+                player.play();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JavaLayerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
     
@@ -750,6 +769,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 }
 
                 this.renderProdutos(transacaoFinanceira.getItens());
+                this.playSoundEffect();
                 this.atualizarTotal();
             }else{
                 this.txtNotFound.setText("Sem mais nas prateleiras");

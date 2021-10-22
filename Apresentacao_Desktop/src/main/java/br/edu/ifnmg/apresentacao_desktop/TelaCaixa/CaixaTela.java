@@ -749,7 +749,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 this.renderProdutos(transacaoFinanceira.getItens());
                 this.txtCode.setText("");
                 
-                this.playSoundEffect();
+                CaixaTela.playSoundEffect();
                 atualizarTotal();
             }else{
                 this.txtCode.selectAll();

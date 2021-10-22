@@ -160,9 +160,9 @@ public class Console {
         UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
         
         List telefones = new ArrayList<Telefone>();
-        telefones.add(new Telefone("3899991111"));
+        /*telefones.add(new Telefone("3899991111"));
         telefones.add(new Telefone("3896291131"));
-
+        */
         Pessoa pessoa = new Pessoa(
             "Sebastião Codeiro",
             "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111",
@@ -355,12 +355,14 @@ public class Console {
     }
     public static void usuariosAleatorios(){
         
-        Telefone telefone01 = new Telefone("3899991111");        
-        Telefone telefone02 = new Telefone("3896291131");
+        //Telefone telefone01 = new Telefone("3899991111");        
+        //Telefone telefone02 = new Telefone("3896291131");
 
         List telefones = new ArrayList<Telefone>();
+
       //  telefones.add(telefone01);
        // telefones.add(telefone02);
+
         
         Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", 
             "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", 
@@ -388,11 +390,13 @@ public class Console {
             Object[] c = {cargo1, cargo2, cargo3, cargo4};
             List cargos = Arrays.asList(c);
             
-            telefone01 = new Telefone("3899991111");        
-            telefone02 = new Telefone("3896291131");
+           // telefone01 = new Telefone("3899991111");        
+            //telefone02 = new Telefone("3896291131");
+
 
        //     telefones.add(telefone01);
         //    telefones.add(telefone02);
+
 
             Usuario usuario = new Usuario(
                     nomes[i].toString(), 

@@ -107,6 +107,11 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         txtIdentificacaoCliente.setBackground(new java.awt.Color(255, 255, 255));
         txtIdentificacaoCliente.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         txtIdentificacaoCliente.setForeground(new java.awt.Color(8, 8, 8));
+        txtIdentificacaoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdentificacaoClienteKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(8, 8, 8));
@@ -115,6 +120,11 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         txtSenhaCliente.setBackground(new java.awt.Color(255, 255, 255));
         txtSenhaCliente.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         txtSenhaCliente.setForeground(new java.awt.Color(8, 8, 8));
+        txtSenhaCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaClienteKeyPressed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButton1.setText("Cancelar");
@@ -188,6 +198,26 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        autenticarCliente();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtSenhaClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaClienteKeyPressed
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            autenticarCliente();
+        }
+    }//GEN-LAST:event_txtSenhaClienteKeyPressed
+
+    private void txtIdentificacaoClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdentificacaoClienteKeyPressed
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            autenticarCliente();
+        }
+    }//GEN-LAST:event_txtIdentificacaoClienteKeyPressed
+
+    private void autenticarCliente(){
         this.clienteTeste = new Cliente();
         this.getComponetes(this.clienteTeste);
         
@@ -212,12 +242,7 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         }else {
             this.dispose();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

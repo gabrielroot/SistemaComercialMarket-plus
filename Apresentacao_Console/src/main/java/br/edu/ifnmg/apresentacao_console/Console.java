@@ -34,12 +34,15 @@ import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.auxiliares.Parcela;
+import br.edu.ifnmg.auxiliares.ParcelaRepositorio;
 import br.edu.ifnmg.enums.FormaPagamento;
+import br.edu.ifnmg.enums.ParcelaStatus;
 import br.edu.ifnmg.enums.TipoPagamento;
 import br.edu.ifnmg.enums.TransacaoStatus;
 import br.edu.ifnmg.enums.TransacaoTipo;
 import br.edu.ifnmg.logicaAplicacao.Pagamento;
 import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediario;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediarioRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PagamentoPorDinheiro;
 import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
@@ -63,6 +66,8 @@ public class Console {
     static ProdutoRepositorio repositorioProduto = RepositorioFactory.getProdutoRepositorio();
     static FuncionarioRepositorio repositorioFuncionario = RepositorioFactory.getFuncionarioRepositorio();
     static TransacaoFinanceiraRepositorio repositorioTransacaoFinanceira = RepositorioFactory.getTransacaoFinanceiraRepositorio();
+    static PagamentoRepositorio repositorioPagamento = RepositorioFactory.getPagamentoRepositorio();
+    static PagamentoPorCrediarioRepositorio repositorioPagamentoCrediario = RepositorioFactory.getPagamentoCrediarioRepositorio();
     
     public static void main(String[] args){
         try{
@@ -519,6 +524,13 @@ public class Console {
         UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
         usuarioRepositorio.Salvar(user);
         
+        Parcela parcela = new Parcela();
+        parcela.setData(Calendar.getInstance());
+        parcela.setStatus(ParcelaStatus.Criada);
+        parcela.setValor(BigDecimal.TEN);
+        ArrayList<Parcela> parcelas = new ArrayList<>();
+       
+        
         PagamentoPorDinheiro pagamentoDinheiro = new PagamentoPorDinheiro();
         pagamentoDinheiro.setData(Calendar.getInstance());
         pagamentoDinheiro.setFormaPagamento(FormaPagamento.Cartao);
@@ -534,12 +546,13 @@ public class Console {
         pagamento.setValorPagamento(BigDecimal.TEN);
         pagamento.setNumeroParcelas(2);
         pagamento.setVencimento(Calendar.getInstance());
-        pagamento.setParcelas(new ArrayList<Parcela>());
         
-        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"), pagamentoDinheiro);
+        parcela.setPagamentoPorCrediario(pagamento);
+        parcelas.add(parcela);
+         
+        TransacaoFinanceira transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"));     
+        TransacaoFinanceira transacaoFinanceiraDois = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"));
         
-        TransacaoFinanceira transacaoFinanceiraDois = new TransacaoFinanceira(TransacaoTipo.Compra, TransacaoStatus.Criada, user, Calendar.getInstance(),repositorioCliente.Abrir("0"), pagamento);
-
         ItemVenda itemVenda = new ItemVenda(BigDecimal.TEN,p1.getValorVarejo());
         itemVenda.setProduto(p1);
         itemVenda.setTransacaoFinanceira(transacaoFinanceira);
@@ -566,8 +579,12 @@ public class Console {
         
         System.out.println("Usuário: "+ transacaoFinanceira.getUsuario().getNome());
         System.out.println("--------------------------");
-        repositorioTransacaoFinanceira.Salvar(transacaoFinanceira);
-        repositorioTransacaoFinanceira.Salvar(transacaoFinanceiraDois);
+        
+        pagamentoDinheiro.setTransacaoFinanceira(transacaoFinanceira);
+        pagamento.setTransacaoFinanceira(transacaoFinanceiraDois);
+        pagamento.setParcelas(parcelas);
+        
+        repositorioPagamentoCrediario.Salvar(pagamento);
     }
 
 }

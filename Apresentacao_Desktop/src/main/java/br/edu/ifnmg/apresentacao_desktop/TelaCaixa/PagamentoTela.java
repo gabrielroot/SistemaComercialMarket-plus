@@ -4,17 +4,18 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
-import static br.edu.ifnmg.apresentacao_desktop.TelaCaixa.CaixaTela.cliente;
+import static br.edu.ifnmg.apresentacao_desktop.TelaCaixa.CaixaTela.txtCode;
+import static br.edu.ifnmg.apresentacao_desktop.TelaCaixa.PagamentoTela.pagamentoPorDinheiro;
 import br.edu.ifnmg.enums.FormaPagamento;
 import br.edu.ifnmg.enums.TipoPagamento;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.Pagamento;
 import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediario;
 import br.edu.ifnmg.logicaAplicacao.PagamentoPorDinheiro;
-import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
-import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
-import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.util.Calendar;
+import javax.swing.SwingUtilities;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 /**
  *
@@ -22,18 +23,23 @@ import java.util.Calendar;
  */
 public class PagamentoTela extends javax.swing.JInternalFrame {
 
-    PagamentoPorDinheiro pagamentoPorDinheiro;
-    PagamentoPorCrediario pagamentoPorCrediario;
+    public static PagamentoPorDinheiro pagamentoPorDinheiro;
+    public static PagamentoPorCrediario pagamentoPorCrediario;
+    public static Pagamento pagamento;
     /**
      * Creates new form
      * @param cliente
      */
     public PagamentoTela(Cliente cliente) {
-        pagamentoPorCrediario = new PagamentoPorCrediario();
-        pagamentoPorDinheiro = new PagamentoPorDinheiro();
         
         initComponents();
         setComponetes(cliente);
+        
+        SwingUtilities.invokeLater(new Runnable() {//colocar o foco no elemento
+            public void run() {
+              cbxTipoPagamento.requestFocusInWindow();
+            }     
+        });
     }
     
     private void setComponetes(Cliente cliente){
@@ -56,9 +62,36 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
                 this.cbxFormaPagamento.addItem(FormaPagamento.Crediario.toString());
             } 
         }
-       
     }
-
+    
+    private void getComponetes(){
+        
+        if(this.cbxTipoPagamento.getSelectedItem().toString().equals(TipoPagamento.AVista.toString()) &&
+                cbxFormaPagamento.getSelectedItem().toString().equals(FormaPagamento.Dinheiro.toString()) ){
+                pagamentoPorDinheiro = new PagamentoPorDinheiro();
+                pagamentoPorDinheiro.setTipo(TipoPagamento.AVista);
+                pagamentoPorDinheiro.setData(Calendar.getInstance());        
+                pagamentoPorDinheiro.setFormaPagamento(FormaPagamento.Dinheiro);
+                
+        }else if(this.cbxFormaPagamento.getSelectedItem().toString().equals(
+                FormaPagamento.Cartao.toString())){
+                pagamento = new Pagamento();
+                pagamento.setData(Calendar.getInstance());
+                pagamento.setTipo(TipoPagamento.values()[this.cbxTipoPagamento.getSelectedIndex()]);
+                pagamento.setFormaPagamento(FormaPagamento.Cartao);
+        
+        }else if(this.cbxTipoPagamento.getSelectedItem().toString().equals(
+                TipoPagamento.APrazo.toString()) &&
+                cbxFormaPagamento.getSelectedItem().toString().equals(FormaPagamento.Crediario.toString())){
+                pagamentoPorCrediario = new PagamentoPorCrediario();
+                pagamentoPorCrediario.setTipo(TipoPagamento.APrazo);
+                pagamentoPorCrediario.setData(Calendar.getInstance());
+                pagamentoPorCrediario.setFormaPagamento(FormaPagamento.Crediario);  
+            
+        }
+        this.dispose();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -129,6 +162,11 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
                 btnProximoActionPerformed(evt);
             }
         });
+        btnProximo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnProximoKeyPressed(evt);
+            }
+        });
 
         cbxTipoPagamento.setBackground(new java.awt.Color(255, 255, 255));
         cbxTipoPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -138,10 +176,20 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
                 cbxTipoPagamentoActionPerformed(evt);
             }
         });
+        cbxTipoPagamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxTipoPagamentoKeyPressed(evt);
+            }
+        });
 
         cbxFormaPagamento.setBackground(new java.awt.Color(255, 255, 255));
         cbxFormaPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cbxFormaPagamento.setForeground(new java.awt.Color(0, 0, 0));
+        cbxFormaPagamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxFormaPagamentoKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -200,39 +248,37 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbxTipoPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoPagamentoActionPerformed
-        // TODO add your handling code here:
+        if(this.cbxTipoPagamento.getSelectedIndex() == 1){
+            this.cbxFormaPagamento.setSelectedIndex(2);
+        }
     }//GEN-LAST:event_cbxTipoPagamentoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.pagamento = null;
+        this.pagamentoPorCrediario = null;
+        this.pagamentoPorDinheiro = null;
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
-        //finalizar venda
-        
-        // se for cartão só registrar
-        
-        //se for crediario só guardar o cliente
-        
-        if(this.cbxTipoPagamento.getSelectedItem().toString().equals(
-                TipoPagamento.AVista.toString()) ){
-            if(cbxFormaPagamento.getSelectedItem().toString().equals(
-                        FormaPagamento.Dinheiro.toString())){
-                pagamentoPorDinheiro.setData(Calendar.getInstance());
-                pagamentoPorDinheiro.setTipo(TipoPagamento.AVista);
-                pagamentoPorDinheiro.setFormaPagamento(FormaPagamento.Dinheiro);
-                CaixaTela.pagamento = pagamentoPorDinheiro;
-                
-                this.dispose();
-            }     
-           
-        }else if(this.cbxTipoPagamento.getSelectedItem().toString().equals(
-                TipoPagamento.APrazo.toString()) ){
-            
-           
-        }    
-        
+        getComponetes();
     }//GEN-LAST:event_btnProximoActionPerformed
+
+    private void cbxTipoPagamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxTipoPagamentoKeyPressed
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            getComponetes();
+        }
+    }//GEN-LAST:event_cbxTipoPagamentoKeyPressed
+
+    private void cbxFormaPagamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxFormaPagamentoKeyPressed
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            getComponetes();
+        }
+    }//GEN-LAST:event_cbxFormaPagamentoKeyPressed
+
+    private void btnProximoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnProximoKeyPressed
+        getComponetes();
+    }//GEN-LAST:event_btnProximoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

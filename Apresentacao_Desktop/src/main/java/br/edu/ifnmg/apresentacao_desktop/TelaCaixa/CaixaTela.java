@@ -998,6 +998,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             
         });
         
+        listagemRapidaProdutos();
+        
         if(e.getInternalFrame().getClass() == ListarProdutos.class){
             if(this.txtCode.getText().length() > 0){
                 this.adicionarProduto();

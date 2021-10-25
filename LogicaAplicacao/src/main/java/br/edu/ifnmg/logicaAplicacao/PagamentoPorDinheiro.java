@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @author Murilo
  */
 @Entity
-@Table(name="pagamentopordinheiro")
+@Table(name="pagamento_dinheiro")
 @DiscriminatorValue("1")
 public class PagamentoPorDinheiro extends Pagamento implements Serializable {
 
@@ -31,8 +31,8 @@ public class PagamentoPorDinheiro extends Pagamento implements Serializable {
     private BigDecimal troco;
 
     public PagamentoPorDinheiro() {
-        this.valorRecebido = null;
-        this.troco = null;
+        this.valorRecebido = BigDecimal.ZERO;
+        this.troco = BigDecimal.ZERO;
     }
 
     public BigDecimal getValorRecebido() { return valorRecebido; }

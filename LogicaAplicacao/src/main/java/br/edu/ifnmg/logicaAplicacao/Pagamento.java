@@ -10,16 +10,20 @@ import br.edu.ifnmg.enums.TipoPagamento;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Version;
@@ -54,16 +58,21 @@ public class Pagamento implements Serializable {
     @Column(nullable=false)
     private FormaPagamento formaPagamento;
     
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "transacao_financeira_id", nullable = false)
+    private TransacaoFinanceira transacaoFinanceira;
+    
     @Version
     private int versao;
 
     public Pagamento() {
         this.id = 0L;
-        this.valorPagamento = null;
+        this.valorPagamento = BigDecimal.ZERO;
         this.data = Calendar.getInstance();
         this.tipo = null;
         this.formaPagamento = null;
         this.versao = 1;
+        this.transacaoFinanceira = null;
     }
 
     public BigDecimal getValorPagamento() { return valorPagamento; }
@@ -83,6 +92,9 @@ public class Pagamento implements Serializable {
 
     public int getVersao() { return versao; }
     public void setVersao(int versao) { this.versao = versao; }
+
+    public TransacaoFinanceira getTransacaoFinanceira() { return transacaoFinanceira; }
+    public void setTransacaoFinanceira(TransacaoFinanceira transacaoFinanceira) {this.transacaoFinanceira = transacaoFinanceira; }
     
     @Override
     public int hashCode() {

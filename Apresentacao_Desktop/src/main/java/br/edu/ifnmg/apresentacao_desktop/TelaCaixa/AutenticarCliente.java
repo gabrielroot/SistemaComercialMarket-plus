@@ -5,14 +5,11 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
 import Util.Util;
-import static br.edu.ifnmg.apresentacao_desktop.TelaCaixa.CaixaTela.cliente;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
-import br.edu.ifnmg.logicaAplicacao.Pagamento;
-import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,15 +21,13 @@ import java.util.Calendar;
 public class AutenticarCliente extends javax.swing.JInternalFrame {
     Cliente clienteTeste;
     ClienteRepositorio clienteRepositorio;
-    Pagamento pagamento;
-    PagamentoRepositorio pagamentoRepositorio;
     Util util;
     /**
      * Creates new form VendaAtacado
      */
     public AutenticarCliente(Cliente cliente) {
         clienteRepositorio = RepositorioFactory.getClienteRepositorio();
-        pagamento = new Pagamento();
+        
         util = new Util();
         initComponents();
         setComponetes(cliente);
@@ -71,8 +66,6 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         txtSenhaCliente = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-
-        setClosable(true);
 
         jPanel1.setBackground(new java.awt.Color(208, 208, 208));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -176,7 +169,7 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSenhaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -202,6 +195,7 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CaixaTela.cliente = new Cliente();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

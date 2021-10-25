@@ -25,23 +25,20 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
 
     public static PagamentoPorDinheiro pagamentoPorDinheiro;
     public static PagamentoPorCrediario pagamentoPorCrediario;
+    public static Pagamento pagamento;
     /**
      * Creates new form
      * @param cliente
      */
     public PagamentoTela(Cliente cliente) {
-        pagamentoPorCrediario = new PagamentoPorCrediario();
-        pagamentoPorDinheiro = new PagamentoPorDinheiro();
         
         initComponents();
         setComponetes(cliente);
-        CaixaTela.pagamento = new Pagamento();
         
         SwingUtilities.invokeLater(new Runnable() {//colocar o foco no elemento
             public void run() {
               cbxTipoPagamento.requestFocusInWindow();
-            }
-            
+            }     
         });
     }
     
@@ -69,25 +66,28 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
     
     private void getComponetes(){
         
-        if(this.cbxTipoPagamento.getSelectedItem().toString().equals(
-                TipoPagamento.AVista.toString()) ){
-            pagamentoPorDinheiro.setTipo(TipoPagamento.AVista);
-            if(cbxFormaPagamento.getSelectedItem().toString().equals(
-                        FormaPagamento.Dinheiro.toString())){
+        if(this.cbxTipoPagamento.getSelectedItem().toString().equals(TipoPagamento.AVista.toString()) &&
+                cbxFormaPagamento.getSelectedItem().toString().equals(FormaPagamento.Dinheiro.toString()) ){
+                pagamentoPorDinheiro = new PagamentoPorDinheiro();
+                pagamentoPorDinheiro.setTipo(TipoPagamento.AVista);
                 pagamentoPorDinheiro.setData(Calendar.getInstance());        
                 pagamentoPorDinheiro.setFormaPagamento(FormaPagamento.Dinheiro);
-                CaixaTela.pagamento = pagamentoPorDinheiro;
-            }else if(cbxFormaPagamento.getSelectedItem().toString().equals(
-                        FormaPagamento.Cartao.toString())){
-                CaixaTela.pagamento.setData(Calendar.getInstance());
-                CaixaTela.pagamento.setFormaPagamento(FormaPagamento.Cartao);
-            }
+                
+        }else if(this.cbxFormaPagamento.getSelectedItem().toString().equals(
+                FormaPagamento.Cartao.toString())){
+                pagamento = new Pagamento();
+                pagamento.setData(Calendar.getInstance());
+                pagamento.setTipo(TipoPagamento.values()[this.cbxTipoPagamento.getSelectedIndex()]);
+                pagamento.setFormaPagamento(FormaPagamento.Cartao);
+        
         }else if(this.cbxTipoPagamento.getSelectedItem().toString().equals(
-                TipoPagamento.APrazo.toString()) ){
+                TipoPagamento.APrazo.toString()) &&
+                cbxFormaPagamento.getSelectedItem().toString().equals(FormaPagamento.Crediario.toString())){
+                pagamentoPorCrediario = new PagamentoPorCrediario();
                 pagamentoPorCrediario.setTipo(TipoPagamento.APrazo);
                 pagamentoPorCrediario.setData(Calendar.getInstance());
-                pagamentoPorCrediario.setFormaPagamento(FormaPagamento.Crediario);
-                CaixaTela.pagamento = pagamentoPorCrediario;    
+                pagamentoPorCrediario.setFormaPagamento(FormaPagamento.Crediario);  
+            
         }
         this.dispose();
     }
@@ -160,6 +160,11 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
         btnProximo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProximoActionPerformed(evt);
+            }
+        });
+        btnProximo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnProximoKeyPressed(evt);
             }
         });
 
@@ -249,6 +254,9 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbxTipoPagamentoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.pagamento = null;
+        this.pagamentoPorCrediario = null;
+        this.pagamentoPorDinheiro = null;
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -267,6 +275,10 @@ public class PagamentoTela extends javax.swing.JInternalFrame {
             getComponetes();
         }
     }//GEN-LAST:event_cbxFormaPagamentoKeyPressed
+
+    private void btnProximoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnProximoKeyPressed
+        getComponetes();
+    }//GEN-LAST:event_btnProximoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

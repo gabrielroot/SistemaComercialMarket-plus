@@ -4,7 +4,13 @@
  */
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
-import br.edu.ifnmg.logicaAplicacao.Cliente;
+import Util.Util;
+import br.edu.ifnmg.auxiliares.Parcela;
+import br.edu.ifnmg.enums.ParcelaStatus;
+import br.edu.ifnmg.enums.TransacaoStatus;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediario;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -13,20 +19,26 @@ import java.util.Calendar;
  */
 public class PagamentoCrediario extends javax.swing.JInternalFrame {
 
-
+    Util util;
     /**
      * Creates new form
      * @param cliente
      */
     public PagamentoCrediario() {
-        
+        util = new Util();
         initComponents();
         setComponetes();
     }
     
     private void setComponetes(){
-        
-       
+        this.txtNomeCliente.setText(CaixaTela.cliente.getNome());
+        this.txtTotal.setText(Util.formatStringToReal(CaixaTela.transacaoFinanceira.getValorTotal().toString()) );
+        BigDecimal numeroParcelas = new BigDecimal(cbxNumeroParcelas.getSelectedItem().toString().replace("X",""));
+        try{
+            this.txtValorParcela.setText(Util.formatStringToReal(CaixaTela.transacaoFinanceira.getValorTotal().divide(numeroParcelas).toString()) );
+        }catch(Exception e){
+            util.abrirJOptionPane("erro", "Não foi possivel dividir, selecione outras opções!", this);
+        }
     }
 
     /**
@@ -38,6 +50,7 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -46,7 +59,13 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         btnFinalizar = new javax.swing.JButton();
         txtNomeCliente = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxNumeroParcelas = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        txtValorParcela = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+
+        jTextField1.setText("jTextField1");
 
         jPanel2.setBackground(new java.awt.Color(208, 208, 208));
 
@@ -104,9 +123,39 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
         txtNomeCliente.setBackground(new java.awt.Color(255, 255, 255));
         txtNomeCliente.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtNomeCliente.setForeground(new java.awt.Color(0, 0, 0));
+        txtNomeCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeClienteActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", " " }));
+        cbxNumeroParcelas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cbxNumeroParcelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1X", "2X", "3X", "4X", "5X", "6X", "7X", "8X", "9X", "10X", "11X", "12X", "13X", "14X", "15X", " " }));
+        cbxNumeroParcelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxNumeroParcelasActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(8, 8, 8));
+        jLabel5.setText("Valor da parcela");
+        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        txtValorParcela.setEditable(false);
+        txtValorParcela.setBackground(new java.awt.Color(255, 255, 255));
+        txtValorParcela.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtValorParcela.setForeground(new java.awt.Color(0, 0, 0));
+
+        txtTotal.setEditable(false);
+        txtTotal.setBackground(new java.awt.Color(255, 255, 255));
+        txtTotal.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtTotal.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel6.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(8, 8, 8));
+        jLabel6.setText("Total ");
+        jLabel6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -120,35 +169,50 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(92, 92, 92)
+                                .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(92, 92, 92)
-                                    .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtTotal, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbxNumeroParcelas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(30, 30, 30)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addComponent(txtValorParcela)))))
                         .addGap(0, 22, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxNumeroParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValorParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54))
+                .addGap(34, 34, 34))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,32 +223,66 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        PagamentoTela.pagamentoPorCrediario = new PagamentoPorCrediario();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        PagamentoTela.pagamentoPorCrediario.setNumeroParcelas(3);
+        ArrayList<Parcela> parcelas = new ArrayList<>();
+        int numeroParcelas = Integer.parseInt(cbxNumeroParcelas.getSelectedItem().toString().replace("X",""));
+        BigDecimal numeroParcelasBig = new BigDecimal(numeroParcelas);
+        
+        for (int i = 0; i < numeroParcelas; i++) {
+            Parcela parcela = new Parcela();
+            Calendar dataVencimento = Calendar.getInstance();
+            dataVencimento.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH+(30*(i+1)));
+            parcela.setData(dataVencimento);
+            parcela.setStatus(ParcelaStatus.Criada);
+            parcela.setValor(CaixaTela.transacaoFinanceira.getValorTotal().divide(numeroParcelasBig));
+            parcelas.add(parcela);
+            parcela.setPagamentoPorCrediario(PagamentoTela.pagamentoPorCrediario);
+        }
+        
+        PagamentoTela.pagamentoPorCrediario.setParcelas(parcelas);
+        PagamentoTela.pagamentoPorCrediario.setNumeroParcelas(Integer.parseInt(cbxNumeroParcelas.getSelectedItem().toString().replace("X","")));
         PagamentoTela.pagamentoPorCrediario.setVencimento(Calendar.getInstance());
+        PagamentoTela.pagamentoPorCrediario.setValorPagamento(BigDecimal.TEN);
+        CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
+        PagamentoTela.pagamentoPorCrediario.setTransacaoFinanceira(CaixaTela.transacaoFinanceira);
+        
         this.dispose();
     }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void txtNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeClienteActionPerformed
+
+    private void cbxNumeroParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNumeroParcelasActionPerformed
+        setComponetes();
+    }//GEN-LAST:event_cbxNumeroParcelasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizar;
+    private javax.swing.JComboBox<String> cbxNumeroParcelas;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtNomeCliente;
+    private javax.swing.JTextField txtTotal;
+    private javax.swing.JTextField txtValorParcela;
     // End of variables declaration//GEN-END:variables
 }

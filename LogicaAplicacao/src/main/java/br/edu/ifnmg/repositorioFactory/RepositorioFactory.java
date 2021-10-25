@@ -10,10 +10,14 @@ import br.edu.ifnmg.auxiliares.CargoRepositorio;
 import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.ItemVendaRepositorio;
 import br.edu.ifnmg.auxiliares.LoteRepositorio;
+import br.edu.ifnmg.auxiliares.Parcela;
+import br.edu.ifnmg.auxiliares.ParcelaRepositorio;
 import br.edu.ifnmg.auxiliares.TelefoneRepositorio;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FornecedorRepositorio;
 import br.edu.ifnmg.logicaAplicacao.FuncionarioRepositorio;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediarioRepositorio;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorDinheiroRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.PessoaRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
@@ -48,7 +52,9 @@ public class RepositorioFactory {
     private static CargoRepositorio cargo;
     private static TelefoneRepositorio telefone;
     private static PagamentoRepositorio pagamento;
-
+    private static PagamentoPorCrediarioRepositorio crediarioRepositorio;
+    private static ParcelaRepositorio parcelaRepositorio;
+    private static PagamentoPorDinheiroRepositorio dinheiroRepositorio;
     
     static {
         FileReader leitorArquivo = null;
@@ -190,5 +196,30 @@ public class RepositorioFactory {
         }
         return pagamento;
     }
+    
+    public static PagamentoPorCrediarioRepositorio getPagamentoCrediarioRepositorio() {
+        if(crediarioRepositorio == null){
+            String nomeclasse = propriedades.getProperty("PagamentoPorCrediarioRepositorio");
+            crediarioRepositorio = (PagamentoPorCrediarioRepositorio) getInstancia(nomeclasse);
+        }
+        return crediarioRepositorio;
+    }
+    
+    public static ParcelaRepositorio getParcelaRepositorio() {
+        if(parcelaRepositorio == null){
+            String nomeclasse = propriedades.getProperty("ParcelaRepositorio");
+            parcelaRepositorio = (ParcelaRepositorio) getInstancia(nomeclasse);
+        }
+        return parcelaRepositorio;
+    }
+    
+    public static PagamentoPorDinheiroRepositorio getPagamentoDinheiroRepositorio() {
+      if(dinheiroRepositorio == null){
+          String nomeclasse = propriedades.getProperty("PagamentoPorDinheiroRepositorio");
+          dinheiroRepositorio = (PagamentoPorDinheiroRepositorio) getInstancia(nomeclasse);
+      }
+      return dinheiroRepositorio;
+    }
+ 
 
 }

@@ -5,6 +5,7 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
 import Util.Util;
+import br.edu.ifnmg.enums.TransacaoStatus;
 import java.math.BigDecimal;
 import javax.swing.SwingUtilities;
 
@@ -292,11 +293,13 @@ public class PagamentoDinheiro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
         this.dispose();
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnFinalizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFinalizarKeyPressed
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
             this.dispose();
         }
     }//GEN-LAST:event_btnFinalizarKeyPressed

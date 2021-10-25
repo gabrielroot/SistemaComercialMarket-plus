@@ -40,6 +40,32 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
             util.abrirJOptionPane("erro", "Não foi possivel dividir, selecione outras opções!", this);
         }
     }
+    
+    private void finalizarPagamento(){
+        ArrayList<Parcela> parcelas = new ArrayList<>();
+        int numeroParcelas = Integer.parseInt(cbxNumeroParcelas.getSelectedItem().toString().replace("X",""));
+        BigDecimal numeroParcelasBig = new BigDecimal(numeroParcelas);
+        
+        for (int i = 0; i < numeroParcelas; i++) {
+            Parcela parcela = new Parcela();
+            Calendar dataVencimento = Calendar.getInstance();
+            dataVencimento.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH+(30*(i+1)));
+            parcela.setData(dataVencimento);
+            parcela.setStatus(ParcelaStatus.Criada);
+            parcela.setValor(CaixaTela.transacaoFinanceira.getValorTotal().divide(numeroParcelasBig));
+            parcelas.add(parcela);
+            parcela.setPagamentoPorCrediario(PagamentoTela.pagamentoPorCrediario);
+        }
+        
+        PagamentoTela.pagamentoPorCrediario.setParcelas(parcelas);
+        PagamentoTela.pagamentoPorCrediario.setNumeroParcelas(Integer.parseInt(cbxNumeroParcelas.getSelectedItem().toString().replace("X","")));
+        PagamentoTela.pagamentoPorCrediario.setVencimento(Calendar.getInstance());
+        PagamentoTela.pagamentoPorCrediario.setValorPagamento(BigDecimal.TEN);
+        
+        PagamentoTela.pagamentoPorCrediario.setTransacaoFinanceira(CaixaTela.transacaoFinanceira);
+        
+        this.dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,6 +142,11 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
         btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFinalizarActionPerformed(evt);
+            }
+        });
+        btnFinalizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnFinalizarKeyPressed(evt);
             }
         });
 
@@ -235,29 +266,7 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        ArrayList<Parcela> parcelas = new ArrayList<>();
-        int numeroParcelas = Integer.parseInt(cbxNumeroParcelas.getSelectedItem().toString().replace("X",""));
-        BigDecimal numeroParcelasBig = new BigDecimal(numeroParcelas);
-        
-        for (int i = 0; i < numeroParcelas; i++) {
-            Parcela parcela = new Parcela();
-            Calendar dataVencimento = Calendar.getInstance();
-            dataVencimento.set(Calendar.DAY_OF_MONTH, Calendar.DAY_OF_MONTH+(30*(i+1)));
-            parcela.setData(dataVencimento);
-            parcela.setStatus(ParcelaStatus.Criada);
-            parcela.setValor(CaixaTela.transacaoFinanceira.getValorTotal().divide(numeroParcelasBig));
-            parcelas.add(parcela);
-            parcela.setPagamentoPorCrediario(PagamentoTela.pagamentoPorCrediario);
-        }
-        
-        PagamentoTela.pagamentoPorCrediario.setParcelas(parcelas);
-        PagamentoTela.pagamentoPorCrediario.setNumeroParcelas(Integer.parseInt(cbxNumeroParcelas.getSelectedItem().toString().replace("X","")));
-        PagamentoTela.pagamentoPorCrediario.setVencimento(Calendar.getInstance());
-        PagamentoTela.pagamentoPorCrediario.setValorPagamento(BigDecimal.TEN);
-        CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
-        PagamentoTela.pagamentoPorCrediario.setTransacaoFinanceira(CaixaTela.transacaoFinanceira);
-        
-        this.dispose();
+        finalizarPagamento();
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void txtNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeClienteActionPerformed
@@ -267,6 +276,10 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
     private void cbxNumeroParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNumeroParcelasActionPerformed
         setComponetes();
     }//GEN-LAST:event_cbxNumeroParcelasActionPerformed
+
+    private void btnFinalizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFinalizarKeyPressed
+        finalizarPagamento();
+    }//GEN-LAST:event_btnFinalizarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

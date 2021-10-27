@@ -137,8 +137,17 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
             }
             
         }else{
+            
+            if(this.txtTelefone1.getValue() != null){
                 this.cliente.getTelefones().get(0).setNumero(this.txtTelefone1.getValue().toString());
-                this.cliente.getTelefones().get(1).setNumero(this.txtTelefone1.getValue().toString());
+            }else{ 
+                this.cliente.getTelefones().get(0).setNumero("(  )          ");
+            }
+            if(this.txtTelefone2.getValue() != null){
+                this.cliente.getTelefones().get(1).setNumero(this.txtTelefone2.getValue().toString());
+            }else{ 
+                this.cliente.getTelefones().get(0).setNumero("(  )          ");
+            }
         }
         
         

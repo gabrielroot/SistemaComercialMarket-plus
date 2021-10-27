@@ -63,7 +63,7 @@ public class PagamentoCrediario extends javax.swing.JInternalFrame {
         PagamentoTela.pagamentoPorCrediario.setValorPagamento(BigDecimal.TEN);
         
         PagamentoTela.pagamentoPorCrediario.setTransacaoFinanceira(CaixaTela.transacaoFinanceira);
-        
+        CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
         this.dispose();
     }
 

@@ -562,6 +562,8 @@ public class Console {
         Produto p2 = new Produto("Papel Higiênico Classe D", "Áspero quanto uma lixa de parede", 6, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 500));
         ItemVenda itemVenda2 = new ItemVenda(BigDecimal.valueOf(15),p2.getValorVarejo());
         itemVenda2.setProduto(p2);
+        repositorioProduto.Salvar(p1);
+        repositorioProduto.Salvar(p2);
         itemVenda2.setTransacaoFinanceira(transacaoFinanceira);
         
         transacaoFinanceira.getItens().add(itemVenda);
@@ -587,6 +589,7 @@ public class Console {
         pagamento.setParcelas(parcelas);
         
         repositorioPagamentoCrediario.Salvar(pagamento);
+        
     }
 
 }

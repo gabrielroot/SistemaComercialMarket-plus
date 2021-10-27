@@ -443,6 +443,9 @@
               <Dimension value="[120, 140]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="panelComprarMouseClicked"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -515,6 +518,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Transa&#xe7;&#xe3;o financeira de compra com fornecedores"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgComprarMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -534,6 +540,9 @@
               <Dimension value="[120, 140]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="panelCrediarioMouseClicked"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -602,6 +611,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Gerir credi&#xe1;rio de clientes"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgCrediarioMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -621,6 +633,9 @@
               <Dimension value="[120, 140]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="panelFinanceiroMouseClicked"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -689,6 +704,9 @@
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Gerir fluxo monet&#xe1;rio"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgFinanceiroMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

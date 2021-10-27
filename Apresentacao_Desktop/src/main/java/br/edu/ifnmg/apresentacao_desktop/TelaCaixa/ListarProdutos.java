@@ -63,7 +63,6 @@ public class ListarProdutos extends javax.swing.JInternalFrame implements KeyLis
         
         for(int i=0;i<resultado.size(); i++){
             Estoque estoqueResultado = this.estoqueRepositorio.Abrir(resultado.get(i).getEstoque().getId());
-            System.out.println("Quantidade na prateleira do primeiro lote: "+estoqueResultado.getLotes().get(0).getNasPrateleiras());
             if(estoqueResultado.getSomaPrateleiras() > 0){
                 Vector linha = new Vector();
             

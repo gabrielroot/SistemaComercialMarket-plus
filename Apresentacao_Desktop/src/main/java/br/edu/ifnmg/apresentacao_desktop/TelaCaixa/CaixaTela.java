@@ -675,10 +675,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
     private void tableResultadoProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResultadoProdutosMouseClicked
         int linha = tableResultadoProdutos.getSelectedRow();
-        int idx = (int) tableResultadoProdutos.getValueAt(linha, 0);
+        int idx = (int) tableResultadoProdutos.getValueAt(linha, 0)-1;
 
-        EditarListaPedido editarListaPedido = new EditarListaPedido(transacaoFinanceira.getItens().get(idx-1));
-        System.out.println(transacaoFinanceira.getItens().get(idx-1).getProduto().getNome());
+        EditarListaPedido editarListaPedido = new EditarListaPedido(transacaoFinanceira.getItens().get(idx), idx);
         editarListaPedido.addInternalFrameListener(this);
         CaixaTela.jDesktopPane1.add(editarListaPedido);
         Util.centralizaInternalFrame(editarListaPedido, this.getSize());
@@ -719,15 +718,13 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         
         
         for (ItemVenda item : transacaoFinanceira.getItens()) {
+            BigDecimal quantidadePedida = item.getQuantidade();
             for (Lote lote : item.getProduto().getEstoque().getLotes()){
-                
-                if(lote.getNasPrateleiras() >= Integer.parseInt(item.getQuantidade().toString()) ){
-                    lote.setNasPrateleiras(lote.getNasPrateleiras() - Integer.parseInt(item.getQuantidade().toString()) );
-                    
+                if(lote.getNasPrateleiras() >= Integer.parseInt(quantidadePedida.toString()) ){
+                    lote.setNasPrateleiras(lote.getNasPrateleiras() - Integer.parseInt(quantidadePedida.toString()) );
                     break;
                 }else{
-                
-                    item.setQuantidade(item.getQuantidade().subtract(new BigDecimal(lote.getNasPrateleiras())));
+                    quantidadePedida = quantidadePedida.subtract(new BigDecimal(lote.getNasPrateleiras()));
                     lote.setNasPrateleiras(0);
                 }
             }

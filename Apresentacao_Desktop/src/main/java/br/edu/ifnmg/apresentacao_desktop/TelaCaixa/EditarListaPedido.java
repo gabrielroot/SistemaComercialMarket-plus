@@ -16,19 +16,21 @@ import java.math.BigDecimal;
  * @author gabriel
  */
 public class EditarListaPedido extends javax.swing.JInternalFrame implements KeyListener {
-    ItemVenda itemVenda;
-    Util util;
-    ItemVendaRepositorio itemVendaRepositorio;
+    private ItemVenda itemVenda;
+    private Util util;
+    private ItemVendaRepositorio itemVendaRepositorio;
+    private int idx;
     /**
      * Creates new form EditarLista
      */
-    public EditarListaPedido(ItemVenda itemVenda) {
+    public EditarListaPedido(ItemVenda itemVenda, int idx) {
         this.itemVenda = itemVenda;
         this.util = new Util();
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
         initComponents();
         setComponentes();
         this.txtQuantidade.addKeyListener(this);
+        this.idx = idx;
     }
 
     public boolean setComponentes(){
@@ -274,7 +276,7 @@ public class EditarListaPedido extends javax.swing.JInternalFrame implements Key
         if(!email.isEmpty()){
             String senha = util.abrirInputPasswordDialog("Informe a SENHA do administrador", true, this);
             if(usuarioRepositorio.Autenticar(email, senha) != null){
-                CaixaTela.transacaoFinanceira.getItens().remove(itemVenda);
+                CaixaTela.transacaoFinanceira.getItens().remove(this.idx);
             }else if(!senha.isEmpty()){
                 util.abrirJOptionPane("erro", "Email ou senha incorretos", this);
             }

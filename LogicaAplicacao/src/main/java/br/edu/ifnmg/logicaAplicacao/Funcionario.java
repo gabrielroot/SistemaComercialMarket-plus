@@ -38,7 +38,7 @@ public class Funcionario extends Pessoa implements Serializable  {
     @Column(nullable=false)
     private FuncionarioSituacao situacao;
     
-    @ManyToOne(cascade= CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "cargoFuncionario_id", nullable= false)
     private CargoFuncionario cargo;
     

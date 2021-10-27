@@ -270,6 +270,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelComprar.setToolTipText("Transação financeira de compra com fornecedores");
         panelComprar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelComprar.setPreferredSize(new java.awt.Dimension(120, 140));
+        panelComprar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelComprarMouseClicked(evt);
+            }
+        });
 
         jPanel9.setBackground(new java.awt.Color(98, 57, 57));
 
@@ -296,6 +301,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         imgComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/supplier.png"))); // NOI18N
         imgComprar.setToolTipText("Transação financeira de compra com fornecedores");
+        imgComprar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgComprarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelComprarLayout = new javax.swing.GroupLayout(panelComprar);
         panelComprar.setLayout(panelComprarLayout);
@@ -321,6 +331,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelCrediario.setToolTipText("Gerir crediário de clientes");
         panelCrediario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelCrediario.setPreferredSize(new java.awt.Dimension(120, 140));
+        panelCrediario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelCrediarioMouseClicked(evt);
+            }
+        });
 
         jPanel15.setBackground(new java.awt.Color(98, 57, 57));
 
@@ -345,6 +360,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         imgCrediario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/crediario.png"))); // NOI18N
         imgCrediario.setToolTipText("Gerir crediário de clientes");
+        imgCrediario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgCrediarioMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCrediarioLayout = new javax.swing.GroupLayout(panelCrediario);
         panelCrediario.setLayout(panelCrediarioLayout);
@@ -369,6 +389,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelFinanceiro.setToolTipText("Gerir fluxo monetário");
         panelFinanceiro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panelFinanceiro.setPreferredSize(new java.awt.Dimension(120, 140));
+        panelFinanceiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelFinanceiroMouseClicked(evt);
+            }
+        });
 
         jPanel17.setBackground(new java.awt.Color(98, 57, 57));
 
@@ -393,6 +418,11 @@ public class TelaInicio extends javax.swing.JInternalFrame {
 
         imgFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/finance.png"))); // NOI18N
         imgFinanceiro.setToolTipText("Gerir fluxo monetário");
+        imgFinanceiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgFinanceiroMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelFinanceiroLayout = new javax.swing.GroupLayout(panelFinanceiro);
         panelFinanceiro.setLayout(panelFinanceiroLayout);
@@ -585,6 +615,54 @@ public class TelaInicio extends javax.swing.JInternalFrame {
             util.abrirJOptionPane("permissao", "",null);
         }
     }//GEN-LAST:event_panelVenderMouseClicked
+
+    private void panelCrediarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCrediarioMouseClicked
+       if(this.telaPrincipal.temPermissao("TELA_CREDIARIO")){
+            
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_panelCrediarioMouseClicked
+
+    private void panelFinanceiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelFinanceiroMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_FINANCEIRO")){
+            
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_panelFinanceiroMouseClicked
+
+    private void panelComprarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelComprarMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_COMPRA")){
+            
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_panelComprarMouseClicked
+
+    private void imgCrediarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgCrediarioMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_CREDIARIO")){
+            
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_imgCrediarioMouseClicked
+
+    private void imgFinanceiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgFinanceiroMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_FINANCEIRO")){
+            
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_imgFinanceiroMouseClicked
+
+    private void imgComprarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgComprarMouseClicked
+        if(this.telaPrincipal.temPermissao("TELA_COMPRA")){
+            
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_imgComprarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

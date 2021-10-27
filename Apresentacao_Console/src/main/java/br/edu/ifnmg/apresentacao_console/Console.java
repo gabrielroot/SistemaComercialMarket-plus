@@ -165,9 +165,9 @@ public class Console {
         UsuarioRepositorio repositorioUsuario = RepositorioFactory.getUsuarioRepositorio();
         
         List telefones = new ArrayList<Telefone>();
-        /*telefones.add(new Telefone("3899991111"));
-        telefones.add(new Telefone("3896291131"));
-        */
+        telefones.add(new Telefone("(38) 9 9991-8711"));
+        telefones.add(new Telefone("(38) 9 9991-8711"));
+        
         Pessoa pessoa = new Pessoa(
             "Sebastião Codeiro",
             "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111",
@@ -367,11 +367,17 @@ public class Console {
      }
     
     public static void fornecedoresAleatorios(){
-        List telefones = new ArrayList<Telefone>();
         Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", "Marcela Fernandes", "Gustavo Barbosa", "Ana Laura Castro", "Ana Carolina Silveira", "Maria Luiza Barros", "Gustavo Rocha", "Luiz Felipe Moura", "Thiago Castro", "Pietro da Paz", "Yago da Costa", "Pietro da Mota", "Gabriel da Mata", "João Miguel Peixoto", "Breno da Luz", "André Peixoto", "Yuri Fogaça", "Sabrina Moreira", "Bárbara Dias", "Vitor Gabriel Barbosa", "Ana Castro", "Emilly Barbosa", "Vitória Silveira", "Vitor Gomes", "Bruno Moreira", "Ana Lívia Farias", "Benício Pires", "Lara Castro", "Sabrina Moraes", "Fernanda Porto", "Pietra Viana", "Luiz Fernando Ribeiro", "Maitê Pinto", "Sophie Almeida", "Stephany da Cunha", "Raul da Rocha", "Maria Vitória Viana", "Gustavo Henrique Nogueira", "Theo Cavalcanti", "Enzo Rodrigues", "Guilherme Rocha", "Davi Lucca Rodrigues", "Bruno da Mata"};
         Object[] enderecos = {"Itacarambi, Minas Gerais. Avenida Floriano Peixoto N° 12", "Lontra, Minas Gerais. Avenida Água viva N° 145", "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
         
         for(int i=0; i<50; i++){
+            Telefone telefone01 = new Telefone("(38) 9 9991-8711");
+            Telefone telefone02 = new Telefone("(38) 9 9629-1131");
+
+            List telefones = new ArrayList<Telefone>();
+            telefones.add(telefone01);
+            telefones.add(telefone02);
+            
             Fornecedor fornecedor = new Fornecedor(
             nomes[i].toString(),
             enderecos[(int) (Math.random()*3)].toString(),
@@ -382,20 +388,12 @@ public class Console {
             (int) (Math.random()*4)+"1.334.543/"+(int) (Math.random()*4)+"355-0"+(int) (Math.random()*4),
             (Segmento) Segmento.values()[((int) (Math.random()*Segmento.values().length))]
         );
+            telefone01.setPessoa(fornecedor);
+            telefone02.setPessoa(fornecedor);
             repositorioFornecedor.Salvar(fornecedor);
         }
     }
     public static void usuariosAleatorios(){
-        
-        //Telefone telefone01 = new Telefone("3899991111");        
-        //Telefone telefone02 = new Telefone("3896291131");
-
-        List telefones = new ArrayList<Telefone>();
-
-      //  telefones.add(telefone01);
-       // telefones.add(telefone02);
-
-        
         Object[] nomes = {"Marina Dias", "Ana Julia Santos", "Lucas da Luz", "Leandro Costa", 
             "Maria Sophia Campos", "Evelyn Lopes", "Enrico Santos", "Marina Pinto", 
             "Marcela Fernandes", "Gustavo Barbosa", "Ana Laura Castro", "Ana Carolina Silveira",
@@ -414,6 +412,8 @@ public class Console {
             "Lontra, Minas Gerais. Avenida Água viva N° 145",
             "Januária, Minas Gerais. Avenida Deodoro da Fonseca N° 111"};
         
+        
+        
         for(int i=0; i<50; i++){
             CargoFuncionario cargo1 = new CargoFuncionario("Faxineiro", "Limpar todo o estabelecimento", new BigDecimal("0.00"), new BigDecimal("1000.00"));
             CargoFuncionario cargo2 = new CargoFuncionario("Caixa", "Realizar vendas", new BigDecimal("1.00"), new BigDecimal("1600.00"));
@@ -422,12 +422,14 @@ public class Console {
             Object[] c = {cargo1, cargo2, cargo3, cargo4};
             List cargos = Arrays.asList(c);
             
-           // telefone01 = new Telefone("3899991111");        
-            //telefone02 = new Telefone("3896291131");
+            List telefones = new ArrayList<Telefone>();
+            
+            Telefone telefone01 = new Telefone("3899991111");        
+            Telefone telefone02 = new Telefone("3896291131");
 
 
-       //     telefones.add(telefone01);
-        //    telefones.add(telefone02);
+            telefones.add(telefone01);
+            telefones.add(telefone02);
 
 
             Usuario usuario = new Usuario(
@@ -587,6 +589,8 @@ public class Console {
         Produto p2 = new Produto("Papel Higiênico Classe D", "Áspero quanto uma lixa de parede", 6, UnidadeMedida.Unidade, UnidadeMedida.Unidade, BigDecimal.valueOf(43), BigDecimal.valueOf(12), BigDecimal.valueOf(23), new Estoque(LocalizacaoProduto.SETOR01, 500));
         ItemVenda itemVenda2 = new ItemVenda(BigDecimal.valueOf(15),p2.getValorVarejo());
         itemVenda2.setProduto(p2);
+        repositorioProduto.Salvar(p1);
+        repositorioProduto.Salvar(p2);
         itemVenda2.setTransacaoFinanceira(transacaoFinanceira);
         
         transacaoFinanceira.getItens().add(itemVenda);
@@ -612,6 +616,7 @@ public class Console {
         pagamento.setParcelas(parcelas);
         
         repositorioPagamentoCrediario.Salvar(pagamento);
+        
     }
 
 }

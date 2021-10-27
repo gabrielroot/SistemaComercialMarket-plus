@@ -7,6 +7,7 @@ package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import Util.Util;
 import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.auxiliares.TelefoneRepositorio;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
@@ -28,6 +29,8 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private Cliente cliente;
     private ClienteRepositorio clienteRepositorio;
     private Util util;
+    TelefoneRepositorio telefoneRepositorio;
+    String titulo;
     
     /**
      * Creates new form TelaCliente
@@ -36,14 +39,16 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     public TelaClienteEditar(Cliente cliente, String titulo) {
         this.cliente = cliente;
         this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
+        this.telefoneRepositorio = RepositorioFactory.getTelefoneRepositorio();
         initComponents();
         setComponentes();
         this.lblTitulo.setText(titulo);
         this.util = new Util();
+        this.titulo = titulo;
     }
     
     private void setComponentes(){
-        if(!this.cliente.getNome().isEmpty()){
+        if(!this.cliente.getNome().isEmpty() && !this.cliente.getNome().equals("0")){
             System.out.println("");
             this.txtNome.setText(this.cliente.getNome());
 
@@ -68,10 +73,12 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
             }
             this.txtNumeroDocumento.setText(this.cliente.getNumeroDocumento());
             if(this.cliente.getTelefones().size() > 0){
-                this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
-
+                if(!this.cliente.getTelefones().get(0).getNumero().equals("(  )          "))             
+                    this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
+                
                 if(this.cliente.getTelefones().size() > 1){
-                    this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
+                    if(!this.cliente.getTelefones().get(1).getNumero().equals("(  )          "))
+                        this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
                 }
             }
             this.txtIdentificacaoCliente.setText(this.cliente.getIdentificaoDoCliente());
@@ -106,15 +113,43 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         endereco.append(TxtComplemento.getText());
         
         ArrayList<Telefone> telefones = new ArrayList();
-        if(this.txtTelefone1.getValue() != null){
-            Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString() );
+        
+        if(this.titulo.equals("Novo Cliente")){
+            
+            if(this.txtTelefone1.getValue() == null){
+            Telefone telefone1 = new Telefone("(  )          ");
             telefones.add(telefone1);
+            telefone1.setPessoa(cliente);
+            }else{
+                Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString() );
+                telefones.add(telefone1);
+                telefone1.setPessoa(cliente);
+            }
+            
+            if(this.txtTelefone2.getValue() == null){
+               Telefone telefone2 = new Telefone("(  )          ");
+               telefones.add(telefone2);
+               telefone2.setPessoa(cliente);
+            }else{
+                Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString() );
+                telefones.add(telefone2);
+                telefone2.setPessoa(cliente);
+            }
+            
+        }else{
+            
+            if(this.txtTelefone1.getValue() != null){
+                this.cliente.getTelefones().get(0).setNumero(this.txtTelefone1.getValue().toString());
+            }else{ 
+                this.cliente.getTelefones().get(0).setNumero("(  )          ");
+            }
+            if(this.txtTelefone2.getValue() != null){
+                this.cliente.getTelefones().get(1).setNumero(this.txtTelefone2.getValue().toString());
+            }else{ 
+                this.cliente.getTelefones().get(0).setNumero("(  )          ");
+            }
         }
         
-        if(this.txtTelefone2.getValue() != null){
-            Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString() );
-            telefones.add(telefone2);
-        }
         
         Calendar data = Calendar.getInstance();
         data = Util.getCalendarDateFromString(this.txtDataNascimento.getText());
@@ -185,9 +220,7 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(219, 219, 219));
         setClosable(true);
 
-        txtNome.setBackground(new java.awt.Color(255, 255, 255));
         txtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtNome.setForeground(new java.awt.Color(0, 0, 0));
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
@@ -195,19 +228,14 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         });
 
         lblNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblNome.setForeground(new java.awt.Color(0, 0, 0));
         lblNome.setText("Nome");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Data de Nascimento");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
 
-        txtEndereco.setBackground(new java.awt.Color(255, 255, 255));
         txtEndereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtEndereco.setForeground(new java.awt.Color(0, 0, 0));
         txtEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEnderecoActionPerformed(evt);
@@ -237,8 +265,6 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19))
         );
 
-        txtDataNascimento.setBackground(new java.awt.Color(255, 255, 255));
-        txtDataNascimento.setForeground(new java.awt.Color(0, 0, 0));
         try {
             txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
@@ -252,25 +278,19 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Endereço");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Número");
 
-        txtNumeroCasa.setBackground(new java.awt.Color(255, 255, 255));
         txtNumeroCasa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtNumeroCasa.setForeground(new java.awt.Color(0, 0, 0));
         txtNumeroCasa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNumeroCasaActionPerformed(evt);
             }
         });
 
-        txtBairro.setBackground(new java.awt.Color(255, 255, 255));
         txtBairro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtBairro.setForeground(new java.awt.Color(0, 0, 0));
         txtBairro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBairroActionPerformed(evt);
@@ -278,12 +298,10 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Bairro");
 
         btnCancelar.setBackground(new java.awt.Color(181, 181, 181));
         btnCancelar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
         btnCancelar.setText("Cancelar");
         btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -306,27 +324,24 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
             }
         });
 
-        cbxTipoPessoa.setBackground(new java.awt.Color(255, 255, 255));
         cbxTipoPessoa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbxTipoPessoa.setForeground(new java.awt.Color(0, 0, 0));
         cbxTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica" }));
+        cbxTipoPessoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTipoPessoaActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Tipo Pessoa");
 
-        cbxTipoDocumento.setBackground(new java.awt.Color(255, 255, 255));
         cbxTipoDocumento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbxTipoDocumento.setForeground(new java.awt.Color(0, 0, 0));
         cbxTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RG", "CNPJ", "CPF", "CTPS", "CNH", "Passaporte", "Certidão de Nascimento", "Certidão de Casamento", "Certidão de Prontuário", "Carteira Militar" }));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Tipo do Documento");
 
-        txtNumeroDocumento.setBackground(new java.awt.Color(255, 255, 255));
         txtNumeroDocumento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtNumeroDocumento.setForeground(new java.awt.Color(0, 0, 0));
         txtNumeroDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNumeroDocumentoActionPerformed(evt);
@@ -334,12 +349,9 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Número do Documento");
 
-        TxtComplemento.setBackground(new java.awt.Color(255, 255, 255));
         TxtComplemento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        TxtComplemento.setForeground(new java.awt.Color(0, 0, 0));
         TxtComplemento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxtComplementoActionPerformed(evt);
@@ -347,20 +359,16 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Complemento");
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Telefone 1");
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Telefone 2");
 
-        txtIdentificacaoCliente.setBackground(new java.awt.Color(255, 255, 255));
         txtIdentificacaoCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtIdentificacaoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,20 +378,14 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Identificação do cliente para compra");
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Senha para comprar");
 
-        txtSenhaCliente.setBackground(new java.awt.Color(255, 255, 255));
         txtSenhaCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtSenhaCliente.setForeground(new java.awt.Color(0, 0, 0));
 
-        txtTelefone2.setBackground(new java.awt.Color(255, 255, 255));
-        txtTelefone2.setForeground(new java.awt.Color(0, 0, 0));
         try {
             txtTelefone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)# ########")));
         } catch (java.text.ParseException ex) {
@@ -391,8 +393,6 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         }
         txtTelefone2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        txtTelefone1.setBackground(new java.awt.Color(255, 255, 255));
-        txtTelefone1.setForeground(new java.awt.Color(0, 0, 0));
         try {
             txtTelefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)# ########")));
         } catch (java.text.ParseException ex) {
@@ -597,6 +597,10 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private void txtIdentificacaoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificacaoClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdentificacaoClienteActionPerformed
+
+    private void cbxTipoPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoPessoaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxTipoPessoaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

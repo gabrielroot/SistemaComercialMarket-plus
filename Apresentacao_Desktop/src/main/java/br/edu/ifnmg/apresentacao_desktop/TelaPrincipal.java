@@ -120,6 +120,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String TELA_PRODUTO = "TELA_PRODUTO";
         String TELA_FINANCEIRO = "TELA_FINANCEIRO";
         String TELA_CAIXA = "TELA_CAIXA";
+        String TELA_CREDIARIO = "TELA_CREDIARIO";
         String TELA_PESSOAS__ABA_USUARIOS = "TELA_PESSOAS__ABA_USUARIOS";
         String TELA_PESSOAS__ABA_FORNECEDORES = "TELA_PESSOAS__ABA_FORNECEDORES";
         String TELA_PESSOAS__ABA_FUNCIONARIOS = "TELA_PESSOAS__ABA_FUNCIONARIOS";
@@ -129,11 +130,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ArrayList<String> removePermissaoAdm = new ArrayList();
         removePermissaoAdm.add(TELA_CAIXA);
         removePermissaoAdm.add(TELA_RELATORIOS);
+        removePermissaoAdm.add(TELA_FINANCEIRO);
         
         ArrayList<String> removePermissaoBalconista = new ArrayList();
         removePermissaoBalconista.add(TELA_CAIXA);
         removePermissaoBalconista.add(TELA_COMPRA);
         removePermissaoBalconista.add(TELA_FINANCEIRO);
+        removePermissaoBalconista.add(TELA_CREDIARIO);
         removePermissaoBalconista.add(TELA_PRODUTO);
         removePermissaoBalconista.add(TELA_RELATORIOS);
         removePermissaoBalconista.add(TELA_PESSOAS__ABA_USUARIOS);
@@ -145,6 +148,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         removePermissaoCaixa.add(TELA_RELATORIOS);
         removePermissaoCaixa.add(TELA_COMPRA);
         removePermissaoCaixa.add(TELA_PRODUTO);
+        removePermissaoCaixa.add(TELA_CREDIARIO);
         removePermissaoCaixa.add(TELA_FINANCEIRO);
         
         TelaPrincipal.permissions.put(UsuarioTipo.Gerente, removePermissaoGerente);
@@ -157,7 +161,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             if(TelaPrincipal.usuario.getId() == 0){
                 System.out.println("[DEV]: Iniciando usuário Desenvolvedor");
                 UsuarioRepositorio usuarioRepositorio = RepositorioFactory.getUsuarioRepositorio();
-                Usuario dev = usuarioRepositorio.Abrir(1000L);
+                Usuario dev = usuarioRepositorio.Abrir(1001L);
                 TelaPrincipal.setUsuario(dev);
             }
         }else if(TelaPrincipal.usuario.getId() == 0){
@@ -277,12 +281,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem5.setText("Financeiro");
         jMenuItem5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem5.setPreferredSize(new java.awt.Dimension(240, 33));
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         menuGerenciamento.add(jMenuItem5);
 
         jMenuItem4.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
         jMenuItem4.setText("Crediário");
         jMenuItem4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem4.setPreferredSize(new java.awt.Dimension(240, 33));
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         menuGerenciamento.add(jMenuItem4);
 
         jMenuBar1.add(menuGerenciamento);
@@ -475,6 +489,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
             util.abrirJOptionPane("permissao", "",null);
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        if(temPermissao("TELA_FINANCEIRO")){
+            
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        if(temPermissao("TELA_CREDIARIO")){
+            
+        }else{
+            util.abrirJOptionPane("permissao", "",null);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
     
     /**
      * @param args the command line arguments

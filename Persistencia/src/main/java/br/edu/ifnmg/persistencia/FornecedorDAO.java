@@ -23,6 +23,7 @@ public class FornecedorDAO extends DataAccessObject<Fornecedor> implements Forne
 
     @Override
     public List<Fornecedor> Buscar(Fornecedor obj) {
+        manager.clear();
         String jpql = "SELECT fornecedor FROM Fornecedor fornecedor";
         String filtros = "";
         Hashtable<String, Object> parametros = new Hashtable<>();

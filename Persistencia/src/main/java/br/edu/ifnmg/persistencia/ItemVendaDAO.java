@@ -23,6 +23,7 @@ public class ItemVendaDAO extends DataAccessObject<ItemVenda> implements ItemVen
 
     @Override
     public List<ItemVenda> Buscar(ItemVenda obj) {
+        manager.clear();
         String jpql = "SELECT itemVenda FROM ItemVenda itemVenda";
         String filtros = "";
         Hashtable<String, Object> parametros = new Hashtable<>();

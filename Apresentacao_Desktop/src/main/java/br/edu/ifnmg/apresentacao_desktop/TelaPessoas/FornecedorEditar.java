@@ -87,16 +87,31 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         
         this.fornecedor.setDataNascimento(Util.getCalendarDateFromString(this.txtNascimento.getValue().toString()));
         
-        List<Telefone> telefones = new ArrayList();
-        if(this.txtTelefone1.getValue() != null){
-            Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString());
-            telefones.add(telefone1);
-            
-        }
+        if(labelTitulo.getText().equalsIgnoreCase("novo fornecedor")){
+            List<Telefone> telefones = new ArrayList();
+            fornecedor.setTelefones(telefones);
         
-        if(this.txtTelefone2.getValue() != null){
-            Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString());
-            telefones.add(telefone2);
+            Telefone telefone1 = new Telefone("");
+            if(this.txtTelefone1.getValue() != null){
+                telefone1.setNumero(this.txtTelefone1.getValue().toString());
+                telefones.add(telefone1);
+
+            }
+
+            Telefone telefone2 = new Telefone("");
+            if(this.txtTelefone2.getValue() != null){
+                telefone2.setNumero(this.txtTelefone2.getValue().toString());
+                telefones.add(telefone2);
+            }
+            
+            telefone1.setPessoa(fornecedor);
+            telefone2.setPessoa(fornecedor);
+                
+        }else{
+            this.fornecedor.getTelefones().get(0).setNumero(this.txtTelefone1.getValue() == null? "":this.txtTelefone1.getValue().toString());
+                
+            if(this.fornecedor.getTelefones().size() > 1)
+                this.fornecedor.getTelefones().get(1).setNumero(this.txtTelefone2.getValue() == null? "":this.txtTelefone2.getValue().toString());
         }
         
         for(Segmento segmento : Segmento.values()){
@@ -105,7 +120,6 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
             }
         }
         
-        this.fornecedor.setTelefones(telefones);
         return true;
     }
     
@@ -168,17 +182,13 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(208, 208, 208));
 
-        txtNome.setBackground(new java.awt.Color(255, 255, 255));
         txtNome.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        txtNome.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(54, 54, 54));
         jLabel2.setText("Nome");
 
-        txtEndereco.setBackground(new java.awt.Color(255, 255, 255));
         txtEndereco.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        txtEndereco.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(54, 54, 54));
@@ -207,8 +217,6 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         jLabel8.setForeground(new java.awt.Color(54, 54, 54));
         jLabel8.setText("Data de Nascimento");
 
-        txtCnpj.setBackground(new java.awt.Color(255, 255, 255));
-        txtCnpj.setForeground(new java.awt.Color(0, 0, 0));
         try {
             txtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
@@ -217,8 +225,6 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         txtCnpj.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCnpj.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
-        txtTelefone2.setBackground(new java.awt.Color(255, 255, 255));
-        txtTelefone2.setForeground(new java.awt.Color(0, 0, 0));
         try {
             txtTelefone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
         } catch (java.text.ParseException ex) {
@@ -227,8 +233,6 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         txtTelefone2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTelefone2.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
-        txtTelefone1.setBackground(new java.awt.Color(255, 255, 255));
-        txtTelefone1.setForeground(new java.awt.Color(0, 0, 0));
         try {
             txtTelefone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) # ####-####")));
         } catch (java.text.ParseException ex) {
@@ -237,8 +241,6 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         txtTelefone1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTelefone1.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
 
-        txtNascimento.setBackground(new java.awt.Color(255, 255, 255));
-        txtNascimento.setForeground(new java.awt.Color(0, 0, 0));
         try {
             txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
@@ -369,7 +371,10 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

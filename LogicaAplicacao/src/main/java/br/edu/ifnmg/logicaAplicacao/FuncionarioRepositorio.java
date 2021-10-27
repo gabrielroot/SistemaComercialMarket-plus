@@ -5,10 +5,13 @@
  */
 package br.edu.ifnmg.logicaAplicacao;
 
+import java.util.List;
+
 /**
  *
  * @author kesley
  */
 public interface FuncionarioRepositorio extends Repositorio<Funcionario> {
-    
+   
+   
 }

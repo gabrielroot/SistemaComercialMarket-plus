@@ -23,6 +23,7 @@ public class EstoqueDAO extends DataAccessObject<Estoque> implements EstoqueRepo
     
     @Override
     public List<Estoque> Buscar(Estoque obj) {
+        manager.clear();
         String jpql = "SELECT estoque FROM Estoque estoque";
         String filtros = "";
         Hashtable<String, Object> parametros = new Hashtable<>();

@@ -25,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,14 +42,6 @@ public class TransacaoFinanceira implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
     
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable=false)
@@ -80,6 +73,7 @@ public class TransacaoFinanceira implements Serializable {
         this.itens = new ArrayList<>();
         this.usuario = new Usuario();
         this.cliente = new Cliente();
+       
     }
 
     public TransacaoFinanceira(
@@ -97,6 +91,9 @@ public class TransacaoFinanceira implements Serializable {
         this.cliente = cliente;
     }
 
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    
     public TransacaoTipo getTransacaoTipo() { return transacaoTipo; }
     public void setTransacaoTipo(TransacaoTipo transacaoTipo) { this.transacaoTipo = transacaoTipo; }
 

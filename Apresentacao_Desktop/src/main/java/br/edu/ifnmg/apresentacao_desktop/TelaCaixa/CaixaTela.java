@@ -11,13 +11,18 @@ import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.ItemVenda;
 import br.edu.ifnmg.auxiliares.ItemVendaRepositorio;
-import br.edu.ifnmg.auxiliares.Telefone;
-import br.edu.ifnmg.enums.TipoDocumento;
-import br.edu.ifnmg.enums.TipoPessoa;
+import br.edu.ifnmg.auxiliares.Lote;
+import br.edu.ifnmg.enums.FormaPagamento;
 import br.edu.ifnmg.enums.TransacaoStatus;
 import br.edu.ifnmg.enums.TransacaoTipo;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
+import br.edu.ifnmg.logicaAplicacao.Pagamento;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediario;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorCrediarioRepositorio;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorDinheiro;
+import br.edu.ifnmg.logicaAplicacao.PagamentoPorDinheiroRepositorio;
+import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
@@ -25,11 +30,11 @@ import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceiraRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Graphics;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +43,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 /**
  *
@@ -46,11 +53,15 @@ import javax.swing.table.DefaultTableModel;
 public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener, InternalFrameListener{
     static TransacaoFinanceira transacaoFinanceira;
     static Cliente cliente;
-    
+    PagamentoPorCrediarioRepositorio pagamentoCrediarioRepositorio;
+    PagamentoPorDinheiroRepositorio pagamentoPorDinheiroRepositorio;
+    PagamentoRepositorio pagamentoRepositorio;
     ClienteRepositorio clienteRepositorio;
     ProdutoRepositorio produtoRepositorio;
     EstoqueRepositorio estoqueRepositorio;
     ItemVendaRepositorio itemVendaRepositorio;
+    TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio;
+    
     Util util;
     /**
      * Creates new form CaixaTela
@@ -58,10 +69,15 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     public CaixaTela() {
         this.cliente = new Cliente();
         this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), cliente);
+        
+        this.transacaoFinanceiraRepositorio = RepositorioFactory.getTransacaoFinanceiraRepositorio();
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
-        this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();    
+        this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
+        this.pagamentoCrediarioRepositorio = RepositorioFactory.getPagamentoCrediarioRepositorio();
+        this.pagamentoPorDinheiroRepositorio = RepositorioFactory.getPagamentoDinheiroRepositorio();
+        this.pagamentoRepositorio = RepositorioFactory.getPagamentoRepositorio();
         this.util = new Util();
         initComponents();
         this.txtCode.addKeyListener(this);
@@ -79,7 +95,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     public static boolean isAtacado(ItemVenda itemVenda){
         return itemVenda.getQuantidade().compareTo(BigDecimal.valueOf(itemVenda.getProduto().getMinimoParaAtacado())) >= 0;
     }
-    
+
     private void renderProdutos(List<ItemVenda> item){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("#");
@@ -107,6 +123,47 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             modelo.addRow(linha);
         }
         tableResultadoProdutos.setModel(modelo);
+    }
+    
+     private void realizarPagamento() {
+        PagamentoTela pagamentoTela = new PagamentoTela(cliente);
+        pagamentoTela.addInternalFrameListener(this);
+        CaixaTela.jDesktopPane1.add(pagamentoTela);
+        Util.centralizaInternalFrame(pagamentoTela, this.getSize());
+        pagamentoTela.setVisible(true);
+    }
+     
+    private void telaPagamentoDinheiro(){
+        PagamentoDinheiro pagamentoDinheiro = new PagamentoDinheiro();
+        pagamentoDinheiro.addInternalFrameListener(this);
+        jDesktopPane1.add(pagamentoDinheiro);
+        Util.centralizaInternalFrame(pagamentoDinheiro,this.getSize());
+        pagamentoDinheiro.setVisible(true);
+    }
+    
+    private void telaPagamentoCrediario(){
+        PagamentoCrediario pagamentoCrediario = new PagamentoCrediario();
+        pagamentoCrediario.addInternalFrameListener(this);
+        jDesktopPane1.add(pagamentoCrediario);
+        Util.centralizaInternalFrame(pagamentoCrediario,this.getSize());
+        pagamentoCrediario.setVisible(true);
+        
+    }
+    
+    private void telaPagamentoCartao(){
+        PagamentoCartao pagamentoCartao = new PagamentoCartao();
+        pagamentoCartao.addInternalFrameListener(this);
+        jDesktopPane1.add(pagamentoCartao);
+        Util.centralizaInternalFrame(pagamentoCartao,this.getSize());
+        pagamentoCartao.setVisible(true);
+    }
+    
+    private void autenticarCliente(){
+        AutenticarCliente autenticarCliente = new AutenticarCliente(this.cliente);
+        autenticarCliente.addInternalFrameListener(this);
+        jDesktopPane1.add(autenticarCliente);
+        autenticarCliente.setVisible(true);
+        Util.centralizaInternalFrame(autenticarCliente,this.getSize());
     }
     
     /**
@@ -402,6 +459,11 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 painelRealizarPgtoMouseClicked(evt);
             }
         });
+        painelRealizarPgto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                painelRealizarPgtoKeyPressed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -616,6 +678,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         int idx = (int) tableResultadoProdutos.getValueAt(linha, 0);
 
         EditarListaPedido editarListaPedido = new EditarListaPedido(transacaoFinanceira.getItens().get(idx-1));
+        System.out.println(transacaoFinanceira.getItens().get(idx-1).getProduto().getNome());
         editarListaPedido.addInternalFrameListener(this);
         CaixaTela.jDesktopPane1.add(editarListaPedido);
         Util.centralizaInternalFrame(editarListaPedido, this.getSize());
@@ -639,39 +702,62 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     }//GEN-LAST:event_tableAllProductsMouseClicked
 
     private void painelRealizarPgtoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRealizarPgtoMouseClicked
-        
-        AutenticarCliente autenticarCliente = new AutenticarCliente(this.cliente);
-        autenticarCliente.addInternalFrameListener(this);
-        jDesktopPane1.add(autenticarCliente);
-        autenticarCliente.setVisible(true);
-        Util.centralizaInternalFrame(autenticarCliente,this.getSize());
-
-        //finalizarCompra();
+        autenticarCliente();
     }//GEN-LAST:event_painelRealizarPgtoMouseClicked
 
     private void painelRepetirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelRepetirMouseClicked
         repetirUltimoProduto();
     }//GEN-LAST:event_painelRepetirMouseClicked
 
+    private void painelRealizarPgtoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_painelRealizarPgtoKeyPressed
+        autenticarCliente();
+    }//GEN-LAST:event_painelRealizarPgtoKeyPressed
+
     private void finalizarCompra(){
-        for(ItemVenda i : transacaoFinanceira.getItens()){
-            System.out.println("    Nome: "+i.getProduto().getNome());
-            System.out.println("    Subtotal: "+i.getSubTotal());
-            System.out.println("");
-        }
-        System.out.println("");
-        System.out.println("Total: "+transacaoFinanceira.getValorTotal());
-        System.out.println("Usuario: "+transacaoFinanceira.getUsuario().getNome());
-       
         transacaoFinanceira.setCliente(cliente);
-        TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio = RepositorioFactory.getTransacaoFinanceiraRepositorio();
-        transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
+        util.abrirJOptionPane("sucesso","Compra Finalizada!",this);
         
-        util.abrirJOptionPane("sucesso","Compra \"finalizada\". Veja a saída no console!",this);
+        
+        for (ItemVenda item : transacaoFinanceira.getItens()) {
+            for (Lote lote : item.getProduto().getEstoque().getLotes()){
+                
+                if(lote.getNasPrateleiras() >= Integer.parseInt(item.getQuantidade().toString()) ){
+                    lote.setNasPrateleiras(lote.getNasPrateleiras() - Integer.parseInt(item.getQuantidade().toString()) );
+                    
+                    break;
+                }else{
+                
+                    item.setQuantidade(item.getQuantidade().subtract(new BigDecimal(lote.getNasPrateleiras())));
+                    lote.setNasPrateleiras(0);
+                }
+            }
+        }
+        
+        
+        if(PagamentoTela.pagamentoPorDinheiro != null){
+            PagamentoTela.pagamentoPorDinheiro.setTransacaoFinanceira(transacaoFinanceira);
+            pagamentoPorDinheiroRepositorio.Salvar(PagamentoTela.pagamentoPorDinheiro);
+            PagamentoTela.pagamentoPorDinheiro = null;
+            
+        }else if(PagamentoTela.pagamento != null){
+                    pagamentoRepositorio.Salvar(PagamentoTela.pagamento);
+                    PagamentoTela.pagamento = null;
+
+        }else if(PagamentoTela.pagamentoPorCrediario !=null){
+                    PagamentoTela.pagamentoPorCrediario.setTransacaoFinanceira(CaixaTela.transacaoFinanceira);
+                    pagamentoCrediarioRepositorio.Salvar(PagamentoTela.pagamentoPorCrediario);
+                    PagamentoTela.pagamentoPorCrediario = null;
+        }
+        transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
+
+        
 
         transacaoFinanceira.getItens().clear();
         this.renderProdutos(transacaoFinanceira.getItens());
         this.atualizarTotal();
+        this.listagemRapidaProdutos();
+        this.cliente = new Cliente();
+        this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), cliente);
     }
     
     private void adicionarProduto(){
@@ -697,8 +783,6 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                             }else{
                                 item.setSubTotal(item.getSubTotal(item.getProduto().getValorVarejo()));
                             }
-                            Toolkit tk = Toolkit.getDefaultToolkit();
-                            tk.beep();
                             bool = true;
                             break;
                         }else{
@@ -716,7 +800,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
 
                 this.renderProdutos(transacaoFinanceira.getItens());
                 this.txtCode.setText("");
-
+                
+                CaixaTela.playSoundEffect();
                 atualizarTotal();
             }else{
                 this.txtCode.selectAll();
@@ -725,6 +810,21 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         }catch(NumberFormatException ex){
             this.txtCode.selectAll();
             txtNotFound.setText("Apenas números, por favor!");
+        }
+    }
+    
+    public static void playSoundEffect(){
+        Player player;
+        try {
+            FileInputStream fileInputStream = new FileInputStream("piscadinha.mp3");
+                player = new Player(fileInputStream);
+                player.play();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JavaLayerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
     
@@ -741,6 +841,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 }
 
                 this.renderProdutos(transacaoFinanceira.getItens());
+                this.playSoundEffect();
                 this.atualizarTotal();
             }else{
                 this.txtNotFound.setText("Sem mais nas prateleiras");
@@ -788,14 +889,6 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             }
         }
         tableAllProducts.setModel(modelo);
-    }
-    
-    private void realizarPagamento() {
-        PagamentoTela pagamentoTela = new PagamentoTela(cliente);
-        pagamentoTela.addInternalFrameListener(this);
-        CaixaTela.jDesktopPane1.add(pagamentoTela);
-        Util.centralizaInternalFrame(pagamentoTela, this.getSize());
-        pagamentoTela.setVisible(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -853,7 +946,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 cancelarCompra();
                 break;
             case java.awt.event.KeyEvent.VK_RIGHT:
-                finalizarCompra();
+                autenticarCliente();
                 break;
             case java.awt.event.KeyEvent.VK_LEFT:
                  repetirUltimoProduto();
@@ -884,7 +977,10 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
             public void run() {
               txtCode.requestFocusInWindow();
             }
+            
         });
+        
+        listagemRapidaProdutos();
         
         if(e.getInternalFrame().getClass() == ListarProdutos.class){
             if(this.txtCode.getText().length() > 0){
@@ -900,6 +996,43 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                 this.realizarPagamento();
             }
         }
+        
+        if(e.getInternalFrame().getClass() == PagamentoTela.class){
+            if(PagamentoTela.pagamentoPorDinheiro != null){
+                if(PagamentoTela.pagamentoPorDinheiro.getFormaPagamento().equals(FormaPagamento.Dinheiro))
+                    this.telaPagamentoDinheiro();
+                    
+            }else if(PagamentoTela.pagamento != null){
+                        if(PagamentoTela.pagamento.getFormaPagamento().equals(FormaPagamento.Cartao)){
+                            this.telaPagamentoCartao();
+                        }
+                        
+            }else if(PagamentoTela.pagamentoPorCrediario !=null){
+                    if(PagamentoTela.pagamentoPorCrediario.getFormaPagamento().equals(FormaPagamento.Crediario)){
+                        this.telaPagamentoCrediario();
+                    }
+            }
+            
+        }
+        
+        if(e.getInternalFrame().getClass() == PagamentoCrediario.class){
+            if(CaixaTela.transacaoFinanceira.getTransacaoStatus().equals(TransacaoStatus.Concluida) &&
+                    PagamentoTela.pagamentoPorCrediario.getFormaPagamento() != null)    
+                this.finalizarCompra();
+        }
+        
+        if(e.getInternalFrame().getClass() == PagamentoDinheiro.class){
+            if(CaixaTela.transacaoFinanceira.getTransacaoStatus().equals(TransacaoStatus.Concluida) &&
+                    PagamentoTela.pagamentoPorDinheiro.getFormaPagamento() != null)    
+                this.finalizarCompra();
+        }
+        
+        if(e.getInternalFrame().getClass() == PagamentoCartao.class){
+            if(CaixaTela.transacaoFinanceira.getTransacaoStatus().equals(TransacaoStatus.Concluida) &&
+                    PagamentoTela.pagamento.getFormaPagamento() != null)    
+                this.finalizarCompra();
+        }
+        
     }
 
     @Override

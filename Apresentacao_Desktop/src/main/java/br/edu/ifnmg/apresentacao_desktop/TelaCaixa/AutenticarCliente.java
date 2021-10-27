@@ -5,14 +5,11 @@
 package br.edu.ifnmg.apresentacao_desktop.TelaCaixa;
 
 import Util.Util;
-import static br.edu.ifnmg.apresentacao_desktop.TelaCaixa.CaixaTela.cliente;
 import br.edu.ifnmg.auxiliares.Telefone;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
 import br.edu.ifnmg.logicaAplicacao.ClienteRepositorio;
-import br.edu.ifnmg.logicaAplicacao.Pagamento;
-import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,15 +21,13 @@ import java.util.Calendar;
 public class AutenticarCliente extends javax.swing.JInternalFrame {
     Cliente clienteTeste;
     ClienteRepositorio clienteRepositorio;
-    Pagamento pagamento;
-    PagamentoRepositorio pagamentoRepositorio;
     Util util;
     /**
      * Creates new form VendaAtacado
      */
     public AutenticarCliente(Cliente cliente) {
         clienteRepositorio = RepositorioFactory.getClienteRepositorio();
-        pagamento = new Pagamento();
+        
         util = new Util();
         initComponents();
         setComponetes(cliente);
@@ -72,8 +67,6 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setClosable(true);
-
         jPanel1.setBackground(new java.awt.Color(208, 208, 208));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -107,6 +100,11 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         txtIdentificacaoCliente.setBackground(new java.awt.Color(255, 255, 255));
         txtIdentificacaoCliente.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         txtIdentificacaoCliente.setForeground(new java.awt.Color(8, 8, 8));
+        txtIdentificacaoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdentificacaoClienteKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(8, 8, 8));
@@ -115,6 +113,11 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         txtSenhaCliente.setBackground(new java.awt.Color(255, 255, 255));
         txtSenhaCliente.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         txtSenhaCliente.setForeground(new java.awt.Color(8, 8, 8));
+        txtSenhaCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaClienteKeyPressed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButton1.setText("Cancelar");
@@ -166,7 +169,7 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSenhaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -188,6 +191,27 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        autenticarCliente();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CaixaTela.cliente = new Cliente();
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtSenhaClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaClienteKeyPressed
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            autenticarCliente();
+        }
+    }//GEN-LAST:event_txtSenhaClienteKeyPressed
+
+    private void txtIdentificacaoClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdentificacaoClienteKeyPressed
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
+            autenticarCliente();
+        }
+    }//GEN-LAST:event_txtIdentificacaoClienteKeyPressed
+
+    private void autenticarCliente(){
         this.clienteTeste = new Cliente();
         this.getComponetes(this.clienteTeste);
         
@@ -212,12 +236,7 @@ public class AutenticarCliente extends javax.swing.JInternalFrame {
         }else {
             this.dispose();
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

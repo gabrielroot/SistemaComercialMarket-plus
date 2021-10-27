@@ -134,7 +134,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         btnEncerrarSessao.setForeground(new java.awt.Color(255, 255, 255));
         btnEncerrarSessao.setText("Encerrar Sessão");
         btnEncerrarSessao.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnEncerrarSessao.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEncerrarSessao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEncerrarSessao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEncerrarSessaoActionPerformed(evt);
@@ -161,7 +161,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelVender.setBackground(new java.awt.Color(224, 191, 191));
         panelVender.setForeground(new java.awt.Color(224, 191, 191));
         panelVender.setToolTipText("Abrir módulo de caixa");
-        panelVender.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panelVender.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelVender.setPreferredSize(new java.awt.Dimension(120, 140));
         panelVender.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -268,7 +268,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelComprar.setBackground(new java.awt.Color(224, 191, 191));
         panelComprar.setForeground(new java.awt.Color(224, 191, 191));
         panelComprar.setToolTipText("Transação financeira de compra com fornecedores");
-        panelComprar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panelComprar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelComprar.setPreferredSize(new java.awt.Dimension(120, 140));
         panelComprar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -329,7 +329,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelCrediario.setBackground(new java.awt.Color(224, 191, 191));
         panelCrediario.setForeground(new java.awt.Color(224, 191, 191));
         panelCrediario.setToolTipText("Gerir crediário de clientes");
-        panelCrediario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panelCrediario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelCrediario.setPreferredSize(new java.awt.Dimension(120, 140));
         panelCrediario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -387,7 +387,7 @@ public class TelaInicio extends javax.swing.JInternalFrame {
         panelFinanceiro.setBackground(new java.awt.Color(224, 191, 191));
         panelFinanceiro.setForeground(new java.awt.Color(224, 191, 191));
         panelFinanceiro.setToolTipText("Gerir fluxo monetário");
-        panelFinanceiro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        panelFinanceiro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelFinanceiro.setPreferredSize(new java.awt.Dimension(120, 140));
         panelFinanceiro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

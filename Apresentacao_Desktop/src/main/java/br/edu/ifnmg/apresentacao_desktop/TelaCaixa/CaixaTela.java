@@ -727,22 +727,15 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         transacaoFinanceira.setCliente(cliente);
         util.abrirJOptionPane("sucesso","Compra \"finalizada\". Veja a saída no console!",this);
         
-/// atualizar a quantidade dos produtos vendidos
         
         for (ItemVenda item : transacaoFinanceira.getItens()) {
             for (Lote lote : item.getProduto().getEstoque().getLotes()){
-                System.out.println("quantidade de item:"+item.getQuantidade());
-                System.out.println("quantidade de item no lote:"+lote.getNasPrateleiras());
                 
                 if(lote.getNasPrateleiras() >= Integer.parseInt(item.getQuantidade().toString()) ){
                     lote.setNasPrateleiras(lote.getNasPrateleiras() - Integer.parseInt(item.getQuantidade().toString()) );
-                    System.out.println("1quantidade de item:"+item.getQuantidade());
-                    System.out.println("1quantidade de item no lote:"+lote.getNasPrateleiras());
                     
                     break;
                 }else{
-                    System.out.println("2quantidade de item:"+item.getQuantidade());
-                    System.out.println("2quantidade de item no lote:"+lote.getNasPrateleiras());
                 
                     item.setQuantidade(item.getQuantidade().subtract(new BigDecimal(lote.getNasPrateleiras())));
                     lote.setNasPrateleiras(0);
@@ -751,7 +744,6 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         }
         
         
-////salvar o pagamento
         if(PagamentoTela.pagamentoPorDinheiro != null){
             PagamentoTela.pagamentoPorDinheiro.setTransacaoFinanceira(transacaoFinanceira);
             pagamentoPorDinheiroRepositorio.Salvar(PagamentoTela.pagamentoPorDinheiro);
@@ -766,10 +758,9 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                     pagamentoCrediarioRepositorio.Salvar(PagamentoTela.pagamentoPorCrediario);
                     PagamentoTela.pagamentoPorCrediario = null;
         }
-    transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
+        transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
 
         
-////Limpar todo tela para uma nova transação
 
         transacaoFinanceira.getItens().clear();
         this.renderProdutos(transacaoFinanceira.getItens());

@@ -23,6 +23,7 @@ public class ProdutoDAO extends DataAccessObject<Produto> implements ProdutoRepo
 
     @Override
     public List<Produto> Buscar(Produto obj) {
+        manager.clear();
         String jpql = "SELECT produto FROM Produto produto";
         String filtros = "";
         Hashtable<String, Object> parametros = new Hashtable<>();

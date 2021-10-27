@@ -23,6 +23,7 @@ public class LoteDAO extends DataAccessObject<Lote> implements LoteRepositorio{
 
     @Override
     public List<Lote> Buscar(Lote obj) {
+        manager.clear();
         String jpql = "SELECT lote FROM Lote lote";
         String filtros = "";
         Hashtable<String, Object> parametros = new Hashtable<>();

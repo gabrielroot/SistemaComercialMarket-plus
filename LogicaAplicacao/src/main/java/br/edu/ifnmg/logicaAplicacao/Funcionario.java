@@ -12,25 +12,15 @@ import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -48,7 +38,7 @@ public class Funcionario extends Pessoa implements Serializable  {
     @Column(nullable=false)
     private FuncionarioSituacao situacao;
     
-    @ManyToOne(cascade= CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "cargoFuncionario_id", nullable= false)
     private CargoFuncionario cargo;
     

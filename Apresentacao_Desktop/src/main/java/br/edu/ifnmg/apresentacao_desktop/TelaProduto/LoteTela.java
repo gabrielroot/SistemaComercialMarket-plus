@@ -265,9 +265,8 @@ public class LoteTela extends javax.swing.JInternalFrame implements InternalFram
 
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
-        ProdutoRepositorio produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
-        Produto p = new Produto();
-        p.setEstoque(this.estoque);
+//        Estoque estq = estoqueRepositorio.Abrir(this.estoque.getId());
+//        this.estoque = estq;
         
         this.estoqueRepositorio.Salvar(this.estoque);
         this.renderizarLotes(this.estoque.getLotes());

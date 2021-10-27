@@ -1,4 +1,5 @@
 # Sistema Comercial Market-plus
+Trabalho final da disciplina: Desenvolvimento de Sistemas Corporativos
 
 ### Introdução
 O desenvolvimento desse software busca resolver alguns problemas relacionados aos processos de negócio de uma empresa fictícia (Market+). Os problemas são:  controle de estoque, fornecedores, vendas, compras, pessoas e emissão de relatórios.

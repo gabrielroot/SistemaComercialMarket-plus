@@ -82,6 +82,7 @@ public abstract class DataAccessObject<T> implements Repositorio<T>{
     @Override
     public T Abrir(Long id) {
         try {
+            this.manager.clear();
             T obj = (T)this.manager.find(this.type, id);
             
             return obj;

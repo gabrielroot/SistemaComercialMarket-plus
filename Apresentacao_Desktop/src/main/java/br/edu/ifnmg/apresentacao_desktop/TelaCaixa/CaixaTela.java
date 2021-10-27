@@ -738,7 +738,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                     lote.setNasPrateleiras(lote.getNasPrateleiras() - Integer.parseInt(item.getQuantidade().toString()) );
                     System.out.println("1quantidade de item:"+item.getQuantidade());
                     System.out.println("1quantidade de item no lote:"+lote.getNasPrateleiras());
-                
+                    
                     break;
                 }else{
                     System.out.println("2quantidade de item:"+item.getQuantidade());

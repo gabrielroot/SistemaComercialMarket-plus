@@ -294,12 +294,15 @@ public class PagamentoDinheiro extends javax.swing.JInternalFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
+        PagamentoTela.pagamentoPorDinheiro.setValorPagamento(CaixaTela.transacaoFinanceira.getValorTotal());
         this.dispose();
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnFinalizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFinalizarKeyPressed
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
             CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
+            PagamentoTela.pagamentoPorDinheiro.setValorPagamento(CaixaTela.transacaoFinanceira.getValorTotal());
+
             this.dispose();
         }
     }//GEN-LAST:event_btnFinalizarKeyPressed

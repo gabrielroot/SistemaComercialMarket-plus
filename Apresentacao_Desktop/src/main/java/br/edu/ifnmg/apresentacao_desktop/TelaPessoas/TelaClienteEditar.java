@@ -7,6 +7,7 @@ package br.edu.ifnmg.apresentacao_desktop.TelaPessoas;
 
 import Util.Util;
 import br.edu.ifnmg.auxiliares.Telefone;
+import br.edu.ifnmg.auxiliares.TelefoneRepositorio;
 import br.edu.ifnmg.enums.TipoDocumento;
 import br.edu.ifnmg.enums.TipoPessoa;
 import br.edu.ifnmg.logicaAplicacao.Cliente;
@@ -28,6 +29,8 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     private Cliente cliente;
     private ClienteRepositorio clienteRepositorio;
     private Util util;
+    TelefoneRepositorio telefoneRepositorio;
+    String titulo;
     
     /**
      * Creates new form TelaCliente
@@ -36,10 +39,12 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
     public TelaClienteEditar(Cliente cliente, String titulo) {
         this.cliente = cliente;
         this.clienteRepositorio = RepositorioFactory.getClienteRepositorio();
+        this.telefoneRepositorio = RepositorioFactory.getTelefoneRepositorio();
         initComponents();
         setComponentes();
         this.lblTitulo.setText(titulo);
         this.util = new Util();
+        this.titulo = titulo;
     }
     
     private void setComponentes(){
@@ -68,10 +73,12 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
             }
             this.txtNumeroDocumento.setText(this.cliente.getNumeroDocumento());
             if(this.cliente.getTelefones().size() > 0){
-                this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
-
+                if(!this.cliente.getTelefones().get(0).getNumero().equals("(  )          "))             
+                    this.txtTelefone1.setValue(this.cliente.getTelefones().get(0).getNumero());
+                
                 if(this.cliente.getTelefones().size() > 1){
-                    this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
+                    if(!this.cliente.getTelefones().get(1).getNumero().equals("(  )          "))
+                        this.txtTelefone2.setValue(this.cliente.getTelefones().get(1).getNumero());
                 }
             }
             this.txtIdentificacaoCliente.setText(this.cliente.getIdentificaoDoCliente());
@@ -106,15 +113,34 @@ public class TelaClienteEditar extends javax.swing.JInternalFrame {
         endereco.append(TxtComplemento.getText());
         
         ArrayList<Telefone> telefones = new ArrayList();
-        if(this.txtTelefone1.getValue() != null){
-            Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString() );
+        
+        if(this.titulo.equals("Novo Cliente")){
+            
+            if(this.txtTelefone1.getValue() == null){
+            Telefone telefone1 = new Telefone("(  )          ");
             telefones.add(telefone1);
+            telefone1.setPessoa(cliente);
+            }else{
+                Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString() );
+                telefones.add(telefone1);
+                telefone1.setPessoa(cliente);
+            }
+            
+            if(this.txtTelefone2.getValue() == null){
+               Telefone telefone2 = new Telefone("(  )          ");
+               telefones.add(telefone2);
+               telefone2.setPessoa(cliente);
+            }else{
+                Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString() );
+                telefones.add(telefone2);
+                telefone2.setPessoa(cliente);
+            }
+            
+        }else{
+                this.cliente.getTelefones().get(0).setNumero(this.txtTelefone1.getValue().toString());
+                this.cliente.getTelefones().get(1).setNumero(this.txtTelefone1.getValue().toString());
         }
         
-        if(this.txtTelefone2.getValue() != null){
-            Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString() );
-            telefones.add(telefone2);
-        }
         
         Calendar data = Calendar.getInstance();
         data = Util.getCalendarDateFromString(this.txtDataNascimento.getText());

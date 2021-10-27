@@ -232,6 +232,8 @@ public class PagamentoCartao extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
         PagamentoTela.pagamento.setTransacaoFinanceira(CaixaTela.transacaoFinanceira);
+        PagamentoTela.pagamento.setValorPagamento(CaixaTela.transacaoFinanceira.getValorTotal());
+
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -252,6 +254,8 @@ public class PagamentoCartao extends javax.swing.JInternalFrame {
         if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER){
             CaixaTela.transacaoFinanceira.setTransacaoStatus(TransacaoStatus.Concluida);
             PagamentoTela.pagamento.setTransacaoFinanceira(CaixaTela.transacaoFinanceira);
+            PagamentoTela.pagamento.setValorPagamento(CaixaTela.transacaoFinanceira.getValorTotal());
+
         }
     }//GEN-LAST:event_jButton2KeyPressed
 

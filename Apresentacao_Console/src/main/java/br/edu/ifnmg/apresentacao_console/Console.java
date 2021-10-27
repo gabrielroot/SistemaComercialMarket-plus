@@ -429,8 +429,8 @@ public class Console {
             );
             
             List lotes = new ArrayList();
-            Lote lote = new Lote("BR110", 5, 2, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoqueSandalia);
-            Lote lote1 = new Lote("BR140", 3, 1, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoqueSandalia);
+            Lote lote = new Lote("BR110", 5, 20, Util.getCalendarDateFromString("02/06/2021"), Util.getCalendarDateFromString("02/05/2020"), estoqueSandalia);
+            Lote lote1 = new Lote("BR140", 3, 11, Util.getCalendarDateFromString("22/02/2020"), Util.getCalendarDateFromString("02/05/2019"), estoqueSandalia);
             Lote lote11 = new Lote("BR14012", 31, 0, Util.getCalendarDateFromString("22/02/2022"), Util.getCalendarDateFromString("22/02/2020"), estoqueSandalia);
             lotes.add(lote);
             lotes.add(lote1);
@@ -482,8 +482,8 @@ public class Console {
                     100
             );
             List lotes3 = new ArrayList();
-            Lote lote33 = new Lote("BR230", 151, 4, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoqueRefri);
-            Lote lote333 = new Lote("BR1430", 3, 0, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoqueRefri);
+            Lote lote33 = new Lote("BR230", 151, 42, Util.getCalendarDateFromString("22/08/2020"), Util.getCalendarDateFromString("12/12/2019"), estoqueRefri);
+            Lote lote333 = new Lote("BR1430", 3, 10, Util.getCalendarDateFromString("20/06/2024"), Util.getCalendarDateFromString("22/12/2020"), estoqueRefri);
             lotes3.add(lote33);
             lotes3.add(lote333);
             

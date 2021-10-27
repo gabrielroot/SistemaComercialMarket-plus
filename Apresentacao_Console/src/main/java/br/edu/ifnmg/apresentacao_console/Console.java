@@ -290,38 +290,65 @@ public class Console {
         usuariosAleatorios();
         fornecedoresAleatorios();
         
+        ArrayList<Telefone> telefonesCliente = new ArrayList<>();
+        Telefone telefone1Cli = new Telefone("(38)9 88885555");
+        Telefone telefone2Cli = new Telefone("(38)9 33332222");
+        telefonesCliente.add(telefone1Cli);
+        telefonesCliente.add(telefone2Cli);
+        
         Cliente cliente1 = new Cliente("zeroberto", 
                 "1234",
                 "Ze Roberto", 
                 "Avenida Floriano Peixoto,12, centro, apartamento 04", 
-                null,
+                telefonesCliente,
                 Calendar.getInstance(), 
                 TipoPessoa.Fisica, 
                 TipoDocumento.CertidaoNascimento,
                 "333333"
         );
+        telefone1Cli.setPessoa(cliente1);
+        telefone2Cli.setPessoa(cliente1);
+        
+        ArrayList<Telefone> telefonesCliente2 = new ArrayList<>();
+        Telefone telefone1Cli2 = new Telefone("(55)9 88885555");
+        Telefone telefone2Cli2 = new Telefone("(55)9 33332222");
+        telefonesCliente.add(telefone1Cli2);
+        telefonesCliente.add(telefone2Cli2);
+        
         
         Cliente cliente2 = new Cliente("mila", 
                 "1234", 
                 "Kamila", 
                 "Avenida costa silva,14, centro, apartamento 07",
-                null,
+                telefonesCliente2,
                 Calendar.getInstance(),
                 TipoPessoa.Fisica, 
                 TipoDocumento.CertidaoNascimento, 
                 "333333"
         );
         
+        telefone1Cli2.setPessoa(cliente2);
+        telefone2Cli2.setPessoa(cliente2);
+        
+        ArrayList<Telefone> telefonesCliente3 = new ArrayList<>();
+        Telefone telefone1Cli3 = new Telefone("(00)9 00000000");
+        Telefone telefone2Cli3 = new Telefone("(00)9 00000000");
+        telefonesCliente.add(telefone1Cli3);
+        telefonesCliente.add(telefone2Cli3);
+        
         Cliente cliente3 = new Cliente("0", 
                 "0", 
                 "0", 
                 "0,0, 0,0",
-                null,
+                telefonesCliente3,
                 Calendar.getInstance(),
                 TipoPessoa.Fisica, 
                 TipoDocumento.CertidaoNascimento, 
                 "0"
         );
+        
+        telefone1Cli3.setPessoa(cliente3);
+        telefone2Cli3.setPessoa(cliente3);
         
         return repositorioPessoa.Salvar(pessoa) &&
 

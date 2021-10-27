@@ -25,6 +25,7 @@ import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.persistence.EntityManager;
 import javax.swing.JDesktopPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
@@ -1039,6 +1040,7 @@ public class TelaPessoas extends javax.swing.JInternalFrame implements InternalF
     }//GEN-LAST:event_tblResultadoMouseClicked
     
     private void buscarCliente(){
+        
         if(cliente.getNome().isEmpty()){
             cliente.setNome(this.txtNomeCliente.getText());  
         }

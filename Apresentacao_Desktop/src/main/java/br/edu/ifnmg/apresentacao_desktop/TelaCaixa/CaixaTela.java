@@ -11,6 +11,7 @@ import br.edu.ifnmg.auxiliares.Estoque;
 import br.edu.ifnmg.auxiliares.EstoqueRepositorio;
 import br.edu.ifnmg.auxiliares.ItemVenda;
 import br.edu.ifnmg.auxiliares.ItemVendaRepositorio;
+import br.edu.ifnmg.auxiliares.Lote;
 import br.edu.ifnmg.enums.FormaPagamento;
 import br.edu.ifnmg.enums.TransacaoStatus;
 import br.edu.ifnmg.enums.TransacaoTipo;
@@ -25,6 +26,7 @@ import br.edu.ifnmg.logicaAplicacao.PagamentoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.Produto;
 import br.edu.ifnmg.logicaAplicacao.ProdutoRepositorio;
 import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceira;
+import br.edu.ifnmg.logicaAplicacao.TransacaoFinanceiraRepositorio;
 import br.edu.ifnmg.logicaAplicacao.UsuarioRepositorio;
 import br.edu.ifnmg.repositorioFactory.RepositorioFactory;
 import java.awt.Graphics;
@@ -58,6 +60,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     ProdutoRepositorio produtoRepositorio;
     EstoqueRepositorio estoqueRepositorio;
     ItemVendaRepositorio itemVendaRepositorio;
+    TransacaoFinanceiraRepositorio transacaoFinanceiraRepositorio;
+    
     Util util;
     /**
      * Creates new form CaixaTela
@@ -66,6 +70,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         this.cliente = new Cliente();
         this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), cliente);
         
+        this.transacaoFinanceiraRepositorio = RepositorioFactory.getTransacaoFinanceiraRepositorio();
         this.produtoRepositorio = RepositorioFactory.getProdutoRepositorio();
         this.itemVendaRepositorio = RepositorioFactory.getItemVendaRepositorio();
         this.estoqueRepositorio = RepositorioFactory.getEstoqueRepositorio();
@@ -159,8 +164,6 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         jDesktopPane1.add(autenticarCliente);
         autenticarCliente.setVisible(true);
         Util.centralizaInternalFrame(autenticarCliente,this.getSize());
-        
-       // finalizarCompra();
     }
     
     /**
@@ -723,9 +726,34 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         
         transacaoFinanceira.setCliente(cliente);
         util.abrirJOptionPane("sucesso","Compra \"finalizada\". Veja a saída no console!",this);
-
-////salvar o pagamento e a transação
+        
+/// atualizar a quantidade dos produtos vendidos
+        
+        for (ItemVenda item : transacaoFinanceira.getItens()) {
+            for (Lote lote : item.getProduto().getEstoque().getLotes()){
+                System.out.println("quantidade de item:"+item.getQuantidade());
+                System.out.println("quantidade de item no lote:"+lote.getNasPrateleiras());
+                
+                if(lote.getNasPrateleiras() >= Integer.parseInt(item.getQuantidade().toString()) ){
+                    lote.setNasPrateleiras(lote.getNasPrateleiras() - Integer.parseInt(item.getQuantidade().toString()) );
+                    System.out.println("1quantidade de item:"+item.getQuantidade());
+                    System.out.println("1quantidade de item no lote:"+lote.getNasPrateleiras());
+                    
+                    break;
+                }else{
+                    System.out.println("2quantidade de item:"+item.getQuantidade());
+                    System.out.println("2quantidade de item no lote:"+lote.getNasPrateleiras());
+                
+                    item.setQuantidade(item.getQuantidade().subtract(new BigDecimal(lote.getNasPrateleiras())));
+                    lote.setNasPrateleiras(0);
+                }
+            }
+        }
+        
+        
+////salvar o pagamento
         if(PagamentoTela.pagamentoPorDinheiro != null){
+            PagamentoTela.pagamentoPorDinheiro.setTransacaoFinanceira(transacaoFinanceira);
             pagamentoPorDinheiroRepositorio.Salvar(PagamentoTela.pagamentoPorDinheiro);
             PagamentoTela.pagamentoPorDinheiro = null;
             
@@ -734,13 +762,13 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
                     PagamentoTela.pagamento = null;
 
         }else if(PagamentoTela.pagamentoPorCrediario !=null){
+                    PagamentoTela.pagamentoPorCrediario.setTransacaoFinanceira(CaixaTela.transacaoFinanceira);
                     pagamentoCrediarioRepositorio.Salvar(PagamentoTela.pagamentoPorCrediario);
                     PagamentoTela.pagamentoPorCrediario = null;
         }
+    transacaoFinanceiraRepositorio.Salvar(transacaoFinanceira);
 
-/// atualizar a quantidade dos produtos vendidos
-     //  transacaoFinanceira.getItens().atualizarQuantidadePrateleiras();
-
+        
 ////Limpar todo tela para uma nova transação
 
         transacaoFinanceira.getItens().clear();

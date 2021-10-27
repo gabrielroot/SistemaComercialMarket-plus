@@ -48,7 +48,7 @@ public class Lote implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar dataValidade;
     
-    @ManyToOne(cascade= CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "estoque_id", nullable= false)
     private Estoque estoque;
 

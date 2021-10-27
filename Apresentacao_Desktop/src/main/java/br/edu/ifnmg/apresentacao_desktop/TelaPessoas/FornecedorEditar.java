@@ -87,16 +87,31 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
         
         this.fornecedor.setDataNascimento(Util.getCalendarDateFromString(this.txtNascimento.getValue().toString()));
         
-        List<Telefone> telefones = new ArrayList();
-        if(this.txtTelefone1.getValue() != null){
-            Telefone telefone1 = new Telefone(this.txtTelefone1.getValue().toString());
-            telefones.add(telefone1);
-            
-        }
+        if(labelTitulo.getText().equalsIgnoreCase("novo fornecedor")){
+            List<Telefone> telefones = new ArrayList();
+            fornecedor.setTelefones(telefones);
         
-        if(this.txtTelefone2.getValue() != null){
-            Telefone telefone2 = new Telefone(this.txtTelefone2.getValue().toString());
-            telefones.add(telefone2);
+            Telefone telefone1 = new Telefone("");
+            if(this.txtTelefone1.getValue() != null){
+                telefone1.setNumero(this.txtTelefone1.getValue().toString());
+                telefones.add(telefone1);
+
+            }
+
+            Telefone telefone2 = new Telefone("");
+            if(this.txtTelefone2.getValue() != null){
+                telefone2.setNumero(this.txtTelefone2.getValue().toString());
+                telefones.add(telefone2);
+            }
+            
+            telefone1.setPessoa(fornecedor);
+            telefone2.setPessoa(fornecedor);
+                
+        }else{
+            this.fornecedor.getTelefones().get(0).setNumero(this.txtTelefone1.getValue() == null? "":this.txtTelefone1.getValue().toString());
+                
+            if(this.fornecedor.getTelefones().size() > 1)
+                this.fornecedor.getTelefones().get(1).setNumero(this.txtTelefone2.getValue() == null? "":this.txtTelefone2.getValue().toString());
         }
         
         for(Segmento segmento : Segmento.values()){
@@ -105,7 +120,6 @@ public class FornecedorEditar extends javax.swing.JInternalFrame {
             }
         }
         
-        this.fornecedor.setTelefones(telefones);
         return true;
     }
     

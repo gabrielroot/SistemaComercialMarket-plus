@@ -714,18 +714,8 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
     }//GEN-LAST:event_painelRealizarPgtoKeyPressed
 
     private void finalizarCompra(){
-        for(ItemVenda i : transacaoFinanceira.getItens()){
-            System.out.println("    Nome: "+i.getProduto().getNome());
-            System.out.println("    Subtotal: "+i.getSubTotal());
-            System.out.println("");
-        }
-        
-        System.out.println("");
-        System.out.println("Total: "+transacaoFinanceira.getValorTotal());
-        System.out.println("Usuario: "+transacaoFinanceira.getUsuario().getNome());
-        
         transacaoFinanceira.setCliente(cliente);
-        util.abrirJOptionPane("sucesso","Compra \"finalizada\". Veja a saída no console!",this);
+        util.abrirJOptionPane("sucesso","Compra Finalizada!",this);
         
         
         for (ItemVenda item : transacaoFinanceira.getItens()) {
@@ -765,6 +755,7 @@ public class CaixaTela extends javax.swing.JInternalFrame implements KeyListener
         transacaoFinanceira.getItens().clear();
         this.renderProdutos(transacaoFinanceira.getItens());
         this.atualizarTotal();
+        this.listagemRapidaProdutos();
         this.cliente = new Cliente();
         this.transacaoFinanceira = new TransacaoFinanceira(TransacaoTipo.Venda, TransacaoStatus.Criada, TelaPrincipal.getUsuario(), Calendar.getInstance(), cliente);
     }

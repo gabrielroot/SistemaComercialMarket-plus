@@ -12,7 +12,13 @@ O desenvolvimento desse software busca resolver alguns problemas relacionados ao
 ### Criando o Ambiente de Desenvolvimento
 Será necessário ter as tecnologias mencionadas acima instaladas.
 
-### Execução
+### Aprendizado
+- (Muito) GIT
+- GIT Flow
+- Trabalho em Equipe
+- Aperfeiçoamento da lógica
+- Modelagem
+- Prototipação de interfaces
 
 ## Capturas
 ### Tela Principal

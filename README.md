@@ -19,6 +19,7 @@ Será necessário ter as tecnologias mencionadas acima instaladas.
 - Aperfeiçoamento da lógica
 - Modelagem
 - Prototipação de interfaces
+- Desenvolvimento incremental
 
 ## Capturas
 ### Tela Principal

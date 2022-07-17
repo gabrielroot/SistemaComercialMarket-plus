@@ -1,6 +1,6 @@
 # Sistema Comercial Market-plus
 Trabalho final da disciplina: Desenvolvimento de Sistemas Corporativos
-([Vídeo de apresentação](https://dms.licdn.com/playlist/C4E05AQEFk_doaOZZoA/mp4-720p-30fp-crf28/0/1635513868563?e=1654218000&v=beta&t=izySFdymDkAkJXNS58qsB0eRjXMvZPpr9lYer4x66iI))
+([Vídeo de apresentação](https://github.com/gabrielroot/SistemaComercialMarket-plus/blob/main/Video%20de%20apresenta%C3%A7%C3%A3o.mp4?raw=true))
 
 ### Introdução
 O desenvolvimento desse software busca resolver alguns problemas relacionados aos processos de negócio de uma empresa fictícia (Market+). Os problemas são:  controle de estoque, fornecedores, vendas, compras, pessoas e emissão de relatórios.
